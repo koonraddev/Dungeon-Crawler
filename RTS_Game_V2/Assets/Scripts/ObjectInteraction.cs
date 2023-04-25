@@ -10,19 +10,26 @@ public class ObjectInteraction : MonoBehaviour
     private GameObject pointedObject;
     [SerializeField] private Color highLightObjectColor;
     [SerializeField] private LayerMask interactiveObjectMask;
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
         if (Physics.Raycast(ray, out hitPoint, 1000f, interactiveObjectMask))
         {
-            pointedObject = hitPoint.transform.gameObject;
-            CheckObject(pointedObject);
+            if (!isOverUI)
+            {
+                if (pointedObject != hitPoint.transform.gameObject)
+                {
+                    UncheckObject(pointedObject);
+                }
+                pointedObject = hitPoint.transform.gameObject;
+                if (pointedObject != null)
+                {
+                    CheckObject(pointedObject);
+                }
+            }
+
         }
         else
         {

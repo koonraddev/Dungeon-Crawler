@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Chest
+  - Door
   layers:
   - Default
   - TransparentFX

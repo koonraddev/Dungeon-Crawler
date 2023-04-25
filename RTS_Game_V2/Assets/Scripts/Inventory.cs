@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour 
 {
     private static Inventory _instance;
-    [SerializeField] private List<ItemSO> items = new();
+    [SerializeField] private List<KeySO> items = new();
 
     public static Inventory Instance { get { return _instance; } }
 
@@ -21,18 +21,18 @@ public class Inventory : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void AddItem(ItemSO itemToAdd)
+    public void AddItem(KeySO itemToAdd)
     {
         items.Add(itemToAdd);
     }
-    public void RemoveItem(ItemSO itemToRemove)
+    public void RemoveItem(KeySO itemToRemove)
     {
         items.Remove(itemToRemove);
     }
 
-    public bool CheckItem(ItemSO itemToCheck)
+    public bool CheckItem(KeySO itemToCheck)
     {
-        foreach (ItemSO invItem in items)
+        foreach (KeySO invItem in items)
         {
             if (invItem.Id == itemToCheck.Id)
             {
@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour
         items = new();
     }
 
-    public List<ItemSO> GetInventory()
+    public List<KeySO> GetInventory()
     {
         return items;
     }

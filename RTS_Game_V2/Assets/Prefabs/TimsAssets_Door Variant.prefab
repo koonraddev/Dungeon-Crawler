@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000010346633862, guid: 9f4e5dd2165039f4a878d1c1260761df, type: 3}
       propertyPath: m_Name
-      value: TimsAssets_Door
+      value: TimsAssets_Door Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010346633862, guid: 9f4e5dd2165039f4a878d1c1260761df, type: 3}
+      propertyPath: m_TagString
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 4000013859883750, guid: 9f4e5dd2165039f4a878d1c1260761df, type: 3}
       propertyPath: m_RootOrder
@@ -74,4 +78,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6308542ba86345e4e880bca401896ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openingKey: {fileID: 0}
+  doorSO: {fileID: 0}

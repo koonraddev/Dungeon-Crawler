@@ -5,19 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newInventory", menuName = "Scriptable Objects/Inventory", order = 1)]
 public class InventorySO : ScriptableObject
 {
-    public List<ItemSO> items = new();
-    public void AddItem(ItemSO itemToAdd)
+    public List<KeySO> items = new();
+    public void AddItem(KeySO itemToAdd)
     {
         items.Add(itemToAdd);
     }
-    public void RemoveItem(ItemSO itemToRemove)
+    public void RemoveItem(KeySO itemToRemove)
     {
         items.Remove(itemToRemove);
     }
 
-    public bool CheckItem(ItemSO itemToCheck)
+    public bool CheckItem(KeySO itemToCheck)
     {
-        foreach(ItemSO invItem in items)
+        foreach(KeySO invItem in items)
         {
             if (invItem.Id == itemToCheck.Id)
             {
@@ -32,7 +32,7 @@ public class InventorySO : ScriptableObject
         items = new();
     }
 
-    public List<ItemSO> GetInventory()
+    public List<KeySO> GetInventory()
     {
         return items;
     }

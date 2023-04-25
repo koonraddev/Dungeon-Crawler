@@ -51,6 +51,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6006989286552680053, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006989286864718785, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006989286870524345, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006989287236947743, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006989288631410963, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006989289354166263, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6006989289481057953, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
       propertyPath: m_Name
       value: ClosedDoor Variant
@@ -59,10 +83,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6006989289904575249, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006989289984952535, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006989291886538199, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592556278718356406, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
+      propertyPath: doorSO
+      value: 
+      objectReference: {fileID: 11400000, guid: b43c1e99ff9932249ac4fa0da06fcbd7, type: 2}
     - target: {fileID: 6592556278718356406, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
       propertyPath: openingKey
       value: 
-      objectReference: {fileID: 11400000, guid: 61eba1617ee6ab14f85ef895ebf72909, type: 2}
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5912966197138923977, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53209eb64db6e6d488a51dcc8f04d8af, type: 3}

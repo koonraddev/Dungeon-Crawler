@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1034eec1716b7cd45a08cefd2776b271, type: 3}
+  m_Name: Door2
+  m_EditorClassIdentifier: 
+  <NameText>k__BackingField: Door Level 2
+  <Id>k__BackingField: 12
+  <Description>k__BackingField: Requires Level 2 acces key.
+  <keyRequired>k__BackingField: {fileID: 11400000, guid: 78f4ba69b54ee094483883509bf0cb38, type: 2}
