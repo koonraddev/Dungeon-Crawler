@@ -15,7 +15,7 @@ public class Key : MonoBehaviour, IInteractionObjects
         if (displayMessage)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", keySo.NameText }, { "Description", keySo.Description } });
-            UIObjectPool.instance.DisplayMessage(this, MessageType.TAKE);
+            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.TAKE);
         }
     }
 
@@ -37,7 +37,7 @@ public class Key : MonoBehaviour, IInteractionObjects
         if (displayInfo)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", keySo.NameText } });
-            UIObjectPool.instance.DisplayMessage(this, MessageType.POPUP);
+            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.POPUP);
             displayInfo = false;
         }
     }

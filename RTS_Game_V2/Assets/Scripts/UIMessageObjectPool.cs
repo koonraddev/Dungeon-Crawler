@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class UIObjectPool : MonoBehaviour
+public class UIMessageObjectPool : MonoBehaviour
 {
-    public static UIObjectPool instance;
+    public static UIMessageObjectPool instance;
     private List<GameObject> pooledObjects;
     public GameObject ObjectToPool { get; set; }
     public int AmountToPool { get; set; }

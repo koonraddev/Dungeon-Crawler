@@ -27,7 +27,7 @@ public class Door : MonoBehaviour, IInteractionObjects
         if (keyRequired)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText }, { "Description", doorSO.Description } });
-            UIObjectPool.instance.DisplayMessage(this, MessageType.OPEN);
+            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.OPEN);
         }
         else
         {
@@ -69,7 +69,7 @@ public class Door : MonoBehaviour, IInteractionObjects
                 else
                 {
                     SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyToOpen.NameText } });
-                    UIObjectPool.instance.DisplayMessage(this, MessageType.INFORMATION);
+                    UIMessageObjectPool.instance.DisplayMessage(this, MessageType.INFORMATION);
                 }
             }
             else
@@ -97,7 +97,7 @@ public class Door : MonoBehaviour, IInteractionObjects
         if (displayInfo)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText } });
-            UIObjectPool.instance.DisplayMessage(this, MessageType.POPUP);
+            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.POPUP);
             displayInfo = false;
         }
     }

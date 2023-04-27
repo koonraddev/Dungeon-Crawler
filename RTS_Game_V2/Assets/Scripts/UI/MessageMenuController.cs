@@ -7,21 +7,25 @@ using UnityEngine.UI;
 public class MessageMenuController : MonoBehaviour
 {
     private Camera mainCamera;
+
     private GameObject objectReq;
     private Vector3 objectReqPosition;
-    private Vector3 offset;
+
+    [Header("Main Panel")]
     [SerializeField] private GameObject panel;
     [SerializeField] private RectTransform panelRect;
+    private Vector2 panelSize;
 
+    [Header("Button Panel")]
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] private RectTransform buttonPanelRect;
     private Vector2 buttonPanelSize;
     [SerializeField] private GameObject buttonYES;
     [SerializeField] private GameObject buttonNO;
     [SerializeField] private GameObject buttonOK;
+    private Button btYes;
 
-    private Button bt;
-
+    [Header("Text Holders")]
     [SerializeField] private TMP_Text nameHolder;
     [SerializeField] private TMP_Text descripotionHolder;
     [SerializeField] private TMP_Text messageHolder;
@@ -34,80 +38,69 @@ public class MessageMenuController : MonoBehaviour
     private Vector2 descrHolderSize;
     private Vector2 messHolderSize;
 
+    [Header("Others")]
+    [Tooltip("Screen MessageMenu position when is static and do not follow object. By default - (0,0,0) - middle of screen")]
+    [SerializeField] private Vector3 staticMenuPosition;
+    private Vector3 relativeOffset;
+    private bool relativePosition;
+    [SerializeField] private bool followMouse;
 
-    [SerializeField] private Vector3 messageMenuPosition;
-    private PopupPanel popupPanel;
+    private MessagePanelBehaviour messPanelBeh;
     private bool doFadeOutAndUnactive;
-    private bool messageMenuPosAsObjectPos;
-    private Vector2 panelSize;
+    private bool firstRun = true;
 
-    void Start()
+    private Vector3 lastMousePositionOnObject;
+
+    private void Start()
     {
-        bt = buttonYES.GetComponent<Button>();
-        buttonPanelSize = buttonPanelRect.sizeDelta;
-        nameHolderSize = nameHolderRect.sizeDelta;
-        descrHolderSize = descripotionHoldeRrect.sizeDelta;
-        messHolderSize = messageHolderRect.sizeDelta;
-
-        doFadeOutAndUnactive = true;
-        mainCamera = Camera.main;
-        popupPanel = panel.GetComponent<PopupPanel>();
-        panelRect = panel.GetComponent<RectTransform>();
-        panelSize = panelRect.sizeDelta;
-
-        ResetAllElements();
+        SetAllElements();
     }
-
 
     void Update()
     {
-        if (messageMenuPosAsObjectPos)
+        if (relativePosition)
         {
             CheckPointing();
         }
         else
         {
-            //Vector3 pos = offset;
-            //if (panel.transform.position != pos)
-            //{
-            //    panel.transform.position = pos;
-            //}
+            Positioning();
         }
-    }
-
-    private void OnEnable()
-    {
-        doFadeOutAndUnactive = true;
     }
 
     public void PrepareMessageMenu(IInteractionObjects intObject, MessageType messageType)
     {
-        bt = buttonYES.GetComponent<Button>();//
+        if (firstRun)
+        {
+            SetAllElements();
+            ResetAllElements();
+            firstRun = false;
+        }
         switch (messageType)
         {
             case MessageType.POPUP:
-                messageMenuPosAsObjectPos = true;
+                relativePosition = true;
                 break;
             case MessageType.OPEN:
-                messageMenuPosAsObjectPos = false;
-                bt.onClick.AddListener(intObject.DoInteraction);
+                relativePosition = false;
+                btYes.onClick.AddListener(intObject.DoInteraction);
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Open?";
                 break;
             case MessageType.TAKE:
-                messageMenuPosAsObjectPos = false;
-                bt.onClick.AddListener(intObject.DoInteraction);
+                relativePosition = false;
+                btYes.onClick.AddListener(intObject.DoInteraction);
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Take it?";
                 break;
             case MessageType.INFORMATION:
-                messageMenuPosAsObjectPos = false;
+                relativePosition = false;
                 buttonOK.SetActive(true);
                 break;
             default:
-                messageMenuPosAsObjectPos = false;
+                relativePosition = false;
                 buttonOK.SetActive(true);
                 break;
         }
@@ -117,6 +110,45 @@ public class MessageMenuController : MonoBehaviour
         SetTextHolders(intObject);
         CheckTextHolders();
         CheckButtons();
+    }
+
+    private void SetAllElements()
+    {
+        btYes = buttonYES.GetComponent<Button>();
+        buttonPanelSize = buttonPanelRect.sizeDelta;
+        nameHolderSize = nameHolderRect.sizeDelta;
+        descrHolderSize = descripotionHoldeRrect.sizeDelta;
+        messHolderSize = messageHolderRect.sizeDelta;
+
+        doFadeOutAndUnactive = true;
+        mainCamera = Camera.main;
+        messPanelBeh = panel.GetComponent<MessagePanelBehaviour>();
+        panelRect = panel.GetComponent<RectTransform>();
+        panelSize = panelRect.sizeDelta;
+    }
+
+    private void ResetAllElements()
+    {
+        nameHolder.text = "";
+        descripotionHolder.text = "";
+        messageHolder.text = "";
+
+        nameHolder.gameObject.SetActive(false);
+        descripotionHolder.gameObject.SetActive(false);
+        messageHolder.gameObject.SetActive(false);
+
+        buttonYES.SetActive(false);
+        buttonNO.SetActive(false);
+        buttonOK.SetActive(false);
+
+        panelRect.sizeDelta = new Vector2(panelSize.x, 0);
+        nameHolderRect.localPosition = Vector3.zero;
+        descripotionHoldeRrect.localPosition = Vector3.zero;
+        messageHolderRect.localPosition = Vector3.zero;
+        buttonPanelRect.localPosition = Vector3.zero;
+
+        relativeOffset = Vector3.zero;
+        btYes.onClick.RemoveAllListeners();
     }
 
     private void SetTextHolders(IInteractionObjects intObject)
@@ -156,7 +188,8 @@ public class MessageMenuController : MonoBehaviour
             descripotionHoldeRrect.localPosition -= new Vector3(0f, nameHolderSize.y, 0f);
             messageHolderRect.localPosition -= new Vector3(0f, nameHolderSize.y, 0f);
             buttonPanelRect.localPosition -= new Vector3(0f, nameHolderSize.y, 0f);
-            offset += new Vector3(0, 80, 0);
+
+            relativeOffset += new Vector3(0f, nameHolderSize.y, 0f);
         }
         if(descripotionHolder.text != "")
         {
@@ -166,7 +199,8 @@ public class MessageMenuController : MonoBehaviour
             descripotionHoldeRrect.localPosition -= new Vector3(0f, descrHolderSize.y, 0f);
             messageHolderRect.localPosition -= new Vector3(0f, descrHolderSize.y, 0f);
             buttonPanelRect.localPosition -= new Vector3(0f, descrHolderSize.y, 0f);
-            //offset += new Vector3(0, 50, 0);
+
+            relativeOffset += new Vector3(0f, descrHolderSize.y, 0f);
         }
         if(messageHolder.text != "")
         {
@@ -175,7 +209,8 @@ public class MessageMenuController : MonoBehaviour
 
             messageHolderRect.localPosition -= new Vector3(0f, messHolderSize.y, 0f);
             buttonPanelRect.localPosition -= new Vector3(0f, messHolderSize.y, 0f);
-            //offset += new Vector3(0, 50, 0);
+
+            relativeOffset += new Vector3(0f, messHolderSize.y, 0f);
         }
     }
 
@@ -185,8 +220,11 @@ public class MessageMenuController : MonoBehaviour
         {
             panelRect.sizeDelta += new Vector2(0f, buttonPanelSize.y);
             buttonPanelRect.localPosition -= new Vector3(0f, buttonPanelSize.y, 0f);
+
+            relativeOffset += new Vector3(0f, buttonPanelSize.y, 0f);
         }
     }
+
     private void CheckPointing()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -196,65 +234,58 @@ public class MessageMenuController : MonoBehaviour
             if ((hit.transform.gameObject == objectReq) && (objectReq != null))
             {
                 doFadeOutAndUnactive = true;
+                lastMousePositionOnObject = Input.mousePosition;
             }
             else
             {
                 if (doFadeOutAndUnactive)
                 {
-                    StartCoroutine(FadeOutAndUnactive());
+                    StartCoroutine(MenuDeactivate());
                     doFadeOutAndUnactive = false;
                 }
             }
         }
     }
 
-    private void OnDisable()
-    {
-        Debug.Log("On disablee");
-        ResetAllElements();
-    }
-
-    private void ResetAllElements()
-    {
-        nameHolder.text = "";
-        descripotionHolder.text = "";
-        messageHolder.text = "";
-
-        nameHolder.gameObject.SetActive(false);
-        descripotionHolder.gameObject.SetActive(false);
-        messageHolder.gameObject.SetActive(false);
-
-        buttonYES.SetActive(false);
-        buttonNO.SetActive(false);
-        buttonOK.SetActive(false);
-
-        panelRect.sizeDelta = new Vector2(panelSize.x, 0);
-        nameHolderRect.localPosition = Vector3.zero;
-        descripotionHoldeRrect.localPosition = Vector3.zero;
-        messageHolderRect.localPosition = Vector3.zero;
-        buttonPanelRect.localPosition = Vector3.zero;
-
-        offset = Vector3.zero;
-        bt.onClick.RemoveAllListeners();
-    }
-
     private void Positioning()
     {
-
-        Vector3 pos = (mainCamera.WorldToScreenPoint(objectReqPosition) + offset);
-        if (panel.transform.position != pos)
+        if (relativePosition) //menu ma sledzic obiekt
         {
-            panel.transform.position = pos;
+            if (followMouse) //...oraz myszke na obiektcie
+            {
+                Vector3 pos = lastMousePositionOnObject + relativeOffset;
+                if (panel.transform.position != pos)
+                {
+                    panel.transform.position = pos;
+                }
+            }
+            else
+            {
+                Vector3 pos = (mainCamera.WorldToScreenPoint(objectReqPosition) + relativeOffset);
+                if (panel.transform.position != pos)
+                {
+                    panel.transform.position = pos;
+                }
+            }
+        }
+        else
+        {
+            panel.transform.localPosition = staticMenuPosition;
         }
     }
 
-    private IEnumerator FadeOutAndUnactive()
+    private IEnumerator MenuDeactivate()
     {
-        if (popupPanel != null)
+        if (messPanelBeh != null)
         {
-            yield return StartCoroutine(popupPanel.FadeOut());
+            yield return StartCoroutine(messPanelBeh.Deactivate());
         }
         gameObject.SetActive(false);
         StopAllCoroutines();
+    }
+
+    private void OnDisable()
+    {
+        ResetAllElements();
     }
 }

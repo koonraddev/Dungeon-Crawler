@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] Transform targetObject;
+    private Transform targetObject;
     [SerializeField] private Vector3 localOffset;
     [SerializeField] private float scrollSpeed;
     [SerializeField] private bool canZoom;
     [SerializeField] private float minFov;
+    [SerializeField] private float baseFov;
     [SerializeField] private float maxFov;
     private Camera cam;
 
     private void Start()
     {
         cam = gameObject.GetComponent<Camera>();
+        targetObject = gameObject.transform.parent.gameObject.transform;
     }
 
     private void LateUpdate()
@@ -27,4 +30,5 @@ public class CameraFollow : MonoBehaviour
             cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, minFov, maxFov);
         }
     }
+
 }
