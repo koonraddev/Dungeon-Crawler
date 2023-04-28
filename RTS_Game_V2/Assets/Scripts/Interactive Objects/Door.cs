@@ -24,7 +24,7 @@ public class Door : MonoBehaviour, IInteractionObjects
     public void ObjectInteraction()
     {
         //Debug.Log("Drzwi");
-        if (keyRequired)
+        if (keyRequired && !opened)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText }, { "Description", doorSO.Description } });
             UIMessageObjectPool.instance.DisplayMessage(this, MessageType.OPEN);
@@ -145,6 +145,7 @@ public class Door : MonoBehaviour, IInteractionObjects
         {
             keyToOpen = doorSO.keyRequired;
             keyRequired = true;
+            LockDoor();
         }
         else
         {
@@ -161,9 +162,18 @@ public class Door : MonoBehaviour, IInteractionObjects
         }
     }
 
-    private void ChangeDoorStatus(bool doorStatus)
+    public void LockDoor()
     {
-        if (doorStatus)
+        if (keyToOpen != null)
+        {
+            keyRequired = true;
+            opened = false;
+        }
+    }
+
+    private void ChangeDoorStatus(bool doorOpened)
+    {
+        if (doorOpened)
         {
             //Debug.Log("otwieram drzwi");
             actualDoor.transform.DOLocalRotate(new Vector3(0, 0, 90f), 2f).SetEase(Ease.Linear);
@@ -176,4 +186,6 @@ public class Door : MonoBehaviour, IInteractionObjects
             opened = false;
         }
     }
+
+    
 }

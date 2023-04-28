@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
     {
         items.Add(itemToAdd);
     }
+
     public void RemoveItem(KeySO itemToRemove)
     {
         items.Remove(itemToRemove);

@@ -1560,10 +1560,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localOffset: {x: 0, y: 25, z: -14}
   scrollSpeed: 20
-  canZoom: 0
-  minFov: 46.8
-  baseFov: 56.5
-  maxFov: 73.3
+  canZoom: 1
+  minFov: 20
+  baseFov: 60
+  maxFov: 80
 --- !u!1 &1285007676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,7 +2199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1850066015614315132, guid: af4b77faba32b4b4cb5d6b54f1133d28, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4019270271448189475, guid: af4b77faba32b4b4cb5d6b54f1133d28, type: 3}
       propertyPath: itemSO
