@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 [RequireComponent(typeof(Collider))]
 public class Door : MonoBehaviour, IInteractionObjects
 {
     [SerializeField] DoorSO doorSO;
-    private KeySO keyToOpen;
+    private IInventoryItem keyItem;
     private bool opened;
+    private bool destroyItemOnUse;
     private bool keyRequired;
     private bool displayInfo;
     private GameObject actualDoor;
@@ -27,7 +29,7 @@ public class Door : MonoBehaviour, IInteractionObjects
         if (keyRequired && !opened)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText }, { "Description", doorSO.Description } });
-            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.OPEN);
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
         }
         else
         {
@@ -49,27 +51,20 @@ public class Door : MonoBehaviour, IInteractionObjects
             if (keyRequired)
             {
                 //Debug.Log("wymagaja klucza");
-                List<KeySO> invToCheck = Inventory.Instance.GetInventory();
-                KeySO matchingKey = null;
-                foreach (KeySO item in invToCheck)
-                {
-                    if (item == keyToOpen)
-                    {
-                        matchingKey = item;
-                        break;
-                    }
-                }
 
-                if(matchingKey != null)
+                if(Inventory.Instance.CheckItem(keyItem))
                 {
+                    if (destroyItemOnUse)
+                    {
+                        Inventory.Instance.RemoveItem(keyItem);
+                    }
                     ChangeDoorStatus(true);
-                    opened = true;
                     keyRequired = false;
                 }
                 else
                 {
-                    SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyToOpen.NameText } });
-                    UIMessageObjectPool.instance.DisplayMessage(this, MessageType.INFORMATION);
+                    SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyItem.NameText } });
+                    UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
                 }
             }
             else
@@ -97,7 +92,7 @@ public class Door : MonoBehaviour, IInteractionObjects
         if (displayInfo)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText } });
-            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.POPUP);
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
             displayInfo = false;
         }
     }
@@ -143,7 +138,8 @@ public class Door : MonoBehaviour, IInteractionObjects
     {
         if (doorSO.keyRequired != null)
         {
-            keyToOpen = doorSO.keyRequired;
+            keyItem = doorSO.keyRequired;
+            destroyItemOnUse = !keyItem.IsReusable;
             keyRequired = true;
             LockDoor();
         }
@@ -164,7 +160,7 @@ public class Door : MonoBehaviour, IInteractionObjects
 
     public void LockDoor()
     {
-        if (keyToOpen != null)
+        if (keyItem != null)
         {
             keyRequired = true;
             opened = false;

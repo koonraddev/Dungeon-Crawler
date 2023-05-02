@@ -2,13 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour 
+public class Inventory : MonoBehaviour
 {
     private static Inventory _instance;
-    [SerializeField] private List<KeySO> items = new();
+    [SerializeField] public InventorySlot[] itemSlots;
 
+    private int inventorySize;
     public static Inventory Instance { get { return _instance; } }
-
+    public int index;
+    public int InventorySize
+    {
+        get { return inventorySize; }
+        set
+        {
+            inventorySize = Mathf.Clamp(value, 1, 10);
+        }
+    }
+    [System.Serializable]
+    public class InventorySlot
+    {
+        public string SlotName { get; set; }
+        public IInventoryItem ItemInSlot { get; set; }
+        public int itemAmount { get; set; }
+    }
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -21,21 +37,16 @@ public class Inventory : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void AddItem(KeySO itemToAdd)
+    private void Start()
     {
-        items.Add(itemToAdd);
+        ClearInventory();
     }
 
-    public void RemoveItem(KeySO itemToRemove)
+    public bool CheckEmptySlot()
     {
-        items.Remove(itemToRemove);
-    }
-
-    public bool CheckItem(KeySO itemToCheck)
-    {
-        foreach (KeySO invItem in items)
+        for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (invItem.Id == itemToCheck.Id)
+            if (itemSlots[i] == null)
             {
                 return true;
             }
@@ -43,13 +54,101 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void ClearInventory()
+    public void AddItem(IInventoryItem itemToAdd)
     {
-        items = new();
+        InventorySlot invSlot = new InventorySlot
+        {
+            SlotName = itemToAdd.NameText,
+            ItemInSlot = itemToAdd
+        };
+
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if(itemSlots[i] == null)
+            {
+                invSlot.itemAmount = 1;
+                itemSlots[i] = invSlot;
+                GameEvents.instance.UpdateInventoryUI();
+                break;
+            }
+            else
+            {
+                if (itemSlots[i].ItemInSlot == itemToAdd && itemToAdd.IsStackable)
+                {
+
+                    invSlot.itemAmount = invSlot.itemAmount + itemSlots[i].itemAmount + 1;
+                    itemSlots[i] = invSlot;
+                    GameEvents.instance.UpdateInventoryUI();
+                    break;
+
+                }
+            }
+        }
     }
 
-    public List<KeySO> GetInventory()
+
+
+    public void RemoveItem(IInventoryItem itemToRemove)
     {
-        return items;
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (itemSlots[i] != null)
+            {
+                if (itemSlots[i].ItemInSlot == itemToRemove)
+                {
+                    if (itemSlots[i].itemAmount == 1)
+                    {
+                        itemSlots[i] = null;
+                    }
+                    else
+                    {
+                        itemSlots[i].itemAmount--;
+                    }
+                    GameEvents.instance.UpdateInventoryUI();
+                    break;
+
+                }
+            }
+
+        }
+    }
+
+    public void RemoveItem(int slotNumber)
+    {
+        if (slotNumber >= 0 && slotNumber <= inventorySize)
+        {
+            itemSlots[slotNumber] = null;
+            GameEvents.instance.UpdateInventoryUI();
+        }
+    }
+
+    public bool CheckItem(IInventoryItem itemToCheck)
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (itemSlots[i] != null)
+            {
+                if (itemSlots[i].ItemInSlot == itemToCheck)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void ClearInventory()
+    {
+        itemSlots = new InventorySlot[inventorySize];
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            itemSlots[i] = null;
+        }
+
+    }
+
+    public InventorySlot[] GetInventorySlots()
+    {
+        return itemSlots;
     }
 }

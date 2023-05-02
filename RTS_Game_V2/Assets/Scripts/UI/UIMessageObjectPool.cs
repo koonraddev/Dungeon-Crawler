@@ -7,6 +7,14 @@ public class UIMessageObjectPool : MonoBehaviour
     public GameObject ObjectToPool { get; set; }
     public int AmountToPool { get; set; }
     public bool canAddObjects { get; set; }
+    public enum MessageType
+    {
+        POPUP,
+        INFORMATION,
+        TAKE,
+        OPEN,
+    }
+
     void Awake()
     {
         instance = this;
@@ -30,7 +38,7 @@ public class UIMessageObjectPool : MonoBehaviour
         return null;
     }
 
-    public void DisplayMessage(IInteractionObjects gameObjectReq, MessageType messageType )
+    public void DisplayMessage(IInteractionObjects gameObjectReq, UIMessageObjectPool.MessageType messageType )
     {
         if (GetPooledObject() == null)
         {
@@ -62,11 +70,11 @@ public class UIMessageObjectPool : MonoBehaviour
                 for (int i = 0; i < amountToCreate; i++)
                 {
                     tmp = Instantiate(ObjectToPool);
+                    tmp.GetComponent<MessageMenuController>().FollowMouse = true;
                     tmp.SetActive(false);
                     pooledObjects.Add(tmp);
                 }
             }
         }
-
     }
 }

@@ -43,7 +43,7 @@ public class MessageMenuController : MonoBehaviour
     [SerializeField] private Vector3 staticMenuPosition;
     private Vector3 relativeOffset;
     private bool relativePosition;
-    [SerializeField] private bool followMouse;
+    public bool FollowMouse { get; set; }
 
     private MessagePanelBehaviour messPanelBeh;
     private bool doFadeOutAndUnactive;
@@ -68,7 +68,7 @@ public class MessageMenuController : MonoBehaviour
         }
     }
 
-    public void PrepareMessageMenu(IInteractionObjects intObject, MessageType messageType)
+    public void PrepareMessageMenu(IInteractionObjects intObject, UIMessageObjectPool.MessageType messageType)
     {
         if (firstRun)
         {
@@ -78,24 +78,24 @@ public class MessageMenuController : MonoBehaviour
         }
         switch (messageType)
         {
-            case MessageType.POPUP:
+            case UIMessageObjectPool.MessageType.POPUP:
                 relativePosition = true;
                 break;
-            case MessageType.OPEN:
+            case UIMessageObjectPool.MessageType.OPEN:
                 relativePosition = false;
                 btYes.onClick.AddListener(intObject.DoInteraction);
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Open?";
                 break;
-            case MessageType.TAKE:
+            case UIMessageObjectPool.MessageType.TAKE:
                 relativePosition = false;
                 btYes.onClick.AddListener(intObject.DoInteraction);
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Take it?";
                 break;
-            case MessageType.INFORMATION:
+            case UIMessageObjectPool.MessageType.INFORMATION:
                 relativePosition = false;
                 buttonOK.SetActive(true);
                 break;
@@ -129,6 +129,11 @@ public class MessageMenuController : MonoBehaviour
 
     private void ResetAllElements()
     {
+        if (firstRun)
+        {
+            SetAllElements();
+            firstRun = false;
+        }
         nameHolder.text = "";
         descripotionHolder.text = "";
         messageHolder.text = "";
@@ -251,7 +256,7 @@ public class MessageMenuController : MonoBehaviour
     {
         if (relativePosition) //menu ma sledzic obiekt
         {
-            if (followMouse) //...oraz myszke na obiektcie
+            if (FollowMouse) //...oraz myszke na obiektcie
             {
                 Vector3 pos = lastMousePositionOnObject + relativeOffset;
                 if (panel.transform.position != pos)

@@ -14,11 +14,16 @@ public class GameController : MonoBehaviour
     [SerializeField] private bool canAddObjectsToPool;
     [Tooltip("Specify whether the Message Menu should follow mouse when on top of a object")]
     [SerializeField] private bool mouseFollow;
-    void Start()
+
+    [Header("UI Inventory")]
+    [Tooltip("Number of item slots")]
+    [SerializeField] private int itemSlots;
+    void Awake()
     {
         if (!FindObjectOfType(typeof(Inventory)))
         {
             GameObject invenotry = new GameObject("Inventory",typeof(Inventory));
+            Inventory.Instance.InventorySize = itemSlots;
         }
 
         if (!FindObjectOfType(typeof(UIMessageObjectPool)))
@@ -29,4 +34,5 @@ public class GameController : MonoBehaviour
             UIMessageObjectPool.instance.canAddObjects = canAddObjectsToPool;
         }
     }
+
 }

@@ -15,7 +15,7 @@ public class Key : MonoBehaviour, IInteractionObjects
         if (displayMessage)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", keySo.NameText }, { "Description", keySo.Description } });
-            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.TAKE);
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.TAKE);
         }
     }
 
@@ -37,15 +37,26 @@ public class Key : MonoBehaviour, IInteractionObjects
         if (displayInfo)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", keySo.NameText } });
-            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.POPUP);
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
             displayInfo = false;
         }
     }
 
     public void DoInteraction()
     {
-        Inventory.Instance.AddItem(keySo);
-        Destroy(gameObject);
+        if (Inventory.Instance.CheckEmptySlot())
+        {
+            Inventory.Instance.AddItem(keySo);
+            SetContentToDisplay(new Dictionary<string, string> { { "Message", "You picked up: " + keySo.NameText } });
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
+            Destroy(gameObject);
+        }
+        else
+        {
+            SetContentToDisplay(new Dictionary<string, string> { { "Message", "No empty slot in inventory: "} });
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
+        }
+        
     }
 
     public void OnMouseExitObject()

@@ -25,7 +25,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
         if (!opened && displayMessage)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.NameText }, { "Description", chestSO.Description } });
-            UIMessageObjectPool.instance.DisplayMessage(this, MessageType.OPEN);
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
         }
     }
 
@@ -53,7 +53,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
             if (displayPopup)
             {
                 SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.NameText } });
-                UIMessageObjectPool.instance.DisplayMessage(this, MessageType.POPUP);
+                UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
                 displayPopup = false;
             }
         }
