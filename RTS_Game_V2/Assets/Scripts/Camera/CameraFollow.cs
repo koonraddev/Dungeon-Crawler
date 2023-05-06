@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
@@ -14,6 +13,13 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float maxFov;
     private Camera cam;
 
+    private PlayerInput camInp;
+    private InputAction zoomAction;
+    private void Awake()
+    {
+        camInp = GetComponent<PlayerInput>();
+        zoomAction = camInp.actions["Zoom"];
+    }
     private void Start()
     {
         cam = gameObject.GetComponent<Camera>();
@@ -24,11 +30,7 @@ public class CameraFollow : MonoBehaviour
     {
         transform.localPosition = localOffset;
         transform.LookAt(targetObject);
-        if (canZoom)
-        {
-            cam.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
-            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, minFov, maxFov);
-        }
+        cam.fieldOfView -= zoomAction.ReadValue<float>() * scrollSpeed;
+        cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, minFov, maxFov);
     }
-
 }

@@ -7,6 +7,7 @@ public class UIMessageObjectPool : MonoBehaviour
     public GameObject ObjectToPool { get; set; }
     public int AmountToPool { get; set; }
     public bool canAddObjects { get; set; }
+    public bool FollowMouse { get; set; }
     public enum MessageType
     {
         POPUP,
@@ -70,7 +71,7 @@ public class UIMessageObjectPool : MonoBehaviour
                 for (int i = 0; i < amountToCreate; i++)
                 {
                     tmp = Instantiate(ObjectToPool);
-                    tmp.GetComponent<MessageMenuController>().FollowMouse = true;
+                    tmp.GetComponent<MessageMenuController>().FollowMouse = FollowMouse;
                     tmp.SetActive(false);
                     pooledObjects.Add(tmp);
                 }

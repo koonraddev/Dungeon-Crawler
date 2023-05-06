@@ -1,36 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraMovingObject : MonoBehaviour
 {
-    private float inputHorizontal;
-    private float inputVertical;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
-
     private bool gameON = true;
+
+    public bool useNewInputSystem;
+
+    public CameraControls camCtrls;
+
+    private PlayerInput camInp;
+
+    private InputAction moveAction;
+    private InputAction rotateAction;
+
+    private void Awake()
+    {
+        camInp = GetComponent<PlayerInput>();
+        moveAction = camInp.actions["Move"];
+        rotateAction = camInp.actions["Rotate"];
+    }
+
+    private void OnEnable()
+    {
+        //camCtrls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        //camCtrls.Disable();
+    }
     private void FixedUpdate()
     {
         if (gameON)
         {
-            inputHorizontal = Input.GetAxisRaw("Horizontal");
-            inputVertical = Input.GetAxisRaw("Vertical");
+            Vector3 mov = moveAction.ReadValue<Vector3>();
+            float rot = rotateAction.ReadValue<float>();
 
-            Vector3 forward = inputVertical * transform.forward * Time.deltaTime * movementSpeed;
-            Vector3 right = inputHorizontal * transform.right * Time.deltaTime * movementSpeed;
-            Vector3 pos = forward + right;
+            Vector3 forward = mov.z * transform.forward;
+            Vector3 right = mov.x * transform.right;
+            Vector3 pos = (forward + right) * Time.deltaTime * movementSpeed;
+
             transform.Translate(pos, Space.World);
-
-            if (Input.GetKey(KeyCode.Q))
-            {
-                transform.Rotate(new Vector3(0f, rotationSpeed, 0f));
-            }
-
-            if (Input.GetKey(KeyCode.E))
-            {
-                transform.Rotate(new Vector3(0f, -rotationSpeed, 0f));
-            }
+            transform.Rotate(new Vector3(0f, rot * rotationSpeed, 0f));
         }
     }
 }

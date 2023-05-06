@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] private GameObject playerInventoryUI;
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject inventoryInfoPanel;
+
+    public GameObject PlayerInventoryUI { get { return playerInventoryUI; } }
+    public GameObject InventoryInfoPanel { get { return inventoryInfoPanel; } }
 
     // Update is called once per frame
     void Update()
@@ -16,10 +14,12 @@ public class UIController : MonoBehaviour
         if(Input.GetKey(KeyCode.Tab))
         {
             playerInventoryUI.SetActive(true);
+            inventoryInfoPanel.SetActive(true);
         }
         else
         {
             playerInventoryUI.SetActive(false);
+            inventoryInfoPanel.SetActive(false);
         }
     }
 }

@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using System.Linq;
 
 [RequireComponent(typeof(Collider))]
 public class Door : MonoBehaviour, IInteractionObjects
@@ -183,5 +181,8 @@ public class Door : MonoBehaviour, IInteractionObjects
         }
     }
 
-    
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }

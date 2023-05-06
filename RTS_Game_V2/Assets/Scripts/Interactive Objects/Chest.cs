@@ -1,7 +1,6 @@
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 [RequireComponent(typeof(Collider))]
 public class Chest : MonoBehaviour, IInteractionObjects
@@ -135,5 +134,10 @@ public class Chest : MonoBehaviour, IInteractionObjects
         {
             key.gameObject.SetActive(false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
     }
 }

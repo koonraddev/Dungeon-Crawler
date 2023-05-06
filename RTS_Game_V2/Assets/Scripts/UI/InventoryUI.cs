@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -16,7 +14,6 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-
         slotPanel = slotPrefab.GetComponent<Image>();
         emptySlotSprite = slotPanel.sprite;
         emptySlotColor = slotPanel.color;
@@ -47,7 +44,6 @@ public class InventoryUI : MonoBehaviour
             rtObj.sizeDelta = new Vector2(105f, slotsArray.Length * 108f);
         }
 
-
         GameEvents.instance.onInventoryUpdate += OnInventoryUpdate;
         OnInventoryUpdate();
     }
@@ -60,20 +56,19 @@ public class InventoryUI : MonoBehaviour
             InventorySlotUI invInter = slotsArray[i].GetComponent<InventorySlotUI>();
             Image image = slotsArray[i].GetComponent<Image>();
             TMP_Text nameHolder = invInter.nameHolder;
-            TMP_Text namountHolder = invInter.amountHolder;
+            TMP_Text amountHolder = invInter.amountHolder;
             if (items[i] != null)
             {
                 nameHolder.text = items[i].SlotName;
-                namountHolder.text = items[i].itemAmount.ToString();
+                amountHolder.text = (items[i].itemAmount == 1) ? amountHolder.text = "" : items[i].itemAmount.ToString();
                 image.sprite = items[i].ItemInSlot.InventoryTexture;
                 image.color = Color.white;
                 invInter.Item = items[i].ItemInSlot;
-
             }
             else
             {
                 nameHolder.text = "";
-                namountHolder.text = "";
+                amountHolder.text = "";
                 image.sprite = emptySlotSprite;
                 image.color = emptySlotColor;
                 invInter.Item = null;

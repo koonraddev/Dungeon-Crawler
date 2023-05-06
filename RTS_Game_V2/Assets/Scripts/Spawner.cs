@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -14,6 +15,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private GameObject chestPrefab;
     [SerializeField] private GameObject spawnPlane;
+
+    public NavMeshSurface[] surfaces;
 
     void Start()
     {
@@ -38,7 +41,7 @@ public class Spawner : MonoBehaviour
             {
                 if (chest != null)
                 {
-                    GameObject newChest = Instantiate(chestPrefab) as GameObject;
+                    GameObject newChest = Instantiate(chestPrefab);
                     newChest.transform.SetPositionAndRotation(GetChestSpawnPosition(), GetChestRotation());
                     Chest chestScript = newChest.GetComponentInChildren<Chest>();
                     chestScript.SetChest(chest);
@@ -53,8 +56,8 @@ public class Spawner : MonoBehaviour
             {
                 if (door != null)
                 {
-                    GameObject newDoor = Instantiate(doorPrefab) as GameObject;
-                    newDoor.transform.position = new Vector3(-d, 1, i);
+                    GameObject newDoor = Instantiate(doorPrefab);
+                    newDoor.transform.position = new Vector3(-d*2, 1, 1);
                     Door doorScript = newDoor.GetComponentInChildren<Door>();
                     doorScript.SetDoor(door);
                 }
@@ -89,7 +92,7 @@ public class Spawner : MonoBehaviour
             //    Debug.Log("Nowy spawn: " + spawnPoint);
             //}
 
-            while (Physics.OverlapSphere(spawnPoint, chestCollRadius/2, mask).Length > 0) //nie dziala jak trzeba
+            while (Physics.OverlapSphere(spawnPoint, chestCollRadius/2, mask).Length > 0) //nie dziala jak trzeba, nie wykrywa kolizji, skrzynie wciaz spawnuja sie na sobie
             {
                 //Debug.Log("koliduje");
                 spawnPosX = Random.Range(1, spawnPlaneSizeX / 2 - 1) * (Random.Range(0, 2) * 2 - 1);
@@ -118,6 +121,7 @@ public class Spawner : MonoBehaviour
         DeleteOldChests();
         DeleteOldDoors();
         SpawnDoorsAndChests();
+        StartCoroutine(UpdateNavMesh());
     }
 
     private void DeleteOldDoors()
@@ -136,6 +140,15 @@ public class Spawner : MonoBehaviour
         foreach(GameObject chest in oldChests)
         {
             Destroy(chest);
+        }
+    }
+
+    private IEnumerator UpdateNavMesh()
+    {
+        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < surfaces.Length; i++)
+        {
+            surfaces[i].BuildNavMesh();
         }
     }
 }

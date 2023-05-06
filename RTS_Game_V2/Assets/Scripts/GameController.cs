@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -13,7 +10,7 @@ public class GameController : MonoBehaviour
     [Tooltip("Specify whether the Object Pooler can create extra objects at runtime when there is a need for them")]
     [SerializeField] private bool canAddObjectsToPool;
     [Tooltip("Specify whether the Message Menu should follow mouse when on top of a object")]
-    [SerializeField] private bool mouseFollow;
+    [SerializeField] private bool followMouse;
 
     [Header("UI Inventory")]
     [Tooltip("Number of item slots")]
@@ -32,6 +29,7 @@ public class GameController : MonoBehaviour
             UIMessageObjectPool.instance.AmountToPool = amountToPool;
             UIMessageObjectPool.instance.ObjectToPool = objectToPool;
             UIMessageObjectPool.instance.canAddObjects = canAddObjectsToPool;
+            UIMessageObjectPool.instance.FollowMouse = followMouse;
         }
     }
 
