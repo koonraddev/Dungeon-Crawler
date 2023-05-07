@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 
@@ -21,4 +19,15 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    //public event Action onShowMessage;
+    public event Action<int> onCloseMessage;
+
+    public void CloseMessage(int i)
+    {
+        if(onCloseMessage != null)
+        {
+            onCloseMessage(i);
+        }
+    }
+    
 }

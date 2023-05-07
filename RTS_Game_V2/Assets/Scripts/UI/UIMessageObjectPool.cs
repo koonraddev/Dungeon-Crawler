@@ -39,7 +39,7 @@ public class UIMessageObjectPool : MonoBehaviour
         return null;
     }
 
-    public void DisplayMessage(IInteractionObjects gameObjectReq, UIMessageObjectPool.MessageType messageType )
+    public void DisplayMessage(IInteractionObjects gameObjectReq, MessageType messageType )
     {
         if (GetPooledObject() == null)
         {
@@ -78,4 +78,5 @@ public class UIMessageObjectPool : MonoBehaviour
             }
         }
     }
+
 }

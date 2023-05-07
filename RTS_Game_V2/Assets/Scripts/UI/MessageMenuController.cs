@@ -9,6 +9,7 @@ public class MessageMenuController : MonoBehaviour
     private Camera mainCamera;
 
     private GameObject objectReq;
+    private UIMessageObjectPool.MessageType messageType;
     private Vector3 objectReqPosition;
 
     [Header("Main Panel")]
@@ -45,8 +46,6 @@ public class MessageMenuController : MonoBehaviour
     private bool relativePosition;
     public bool FollowMouse { get; set; }
 
-    private MessagePanelBehaviour messPanelBeh;
-    private bool doFadeOutAndUnactive;
     private bool firstRun = true;
 
     private Vector3 lastMousePositionOnObject;
@@ -54,22 +53,26 @@ public class MessageMenuController : MonoBehaviour
     private void Start()
     {
         SetAllElements();
+        GameEvents.instance.onCloseMessage += DeactivateMessageMenu;
+    }
+
+    private void DeactivateMessageMenu(int id)
+    {
+        if(id == objectReq.GetInstanceID() && messageType == UIMessageObjectPool.MessageType.POPUP)
+        {
+            gameObject.SetActive(false);
+        }
+
     }
 
     void Update()
     {
-        if (relativePosition)
-        {
-            CheckPointing();
-        }
-        else
-        {
-            Positioning();
-        }
+        Positioning();
     }
 
     public void PrepareMessageMenu(IInteractionObjects intObject, UIMessageObjectPool.MessageType messageType)
     {
+        this.messageType = messageType;
         if (firstRun)
         {
             SetAllElements();
@@ -120,9 +123,7 @@ public class MessageMenuController : MonoBehaviour
         descrHolderSize = descripotionHoldeRrect.sizeDelta;
         messHolderSize = messageHolderRect.sizeDelta;
 
-        doFadeOutAndUnactive = true;
         mainCamera = Camera.main;
-        messPanelBeh = panel.GetComponent<MessagePanelBehaviour>();
         panelRect = panel.GetComponent<RectTransform>();
         panelSize = panelRect.sizeDelta;
     }
@@ -230,27 +231,6 @@ public class MessageMenuController : MonoBehaviour
         }
     }
 
-    private void CheckPointing()
-    {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            Positioning();
-            if ((hit.transform.gameObject == objectReq) && (objectReq != null))
-            {
-                doFadeOutAndUnactive = true;
-                lastMousePositionOnObject = Input.mousePosition;
-            }
-            else
-            {
-                if (doFadeOutAndUnactive)
-                {
-                    StartCoroutine(MenuDeactivate());
-                    doFadeOutAndUnactive = false;
-                }
-            }
-        }
-    }
 
     private void Positioning()
     {
@@ -258,6 +238,7 @@ public class MessageMenuController : MonoBehaviour
         {
             if (FollowMouse) //...oraz myszke na obiektcie
             {
+                lastMousePositionOnObject = Input.mousePosition;
                 Vector3 pos = lastMousePositionOnObject + relativeOffset;
                 if (panel.transform.position != pos)
                 {
@@ -279,18 +260,13 @@ public class MessageMenuController : MonoBehaviour
         }
     }
 
-    private IEnumerator MenuDeactivate()
-    {
-        if (messPanelBeh != null)
-        {
-            yield return StartCoroutine(messPanelBeh.Deactivate());
-        }
-        gameObject.SetActive(false);
-        StopAllCoroutines();
-    }
-
     private void OnDisable()
     {
         ResetAllElements();
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.onCloseMessage -= DeactivateMessageMenu;
     }
 }

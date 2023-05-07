@@ -72,6 +72,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
             }
         }
         displayPopup = true;
+        GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
 

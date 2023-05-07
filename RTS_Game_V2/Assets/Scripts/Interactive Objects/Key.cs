@@ -73,6 +73,7 @@ public class Key : MonoBehaviour, IInteractionObjects
             }
         }
         displayInfo = true;
+        GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
     public GameObject GetGameObject()

@@ -75,16 +75,18 @@ public class MessagePanelBehaviour : MonoBehaviour
     }
     public IEnumerator Deactivate()
     {
-        Sequence fadeOutSeq = DOTween.Sequence();
-        fadeOutSeq.Append(panel.DOColor(panelColorTransparent, fadingTime)).SetEase(Ease.Linear);
-        foreach (TMP_Text textHolder in textHolderList)
+        if (fadeEffect)
         {
-            fadeOutSeq.Join(textHolder.DOColor(transparentColorsDict[textHolder], fadingTime)).SetEase(Ease.Linear);
-        }
+            Sequence fadeOutSeq = DOTween.Sequence();
+            fadeOutSeq.Append(panel.DOColor(panelColorTransparent, fadingTime)).SetEase(Ease.Linear);
+            foreach (TMP_Text textHolder in textHolderList)
+            {
+                fadeOutSeq.Join(textHolder.DOColor(transparentColorsDict[textHolder], fadingTime)).SetEase(Ease.Linear);
+            }
 
-        fadeOutSeq.WaitForCompletion();
-        yield return fadeOutSeq.WaitForCompletion();
-        fadeOutSeq.Kill();
-        StopAllCoroutines();
+            fadeOutSeq.WaitForCompletion();
+            yield return fadeOutSeq.WaitForCompletion();
+            fadeOutSeq.Kill();
+        }
     } 
 }

@@ -110,6 +110,7 @@ public class Door : MonoBehaviour, IInteractionObjects
             }
         }
         displayInfo = true;
+        GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
     public GameObject GetGameObject()
