@@ -7,10 +7,6 @@ public class CameraMovingObject : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     private bool gameON = true;
 
-    public bool useNewInputSystem;
-
-    public CameraControls camCtrls;
-
     private PlayerInput camInp;
 
     private InputAction moveAction;
@@ -23,15 +19,6 @@ public class CameraMovingObject : MonoBehaviour
         rotateAction = camInp.actions["Rotate"];
     }
 
-    private void OnEnable()
-    {
-        //camCtrls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        //camCtrls.Disable();
-    }
     private void FixedUpdate()
     {
         if (gameON)
