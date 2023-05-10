@@ -5,19 +5,15 @@ using UnityEngine;
 
 public class SpawnWalls : MonoBehaviour
 {
-    private List<DoorClass> doorList = new();
+    private List<DoorClass> doorClassList = new();
 
+    [SerializeField] private List<DoorSO> doorslist;
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private Collider doorCollider;
     [SerializeField] private Mesh doorMesh;
     [SerializeField] private GameObject plane;
 
     private Vector3 planeSize;
-
-    private GameObject cubeAB;
-    private GameObject cubeBC;
-    private GameObject cubeCD;
-    private GameObject cubeDA;
 
     private Vector3 pointA;
     private Vector3 pointB;
@@ -28,10 +24,6 @@ public class SpawnWalls : MonoBehaviour
     [SerializeField] private int wallB;
     [SerializeField] private int wallC;
     [SerializeField] private int wallD;
-
-    private float spawnPlaneSizeX;
-    private float spawnPlaneSizeZ;
-
     public class DoorClass
     {
         public DoorClass(int wallIndex, GameObject doorObject)
@@ -42,12 +34,10 @@ public class SpawnWalls : MonoBehaviour
         public int WallIndex { get; }
         public GameObject DoorObject { get; }
     }
+    
 
     void Start()
     {
-        spawnPlaneSizeX = planeSize.x;
-        spawnPlaneSizeZ = planeSize.z;
-
         planeSize = plane.GetComponent<Collider>().bounds.size;
 
         pointA = new Vector3(-planeSize.x / 2, 0f, planeSize.z / 2);
@@ -70,50 +60,53 @@ public class SpawnWalls : MonoBehaviour
         cornerC.transform.position = pointC;
         cornerD.transform.position = pointD;
 
-        int[] tab = { wallA, wallB, wallC, wallD };
+        int[] doorsArray = { wallA, wallB, wallC, wallD };
 
-        for (int i = 0; i < tab.Length; i++)
+        for (int i = 0; i < doorsArray.Length; i++)
         {
-            for (int j = 0; j < tab[i]; j++)
+            for (int j = 0; j < doorsArray[i]; j++)
             {
-                float spawnPosZ = Random.Range(2, spawnPlaneSizeZ / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
-                float spawnPosX = Random.Range(2, spawnPlaneSizeX / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
+                float spawnPosZ = Random.Range(2, planeSize.z / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
+                float spawnPosX = Random.Range(2, planeSize.x / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
                 Vector3 pos = Vector3.zero;
                 Quaternion rot = Quaternion.identity;
                 switch (i)
                 {
                     case 0:
-                        pos = new Vector3(/*spawnPosX*/  +j * 3 + 5, 0f, planeSize.z / 2);
+                        pos = new Vector3(pointA.x + planeSize.x / (wallA+1)*(j+1) , 0f, planeSize.z / 2);
                         rot = Quaternion.Euler(new Vector3(-90f, 0f, 0f));
                         break;
                     case 1:
-                        pos = new Vector3(planeSize.x / 2, 0f, +j * 3 + 5);
+                        pos = new Vector3(planeSize.x / 2, 0f, pointB.z - planeSize.z / (wallB + 1) * (j + 1));
                         rot = Quaternion.Euler(new Vector3(-90f, 0f, 90f));
                         break;
                     case 2:
-                        pos = new Vector3(/*spawnPosX*/ +j * 3 + 5, 0f, -planeSize.z / 2);
+                        pos = new Vector3(pointC.x - planeSize.x / (wallC + 1) * (j + 1), -planeSize.z / 2);
                         rot = Quaternion.Euler(new Vector3(-90f, 0f, 180f));
                         break;
                     case 3:
-                        pos = new Vector3(-planeSize.x / 2, 0f, +j * 3 + 5 /*spawnPosZ*/);
+                        pos = new Vector3(-planeSize.x / 2, 0f, pointD.z + planeSize.z / (wallD + 1) * (j + 1));
                         rot = Quaternion.Euler(new Vector3(-90f, 0f, 270f));
                         break;
                     default:
                         break;
                 }
 
-                GameObject door1 = Instantiate(doorPrefab, pos, rot);
-                DoorClass doorClass = new DoorClass(i, door1);
-                doorList.Add(doorClass);
+                GameObject door = Instantiate(doorPrefab, pos, rot);
+                Door doorScript = door.GetComponentInChildren<Door>();
+
+                doorScript.SetDoor(doorslist[Random.Range(0, doorslist.Count)]);
+                DoorClass doorClass = new DoorClass(i, door);
+                doorClassList.Add(doorClass);
             }
         }
 
-        for (int i = 0; i < tab.Length; i++)
+        for (int i = 0; i < doorsArray.Length; i++)
         {
-            List<DoorClass> newList = doorList.Where(door => door.WallIndex == i).ToList();
-            int temp = tab[i];
+            List<DoorClass> newList = doorClassList.Where(door => door.WallIndex == i).ToList();
+            int numberOfDoors = doorsArray[i];
 
-            switch (temp)
+            switch (numberOfDoors)
             {
                 case 0:
                     ZeroDors(i);
@@ -123,19 +116,19 @@ public class SpawnWalls : MonoBehaviour
                     OneDoor(i, oneDoor.DoorObject);
                     break;
                 default:
-                    MultipleDoors(tab, i, temp, newList);
+                    MultipleDoors(doorsArray, i, numberOfDoors, newList);
                     break;
             }
         }
     }
 
 
-    private void ZeroDors(int i)
+    private void ZeroDors(int wallIndex)
     {
         Vector3 startPoint = Vector3.zero;
         Vector3 endPoint = Vector3.zero;
         Vector3 distanceStartEnd = Vector3.zero;
-        switch (i)
+        switch (wallIndex)
         {
             case 0:
                 startPoint = pointA;
@@ -159,19 +152,19 @@ public class SpawnWalls : MonoBehaviour
         }
         GameObject cube1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         distanceStartEnd = startPoint - endPoint;
-        cube1.transform.localScale = new Vector3(1f, 1f, distanceStartEnd.magnitude);
-        cube1.GetComponent<MeshRenderer>().material.color = Color.red;
-        cube1.transform.position = (startPoint + endPoint) / 2f;
-        cube1.transform.LookAt(endPoint);
+        cube1.GetComponent<MeshRenderer>().material.color = Color.yellow;
+        cube1.transform.localScale = new Vector3(0.5f, doorMesh.bounds.size.y * 2, distanceStartEnd.magnitude);
+        cube1.transform.position = (startPoint + endPoint) / 2f + new Vector3(0f, doorMesh.bounds.center.y, 0f);
+        cube1.transform.LookAt(endPoint + new Vector3(0f, doorMesh.bounds.center.y, 0f));
     }
 
-    private void OneDoor(int i, GameObject oneDoor)
+    private void OneDoor(int wallIndex, GameObject oneDoor)
     {
         Vector3 endPoint = Vector3.zero;
         Vector3 distanceStartEnd = Vector3.zero;
         Vector3 doorPrefabOffset = Vector3.zero;
         Vector3 startPoint = Vector3.zero;
-        switch (i)
+        switch (wallIndex)
         {
             case 0:
                 startPoint = pointA;
@@ -201,14 +194,14 @@ public class SpawnWalls : MonoBehaviour
         endPoint = oneDoor.transform.position + doorPrefabOffset;
         distanceStartEnd = startPoint - endPoint;
 
-        cube1.transform.localScale = new Vector3(1f, 1f, distanceStartEnd.magnitude);
-        cube1.GetComponent<MeshRenderer>().material.color = Color.yellow;
-        cube1.transform.position = (startPoint + endPoint) / 2f;
-        cube1.transform.LookAt(endPoint);
+        cube1.GetComponent<MeshRenderer>().material.color = Color.red;
+        cube1.transform.localScale = new Vector3(0.5f, doorMesh.bounds.size.y*2, distanceStartEnd.magnitude);
+        cube1.transform.position = (startPoint + endPoint) / 2f + new Vector3(0f, doorMesh.bounds.center.y,0f);
+        cube1.transform.LookAt(endPoint + new Vector3(0f, doorMesh.bounds.center.y, 0f));
 
         GameObject cube2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         startPoint = oneDoor.transform.position - doorPrefabOffset;
-        switch (i)
+        switch (wallIndex)
         {
             case 0:
                 endPoint = pointB;
@@ -227,22 +220,22 @@ public class SpawnWalls : MonoBehaviour
         }
         distanceStartEnd = startPoint - endPoint;
 
-        cube2.transform.localScale = new Vector3(1f, 1f, distanceStartEnd.magnitude);
-        cube2.GetComponent<MeshRenderer>().material.color = Color.yellow;
-        cube2.transform.position = (startPoint + endPoint) / 2f;
-        cube2.transform.LookAt(endPoint);
+        cube2.GetComponent<MeshRenderer>().material.color = Color.magenta;
+        cube2.transform.localScale = new Vector3(0.5f, doorMesh.bounds.size.y * 2, distanceStartEnd.magnitude);
+        cube2.transform.position = (startPoint + endPoint) / 2f + new Vector3(0f, doorMesh.bounds.center.y, 0f);
+        cube2.transform.LookAt(endPoint + new Vector3(0f, doorMesh.bounds.center.y, 0f));
     }
 
-    private void MultipleDoors(int[] tab, int i, int temp, List<DoorClass> newList)
+    private void MultipleDoors(int[] doorsArray, int wallIndex, int numberOfDoors, List<DoorClass> newList)
     {
-        for (int j = 0; j < tab[i]; j++)
+        for (int j = 0; j < doorsArray[wallIndex]; j++)
         {
             GameObject cube1A = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Vector3 endPoint = Vector3.zero;
             Vector3 distanceStartEnd = Vector3.zero;
             Vector3 doorPrefabOffset = Vector3.zero;
             Vector3 startPoint = Vector3.zero;
-            switch (i)
+            switch (wallIndex)
             {
                 case 0:
                     startPoint = pointA;
@@ -267,10 +260,10 @@ public class SpawnWalls : MonoBehaviour
                 default:
                     break;
             }
-            if (temp >= 1)
+            if (numberOfDoors >= 1)
             {
 
-                if (temp == tab[i])
+                if (numberOfDoors == doorsArray[wallIndex])
                 {
                     endPoint = newList[j].DoorObject.transform.position - doorPrefabOffset;
                     distanceStartEnd = startPoint - endPoint;
@@ -283,15 +276,15 @@ public class SpawnWalls : MonoBehaviour
                     distanceStartEnd = startPoint - endPoint;
                     cube1A.GetComponent<MeshRenderer>().material.color = Color.green;
                 }
-                cube1A.transform.localScale = new Vector3(1f, 1f, distanceStartEnd.magnitude);
-                cube1A.transform.position = (startPoint + endPoint) / 2f;
-                cube1A.transform.LookAt(endPoint);
+                cube1A.transform.localScale = new Vector3(0.5f, doorMesh.bounds.size.y * 2, distanceStartEnd.magnitude);
+                cube1A.transform.position = (startPoint + endPoint) / 2f + new Vector3(0f, doorMesh.bounds.center.y, 0f);
+                cube1A.transform.LookAt(endPoint + new Vector3(0f, doorMesh.bounds.center.y, 0f));
 
-                if (temp == 1)
+                if (numberOfDoors == 1)
                 {
                     GameObject cube1B = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     startPoint = newList[j].DoorObject.transform.position + doorPrefabOffset;
-                    switch (i)
+                    switch (wallIndex)
                     {
                         case 0:
                             endPoint = pointB;
@@ -309,12 +302,12 @@ public class SpawnWalls : MonoBehaviour
                             break;
                     }
                     distanceStartEnd = startPoint - endPoint;
-                    cube1B.transform.localScale = new Vector3(1f, 1f, distanceStartEnd.magnitude);
-                    cube1B.GetComponent<MeshRenderer>().material.color = Color.yellow;
-                    cube1B.transform.position = (startPoint + endPoint) / 2f;
-                    cube1B.transform.LookAt(endPoint);
+                    cube1B.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                    cube1B.transform.localScale = new Vector3(0.5f, doorMesh.bounds.size.y * 2, distanceStartEnd.magnitude);
+                    cube1B.transform.position = (startPoint + endPoint) / 2f + new Vector3(0f, doorMesh.bounds.center.y, 0f);
+                    cube1B.transform.LookAt(endPoint + new Vector3(0f, doorMesh.bounds.center.y, 0f));
                 }
-                temp--;
+                numberOfDoors--;
             }
         }
     }
