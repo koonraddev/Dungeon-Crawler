@@ -44,7 +44,7 @@ public class InventoryUI : MonoBehaviour
             rtObj.sizeDelta = new Vector2(105f, slotsArray.Length * 108f);
         }
 
-        GameEvents.instance.onInventoryUpdate += OnInventoryUpdate;
+        GameEvents.instance.OnInventoryUpdate += OnInventoryUpdate;
         OnInventoryUpdate();
     }
 
@@ -78,6 +78,6 @@ public class InventoryUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents.instance.onInventoryUpdate -= OnInventoryUpdate;
+        GameEvents.instance.OnInventoryUpdate -= OnInventoryUpdate;
     }
 }

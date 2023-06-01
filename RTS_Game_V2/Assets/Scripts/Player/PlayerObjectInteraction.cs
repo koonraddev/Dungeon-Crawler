@@ -1,11 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerObjectInteraction : MonoBehaviour
 {
-    private Ray ray;
-    private RaycastHit hitPoint;
     private GameObject pointedObject;
     private GameObject clickedObject;
     [SerializeField] private Color highLightObjectColor;
@@ -13,17 +12,35 @@ public class PlayerObjectInteraction : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     private float distanceFromObject;
 
-    private void Start()
+    private PlayerControls playerControls;
+    private InputAction moveInspectAction;
+
+    private void Awake()
     {
+        playerControls = new PlayerControls();
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
+
+    void Start()
+    {
+        moveInspectAction = playerControls.BasicMovement.MoveInspect;
         playerMovement = GetComponent<PlayerMovement>();
     }
+
     void Update()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
-        if (Physics.Raycast(ray, out hitPoint, 1000f, interactiveObjectMask))
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hitPoint, 1000f, interactiveObjectMask))
         {
-            if (!isOverUI)
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
                 if (pointedObject != hitPoint.transform.gameObject)
                 {
@@ -52,7 +69,7 @@ public class PlayerObjectInteraction : MonoBehaviour
         if (pointedObject != null && pointedObject.TryGetComponent<IInteractionObjects>(out IInteractionObjects pointedScript))
         {
             pointedScript.OnMouseEnterObject(highLightObjectColor);
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            if (moveInspectAction.IsPressed())
             {
                 StopAllCoroutines();
                 clickedObject = pointedObject;

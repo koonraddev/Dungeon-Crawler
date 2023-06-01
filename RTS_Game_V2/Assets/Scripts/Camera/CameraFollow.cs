@@ -13,17 +13,28 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float maxFov;
     private Camera cam;
 
-    private PlayerInput camInp;
+    private CameraControls cameraControls;
     private InputAction zoomAction;
+
     private void Awake()
     {
-        camInp = GetComponent<PlayerInput>();
-        zoomAction = camInp.actions["Zoom"];
+        cameraControls = new CameraControls();
+
+    }
+
+    private void OnEnable()
+    {
+        cameraControls.Enable();
+    }
+    private void OnDisable()
+    {
+        cameraControls.Disable();
     }
     private void Start()
     {
         cam = gameObject.GetComponent<Camera>();
         targetObject = gameObject.transform.parent.gameObject.transform;
+        zoomAction = cameraControls.MainCamera.Zoom;
     }
 
     private void LateUpdate()

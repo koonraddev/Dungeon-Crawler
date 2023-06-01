@@ -53,7 +53,7 @@ public class MessageMenuController : MonoBehaviour
     private void Start()
     {
         SetAllElements();
-        GameEvents.instance.onCloseMessage += DeactivateMessageMenu;
+        GameEvents.instance.OnCloseMessage += DeactivateMessageMenu;
     }
 
     private void DeactivateMessageMenu(int id)
@@ -267,6 +267,6 @@ public class MessageMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents.instance.onCloseMessage -= DeactivateMessageMenu;
+        GameEvents.instance.OnCloseMessage -= DeactivateMessageMenu;
     }
 }

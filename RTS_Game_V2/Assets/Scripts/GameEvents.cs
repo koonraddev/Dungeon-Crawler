@@ -9,25 +9,26 @@ public class GameEvents : MonoBehaviour
     {
         instance = this;
     }
-    public event Action onInventoryUpdate;
+    public event Action OnInventoryUpdate;
 
     public void UpdateInventoryUI()
     {
-        if(onInventoryUpdate!= null)
-        {
-            onInventoryUpdate();
-        }
+        OnInventoryUpdate?.Invoke();
     }
 
     //public event Action onShowMessage;
-    public event Action<int> onCloseMessage;
+    public event Action<int> OnCloseMessage;
 
     public void CloseMessage(int i)
     {
-        if(onCloseMessage != null)
-        {
-            onCloseMessage(i);
-        }
+        OnCloseMessage?.Invoke(i);
+    }
+
+    public event Action<InputManager.InputType> OnInputChange;
+
+    public void SwitchInput(InputManager.InputType inputType)
+    {
+        OnInputChange?.Invoke(inputType);
     }
     
 }
