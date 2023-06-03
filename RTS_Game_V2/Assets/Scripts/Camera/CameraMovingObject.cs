@@ -34,10 +34,12 @@ public class CameraMovingObject : MonoBehaviour
     private void OnEnable()
     {
         cameraControls.Enable();
+        
     }
     private void OnDisable()
     {
         cameraControls.Disable();
+        GameEvents.instance.OnInputChange -= ChangeInput;
     }
 
     void Start()
@@ -47,6 +49,7 @@ public class CameraMovingObject : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(moveAction.ReadValue<Vector2>());
         if (lockCameraAction.triggered)
         {
             followPlayerCharacter = !followPlayerCharacter;

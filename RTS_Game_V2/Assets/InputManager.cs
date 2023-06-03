@@ -15,6 +15,9 @@ public class InputManager : MonoBehaviour
         Gamepad
     }
 
+
+    [SerializeField] private InputType startInputType;
+
     private void Awake()
     {
         inputControler = new InputControler();
@@ -29,6 +32,9 @@ public class InputManager : MonoBehaviour
         switchScheme = inputControler.SwitchingMap.SwitchScheme;
 
         switchScheme.performed += ctx => SwitchScheme(ctx);
+
+
+        GameEvents.instance.SwitchInput(startInputType);
     }
 
     private void SwitchScheme(InputAction.CallbackContext ctx)

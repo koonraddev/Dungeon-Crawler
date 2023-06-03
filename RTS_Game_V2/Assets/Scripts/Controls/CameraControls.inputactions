@@ -15,9 +15,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Zoom",
+                    "name": "ZoomMouse",
                     "type": "PassThrough",
                     "id": "759fd6f4-3adc-47ba-8346-c46b3940b177",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ZoomGamepad",
+                    "type": "Value",
+                    "id": "ee7e86e9-aa6c-44d3-bc13-7b688c991aa3",
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
@@ -50,7 +59,7 @@
                     "interactions": "Press",
                     "processors": "Clamp(min=-1,max=1)",
                     "groups": "KeyboardAndMouse",
-                    "action": "Zoom",
+                    "action": "ZoomMouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -123,7 +132,7 @@
                 {
                     "name": "up",
                     "id": "59bac58c-4770-4e79-9eab-97a71811ed50",
-                    "path": "<Gamepad>/rightStick/up",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -134,7 +143,7 @@
                 {
                     "name": "down",
                     "id": "795caad2-2e39-40eb-909f-86cf6614d16e",
-                    "path": "<Gamepad>/rightStick/down",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -145,7 +154,7 @@
                 {
                     "name": "left",
                     "id": "02f3763a-ca8b-463a-a2fd-74030aacedc7",
-                    "path": "<Gamepad>/rightStick/left",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -156,7 +165,7 @@
                 {
                     "name": "right",
                     "id": "e0371df4-3117-4678-a3d2-586d313be646",
-                    "path": "<Gamepad>/rightStick/right",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -211,7 +220,7 @@
                 {
                     "name": "negative",
                     "id": "a4ce1b75-5af9-4738-9a2a-bb20ae0e72d6",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -222,7 +231,7 @@
                 {
                     "name": "positive",
                     "id": "e9d76eda-5c98-410a-92a0-4ebec5704761",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -242,35 +251,79 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Bumpers",
-                    "id": "60a94d73-ff91-44b4-bd0b-ffa0aa56a099",
+                    "name": "",
+                    "id": "5e5f283f-c70d-4988-a2d9-5be95cf0fefa",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "LockCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "00a6aa8b-73d5-49ac-928a-c75101f7fd4f",
                     "path": "OneModifier",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "LockCamera",
+                    "action": "ZoomGamepad",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier",
+                    "id": "08b3078c-1e9f-4597-a7cc-4dd0fd8bc731",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ZoomGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Binding",
+                    "id": "c94d7114-e295-4122-b268-f334b0724bc9",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ZoomGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "f80893a3-f787-4977-be7d-487a0771d2ae",
+                    "path": "OneModifier",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZoomGamepad",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "modifier",
-                    "id": "9fb2d6b9-c157-4e27-9260-d2c7717ea8ab",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "72af9aff-153a-4cf6-a73c-7d53e4e023e0",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "LockCamera",
+                    "action": "ZoomGamepad",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "binding",
-                    "id": "7472cfb5-7230-4f6d-9d45-5f3568e4b376",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "fb31ff02-56b8-47ce-8fc6-abba2d6a78ee",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Invert",
                     "groups": "Gamepad",
-                    "action": "LockCamera",
+                    "action": "ZoomGamepad",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

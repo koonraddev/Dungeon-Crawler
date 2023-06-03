@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
-using UnityEngine.InputSystem.LowLevel;
 
 public class CursorsController : MonoBehaviour
 {
     [SerializeField] private float movementSpeed;
-    private CameraControls cameraControls;
+    private CursorControls cursorControls;
     private InputAction moveAction;
 
     public Vector2 startPosition;
@@ -19,8 +15,8 @@ public class CursorsController : MonoBehaviour
 
     private void Awake()
     {
-        cameraControls = new CameraControls();
-        moveAction = cameraControls.MainCamera.Move;
+        cursorControls = new CursorControls();
+        moveAction = cursorControls.Cursor.Move;
     }
 
     void Start()
@@ -35,12 +31,11 @@ public class CursorsController : MonoBehaviour
 
     private void OnEnable()
     {
-        cameraControls.Enable();
-        
+        cursorControls.Enable();
     }
     private void OnDisable()
     {
-        cameraControls.Disable();
+        cursorControls.Disable();
         GameEvents.instance.OnInputChange -= ChangeInput;
     }
 
@@ -56,7 +51,6 @@ public class CursorsController : MonoBehaviour
             startPosition += pos;
             Mouse.current.WarpCursorPosition(startPosition);
         }
-
     }
 
     private void ChangeInput(InputManager.InputType inputType)

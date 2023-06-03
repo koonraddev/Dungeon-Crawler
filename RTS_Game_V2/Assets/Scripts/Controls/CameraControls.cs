@@ -37,9 +37,18 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Zoom"",
+                    ""name"": ""ZoomMouse"",
                     ""type"": ""PassThrough"",
                     ""id"": ""759fd6f4-3adc-47ba-8346-c46b3940b177"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ZoomGamepad"",
+                    ""type"": ""Value"",
+                    ""id"": ""ee7e86e9-aa6c-44d3-bc13-7b688c991aa3"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -72,7 +81,7 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": ""Clamp(min=-1,max=1)"",
                     ""groups"": ""KeyboardAndMouse"",
-                    ""action"": ""Zoom"",
+                    ""action"": ""ZoomMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -145,7 +154,7 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""59bac58c-4770-4e79-9eab-97a71811ed50"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -156,7 +165,7 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""795caad2-2e39-40eb-909f-86cf6614d16e"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -167,7 +176,7 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""02f3763a-ca8b-463a-a2fd-74030aacedc7"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -178,7 +187,7 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""e0371df4-3117-4678-a3d2-586d313be646"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -233,7 +242,7 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""a4ce1b75-5af9-4738-9a2a-bb20ae0e72d6"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -244,7 +253,7 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""e9d76eda-5c98-410a-92a0-4ebec5704761"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -264,35 +273,79 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Bumpers"",
-                    ""id"": ""60a94d73-ff91-44b4-bd0b-ffa0aa56a099"",
+                    ""name"": """",
+                    ""id"": ""5e5f283f-c70d-4988-a2d9-5be95cf0fefa"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LockCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""00a6aa8b-73d5-49ac-928a-c75101f7fd4f"",
                     ""path"": ""OneModifier"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LockCamera"",
+                    ""action"": ""ZoomGamepad"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""08b3078c-1e9f-4597-a7cc-4dd0fd8bc731"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ZoomGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Binding"",
+                    ""id"": ""c94d7114-e295-4122-b268-f334b0724bc9"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ZoomGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""f80893a3-f787-4977-be7d-487a0771d2ae"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomGamepad"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""modifier"",
-                    ""id"": ""9fb2d6b9-c157-4e27-9260-d2c7717ea8ab"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""id"": ""72af9aff-153a-4cf6-a73c-7d53e4e023e0"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""LockCamera"",
+                    ""action"": ""ZoomGamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""binding"",
-                    ""id"": ""7472cfb5-7230-4f6d-9d45-5f3568e4b376"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""id"": ""fb31ff02-56b8-47ce-8fc6-abba2d6a78ee"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Invert"",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""LockCamera"",
+                    ""action"": ""ZoomGamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -332,7 +385,8 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
         // MainCamera
         m_MainCamera = asset.FindActionMap("MainCamera", throwIfNotFound: true);
         m_MainCamera_Move = m_MainCamera.FindAction("Move", throwIfNotFound: true);
-        m_MainCamera_Zoom = m_MainCamera.FindAction("Zoom", throwIfNotFound: true);
+        m_MainCamera_ZoomMouse = m_MainCamera.FindAction("ZoomMouse", throwIfNotFound: true);
+        m_MainCamera_ZoomGamepad = m_MainCamera.FindAction("ZoomGamepad", throwIfNotFound: true);
         m_MainCamera_Rotate = m_MainCamera.FindAction("Rotate", throwIfNotFound: true);
         m_MainCamera_LockCamera = m_MainCamera.FindAction("LockCamera", throwIfNotFound: true);
     }
@@ -395,7 +449,8 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_MainCamera;
     private IMainCameraActions m_MainCameraActionsCallbackInterface;
     private readonly InputAction m_MainCamera_Move;
-    private readonly InputAction m_MainCamera_Zoom;
+    private readonly InputAction m_MainCamera_ZoomMouse;
+    private readonly InputAction m_MainCamera_ZoomGamepad;
     private readonly InputAction m_MainCamera_Rotate;
     private readonly InputAction m_MainCamera_LockCamera;
     public struct MainCameraActions
@@ -403,7 +458,8 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
         private @CameraControls m_Wrapper;
         public MainCameraActions(@CameraControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_MainCamera_Move;
-        public InputAction @Zoom => m_Wrapper.m_MainCamera_Zoom;
+        public InputAction @ZoomMouse => m_Wrapper.m_MainCamera_ZoomMouse;
+        public InputAction @ZoomGamepad => m_Wrapper.m_MainCamera_ZoomGamepad;
         public InputAction @Rotate => m_Wrapper.m_MainCamera_Rotate;
         public InputAction @LockCamera => m_Wrapper.m_MainCamera_LockCamera;
         public InputActionMap Get() { return m_Wrapper.m_MainCamera; }
@@ -418,9 +474,12 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnMove;
-                @Zoom.started -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoom;
-                @Zoom.performed -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoom;
-                @Zoom.canceled -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoom;
+                @ZoomMouse.started -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoomMouse;
+                @ZoomMouse.performed -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoomMouse;
+                @ZoomMouse.canceled -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoomMouse;
+                @ZoomGamepad.started -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoomGamepad;
+                @ZoomGamepad.performed -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoomGamepad;
+                @ZoomGamepad.canceled -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnZoomGamepad;
                 @Rotate.started -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_MainCameraActionsCallbackInterface.OnRotate;
@@ -434,9 +493,12 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Zoom.started += instance.OnZoom;
-                @Zoom.performed += instance.OnZoom;
-                @Zoom.canceled += instance.OnZoom;
+                @ZoomMouse.started += instance.OnZoomMouse;
+                @ZoomMouse.performed += instance.OnZoomMouse;
+                @ZoomMouse.canceled += instance.OnZoomMouse;
+                @ZoomGamepad.started += instance.OnZoomGamepad;
+                @ZoomGamepad.performed += instance.OnZoomGamepad;
+                @ZoomGamepad.canceled += instance.OnZoomGamepad;
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
@@ -468,7 +530,8 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
     public interface IMainCameraActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnZoom(InputAction.CallbackContext context);
+        void OnZoomMouse(InputAction.CallbackContext context);
+        void OnZoomGamepad(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnLockCamera(InputAction.CallbackContext context);
     }
