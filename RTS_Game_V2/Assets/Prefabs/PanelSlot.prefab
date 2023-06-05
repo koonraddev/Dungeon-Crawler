@@ -362,6 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameHolder: {fileID: 6144356401469594855}
   amountHolder: {fileID: 2509184008793682214}
+  textureHolder: {fileID: 6144356401768516489}
 --- !u!1 &6144356402196106142
 GameObject:
   m_ObjectHideFlags: 0

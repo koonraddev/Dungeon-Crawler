@@ -43,9 +43,8 @@ public class Key : MonoBehaviour, IInteractionObjects
 
     public void DoInteraction()
     {
-        if (Inventory.Instance.CheckEmptySlot())
-        {
-            Inventory.Instance.AddItem(keySo);
+        if (Inventory.Instance.AddItem(keySo))
+        { 
             SetContentToDisplay(new Dictionary<string, string> { { "Message", "You picked up: " + keySo.NameText } });
             UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
             Destroy(gameObject);

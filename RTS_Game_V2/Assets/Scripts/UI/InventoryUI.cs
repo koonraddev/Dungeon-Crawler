@@ -54,24 +54,14 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < items.Length; i++)
         {
             InventorySlotUI invInter = slotsArray[i].GetComponent<InventorySlotUI>();
-            Image image = slotsArray[i].GetComponent<Image>();
-            TMP_Text nameHolder = invInter.nameHolder;
-            TMP_Text amountHolder = invInter.amountHolder;
+
             if (items[i] != null)
             {
-                nameHolder.text = items[i].SlotName;
-                amountHolder.text = (items[i].itemAmount == 1) ? amountHolder.text = "" : items[i].itemAmount.ToString();
-                image.sprite = items[i].ItemInSlot.InventoryTexture;
-                image.color = Color.white;
-                invInter.Item = items[i].ItemInSlot;
+                invInter.SetInventorySlotUI(items[i].ItemInSlot, items[i].itemAmount, Color.white);
             }
             else
             {
-                nameHolder.text = "";
-                amountHolder.text = "";
-                image.sprite = emptySlotSprite;
-                image.color = emptySlotColor;
-                invInter.Item = null;
+                invInter.SetEmptySlot(emptySlotSprite, emptySlotColor);
             }
         }
     }
