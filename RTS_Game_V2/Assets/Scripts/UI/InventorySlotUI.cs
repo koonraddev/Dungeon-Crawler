@@ -99,24 +99,30 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnte
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-         newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
-         rect = newObj.GetComponent<RectTransform>();
-         Image dragImage = newObj.GetComponent<Image>();
-         CanvasGroup canvGroup = newObj.GetComponent<CanvasGroup>();
-
-         dragImage.sprite = Item.InventoryTexture;
-         canvGroup.alpha = 0.6f;
-         canvGroup.blocksRaycasts = false;
-
-         newObj.transform.SetParent(GameObject.Find("UICanvas").transform);
-         rect.transform.position = gameObject.transform.position;
-         Instantiate(newObj);
+        if(Item != null)
+        {
+            newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
+            rect = newObj.GetComponent<RectTransform>();
+            Image dragImage = newObj.GetComponent<Image>();
+            CanvasGroup canvGroup = newObj.GetComponent<CanvasGroup>();
+            
+            dragImage.sprite = Item.InventoryTexture;
+            canvGroup.alpha = 0.6f;
+            canvGroup.blocksRaycasts = false;
+            
+            newObj.transform.SetParent(GameObject.Find("UICanvas").transform);
+            rect.transform.position = gameObject.transform.position;
+        }
     }
 
 
     public void OnDrag(PointerEventData eventData)
     {
-        rect.anchoredPosition += eventData.delta;
+        if(newObj != null)
+        {
+            rect.anchoredPosition += eventData.delta;
+        }
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -141,7 +147,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnte
                     Inventory.Instance.MergeItems(invSlotDrag.SlotNumber, this.SlotNumber);
                     return;
                 }
-                Inventory.Instance.SwapItems(this.SlotNumber, invSlotDrag.SlotNumber);
+                Inventory.Instance.SwapItems(invSlotDrag.SlotNumber, this.SlotNumber);
             }
         }
     }

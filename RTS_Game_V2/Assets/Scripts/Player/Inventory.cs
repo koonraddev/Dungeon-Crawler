@@ -128,29 +128,33 @@ public class Inventory : MonoBehaviour
     {
         InventorySlot donorSlot  = itemSlots[fromSlotAIndex];
 
-        if (donorSlot.itemAmount <= 1)
+        if(donorSlot != null)
         {
-            SwapItems(fromSlotAIndex, toSlotBIndex);
-        }
-        else
-        {
-            if (AddItem(donorSlot.ItemInSlot, toSlotBIndex))
+            if (donorSlot.itemAmount <= 1)
             {
-                donorSlot.itemAmount -= 1;
+                SwapItems(fromSlotAIndex, toSlotBIndex);
+            }
+            else
+            {
+                if (AddItem(donorSlot.ItemInSlot, toSlotBIndex))
+                {
+                    donorSlot.itemAmount -= 1;
+                }
             }
         }
-
         GameEvents.instance.UpdateInventoryUI();
     }
 
-    public void SwapItems(int slotAIndex, int slotBIndex)
+    public void SwapItems(int requestingSlotIndex, int destinationSlotIndex)
     {
-        InventorySlot slotA = itemSlots[slotAIndex];
-        InventorySlot slotB = itemSlots[slotBIndex];
+        InventorySlot requestingSlot = itemSlots[requestingSlotIndex];
+        InventorySlot slotB = itemSlots[destinationSlotIndex];
 
-        itemSlots[slotAIndex] = slotB;
-        itemSlots[slotBIndex] = slotA;
-
+        if(requestingSlot != null)
+        {
+            itemSlots[requestingSlotIndex] = slotB;
+            itemSlots[destinationSlotIndex] = requestingSlot;
+        }
         GameEvents.instance.UpdateInventoryUI();
     }
 
