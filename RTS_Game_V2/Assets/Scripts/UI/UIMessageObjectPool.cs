@@ -14,6 +14,8 @@ public class UIMessageObjectPool : MonoBehaviour
         INFORMATION,
         TAKE,
         OPEN,
+        DELETE,
+        DROP
     }
 
     void Awake()
@@ -59,6 +61,29 @@ public class UIMessageObjectPool : MonoBehaviour
             cc.PrepareMessageMenu(gameObjectReq, messageType);
             gm.SetActive(true);
         }
+    }
+
+    public void DisplayMessage(ISpecialInventoryPanel specialInventoryPanel, MessageType messageType)
+    {
+        if (GetPooledObject() == null)
+        {
+            if (canAddObjects)
+            {
+                CreateObjects(1);
+                GameObject gm = GetPooledObject();
+                MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
+                cc.PrepareMessageMenu(specialInventoryPanel, messageType);
+                gm.SetActive(true);
+            }
+        }
+        else
+        {
+            GameObject gm = GetPooledObject();
+            MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
+            cc.PrepareMessageMenu(specialInventoryPanel, messageType);
+            gm.SetActive(true);
+        }
+
     }
 
     private void CreateObjects(int amountToCreate)

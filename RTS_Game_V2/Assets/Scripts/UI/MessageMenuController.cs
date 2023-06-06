@@ -115,6 +115,45 @@ public class MessageMenuController : MonoBehaviour
         CheckButtons();
     }
 
+    public void PrepareMessageMenu(ISpecialInventoryPanel specialSlot, UIMessageObjectPool.MessageType messageType)
+    {
+        this.messageType = messageType;
+        InventorySlotPanel invSlotpanel = specialSlot.GetRequestingSlot();
+
+        if (firstRun)
+        {
+            SetAllElements();
+            ResetAllElements();
+            firstRun = false;
+        }
+
+        switch (messageType)
+        {
+            case UIMessageObjectPool.MessageType.DELETE:
+                relativePosition = false;
+                btYes.onClick.AddListener(specialSlot.DoSpecialIntercation);
+                buttonYES.SetActive(true);
+                buttonNO.SetActive(true);
+                messageHolder.text += "Delete items from slot nr ";
+                break;
+            case UIMessageObjectPool.MessageType.DROP:
+                relativePosition = false;
+                btYes.onClick.AddListener(specialSlot.DoSpecialIntercation);
+                buttonYES.SetActive(true);
+                buttonNO.SetActive(true);
+                messageHolder.text += "Drop items from slot nr ";
+                break;
+            default:
+                break;
+        }
+        //objectReq = intObject.GetGameObject();
+        //objectReqPosition = objectReq.transform.position;
+        SetTextHolders(specialSlot);
+        CheckTextHolders();
+        CheckButtons();
+
+    }
+
     private void SetAllElements()
     {
         btYes = buttonYES.GetComponent<Button>();
@@ -157,9 +196,9 @@ public class MessageMenuController : MonoBehaviour
         btYes.onClick.RemoveAllListeners();
     }
 
-    private void SetTextHolders(IInteractionObjects intObject)
+    private void SetTextHolders(IContentDisplayObject cntObject)
     {
-        Dictionary<string, string> lista = intObject.GetContentToDisplay();
+        Dictionary<string, string> lista = cntObject.GetContentToDisplay();
         if (lista.Count > 0)
         {
             foreach (KeyValuePair<string, string> li in lista)

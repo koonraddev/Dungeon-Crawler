@@ -16,7 +16,6 @@ public class GameEvents : MonoBehaviour
         OnInventoryUpdate?.Invoke();
     }
 
-    //public event Action onShowMessage;
     public event Action<int> OnCloseMessage;
 
     public void CloseMessage(int i)
@@ -30,5 +29,4 @@ public class GameEvents : MonoBehaviour
     {
         OnInputChange?.Invoke(inputType);
     }
-    
 }

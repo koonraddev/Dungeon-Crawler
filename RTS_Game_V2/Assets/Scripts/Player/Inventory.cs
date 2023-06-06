@@ -85,25 +85,6 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void MergeItems(int mergeFromSlotIndex, int mergeToSlotIndex)
-    {
-        InventorySlot mergingSlot = itemSlots[mergeFromSlotIndex];
-        InventorySlot slotToMerge = itemSlots[mergeToSlotIndex];
-        if (mergingSlot == null || slotToMerge == null)
-        {
-            return;
-        }
-
-        if(mergingSlot.ItemInSlot == slotToMerge.ItemInSlot)
-        {
-            if (mergingSlot.ItemInSlot.IsStackable)
-            {
-                slotToMerge.itemAmount += mergingSlot.itemAmount;
-                RemoveItem(mergeFromSlotIndex, mergingSlot.itemAmount);
-            }
-        }
-    }
-
     public bool AddItem(IInventoryItem itemToAdd, int slotIndex)
     {
         InventorySlot invSlot = new InventorySlot
@@ -123,6 +104,24 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    public void MergeItems(int mergeFromSlotIndex, int mergeToSlotIndex)
+    {
+        InventorySlot mergingSlot = itemSlots[mergeFromSlotIndex];
+        InventorySlot slotToMerge = itemSlots[mergeToSlotIndex];
+        if (mergingSlot == null || slotToMerge == null)
+        {
+            return;
+        }
+
+        if(mergingSlot.ItemInSlot == slotToMerge.ItemInSlot)
+        {
+            if (mergingSlot.ItemInSlot.IsStackable)
+            {
+                slotToMerge.itemAmount += mergingSlot.itemAmount;
+                RemoveItem(mergeFromSlotIndex, mergingSlot.itemAmount);
+            }
+        }
+    }
 
     public void GetOneItem(int fromSlotAIndex,int toSlotBIndex)
     {
@@ -202,11 +201,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void ClearSlot(int slotNumber)
+    public void ClearSlot(int slotNumber)
     {
         itemSlots[slotNumber] = null;
+        GameEvents.instance.UpdateInventoryUI();
     }
-
 
     public bool CheckItem(IInventoryItem itemToCheck)
     {
