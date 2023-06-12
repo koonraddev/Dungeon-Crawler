@@ -114,13 +114,14 @@ public class Spawner : MonoBehaviour
     {
         float spawnRotY = Random.Range(0, 360);
         return Quaternion.Euler(0f, spawnRotY, 0f);
-    }
+    }                                                                                                                                                                                                                                                                                                                                                           
 
     private void Respawn()
     {
         DeleteOldChests();
         DeleteOldDoors();
         SpawnDoorsAndChests();
+        StopAllCoroutines();
         StartCoroutine(UpdateNavMesh());
     }
 

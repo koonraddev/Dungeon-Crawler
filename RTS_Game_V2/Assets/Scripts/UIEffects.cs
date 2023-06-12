@@ -5,10 +5,33 @@ using TMPro;
 
 public class UIEffects : MonoBehaviour
 {
-    public TMP_Text textObj;
+    public TMP_Text textInputObj;
+    public TMP_Text textGameStatusObj;
     void Start()
     {
         GameEvents.instance.OnInputChange += ChangeInput;
+        GameEvents.instance.OnGameStatusChange += ChangeGameStatus;
+    }
+
+    private void ChangeGameStatus(GameController.GameStatus gameStatus)
+    {
+        switch (gameStatus)
+        {
+            case GameController.GameStatus.START:
+                textGameStatusObj.text = "GAME START";
+                break;
+            case GameController.GameStatus.RUN:
+                textGameStatusObj.text = "GAME RUN";
+                break;
+            case GameController.GameStatus.PAUSE:
+                textGameStatusObj.text = "GAME PAUSE";
+                break;
+            case GameController.GameStatus.END:
+                textGameStatusObj.text = "GAME END";
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -17,10 +40,10 @@ public class UIEffects : MonoBehaviour
         switch (inputType)
         {
             case InputManager.InputType.KeyboardAndMouse:
-                textObj.text = "keyboard and mouse";
+                textInputObj.text = "keyboard and mouse";
                 break;
             case InputManager.InputType.Gamepad:
-                textObj.text = "gamepad";
+                textInputObj.text = "gamepad";
                 break;
             default:
                 break;

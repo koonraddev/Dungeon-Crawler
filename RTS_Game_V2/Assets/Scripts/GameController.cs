@@ -31,6 +31,19 @@ public class GameController : MonoBehaviour
             UIMessageObjectPool.instance.canAddObjects = canAddObjectsToPool;
             UIMessageObjectPool.instance.FollowMouse = followMouse;
         }
+
     }
 
+    private void Start()
+    {
+        GameEvents.instance.ChangeGameStatus(GameStatus.START);
+    }
+
+    public enum GameStatus
+    {
+        START,
+        RUN,
+        PAUSE,
+        END
+    }
 }

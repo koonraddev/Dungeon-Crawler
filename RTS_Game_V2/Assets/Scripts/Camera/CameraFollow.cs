@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
 {
-
     private Transform targetObject;
     [SerializeField] private Vector3 localOffset;
     [SerializeField] private float camDistanceMin;

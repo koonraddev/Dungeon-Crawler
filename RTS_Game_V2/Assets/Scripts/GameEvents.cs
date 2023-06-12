@@ -10,23 +10,28 @@ public class GameEvents : MonoBehaviour
         instance = this;
     }
     public event Action OnInventoryUpdate;
+    public event Action<int> OnCloseMessage;
+    public event Action<InputManager.InputType> OnInputChange;
+    public event Action<GameController.GameStatus> OnGameStatusChange;
+
 
     public void UpdateInventoryUI()
     {
         OnInventoryUpdate?.Invoke();
     }
 
-    public event Action<int> OnCloseMessage;
-
     public void CloseMessage(int i)
     {
         OnCloseMessage?.Invoke(i);
     }
 
-    public event Action<InputManager.InputType> OnInputChange;
-
     public void SwitchInput(InputManager.InputType inputType)
     {
         OnInputChange?.Invoke(inputType);
+    }
+
+    public void ChangeGameStatus(GameController.GameStatus gameStatus)
+    {
+        OnGameStatusChange?.Invoke(gameStatus);
     }
 }

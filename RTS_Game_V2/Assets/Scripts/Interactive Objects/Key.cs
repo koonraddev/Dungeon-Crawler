@@ -93,7 +93,6 @@ public class Key : MonoBehaviour, IInteractionObjects
     {
         return contentToDisplay;
     }
-    
 
     public void SetKey(KeySO newKey)
     {

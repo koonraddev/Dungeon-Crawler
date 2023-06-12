@@ -8,6 +8,7 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
     private InventorySlotPanel invSlotPanel;
     private Dictionary<string, string> contentToDisplay;
     [SerializeField] private GameObject dropObjectPrefab;
+    private GameObject playerObject;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -33,21 +34,32 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
 
     public void DropAllSlotItems()
     {
-        //drop items
-        Inventory.InventorySlot invSlot = Inventory.Instance.itemSlots[invSlotPanel.SlotNumber];
+        if (playerObject == null)
+        {
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+        }
 
-        IInventoryItem invItem = invSlot.ItemInSlot;
-        int itemAmount = invSlot.itemAmount;
+        if (playerObject != null)
+        {
+            //drop items
+            Inventory.InventorySlot invSlot = Inventory.Instance.itemSlots[invSlotPanel.SlotNumber];
 
-        GameObject dropBagObject = Instantiate(dropObjectPrefab);
-        DropBag dropBag = dropBagObject.GetComponent<DropBag>();
+            IInventoryItem invItem = invSlot.ItemInSlot;
+            int itemAmount = invSlot.itemAmount;
 
-        dropBag.invItem = invItem;
-        dropBag.invItemAmount = itemAmount;
+            GameObject dropBagObject = Instantiate(dropObjectPrefab);
+            DropBag dropBag = dropBagObject.GetComponent<DropBag>();
 
-        //then
-        Inventory.Instance.ClearSlot(invSlotPanel.SlotNumber);
-        invSlotPanel = null;
+            dropBag.invItem = invItem;
+            dropBag.invItemAmount = itemAmount;
+
+
+            dropBagObject.transform.position = playerObject.transform.position + new Vector3(0f,1f,0f);
+
+            //then
+            Inventory.Instance.ClearSlot(invSlotPanel.SlotNumber);
+            invSlotPanel = null;
+        }
     }
 
     public void DoSpecialIntercation()

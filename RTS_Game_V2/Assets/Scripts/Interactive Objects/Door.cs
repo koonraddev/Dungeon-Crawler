@@ -11,6 +11,7 @@ public class Door : MonoBehaviour, IInteractionObjects
     private bool destroyItemOnUse;
     private bool keyRequired;
     private bool displayInfo;
+    private bool endingDoor;
     private GameObject actualDoor;
     private Dictionary<string, string> contentToDisplay;
     public void Start()
@@ -58,6 +59,10 @@ public class Door : MonoBehaviour, IInteractionObjects
                     }
                     ChangeDoorStatus(true);
                     keyRequired = false;
+                    if (endingDoor)
+                    {
+                        GameEvents.instance.ChangeGameStatus(GameController.GameStatus.END);
+                    }
                 }
                 else
                 {
@@ -148,11 +153,12 @@ public class Door : MonoBehaviour, IInteractionObjects
         }
     }
 
-    public void SetDoor(DoorSO newDoor)
+    public void SetDoor(DoorSO newDoor, bool endingDoor = false)
     {
         if (newDoor != null)
         {
             doorSO = newDoor;
+            this.endingDoor = endingDoor;
             CheckKey();
         }
     }
