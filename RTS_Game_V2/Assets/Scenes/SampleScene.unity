@@ -433,13 +433,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89b17b2f0b90f8a44ac4c8f12750d47f, type: 2}
   - {fileID: 11400000, guid: cc01734ea35b04148bf243c9c887353f, type: 2}
   doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
-  doorCollider: {fileID: 0}
   doorMesh: {fileID: 4300014, guid: 53fd6f5729dcb094ebf37d4437bf647a, type: 3}
   plane: {fileID: 515274086}
   wallA: 3
-  wallB: 1
+  wallB: 0
   wallC: 0
-  wallD: 3
+  wallD: 0
   generateEndingDoor: 1
   generateManyDoors: 1
   generateDoorRandomly: 1
