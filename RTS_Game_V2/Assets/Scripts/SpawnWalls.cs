@@ -11,9 +11,10 @@ public class SpawnWalls : MonoBehaviour
 
     [SerializeField] private List<DoorSO> doorslist;
     [SerializeField] private GameObject doorPrefab;
-    [SerializeField] private Mesh doorMesh;
-    [SerializeField] private GameObject plane;
 
+    [SerializeField] private GameObject plane;
+    
+    private BoxCollider doorCollider;
     private Vector3 planeSize;
 
     private Vector3 pointA;
@@ -30,18 +31,16 @@ public class SpawnWalls : MonoBehaviour
     private Vector3 pointDx;
     private Vector3 pointDz;
 
-    private Vector3 meshSize;
-    private Vector3 meshCenter;
+    private Vector3 colliderSize;
+    private Vector3 colliderCenter;
 
     [SerializeField] [HideInInspector] private int wallA;
     [SerializeField] [HideInInspector] private int wallB;
     [SerializeField] [HideInInspector] private int wallC;
     [SerializeField] [HideInInspector] private int wallD;
 
-    [Tooltip("Make one of generated doors able to end game when open")]
     [SerializeField] [HideInInspector] private bool generateEndingDoor;
     [SerializeField] [HideInInspector] private bool generateManyDoors;
-    [Tooltip("Generated doors will be placed randomly instead of at regular distances.")]
     [SerializeField] [HideInInspector] private bool generateDoorRandomly;
 
     private int[] doorsArray;
@@ -63,38 +62,32 @@ public class SpawnWalls : MonoBehaviour
     void Start()
     {
         planeSize = plane.GetComponent<Collider>().bounds.size;
-        meshSize = doorMesh.bounds.size;
-        meshCenter = doorMesh.bounds.center;
+        doorCollider = doorPrefab.GetComponent<BoxCollider>();
+        colliderSize = doorCollider.size;
+        colliderCenter = doorCollider.center;
         pointA = new Vector3(-planeSize.x / 2, 0f, planeSize.z / 2);
         pointB = new Vector3(planeSize.x / 2, 0f, planeSize.z / 2);
         pointC = new Vector3(planeSize.x / 2, 0f, -planeSize.z / 2);
         pointD = new Vector3(-planeSize.x / 2, 0f, -planeSize.z / 2);
 
-        pointAx = pointA + new Vector3(meshSize.x, 0f, 0f);
-        pointBx = pointB - new Vector3(meshSize.x, 0f, 0f);
-        pointCx = pointC - new Vector3(meshSize.x, 0f, 0f);
-        pointDx = pointD + new Vector3(meshSize.x, 0f, 0f);
+        pointAx = pointA + new Vector3(colliderSize.x, 0f, 0f);
+        pointBx = pointB - new Vector3(colliderSize.x, 0f, 0f);
+        pointCx = pointC - new Vector3(colliderSize.x, 0f, 0f);
+        pointDx = pointD + new Vector3(colliderSize.x, 0f, 0f);
 
-        pointAz = pointA - new Vector3(0f, 0f, meshSize.x);
-        pointBz = pointB - new Vector3(0f, 0f, meshSize.x);
-        pointCz = pointC + new Vector3(0f, 0f, meshSize.x);
-        pointDz = pointD + new Vector3(0f, 0f, meshSize.x);
+        pointAz = pointA - new Vector3(0f, 0f, colliderSize.x);
+        pointBz = pointB - new Vector3(0f, 0f, colliderSize.x);
+        pointCz = pointC + new Vector3(0f, 0f, colliderSize.x);
+        pointDz = pointD + new Vector3(0f, 0f, colliderSize.x);
 
         SpawnDoorsAndWalls();
 
-        Debug.Log("X  " + meshSize.x);
-        Debug.Log("Y  " + meshSize.y);
-        Debug.Log("Z  " + meshSize.z);
-
+        GameEvents.instance.OnPrepareGame += Respawn;
     }
 
-
-    private void Update()
+    private void OnDisable()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Respawn();
-        }
+        GameEvents.instance.OnPrepareGame -= Respawn;
     }
 
     private int GetAxisPos(int minValue, int maxValue, HashSet<int> excludeHashSet = null, int attempt = 1)
@@ -273,15 +266,15 @@ public class SpawnWalls : MonoBehaviour
 
     private void GenerateWall(Vector3 startPoint, Vector3 endPoint, Color color)
     {
-        if(doorMesh!= null)
+        if(doorCollider!= null)
         {
             GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
             Vector3 distanceStartEnd = startPoint - endPoint;
             wall.GetComponent<MeshRenderer>().material.color = color;
             wall.tag = "Wall";
-            wall.transform.localScale = new Vector3(0.5f, meshSize.y * 2, distanceStartEnd.magnitude);
-            wall.transform.position = (startPoint + endPoint) / 2f + new Vector3(0f, meshCenter.y, 0f);
-            wall.transform.LookAt(endPoint + new Vector3(0f, meshCenter.y, 0f));
+            wall.transform.localScale = new Vector3(0.5f, colliderSize.z * doorPrefab.transform.localScale.y, distanceStartEnd.magnitude);
+            wall.transform.position = (startPoint + endPoint) / 2f + new Vector3(0f, colliderCenter.z * doorPrefab.transform.localScale.y, 0f);
+            wall.transform.LookAt(endPoint + new Vector3(0f, colliderCenter.z * doorPrefab.transform.localScale.y, 0f));
         }
     }
 
@@ -328,19 +321,19 @@ public class SpawnWalls : MonoBehaviour
             {
                 case 0:
                     startPoint = pointA;
-                    doorPrefabOffset = new Vector3(meshSize.x, 0f, 0f);
+                    doorPrefabOffset = new Vector3(colliderSize.x/2 * doorPrefab.transform.localScale.x, 0f, 0f);
                     break;
                 case 1:
                     startPoint = pointC;
-                    doorPrefabOffset = new Vector3(0f, 0f, meshSize.x);
+                    doorPrefabOffset = new Vector3(0f, 0f, colliderSize.x / 2 * doorPrefab.transform.localScale.x);
                     break;
                 case 2:
                     startPoint = pointD;
-                    doorPrefabOffset = new Vector3(meshSize.x, 0f, 0f);
+                    doorPrefabOffset = new Vector3(colliderSize.x / 2 * doorPrefab.transform.localScale.x, 0f, 0f);
                     break;
                 case 3:
                     startPoint = pointD;
-                    doorPrefabOffset = new Vector3(0f, 0f, meshSize.x);
+                    doorPrefabOffset = new Vector3(0f, 0f, colliderSize.x / 2 * doorPrefab.transform.localScale.x);
                     break;
                 default:
                     startPoint = Vector3.zero;
@@ -351,7 +344,7 @@ public class SpawnWalls : MonoBehaviour
                 if (numberOfDoors == doorsArray[wallIndex])
                 {
                     endPoint = newList[j].DoorObject.transform.position - doorPrefabOffset;
-                    if (Vector3.Distance(startPoint, endPoint) >= meshSize.x/2)
+                    if (Vector3.Distance(startPoint, endPoint) >= colliderSize.x/2)
                     {
                         GenerateWall(startPoint, endPoint, Color.blue);
                     }
@@ -363,7 +356,6 @@ public class SpawnWalls : MonoBehaviour
                     endPoint = newList[j].DoorObject.transform.position - doorPrefabOffset;
 
                     float distance = Vector3.Distance(newList[j - 1].DoorObject.transform.position, newList[j].DoorObject.transform.position);
-                    Debug.Log("Distance: " + distance);
                     if (distance >= 3)
                     {
                         GenerateWall(startPoint, endPoint, Color.green);
@@ -381,7 +373,7 @@ public class SpawnWalls : MonoBehaviour
                         3 => pointA,
                         _ => Vector3.zero,
                     };
-                    if (Vector3.Distance(startPoint, endPoint) >= meshSize.x/2)
+                    if (Vector3.Distance(startPoint, endPoint) >= colliderSize.x/2)
                     {
                         GenerateWall(startPoint, endPoint, Color.cyan);
                     }

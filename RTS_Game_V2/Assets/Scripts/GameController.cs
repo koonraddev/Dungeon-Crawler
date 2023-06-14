@@ -15,6 +15,15 @@ public class GameController : MonoBehaviour
     [Header("UI Inventory")]
     [Tooltip("Number of item slots")]
     [SerializeField] private int itemSlots;
+
+    public enum GameStatus
+    {
+        START,
+        RUN,
+        PAUSE,
+        END
+    }
+
     void Awake()
     {
         if (!FindObjectOfType(typeof(Inventory)))
@@ -39,11 +48,11 @@ public class GameController : MonoBehaviour
         GameEvents.instance.ChangeGameStatus(GameStatus.START);
     }
 
-    public enum GameStatus
+    private void Update()
     {
-        START,
-        RUN,
-        PAUSE,
-        END
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GameEvents.instance.PrepareGame();
+        }
     }
 }

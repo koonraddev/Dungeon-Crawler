@@ -176,13 +176,11 @@ public class Door : MonoBehaviour, IInteractionObjects
     {
         if (doorOpened)
         {
-            //Debug.Log("otwieram drzwi");
             actualDoor.transform.DOLocalRotate(new Vector3(0, 0, 90f), 2f).SetEase(Ease.Linear);
             opened = true;
         }
         else
         {
-            //Debug.Log("zamykam drzwi");
             actualDoor.transform.DOLocalRotate(new Vector3(0, 0, 0f), 2f).SetEase(Ease.Linear);
             opened = false;
         }
