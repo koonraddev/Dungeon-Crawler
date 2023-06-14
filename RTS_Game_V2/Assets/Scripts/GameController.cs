@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -15,6 +17,8 @@ public class GameController : MonoBehaviour
     [Header("UI Inventory")]
     [Tooltip("Number of item slots")]
     [SerializeField] private int itemSlots;
+
+    public NavMeshSurface[] surfaces;
 
     public enum GameStatus
     {
@@ -40,7 +44,6 @@ public class GameController : MonoBehaviour
             UIMessageObjectPool.instance.canAddObjects = canAddObjectsToPool;
             UIMessageObjectPool.instance.FollowMouse = followMouse;
         }
-
     }
 
     private void Start()
@@ -53,6 +56,17 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
         {
             GameEvents.instance.PrepareGame();
+            StartCoroutine(UpdateNavMesh());
+        }
+    }
+
+    //to move to another script
+    private IEnumerator UpdateNavMesh()
+    {
+        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < surfaces.Length; i++)
+        {
+            surfaces[i].BuildNavMesh();
         }
     }
 }

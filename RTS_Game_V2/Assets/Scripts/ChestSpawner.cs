@@ -1,108 +1,87 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
 using UnityEngine;
 
 public class ChestSpawner : MonoBehaviour
 {
     [Header("Spawning Section")]
-    [Tooltip("This represents a list of doors(Scriptable Objects) that are required to appear in game. " +
-        "which are spawned automaticaly in area (Spawn Plane). ")]
-    [SerializeField] private List<DoorSO> doorslist;
     [Tooltip("This represents a list of chests(Scriptable Objects) that are required to appear in game. " +
         "which are spawned automaticaly in area (Spawn Plane). ")]
     [SerializeField] private List<ChestSO> chestlist;
-    [SerializeField] private GameObject doorPrefab;
     [SerializeField] private GameObject chestPrefab;
     [SerializeField] private GameObject spawnPlane;
 
-    public NavMeshSurface[] surfaces;
-
+    private MeshCollider mColl;
+    private List<ChestClass> chestClassList = new();
+    public class ChestClass
+    {
+        public ChestClass(int chestIndex, GameObject chestObject)
+        {
+            ChestIndex = chestIndex;
+            ChestObject = chestObject;
+        }
+        public int ChestIndex { get; }
+        public GameObject ChestObject { get; }
+    }
     void Start()
     {
-        SpawnDoorsAndChests();
+        mColl = spawnPlane.GetComponent<MeshCollider>();
+        GameEvents.instance.OnPrepareGame += Respawn;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            Respawn();
-        }
+        GameEvents.instance.OnPrepareGame -= Respawn;
     }
 
-    private void SpawnDoorsAndChests()
+    private void SpawnChests()
     {
-        int i = chestlist.Count;
-        int d = doorslist.Count;
         if (chestPrefab != null)
         {
-            foreach (ChestSO chest in chestlist)
+            for (int i = 0; i < chestlist.Count; i++)
             {
-                if (chest != null)
-                {
-                    GameObject newChest = Instantiate(chestPrefab);
-                    newChest.transform.SetPositionAndRotation(GetChestSpawnPosition(), GetChestRotation());
-                    Chest chestScript = newChest.GetComponentInChildren<Chest>();
-                    chestScript.SetChest(chest);
-                }
-                i--;
-            }
-        }
+                GameObject newChest = Instantiate(chestPrefab);
 
-        if (doorPrefab != null)
-        {
-            foreach (DoorSO door in doorslist)
-            {
-                if (door != null)
-                {
-                    GameObject newDoor = Instantiate(doorPrefab);
-                    newDoor.transform.position = new Vector3(-d*2, 1, 1);
-                    Door doorScript = newDoor.GetComponentInChildren<Door>();
-                    doorScript.SetDoor(door);
-                }
-                d--;
+                Chest chestScript = newChest.GetComponentInChildren<Chest>();
+                ChestSO chest = chestlist[i];
+                chestScript.SetChest(chest);
+
+                Quaternion newRot = GetChestRotation();
+                newChest.transform.rotation = newRot;
+                
+                Vector3 newPos = GetChestSpawnPosition();
+
+                newChest.transform.position = newPos;
+
+                ChestClass chestClass = new ChestClass(i, newChest);
+                chestClassList.Add(chestClass);
             }
         }
     }
 
-    private Vector3 GetChestSpawnPosition()
-    {
-        
+    private Vector3 GetChestSpawnPosition(int attempt = 1)
+    { 
         if (spawnPlane != null)
         {
-            MeshCollider mColl = spawnPlane.GetComponent<MeshCollider>();
             float spawnPlaneSizeX = mColl.bounds.size.x;
             float spawnPlaneSizeZ = mColl.bounds.size.z;
 
             float spawnPosX = Random.Range(2, spawnPlaneSizeX / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
             float spawnPosZ = Random.Range(2, spawnPlaneSizeZ / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
+            Vector3 spawnPoint = new(spawnPosX, spawnPlane.transform.position.y + 0.7f, spawnPosZ);
 
-            int layerMask = chestPrefab.layer;
-            LayerMask mask = 1 << layerMask;
-            float chestCollRadius = chestPrefab.GetComponentInChildren<MeshCollider>().bounds.max.x;
-            Vector3 spawnPoint = new(spawnPosX, 0.7f, spawnPosZ);
-            //Debug.Log("Spawn: " + spawnPoint);
-            //while (Physics.CheckSphere(spawnPoint, chestCollRadius, mask)) // do poprawy
-            //{
-            //    int czas = 3;
-            //    //spawnPosX = Random.Range(2, spawnPlaneSizeX / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
-            //    //spawnPosZ = Random.Range(2, spawnPlaneSizeZ / 2 - 2) * (Random.Range(0, 2) * 2 - 1);
-            //    //spawnPoint = new Vector3(spawnPosX, 0.7f, spawnPosZ);
-            //    Debug.Log("Nowy spawn: " + spawnPoint);
-            //}
-
-            while (Physics.OverlapSphere(spawnPoint, chestCollRadius/2, mask).Length > 0) //nie dziala jak trzeba, nie wykrywa kolizji, skrzynie wciaz spawnuja sie na sobie
+            int thisAttempt = attempt;
+            if(thisAttempt < 10)
             {
-                //Debug.Log("koliduje");
-                spawnPosX = Random.Range(1, spawnPlaneSizeX / 2 - 1) * (Random.Range(0, 2) * 2 - 1);
-                spawnPosZ = Random.Range(1, spawnPlaneSizeZ / 2 - 1) * (Random.Range(0, 2) * 2 - 1);
-                spawnPoint = new Vector3(spawnPosX, 0.7f, spawnPosZ);
-                //Debug.Log("Nowy spawn: " + spawnPoint);
+                Collider[] colliders = Physics.OverlapSphere(spawnPoint, 0f);
 
+                if (colliders.Length > 0)
+                {
+                    spawnPoint = GetChestSpawnPosition(thisAttempt + 1);
+                }
+                return spawnPoint;
             }
-            //Debug.Log("Finalny spawn: " + spawnPoint);
-            return spawnPoint;
+            return Vector3.zero;
         }
         else
         {
@@ -112,44 +91,21 @@ public class ChestSpawner : MonoBehaviour
 
     private Quaternion GetChestRotation()
     {
-        float spawnRotY = Random.Range(0, 360);
-        return Quaternion.Euler(0f, spawnRotY, 0f);
+        return Quaternion.Euler(0f, Random.Range(0, 360), 0f);
     }                                                                                                                                                                                                                                                                                                                                                           
 
     private void Respawn()
     {
         DeleteOldChests();
-        DeleteOldDoors();
-        SpawnDoorsAndChests();
-        StopAllCoroutines();
-        StartCoroutine(UpdateNavMesh());
+        SpawnChests();
     }
 
-    private void DeleteOldDoors()
-    {
-        GameObject[] oldDoors = GameObject.FindGameObjectsWithTag("Door");
-
-        foreach (GameObject door in oldDoors)
-        {
-            Destroy(door);
-        }
-    }
     private void DeleteOldChests()
     {
-        GameObject[] oldChests = GameObject.FindGameObjectsWithTag("Chest");
-
-        foreach(GameObject chest in oldChests)
+        foreach (var item in chestClassList)
         {
-            Destroy(chest);
+            Destroy(item.ChestObject);
         }
-    }
-
-    private IEnumerator UpdateNavMesh()
-    {
-        yield return new WaitForEndOfFrame();
-        for (int i = 0; i < surfaces.Length; i++)
-        {
-            surfaces[i].BuildNavMesh();
-        }
+        chestClassList.Clear();
     }
 }

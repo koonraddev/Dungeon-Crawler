@@ -80,8 +80,6 @@ public class SpawnWalls : MonoBehaviour
         pointCz = pointC + new Vector3(0f, 0f, colliderSize.x);
         pointDz = pointD + new Vector3(0f, 0f, colliderSize.x);
 
-        SpawnDoorsAndWalls();
-
         GameEvents.instance.OnPrepareGame += Respawn;
     }
 
@@ -385,12 +383,11 @@ public class SpawnWalls : MonoBehaviour
 
     private void DeleteOldDoors()
     {
-        GameObject[] oldDoors = GameObject.FindGameObjectsWithTag("Door");
-        doorClassList.Clear();
-        foreach (GameObject door in oldDoors)
+        foreach(var item in doorClassList)
         {
-            Destroy(door);
+            Destroy(item.DoorObject);
         }
+        doorClassList.Clear();
     }
 
     private void DeleteOldWalls()
