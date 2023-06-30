@@ -14,6 +14,12 @@ public class GameEvents : MonoBehaviour
     public event Action<InputManager.InputType> OnInputChange;
     public event Action<GameController.GameStatus> OnGameStatusChange;
     public event Action OnPrepareGame;
+    public event Action<int> OnSpawn;
+
+    public void Spawn(int id)
+    {
+        OnSpawn?.Invoke(id);
+    }
 
     public void UpdateInventoryUI()
     {

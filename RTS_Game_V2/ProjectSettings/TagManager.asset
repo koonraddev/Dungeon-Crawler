@@ -8,6 +8,10 @@ TagManager:
   - Chest
   - Door
   - Wall
+  - RoomPlane
+  - Spawner
+  - ActivatedSpawner
+  - UnactivatedSpawner
   layers:
   - Default
   - TransparentFX
