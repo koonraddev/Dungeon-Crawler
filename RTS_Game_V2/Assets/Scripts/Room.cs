@@ -190,5 +190,6 @@ public class Room : MonoBehaviour
 
         SpawnWalls spawnScript = gameObject.AddComponent(typeof(SpawnWalls)) as SpawnWalls;
         spawnScript.SetEssentials(roomSO, doorsArray);
+        roomSO.RoomBehavoiur(this.gameObject);
     }
 }

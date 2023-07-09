@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
   roomWallTexture: {fileID: 0}
-  doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
-  doorsList:
-  - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}
+  doorPrefab: {fileID: 4475833871529060043, guid: b93bcc1a296b1a841846b927a706f0b8, type: 3}
+  doorsList: []

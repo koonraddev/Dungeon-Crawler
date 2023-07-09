@@ -23,7 +23,7 @@ public class InventoryPanel : MonoBehaviour
 
     private void PrepareInventoryUI()
     {
-        slotsArray = new GameObject[Inventory.Instance.InventorySize];
+        slotsArray = new GameObject[Inventory.Instance.GetInventorySize()];
         if (slotPrefab != null)
         {
             GameObject tmp;
@@ -50,20 +50,28 @@ public class InventoryPanel : MonoBehaviour
 
     private void OnInventoryUpdate()
     {
-        Inventory.InventorySlot[] items = Inventory.Instance.GetInventorySlots();
-        for (int i = 0; i < items.Length; i++)
+        InventorySO.InventorySlot[] items = Inventory.Instance.GetInventorySlots();
+        if(items != null)
         {
-            InventorySlotPanel invInter = slotsArray[i].GetComponent<InventorySlotPanel>();
+            for (int i = 0; i < items.Length; i++)
+            {
+                InventorySlotPanel invInter = slotsArray[i].GetComponent<InventorySlotPanel>();
 
-            if (items[i] != null)
-            {
-                invInter.SetInventorySlotUI(items[i].ItemInSlot, items[i].itemAmount, Color.white);
-            }
-            else
-            {
-                invInter.SetEmptySlot(emptySlotSprite, emptySlotColor);
+                if (items[i] != null)
+                {
+                    invInter.SetInventorySlotUI(items[i].ItemInSlot, items[i].ItemAmount, Color.white);
+                }
+                else
+                {
+                    invInter.SetEmptySlot(emptySlotSprite, emptySlotColor);
+                }
             }
         }
+        else
+        {
+            Debug.Log("NULL");
+        }
+
     }
 
     private void OnDestroy()

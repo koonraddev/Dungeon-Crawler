@@ -14,9 +14,9 @@ public class GameController : MonoBehaviour
     [Tooltip("Specify whether the Message Menu should follow mouse when on top of a object")]
     [SerializeField] private bool followMouse;
 
-    [Header("UI Inventory")]
-    [Tooltip("Number of item slots")]
-    [SerializeField] private int itemSlots;
+    [Header("Inventory")]
+    [Tooltip("Inventory Scriptale Object")]
+    [SerializeField] private InventorySO inventorySO;
 
     public NavMeshSurface[] surfaces;
 
@@ -30,17 +30,13 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-        if (!FindObjectOfType(typeof(Inventory)))
-        {
-            GameObject invenotry = new GameObject("Inventory",typeof(Inventory));
-            Inventory.Instance.InventorySize = itemSlots;
-        }
+
 
         if (!FindObjectOfType(typeof(UIMessageObjectPool)))
         {
             GameObject uiObjectPooler = new GameObject("UIObjectpooler", typeof(UIMessageObjectPool));
             UIMessageObjectPool.instance.AmountToPool = amountToPool;
-            UIMessageObjectPool.instance.ObjectToPool = objectToPool;
+            UIMessageObjectPool.instance.MessageObjectToPool = objectToPool;
             UIMessageObjectPool.instance.canAddObjects = canAddObjectsToPool;
             UIMessageObjectPool.instance.FollowMouse = followMouse;
         }
@@ -49,6 +45,11 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         GameEvents.instance.ChangeGameStatus(GameStatus.START);
+        if (!FindObjectOfType(typeof(Inventory)))
+        {
+            GameObject invenotry = new GameObject("Inventory", typeof(Inventory));
+            Inventory.Instance.InventorySO = inventorySO;
+        }
     }
 
     private void Update()

@@ -35,6 +35,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""251b4110-a2b0-4e5c-9e1d-3d4c8589571e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -59,6 +68,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""MoveInspect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f480cc5-832d-4f39-a999-8e61a7460422"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -70,6 +90,11 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Keyboard>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
@@ -91,6 +116,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // BasicMovement
         m_BasicMovement = asset.FindActionMap("BasicMovement", throwIfNotFound: true);
         m_BasicMovement_MoveInspect = m_BasicMovement.FindAction("MoveInspect", throwIfNotFound: true);
+        m_BasicMovement_Inventory = m_BasicMovement.FindAction("Inventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -151,11 +177,13 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_BasicMovement;
     private IBasicMovementActions m_BasicMovementActionsCallbackInterface;
     private readonly InputAction m_BasicMovement_MoveInspect;
+    private readonly InputAction m_BasicMovement_Inventory;
     public struct BasicMovementActions
     {
         private @PlayerControls m_Wrapper;
         public BasicMovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveInspect => m_Wrapper.m_BasicMovement_MoveInspect;
+        public InputAction @Inventory => m_Wrapper.m_BasicMovement_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_BasicMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -168,6 +196,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MoveInspect.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnMoveInspect;
                 @MoveInspect.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnMoveInspect;
                 @MoveInspect.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnMoveInspect;
+                @Inventory.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnInventory;
             }
             m_Wrapper.m_BasicMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -175,6 +206,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MoveInspect.started += instance.OnMoveInspect;
                 @MoveInspect.performed += instance.OnMoveInspect;
                 @MoveInspect.canceled += instance.OnMoveInspect;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
             }
         }
     }
@@ -200,5 +234,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IBasicMovementActions
     {
         void OnMoveInspect(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
     }
 }

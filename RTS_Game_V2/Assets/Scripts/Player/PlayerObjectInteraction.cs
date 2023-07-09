@@ -10,6 +10,7 @@ public class PlayerObjectInteraction : MonoBehaviour
     [SerializeField] private Color highLightObjectColor;
     [SerializeField] private LayerMask interactiveObjectMask;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private int minimumDistanceFromObject;
     private float distanceFromObject;
 
     private PlayerControls playerControls;
@@ -88,13 +89,20 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public IEnumerator InspectObject(IInteractionObjects objectToInspect)
     {
-        distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
         if (distanceFromObject > 3 && playerMovement != null) 
         {
             playerMovement.MoveTo(clickedObject.transform.position);
         }
-        yield return new WaitUntil(() => distanceFromObject <= 3);
+        yield return new WaitUntil(() => distanceFromObject <= minimumDistanceFromObject);
 
         objectToInspect.ObjectInteraction();
+        StartCoroutine(IfInspectingObject());
+    }
+
+    public IEnumerator IfInspectingObject()
+    {
+        yield return new WaitUntil(() => distanceFromObject >= minimumDistanceFromObject);
+        GameEvents.instance.InventoryPanel(false);
+        GameEvents.instance.CancelGameObjectAction();
     }
 }

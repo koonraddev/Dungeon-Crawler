@@ -6,6 +6,6 @@ public interface IInventoryItem
     public int Id { get; set; }
     public string Description { get; set; }
     public bool IsStackable { get; set; }
-    public Sprite InventoryTexture { get; set; }
+    public Sprite InventoryThumbnail { get; set; }
     public bool IsReusable { get; set; }
 }

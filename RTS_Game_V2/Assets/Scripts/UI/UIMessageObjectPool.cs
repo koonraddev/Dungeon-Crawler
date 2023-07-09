@@ -4,7 +4,7 @@ public class UIMessageObjectPool : MonoBehaviour
 {
     public static UIMessageObjectPool instance;
     private List<GameObject> pooledObjects;
-    public GameObject ObjectToPool { get; set; }
+    public GameObject MessageObjectToPool { get; set; }
     public int AmountToPool { get; set; }
     public bool canAddObjects { get; set; }
     public bool FollowMouse { get; set; }
@@ -88,14 +88,14 @@ public class UIMessageObjectPool : MonoBehaviour
 
     private void CreateObjects(int amountToCreate)
     {
-        if (ObjectToPool.GetComponent<MessageMenuController>() != null)
+        if (MessageObjectToPool.GetComponent<MessageMenuController>() != null)
         {
             GameObject tmp;
-            if (amountToCreate > 0 && ObjectToPool != null)
+            if (amountToCreate > 0 && MessageObjectToPool != null)
             {
                 for (int i = 0; i < amountToCreate; i++)
                 {
-                    tmp = Instantiate(ObjectToPool);
+                    tmp = Instantiate(MessageObjectToPool);
                     tmp.GetComponent<MessageMenuController>().FollowMouse = FollowMouse;
                     tmp.SetActive(false);
                     pooledObjects.Add(tmp);

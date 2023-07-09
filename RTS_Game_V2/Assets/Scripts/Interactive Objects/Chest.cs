@@ -5,27 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Chest : MonoBehaviour, IInteractionObjects
 {
-    [SerializeField] private ChestSO chestSO;
-    [SerializeField] private Key key;
-    private KeySO treasure;
-    private bool displayPopup = true;
-    private bool displayMessage = true;
-    private bool opened;
+    public  ChestSO chestSO;
+    public GameObject panel;
     private Dictionary<string, string> contentToDisplay;
-
+    private bool displayPopup = true;
     public void Start()
     {
         ChangeChestStatus(false);
-        CheckKey();
     }
 
     public void ObjectInteraction()
     {
-        if (!opened && displayMessage)
-        {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.NameText }, { "Description", chestSO.Description } });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
-        }
+        SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.GetNameText() }, { "Description", chestSO.GetDescription() } });
+        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
     }
 
     public void DoInteraction()
@@ -35,27 +27,25 @@ public class Chest : MonoBehaviour, IInteractionObjects
 
     public void OnMouseEnterObject(Color highLightColor)
     {
-        if (!opened)
+         
+        Material[] objectMaterials;
+        objectMaterials = gameObject.GetComponent<Renderer>().materials;
+        if (objectMaterials != null)
         {
-            Material[] objectMaterials;
-            objectMaterials = gameObject.GetComponent<Renderer>().materials;
-            if (objectMaterials != null)
+            foreach (Material objMaterial in objectMaterials)
             {
-                foreach (Material objMaterial in objectMaterials)
+                if (objMaterial.color != highLightColor)
                 {
-                    if (objMaterial.color != highLightColor)
-                    {
-                        objMaterial.DOColor(highLightColor, "_Color", 0.5f);
-                    }
+                    objMaterial.DOColor(highLightColor, "_Color", 0.5f);
                 }
             }
-            if (displayPopup)
-            {
-                SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.NameText } });
-                UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
-                displayPopup = false;
-            }
         }
+        if (displayPopup)
+        {
+            SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.GetNameText() } });
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+        }
+  
     }
     public void OnMouseExitObject()
     {
@@ -71,8 +61,8 @@ public class Chest : MonoBehaviour, IInteractionObjects
                 }
             }
         }
-        displayPopup = true;
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
+        displayPopup = false;
     }
 
 
@@ -113,28 +103,22 @@ public class Chest : MonoBehaviour, IInteractionObjects
         if (chestStatus)
         {
             gameObject.transform.DOLocalRotate(new Vector3(-140, 0, 0), 2f).SetEase(Ease.OutBounce);
-            opened = true;
+            ChestInfoPanel panelScript = panel.GetComponent<ChestInfoPanel>();
+            panel.SetActive(true);
+            panelScript.SetChestPanel(chestSO);
+            GameEvents.instance.InventoryPanel(true);
+            GameEvents.instance.OnCancelGameObjectAction += OnCancelGameObject;
         }
         else
         {
             gameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 2f).SetEase(Ease.Linear);
-            opened = false;
+            GameEvents.instance.OnCancelGameObjectAction -= OnCancelGameObject;
         }
     }
 
-    private void CheckKey()
+    public void OnCancelGameObject()
     {
-        if (chestSO.Treasure != null)
-        {
-            treasure = chestSO.Treasure;
-            displayPopup = true;
-            key.SetKey(treasure);
-            key.gameObject.SetActive(true);
-        }
-        else
-        {
-            key.gameObject.SetActive(false);
-        }
+        ChangeChestStatus(false);
     }
 
     private void OnDestroy()

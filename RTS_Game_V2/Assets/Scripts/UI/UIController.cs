@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
@@ -6,21 +7,60 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject inventoryInfoPanel;
     [SerializeField] private GameObject inventoryDeletePanel;
     [SerializeField] private GameObject inventoryDropPanel;
+    [SerializeField] private GameObject chestInfoPanel;
 
-    public GameObject PlayerInventoryUI { get { return playerInventoryUI; } }
-    public GameObject InventoryInfoPanel { get { return inventoryInfoPanel; } }
-    public GameObject InventoryDeletePanel { get { return inventoryDeletePanel; } }
-    public GameObject InventoryDropPanel { get { return inventoryDropPanel; } }
+    private PlayerControls playerControls;
+    private InputAction inventoryAction;
+    private bool isInventoryActivated;
 
-
-    void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        playerControls = new PlayerControls();
+    }
+    private void OnEnable()
+    {
+        playerControls.Enable();
+
+    }
+    private void Start()
+    {
+        GameEvents.instance.OnInventoryPanel += InventoryPanelStatus;
+        inventoryAction = playerControls.BasicMovement.Inventory;
+        InventoryPanelStatus(false);
+    }
+
+
+
+    private void Update()
+    {
+        if (inventoryAction.triggered)
         {
-            playerInventoryUI.SetActive(!playerInventoryUI.activeSelf);
-            inventoryInfoPanel.SetActive(!inventoryInfoPanel.activeSelf);
-            inventoryDeletePanel.SetActive(!inventoryDeletePanel.activeSelf);
-            inventoryDropPanel.SetActive(!inventoryDropPanel.activeSelf);
+            InventoryPanelStatus(!isInventoryActivated);
+            GameEvents.instance.CancelGameObjectAction();
         }
+    }
+
+
+    public void InventoryPanelStatus(bool active)
+    {
+        isInventoryActivated = active;
+        playerInventoryUI.SetActive(active);
+        inventoryInfoPanel.SetActive(active);
+        inventoryDeletePanel.SetActive(active);
+        inventoryDropPanel.SetActive(active);
+        if (!active)
+        {
+            chestInfoPanel.SetActive(active);
+        }
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.instance.OnInventoryPanel -= InventoryPanelStatus;
+    }
+
+    public GameObject GetInfoPanel()
+    {
+        return inventoryInfoPanel;
     }
 }

@@ -42,10 +42,10 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
         if (playerObject != null)
         {
             //drop items
-            Inventory.InventorySlot invSlot = Inventory.Instance.itemSlots[invSlotPanel.SlotNumber];
+            InventorySO.InventorySlot invSlot = Inventory.Instance.GetInventorySlot(invSlotPanel.SlotNumber);
 
             IInventoryItem invItem = invSlot.ItemInSlot;
-            int itemAmount = invSlot.itemAmount;
+            int itemAmount = invSlot.ItemAmount;
 
             GameObject dropBagObject = Instantiate(dropObjectPrefab);
             DropBag dropBag = dropBagObject.GetComponent<DropBag>();

@@ -10,11 +10,20 @@ public class GameEvents : MonoBehaviour
         instance = this;
     }
     public event Action OnInventoryUpdate;
+    public event Action OnChestUpdate;
     public event Action<int> OnCloseMessage;
     public event Action<InputManager.InputType> OnInputChange;
     public event Action<GameController.GameStatus> OnGameStatusChange;
+    public event Action OnCancelGameObjectAction;
     public event Action OnPrepareGame;
     public event Action<int> OnSpawn;
+    public event Action<bool> OnInventoryPanel;
+
+    public event Action OnCanSave;
+    public event Action OnCannotSave;
+    public event Action OnLoadLevel;
+    public event Action OnExitToMenu;
+
 
     public void Spawn(int id)
     {
@@ -45,4 +54,40 @@ public class GameEvents : MonoBehaviour
     {
         OnPrepareGame?.Invoke();
     }
+
+    public void InventoryPanel(bool activePanel)
+    {
+        OnInventoryPanel?.Invoke(activePanel);
+    }
+
+    public void CancelGameObjectAction()
+    {
+        OnCancelGameObjectAction?.Invoke();
+    }
+
+    public void ChestUpdate()
+    {
+        OnChestUpdate?.Invoke();
+    }
+
+    public void EnableSave()
+    {
+        OnCanSave?.Invoke();
+    }
+
+    public void DisableSave()
+    {
+        OnCannotSave?.Invoke();
+    }
+
+    public void LoadLevel()
+    {
+        OnLoadLevel?.Invoke();
+    }
+
+    public void ExitToMenu()
+    {
+        OnExitToMenu?.Invoke();
+    }
+
 }

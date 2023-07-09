@@ -15,6 +15,7 @@ MonoBehaviour:
   roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
   roomWallTexture: {fileID: 0}
   doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
-  doorsList: []
+  doorsList:
+  - {fileID: 11400000, guid: b43c1e99ff9932249ac4fa0da06fcbd7, type: 2}
   maxDoorsInWall: 2
   enemyDescription: Tu beda przeciwnicy

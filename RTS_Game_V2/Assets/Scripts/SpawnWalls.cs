@@ -22,8 +22,6 @@ public class SpawnWalls : MonoBehaviour
     private Vector3 colliderSize;
     private Vector3 colliderCenter;
 
-    private bool generateEndingDoor = true;
-    private bool generateManyDoors = true;
     private bool generateDoorRandomly = true;
 
     private int[] doorsArray;
@@ -90,29 +88,6 @@ public class SpawnWalls : MonoBehaviour
 
     private void SpawnDoorsAndWalls()
     {
-        //if (!generateManyDoors)
-        //{
-        //    doorsArray = new int[] { 0, 0, 0, 0 };
-        //    int d = Random.Range(0, 4);
-        //    doorsArray[d] = 1;
-        //}
-        //else
-        //{
-        //    //doorsArray = room.RoomDoors();
-        //}
-
-
-        int endingDoorIndex = -1;
-        //if (generateEndingDoor)
-        //{
-        //    int doorsAmount = 0;
-        //    foreach (int amount in doorsArray)
-        //    {
-        //        doorsAmount += amount;
-        //    }
-        //    endingDoorIndex = Random.Range(0, doorsAmount);
-        //}
-
         int doorIterator = 0;
         for (int i = 0; i < doorsArray.Length; i++)
         {
@@ -205,15 +180,9 @@ public class SpawnWalls : MonoBehaviour
                 door.transform.SetParent(gameObject.transform);
                 door.transform.SetLocalPositionAndRotation(pos, rot);
                 Door doorScript = door.GetComponentInChildren<Door>();
-                if (doorIterator == endingDoorIndex)
-                {
-                    doorScript.SetDoor(doorsList[Random.Range(0, doorsList.Count)], true);
-                }
-                else
-                {
-                    doorScript.SetDoor(doorsList[Random.Range(0, doorsList.Count)]);
-                }
-                
+
+                doorScript.SetDoor(doorsList[Random.Range(0, doorsList.Count)]);
+
                 DoorClass doorClass = new DoorClass(i, positionInWall, door);
                 doorClassList.Add(doorClass);
                 
@@ -231,14 +200,11 @@ public class SpawnWalls : MonoBehaviour
             {
                 ZeroDoors(i);
             }
-            if(doorsArray[i] > 0)
+            if (doorsArray[i] > 0)
             {
                 MultipleDoors(doorsArray, i, currentWallDoors);
             }
-
         }
-
-        roomSO.RoomBehavoiur(this.gameObject);
     }
 
     private void GenerateWall(Vector3 startPoint, Vector3 endPoint, Color color)
