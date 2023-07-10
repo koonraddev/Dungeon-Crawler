@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: EmptyRoom1
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
-  roomWallTexture: {fileID: 0}
+  roomWallMaterial: {fileID: 2100000, guid: d8c1f73efa86eb643818c08548596967, type: 2}
+  roomFloorMaterial: {fileID: 2100000, guid: 0fbb5906a12ff0246ada62b37f9418df, type: 2}
   doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
   doorsList:
   - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}

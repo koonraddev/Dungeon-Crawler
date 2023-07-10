@@ -207,7 +207,7 @@ public class SpawnWalls : MonoBehaviour
         }
     }
 
-    private void GenerateWall(Vector3 startPoint, Vector3 endPoint, Color color)
+    private void GenerateWall(Vector3 startPoint, Vector3 endPoint, Material wallMaterial)
     {
         if(doorCollider!= null)
         {
@@ -215,7 +215,7 @@ public class SpawnWalls : MonoBehaviour
             Vector3 distanceStartEnd = startPoint - endPoint;
 
             wall.transform.SetParent(gameObject.transform);
-            wall.GetComponent<MeshRenderer>().material.color = color;
+            wall.GetComponent<MeshRenderer>().material = wallMaterial;
             wall.tag = "Wall";
             wall.transform.localScale = new Vector3(colliderSize.y /* * doorPrefab.transform.lossyScale.x * 2*/, colliderSize.z / gameObject.transform.lossyScale.z * doorPrefab.transform.lossyScale.z, distanceStartEnd.magnitude);
             wall.transform.localPosition = (startPoint + endPoint) / 2f+ new Vector3(0f,colliderSize.z/2 / gameObject.transform.lossyScale.z * doorPrefab.transform.lossyScale.z, 0f);
@@ -253,7 +253,7 @@ public class SpawnWalls : MonoBehaviour
                 endPoint = Vector3.zero;
                 break;
         }
-        GenerateWall(startPoint, endPoint, Color.yellow);
+        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
     }
 
     private void MultipleDoors(int[] doorsArray, int wallIndex, List<DoorClass> newList)
@@ -293,7 +293,7 @@ public class SpawnWalls : MonoBehaviour
                     endPoint = newList[j].DoorObject.transform.localPosition - doorPrefabOffset;
                     if (Vector3.Distance(startPoint, endPoint) >= colliderSize.x/2)
                     {
-                        GenerateWall(startPoint, endPoint, Color.blue);
+                        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
                     }
 
                 }
@@ -305,7 +305,7 @@ public class SpawnWalls : MonoBehaviour
                     float distance = Vector3.Distance(newList[j - 1].DoorObject.transform.localPosition, newList[j].DoorObject.transform.localPosition);
                     if (distance >= colliderSize.x / 2 / gameObject.transform.lossyScale.x * doorPrefab.transform.lossyScale.x)
                     {
-                        GenerateWall(startPoint, endPoint, Color.green);
+                        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
                     }
                 }
 
@@ -322,7 +322,7 @@ public class SpawnWalls : MonoBehaviour
                     };
                     if (Vector3.Distance(startPoint, endPoint) >= colliderSize.x/2)
                     {
-                        GenerateWall(startPoint, endPoint, Color.cyan);
+                        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
                     }
                 }
                 numberOfDoors--;

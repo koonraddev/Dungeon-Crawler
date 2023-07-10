@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class GameController : MonoBehaviour
     [Tooltip("Inventory Scriptale Object")]
     [SerializeField] private InventorySO inventorySO;
 
-    public NavMeshSurface[] surfaces;
+    [SerializeField] public NavMeshSurface surface;
 
     public enum GameStatus
     {
@@ -30,8 +31,6 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-
-
         if (!FindObjectOfType(typeof(UIMessageObjectPool)))
         {
             GameObject uiObjectPooler = new GameObject("UIObjectpooler", typeof(UIMessageObjectPool));
@@ -50,24 +49,23 @@ public class GameController : MonoBehaviour
             GameObject invenotry = new GameObject("Inventory", typeof(Inventory));
             Inventory.Instance.InventorySO = inventorySO;
         }
+
+        //GameEvents.instance.OnUpdateNaviMesh += UpdateNavMesh;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            GameEvents.instance.PrepareGame();
-            StartCoroutine(UpdateNavMesh());
+            //GameEvents.instance.PrepareGame();
+            UpdateNavMesh();
         }
+
     }
 
     //to move to another script
-    private IEnumerator UpdateNavMesh()
+    private void UpdateNavMesh()
     {
-        yield return new WaitForEndOfFrame();
-        for (int i = 0; i < surfaces.Length; i++)
-        {
-            surfaces[i].BuildNavMesh();
-        }
+        surface.BuildNavMesh();
     }
 }

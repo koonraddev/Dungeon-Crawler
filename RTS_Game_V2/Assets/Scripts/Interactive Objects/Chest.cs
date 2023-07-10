@@ -12,6 +12,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
     public void Start()
     {
         ChangeChestStatus(false);
+        panel = GameObject.Find("ChestInfoPanel");
     }
 
     public void ObjectInteraction()

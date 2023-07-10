@@ -8,6 +8,7 @@ public abstract class RoomSO: ScriptableObject
     public abstract List<DoorSO> RoomDoors();
     public abstract GameObject DoorPrefab();
     public abstract GameObject RoomPlane();
-    public abstract Sprite RoomWallTexture();
+    public abstract Material RoomWallMaterial();
+    public abstract Material RoomFloorMaterial();
     public abstract void RoomBehavoiur(GameObject gameObject);
 }

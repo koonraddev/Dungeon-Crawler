@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FightRoom1
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
-  roomWallTexture: {fileID: 0}
+  roomWallMaterial: {fileID: 2100000, guid: eb7a5819a136f124e9873c027808be96, type: 2}
+  roomFloorMaterial: {fileID: 2100000, guid: 6f3b764d69dc4d04d8e2ce516d2dfaa3, type: 2}
   doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
   doorsList:
   - {fileID: 11400000, guid: b43c1e99ff9932249ac4fa0da06fcbd7, type: 2}

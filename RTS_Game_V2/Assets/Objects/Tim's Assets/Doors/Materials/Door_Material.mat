@@ -166,7 +166,7 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _AmbientOcclusionStrength: 1
-    - _BloodAmount: 0
+    - _BloodAmount: 0.706
     - _Blood_FlowIntensity: 1
     - _BulgeShape: 1
     - _BumpScale: 1
@@ -192,7 +192,7 @@ Material:
     - _node_879: 0
     - _norminten: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.44197223, g: 0.45741725, b: 0.49056602, a: 1}
     - _Color_Bloof: {r: 0.309, g: 0, b: 0, a: 1}
     - _Color_Multi: {r: 1, g: 1, b: 1, a: 1}
     - _Color_copy: {r: 1, g: 1, b: 1, a: 1}

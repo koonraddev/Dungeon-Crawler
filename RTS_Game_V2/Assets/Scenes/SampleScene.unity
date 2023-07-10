@@ -142,6 +142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyChest
       objectReference: {fileID: 0}
+    - target: {fileID: 1850066015614315132, guid: af4b77faba32b4b4cb5d6b54f1133d28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5648999909880280093, guid: af4b77faba32b4b4cb5d6b54f1133d28, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -418,8 +422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09010887bce02f4ba000c2817d80738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomsToGenerate: 5
+  roomsToGenerate: 10
   roomsList:
+  - {fileID: 11400000, guid: 98f8f0b87b1a4844a8f9ada514389b56, type: 2}
   - {fileID: 11400000, guid: 660c056237ec6364da556a3c3f8ef99a, type: 2}
   - {fileID: 11400000, guid: 0680ed9475389924992d182b0e459575, type: 2}
   startRoom: {fileID: 11400000, guid: a87fca5a60f387b4a91075f6d96f5889, type: 2}
@@ -655,7 +660,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 462816446}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 15
   m_Acceleration: 200
   avoidancePriority: 50
@@ -715,6 +720,36 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
   m_PrefabInstance: {fileID: 6318649012861770541}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &515274092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515274086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.1
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1 &516781932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +2006,7 @@ MonoBehaviour:
   canAddObjectsToPool: 0
   followMouse: 1
   inventorySO: {fileID: 11400000, guid: 2d7c6a21855f9474aa85a4a30f065614, type: 2}
-  surfaces: []
+  surface: {fileID: 8584441013237840185, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
 --- !u!114 &1285007681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10160,6 +10195,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6318649012883418694, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318649012883418694, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 3a4261a7c7caf78448bf09ea06fc0e1f, type: 2}
+    - target: {fileID: 6318649012883418694, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
+      propertyPath: m_UseGeometry
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6318649012883418695, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
       propertyPath: m_RootOrder
       value: 6

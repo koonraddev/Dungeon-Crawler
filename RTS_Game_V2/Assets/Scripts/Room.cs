@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 
@@ -17,7 +18,6 @@ public class Room : MonoBehaviour
     private bool readyTo;
     private GameObject spawner;
     private bool pointsCanBeChecked;
-
     private void Awake()
     {
         planeSize = GetComponent<Collider>().bounds.size;
@@ -190,6 +190,7 @@ public class Room : MonoBehaviour
 
         SpawnWalls spawnScript = gameObject.AddComponent(typeof(SpawnWalls)) as SpawnWalls;
         spawnScript.SetEssentials(roomSO, doorsArray);
-        roomSO.RoomBehavoiur(this.gameObject);
+        roomSO.RoomBehavoiur(gameObject);
     }
+
 }

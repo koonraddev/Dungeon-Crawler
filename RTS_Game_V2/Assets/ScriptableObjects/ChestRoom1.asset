@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad6c2c867ec8b04abef599ee1a1345c, type: 3}
+  m_Name: ChestRoom1
+  m_EditorClassIdentifier: 
+  roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
+  roomWallMaterial: {fileID: 2100000, guid: b9f2116ed3a734a7fbd443757fad6430, type: 2}
+  roomFloorMaterial: {fileID: 2100000, guid: 897bc507617104ed0af3e9c46b43d9c0, type: 2}
+  doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
+  doorsList:
+  - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}
+  chestList:
+  - {fileID: 11400000, guid: 808dc1b6a65bfb34faffa2a3105eec79, type: 2}
+  - {fileID: 11400000, guid: 3e8f94ac7b3caa74b892ff74debcf8be, type: 2}
+  - {fileID: 11400000, guid: 536e03cd77ac1ec4f81b4fd7292cca50, type: 2}
+  chestPrefab: {fileID: 1850066015614315132, guid: af4b77faba32b4b4cb5d6b54f1133d28, type: 3}

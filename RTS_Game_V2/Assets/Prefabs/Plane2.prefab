@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6318649012883418692}
   - component: {fileID: 6318649012883418693}
   - component: {fileID: 6318649012883418698}
-  - component: {fileID: 6318649012883418694}
+  - component: {fileID: 8584441013237840185}
   m_Layer: 7
   m_Name: Plane2
   m_TagString: RoomPlane
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0fbb5906a12ff0246ada62b37f9418df, type: 2}
+  - {fileID: 2100000, guid: 9b6ddd41c8e093a4fa7c17353550c734, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,7 +99,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &6318649012883418694
+--- !u!114 &8584441013237840185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c1d872524ff50cc4e8bb099a69cd4c06, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0

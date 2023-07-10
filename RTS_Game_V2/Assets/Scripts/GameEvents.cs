@@ -23,7 +23,8 @@ public class GameEvents : MonoBehaviour
     public event Action OnCannotSave;
     public event Action OnLoadLevel;
     public event Action OnExitToMenu;
-
+    public event Action OnEndGeneratingLevel;
+    public event Action<int> OnOpenRoom;
 
     public void Spawn(int id)
     {
@@ -88,6 +89,11 @@ public class GameEvents : MonoBehaviour
     public void ExitToMenu()
     {
         OnExitToMenu?.Invoke();
+    }
+
+    public void EndGeneratingLevel()
+    {
+        OnEndGeneratingLevel?.Invoke();
     }
 
 }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BossRoom
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
-  roomWallTexture: {fileID: 0}
+  roomWallMaterial: {fileID: 2100000, guid: 094c835627124fe4bbbaa762d2240cb1, type: 2}
+  roomFloorMaterial: {fileID: 2100000, guid: 5f73475cf0cad364b9800b85c2a229fc, type: 2}
   doorPrefab: {fileID: 4475833871529060043, guid: b93bcc1a296b1a841846b927a706f0b8, type: 3}
   doorsList: []

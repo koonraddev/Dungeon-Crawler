@@ -7,7 +7,8 @@ public class FightRoomSO : RoomSO
 {
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
-    [SerializeField] private Sprite roomWallTexture;
+    [SerializeField] private Material roomWallMaterial;
+    [SerializeField] private Material roomFloorMaterial;
     [Header("Door section")]
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
@@ -27,11 +28,14 @@ public class FightRoomSO : RoomSO
         return maxDoorsInWall;
     }
 
+    public override Material RoomFloorMaterial()
+    {
+        return roomFloorMaterial;
+    }
+
     public override void RoomBehavoiur(GameObject gameObject)
     {
-        Material objMaterial = gameObject.GetComponent<Renderer>().material;
-
-        objMaterial.color = Color.red;
+        gameObject.GetComponent<Renderer>().material = roomFloorMaterial;
 
         GameObject newCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         newCube.transform.position = gameObject.transform.position;
@@ -49,8 +53,8 @@ public class FightRoomSO : RoomSO
         return roomPlane;
     }
 
-    public override Sprite RoomWallTexture()
+    public override Material RoomWallMaterial()
     {
-        return roomWallTexture;
+        return roomWallMaterial;
     }
 }

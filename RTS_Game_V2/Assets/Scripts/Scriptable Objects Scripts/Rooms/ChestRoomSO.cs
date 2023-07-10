@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newChestRoom", menuName = "Scriptable Objects/Room/Chest Room", order = 5)]
@@ -7,14 +8,22 @@ public class ChestRoomSO : RoomSO
 {
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
-    [SerializeField] private Sprite roomWallTexture;
+    [SerializeField] private Material roomWallMaterial;
+    [SerializeField] private Material roomFloorMaterial;
     [Header("Door section")]
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
     [Header("Chest section")]
     [SerializeField] private List<ChestSO> chestList;
+    [SerializeField] private GameObject chestPrefab;
 
     private int maxDoorsInWall = 0;
+
+    private MeshCollider mColl;
+    private float spawnPlaneSizeX;
+    private float spawnPlaneSizeZ;
+    private Vector3 planePos;
+
     public override GameObject DoorPrefab()
     {
         return doorPrefab;
@@ -27,9 +36,55 @@ public class ChestRoomSO : RoomSO
 
     public override void RoomBehavoiur(GameObject gameObject)
     {
-        Material objMaterial = gameObject.GetComponent<Renderer>().material;
+        gameObject.GetComponent<Renderer>().material = roomFloorMaterial;
 
-        objMaterial.color = Color.cyan;
+        mColl = gameObject.GetComponent<MeshCollider>();
+        spawnPlaneSizeX = mColl.bounds.size.x;
+        spawnPlaneSizeZ = mColl.bounds.size.z;
+        planePos = gameObject.transform.position;
+
+        foreach (var item in chestList)
+        {
+            GameObject newChest = Instantiate(chestPrefab);
+            Chest chestScript = newChest.GetComponentInChildren<Chest>();
+            chestScript.SetChest(item);
+
+            newChest.transform.rotation = GetChestSpawnRotation();
+            newChest.transform.position = GetChestSpawnPosition();
+        }
+    }
+
+    private Vector3 GetChestSpawnPosition(int attempt = 1)
+    {
+        if (roomPlane != null)
+        {
+            float spawnPosX = Random.Range(1, spawnPlaneSizeX / 2 - 1) * (Random.Range(0, 2) * 2 - 1);
+            float spawnPosZ = Random.Range(1, spawnPlaneSizeZ / 2 - 1) * (Random.Range(0, 2) * 2 - 1);
+            Vector3 spawnPoint = new(spawnPosX, roomPlane.transform.position.y + 0.7f, spawnPosZ);
+            spawnPoint += planePos;
+
+            int thisAttempt = attempt;
+            if (thisAttempt < 10)
+            {
+                Collider[] colliders = Physics.OverlapSphere(spawnPoint, 0f);
+
+                if (colliders.Length > 0)
+                {
+                    spawnPoint = GetChestSpawnPosition(thisAttempt + 1);
+                }
+                return spawnPoint;
+            }
+            return Vector3.zero;
+        }
+        else
+        {
+            return Vector3.zero;
+        }
+    }
+
+    private Quaternion GetChestSpawnRotation()
+    {
+        return Quaternion.Euler(0f, Random.Range(0, 360), 0f);
     }
 
     public override List<DoorSO> RoomDoors()
@@ -42,8 +97,13 @@ public class ChestRoomSO : RoomSO
         return roomPlane;
     }
 
-    public override Sprite RoomWallTexture()
+    public override Material RoomWallMaterial()
     {
-        return roomWallTexture;
+        return roomWallMaterial;
+    }
+
+    public override Material RoomFloorMaterial()
+    {
+        return roomFloorMaterial;
     }
 }

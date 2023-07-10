@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
 public class Door : MonoBehaviour, IInteractionObjects
@@ -11,9 +12,15 @@ public class Door : MonoBehaviour, IInteractionObjects
     private bool destroyItemOnUse;
     private bool keyRequired;
     private bool displayInfo;
-    private bool endingDoor;
     private GameObject actualDoor;
     private Dictionary<string, string> contentToDisplay;
+    private OffMeshLink meshLink;
+
+    private void Awake()
+    {
+        meshLink = GetComponent<OffMeshLink>();
+        meshLink.activated = false;
+    }
     public void Start()
     {
         actualDoor = gameObject.transform.parent.gameObject;
@@ -38,18 +45,18 @@ public class Door : MonoBehaviour, IInteractionObjects
 
     public void DoInteraction()
     {
-        //Debug.Log("Interakcja");
+        //Interakcja
         if (opened)
         {
-            //Debug.Log("Sa otwarte");
-            ChangeDoorStatus(false);
+            //Sa otwarte
+            //ChangeDoorStatus(false);
         }
         else
         {
-            //Debug.Log("Sa zamkniete");
+            //Sa zamkniete
             if (keyRequired)
             {
-                //Debug.Log("wymagaja klucza");
+                //wymagaja klucza
 
                 if(Inventory.Instance.CheckItem(keyItem))
                 {
@@ -59,10 +66,6 @@ public class Door : MonoBehaviour, IInteractionObjects
                     }
                     ChangeDoorStatus(true);
                     keyRequired = false;
-                    if (endingDoor)
-                    {
-                        GameEvents.instance.ChangeGameStatus(GameController.GameStatus.END);
-                    }
                 }
                 else
                 {
@@ -72,7 +75,7 @@ public class Door : MonoBehaviour, IInteractionObjects
             }
             else
             {
-                //Debug.Log("nie wymagaja klucza");
+                //nie wymagaja klucza
                 ChangeDoorStatus(true);
             }
         }
@@ -153,12 +156,11 @@ public class Door : MonoBehaviour, IInteractionObjects
         }
     }
 
-    public void SetDoor(DoorSO newDoor, bool endingDoor = false)
+    public void SetDoor(DoorSO newDoor)
     {
         if (newDoor != null)
         {
             doorSO = newDoor;
-            this.endingDoor = endingDoor;
             CheckKey();
         }
     }
@@ -178,6 +180,7 @@ public class Door : MonoBehaviour, IInteractionObjects
         {
             actualDoor.transform.DOLocalRotate(new Vector3(0, 0, 90f), 2f).SetEase(Ease.Linear);
             opened = true;
+            meshLink.activated = true;
         }
         else
         {

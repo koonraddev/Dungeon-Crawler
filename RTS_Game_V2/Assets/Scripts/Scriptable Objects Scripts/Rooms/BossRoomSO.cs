@@ -7,7 +7,8 @@ public class BossRoomSO : RoomSO
 {
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
-    [SerializeField] private Sprite roomWallTexture;
+    [SerializeField] private Material roomWallMaterial;
+    [SerializeField] private Material roomFloorMaterial;
     [Header("Door section")]
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
@@ -25,9 +26,8 @@ public class BossRoomSO : RoomSO
 
     public override void RoomBehavoiur(GameObject gameObject)
     {
-        Material objMaterial = gameObject.GetComponent<Renderer>().material;
+        gameObject.GetComponent<Renderer>().material = roomFloorMaterial;
 
-        objMaterial.color = Color.cyan;
     }
 
     public override List<DoorSO> RoomDoors()
@@ -35,13 +35,18 @@ public class BossRoomSO : RoomSO
         return doorsList;
     }
 
+    public override Material RoomFloorMaterial()
+    {
+        return roomFloorMaterial;
+    }
+
     public override GameObject RoomPlane()
     {
         return roomPlane;
     }
 
-    public override Sprite RoomWallTexture()
+    public override Material RoomWallMaterial()
     {
-        return roomWallTexture;
+        return roomWallMaterial;
     }
 }
