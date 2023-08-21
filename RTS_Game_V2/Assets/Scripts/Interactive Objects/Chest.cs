@@ -12,7 +12,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
     public void Start()
     {
         ChangeChestStatus(false);
-        panel = GameObject.Find("ChestInfoPanel");
+        panel = ChestInfoPanel.instance.gameObject;
     }
 
     public void ObjectInteraction()
@@ -45,6 +45,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.GetNameText() } });
             UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+            displayPopup = false;
         }
   
     }
@@ -67,12 +68,6 @@ public class Chest : MonoBehaviour, IInteractionObjects
     }
 
 
-
-    private void OnDrawGizmos()
-    {
-        float chestCollRadius = gameObject.GetComponentInChildren<MeshCollider>().bounds.max.x;
-        Gizmos.DrawWireSphere(gameObject.transform.position, chestCollRadius/2);
-    }
     private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
     {
         contentToDisplay = new Dictionary<string, string> { };
@@ -104,9 +99,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
         if (chestStatus)
         {
             gameObject.transform.DOLocalRotate(new Vector3(-140, 0, 0), 2f).SetEase(Ease.OutBounce);
-            ChestInfoPanel panelScript = panel.GetComponent<ChestInfoPanel>();
-            panel.SetActive(true);
-            panelScript.SetChestPanel(chestSO);
+            ChestInfoPanel.instance.SetAndActiveChestPanel(chestSO);
             GameEvents.instance.InventoryPanel(true);
             GameEvents.instance.OnCancelGameObjectAction += OnCancelGameObject;
         }

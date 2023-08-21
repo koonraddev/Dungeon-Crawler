@@ -10,6 +10,38 @@ public class ChestSO : ScriptableObject
     [SerializeField] private int chestId;
     [SerializeField] List<TreasureSO> treasureList;
 
+    private void OnValidate()
+    {
+        if(treasureList.Count > 25)
+        {
+            int slotsToCreate = treasureList.Count - 25;
+            for (int i = 0; i < slotsToCreate; i++)
+            {
+                treasureList.RemoveAt(treasureList.Count - 1);
+            }
+        }
+        else if(treasureList.Count < 25)
+        {
+            int slotsToCreate = 25 - treasureList.Count;
+            for (int i = 0; i < slotsToCreate; i++)
+            {
+                treasureList.Add(null);
+            }
+        }
+
+    }
+
+    private void Awake()
+    {
+        treasureList = new();
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                treasureList.Add(null);
+            }
+        }
+    }
+    
     public int GetId()
     {
         return chestId;
@@ -27,16 +59,21 @@ public class ChestSO : ScriptableObject
         return treasureList;
     }
 
-    public void RemoveTreasure(TreasureSO treasureToRemove)
+    public void RemoveTreasure(int slotIndex)
     {
-        treasureList.Remove(treasureToRemove);
+        treasureList[slotIndex] = null;
         GameEvents.instance.ChestUpdate();
     }
 
-    public void AddTreasure(TreasureSO treasureToAdd)
+    public bool AddTreasure(int slotIndex, TreasureSO treasureToAdd)
     {
-        treasureList.Add(treasureToAdd);
-        GameEvents.instance.ChestUpdate();
+        if(treasureList[slotIndex] == null)
+        {
+            treasureList[slotIndex] = treasureToAdd;
+            GameEvents.instance.ChestUpdate();
+            return true;
+        }
+        return false;
     }
 
     public void SwapItems(int fromIndex, int toIndex)

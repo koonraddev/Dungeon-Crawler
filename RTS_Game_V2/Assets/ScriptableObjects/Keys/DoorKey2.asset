@@ -15,7 +15,7 @@ MonoBehaviour:
   <NameText>k__BackingField: Level 2 access key.
   <Id>k__BackingField: 2
   <Description>k__BackingField: Key to open level 2 door.
-  <KeyLevel>k__BackingField: 2
   <IsStackable>k__BackingField: 1
   <IsReusable>k__BackingField: 0
-  <InventoryTexture>k__BackingField: {fileID: 21300000, guid: e7e0c45b357d33945a5910957f26087a, type: 3}
+  <InventoryThumbnail>k__BackingField: {fileID: 21300000, guid: e7e0c45b357d33945a5910957f26087a, type: 3}
+  <KeyLevel>k__BackingField: 2

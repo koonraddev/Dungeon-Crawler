@@ -16,12 +16,28 @@ MonoBehaviour:
   description: zwykla skrzynia
   chestId: 0
   treasureList:
-  - {fileID: 11400000, guid: f441d8a98105ec042bef7af792f70399, type: 2}
+  - {fileID: 11400000, guid: a9f1c975557c2bf4d944a6aa4e35b3bd, type: 2}
   - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
   - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
   - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
-  - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
-  - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
-  - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
-  - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
-  - {fileID: 11400000, guid: 4283af0776de55c4488939f9f6a94a08, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 67d9d9800adef7f4c82911d28d744647, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

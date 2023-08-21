@@ -15,7 +15,7 @@ MonoBehaviour:
   <NameText>k__BackingField: Level 3 access key.
   <Id>k__BackingField: 3
   <Description>k__BackingField: Key to open level3 door.
-  <KeyLevel>k__BackingField: 3
   <IsStackable>k__BackingField: 1
   <IsReusable>k__BackingField: 1
-  <InventoryTexture>k__BackingField: {fileID: 21300000, guid: 16f26cf782892294dab0cb625cf4bb40, type: 3}
+  <InventoryThumbnail>k__BackingField: {fileID: 21300000, guid: 16f26cf782892294dab0cb625cf4bb40, type: 3}
+  <KeyLevel>k__BackingField: 3

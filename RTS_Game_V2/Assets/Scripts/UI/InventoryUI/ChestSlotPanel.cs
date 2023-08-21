@@ -31,6 +31,8 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         infoPanel = infoObject.GetComponent<InventoryInfoPanel>();
         nameHolder = GetComponentInChildren<TMP_Text>();
         textureHolder = GetComponent<Image>();
+        //panelSlotSprite = textureHolder.sprite;
+        //panelSlotColor = textureHolder.color;
     }
     void Start()
     {
@@ -38,19 +40,18 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     }
 
-    public void SetChestSlotUI(ChestSO chestSO,TreasureSO treasureSO, Color slotColor, Sprite panelSlotSprite = null)
+    public void SetChestSlotUI(ChestSO chestSO,TreasureSO treasureSO, Color slotColor)
     {
         this.chestSO = chestSO;
-        this.treasureSO = treasureSO;
-        nameHolder.text = treasureSO.GetName();
-        textureHolder.color = slotColor;
-        if(panelSlotSprite == null)
+        textureHolder.color = panelSlotColor;
+        textureHolder.sprite = this.panelSlotSprite;
+
+        if (treasureSO != null)
         {
+            this.treasureSO = treasureSO;
+            nameHolder.text = treasureSO.GetName();
+            textureHolder.color = slotColor;
             textureHolder.sprite = treasureSO.GetThumbnail();
-        }
-        else
-        {
-            textureHolder.sprite = panelSlotSprite;
         }
 
     }
@@ -120,7 +121,7 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void SetEmptySlot()
     {
-        chestSO.RemoveTreasure(treasureSO);
+        chestSO.RemoveTreasure(slotIndex);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -133,9 +134,11 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 IInventoryItem invItem = invSlot.Item;
                 if(invItem is TreasureSO)
                 {
-                    Inventory.Instance.RemoveItem(invSlot.SlotNumber);
-                    SetChestSlotUI(chestSO,invItem as TreasureSO, Color.white, invItem.InventoryThumbnail);
-                    chestSO.AddTreasure(invItem as TreasureSO);
+                    if (chestSO.AddTreasure(slotIndex, invItem as TreasureSO))
+                    {
+                        Inventory.Instance.RemoveItem(invSlot.SlotNumber);
+                        SetChestSlotUI(chestSO, invItem as TreasureSO, Color.white);
+                    }
                 }
             }
 
