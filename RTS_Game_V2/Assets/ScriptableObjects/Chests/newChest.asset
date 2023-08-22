@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5125d5c983fb1ab4186986926980e3ee, type: 3}
-  m_Name: newChes 1
+  m_Name: newChest
   m_EditorClassIdentifier: 
-  nameText: 'Skrzynia '
-  description: zwykla skrzynia
+  nameText: 
+  description: 
   chestId: 0
   treasureList:
-  - {fileID: 11400000, guid: 61eba1617ee6ab14f85ef895ebf72909, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 78f4ba69b54ee094483883509bf0cb38, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

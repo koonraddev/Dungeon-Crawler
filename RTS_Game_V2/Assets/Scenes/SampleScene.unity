@@ -1871,7 +1871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localOffset: {x: 0, y: 25, z: -18}
   camDistanceMin: 10
-  camDistanceMax: 40
+  camDistanceMax: 20
   scrollSpeed: 5
   zoomSensitivity: 0.166
   canZoom: 1

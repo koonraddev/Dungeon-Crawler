@@ -12,7 +12,7 @@ public class ChestSO : ScriptableObject
 
     private void OnValidate()
     {
-        if(treasureList.Count > 25)
+        if (treasureList.Count > 25)
         {
             int slotsToCreate = treasureList.Count - 25;
             for (int i = 0; i < slotsToCreate; i++)
@@ -33,11 +33,14 @@ public class ChestSO : ScriptableObject
 
     private void Awake()
     {
-        treasureList = new();
+        if(treasureList == null)
         {
-            for (int i = 0; i < 25; i++)
+            treasureList = new();
             {
-                treasureList.Add(null);
+                for (int i = 0; i < 25; i++)
+                {
+                    treasureList.Add(null);
+                }
             }
         }
     }

@@ -31,15 +31,7 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         infoPanel = infoObject.GetComponent<InventoryInfoPanel>();
         nameHolder = GetComponentInChildren<TMP_Text>();
         textureHolder = GetComponent<Image>();
-        //panelSlotSprite = textureHolder.sprite;
-        //panelSlotColor = textureHolder.color;
     }
-    void Start()
-    {
-
-
-    }
-
     public void SetChestSlotUI(ChestSO chestSO,TreasureSO treasureSO, Color slotColor)
     {
         this.chestSO = chestSO;
