@@ -18,6 +18,8 @@ public class Room : MonoBehaviour
     private bool readyTo;
     private GameObject spawner;
     private bool pointsCanBeChecked;
+
+    public bool isLastRoom;
     private void Awake()
     {
         planeSize = GetComponent<Collider>().bounds.size;
@@ -38,9 +40,10 @@ public class Room : MonoBehaviour
     }
 
 
-    public void SetEssentials(RoomSO roomSO, SpawnPoint.SpawnType spawnToExclude)
+    public void SetEssentials(RoomSO roomSO, SpawnPoint.SpawnType spawnToExclude, bool isLastRoom)
     {
         this.roomSO = roomSO;
+        this.isLastRoom = isLastRoom;
         switch (spawnToExclude)
         {
             case SpawnPoint.SpawnType.NORTH:
@@ -190,7 +193,7 @@ public class Room : MonoBehaviour
 
         SpawnWalls spawnScript = gameObject.AddComponent(typeof(SpawnWalls)) as SpawnWalls;
         spawnScript.SetEssentials(roomSO, doorsArray);
-        roomSO.RoomBehavoiur(gameObject);
+        roomSO.RoomBehavoiur(gameObject, isLastRoom);
     }
 
 }

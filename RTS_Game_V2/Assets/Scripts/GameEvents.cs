@@ -26,6 +26,16 @@ public class GameEvents : MonoBehaviour
     public event Action OnEndGeneratingLevel;
     public event Action<int> OnOpenRoom;
 
+
+    //Spawns ready status
+    //public event Action OnLastSpawnPoint
+    public event Action OnLastRoomReady;
+
+    public void LastRoomReady()
+    {
+        OnLastRoomReady?.Invoke();
+    }
+
     public void Spawn(int id)
     {
         OnSpawn?.Invoke(id);

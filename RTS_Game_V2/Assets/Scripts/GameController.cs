@@ -21,6 +21,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField] public NavMeshSurface surface;
 
+
+    //testing
+
     public enum GameStatus
     {
         START,
@@ -51,6 +54,7 @@ public class GameController : MonoBehaviour
         }
 
         //GameEvents.instance.OnUpdateNaviMesh += UpdateNavMesh;
+        GameEvents.instance.OnLastRoomReady += LastRoomReady;
     }
 
     private void Update()
@@ -68,4 +72,17 @@ public class GameController : MonoBehaviour
     {
         surface.BuildNavMesh();
     }
+
+
+    private void LastRoomReady()
+    {
+        Debug.Log("Last Room Ready");
+        UpdateNavMesh();
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.instance.OnLastRoomReady -= LastRoomReady;
+    }
+
 }

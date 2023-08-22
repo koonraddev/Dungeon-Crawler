@@ -32,7 +32,7 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     void Start()
     {
-        moveInspectAction = playerControls.BasicMovement.MoveInspect;
+        moveInspectAction = playerControls.BasicMovement.Inspect;
         playerMovement = GetComponent<PlayerMovement>();
     }
 

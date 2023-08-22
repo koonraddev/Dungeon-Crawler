@@ -33,15 +33,22 @@ public class FightRoomSO : RoomSO
         return roomFloorMaterial;
     }
 
-    public override void RoomBehavoiur(GameObject gameObject)
+    public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        gameObject.GetComponent<Renderer>().material = roomFloorMaterial;
+        roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
 
         GameObject newCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        newCube.transform.position = gameObject.transform.position;
+        newCube.transform.position = roomGameObject.transform.position;
         newCube.name = enemyDescription;
-        newCube.transform.SetParent(gameObject.transform);
+        newCube.transform.SetParent(roomGameObject.transform);
+
+        if (isLastRoom)
+        {
+            GameEvents.instance.LastRoomReady();
+        }
+
     }
+
 
     public override List<DoorSO> RoomDoors()
     {

@@ -29,9 +29,14 @@ public class EmptyRoomSO : RoomSO
         return roomFloorMaterial;
     }
 
-    public override void RoomBehavoiur(GameObject gameObject)
+    public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        gameObject.GetComponent<Renderer>().material = roomFloorMaterial;
+        roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
+
+        if (isLastRoom)
+        {
+            GameEvents.instance.LastRoomReady();
+        }
     }
 
     public override List<DoorSO> RoomDoors()

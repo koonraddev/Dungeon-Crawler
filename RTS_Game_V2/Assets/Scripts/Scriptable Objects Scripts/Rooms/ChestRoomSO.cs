@@ -34,14 +34,14 @@ public class ChestRoomSO : RoomSO
         return maxDoorsInWall;
     }
 
-    public override void RoomBehavoiur(GameObject gameObject)
+    public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        gameObject.GetComponent<Renderer>().material = roomFloorMaterial;
+        roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
 
-        mColl = gameObject.GetComponent<MeshCollider>();
+        mColl = roomGameObject.GetComponent<MeshCollider>();
         spawnPlaneSizeX = mColl.bounds.size.x;
         spawnPlaneSizeZ = mColl.bounds.size.z;
-        planePos = gameObject.transform.position;
+        planePos = roomGameObject.transform.position;
 
         foreach (var item in chestList)
         {
@@ -51,6 +51,10 @@ public class ChestRoomSO : RoomSO
 
             newChest.transform.rotation = GetChestSpawnRotation();
             newChest.transform.position = GetChestSpawnPosition();
+        }
+        if (isLastRoom)
+        {
+            GameEvents.instance.LastRoomReady();
         }
     }
 

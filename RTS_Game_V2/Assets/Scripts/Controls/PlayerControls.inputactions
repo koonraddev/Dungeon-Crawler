@@ -6,7 +6,7 @@
             "id": "23c83fe9-e588-4f0a-8620-f671fe3d05cb",
             "actions": [
                 {
-                    "name": "MoveInspect",
+                    "name": "Move",
                     "type": "Button",
                     "id": "7284f024-eedb-486d-9195-f7c8a9d8333a",
                     "expectedControlType": "Button",
@@ -22,17 +22,26 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Inspect",
+                    "type": "Button",
+                    "id": "b3c1f694-6b87-4af9-886a-0e67070961dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "7b6e2972-c3cf-4218-81b1-d46aeecd0205",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Mouse",
-                    "action": "MoveInspect",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -43,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "MoveInspect",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -55,6 +64,17 @@
                     "processors": "",
                     "groups": "Mouse",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e5c7587-0a9e-44c6-9e34-13fe8ef3132a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "Inspect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

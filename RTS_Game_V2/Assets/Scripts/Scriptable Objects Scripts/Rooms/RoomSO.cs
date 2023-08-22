@@ -10,5 +10,5 @@ public abstract class RoomSO: ScriptableObject
     public abstract GameObject RoomPlane();
     public abstract Material RoomWallMaterial();
     public abstract Material RoomFloorMaterial();
-    public abstract void RoomBehavoiur(GameObject gameObject);
+    public abstract void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false);
 }

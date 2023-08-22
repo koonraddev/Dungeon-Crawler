@@ -24,6 +24,8 @@ public class SpawnPoint : MonoBehaviour
     public SpawnStatus spawnStatus;
     private bool isChecked;
 
+    private bool isLastSpawn;
+
     public  enum SpawnStatus
     {
         BLOCKED,
@@ -103,7 +105,11 @@ public class SpawnPoint : MonoBehaviour
             }
             else
             {
-                roomScript.SetEssentials(newRoomSO, spawnType);
+                if(RoomsGenerator.instance.GetRoomsLeft() == 0)
+                {
+                    isLastSpawn = true;
+                }
+                roomScript.SetEssentials(newRoomSO, spawnType, isLastSpawn);
             }
             newRoom.SetActive(true);
 

@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        moveInspectAction = playerControls.BasicMovement.MoveInspect;
+        moveInspectAction = playerControls.BasicMovement.Move;
 
         playerAgent = gameObject.GetComponent<NavMeshAgent>();
         groundMask = LayerMask.NameToLayer("Ground");
@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (moveInspectAction.triggered && !EventSystem.current.IsPointerOverGameObject())
+        if (moveInspectAction.IsInProgress() && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity))
