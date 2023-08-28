@@ -15,10 +15,13 @@ public class GameController : MonoBehaviour
     [Tooltip("Specify whether the Message Menu should follow mouse when on top of a object")]
     [SerializeField] private bool followMouse;
 
-    [Header("Inventory")]
+    [Header("Player Section")]
     [Tooltip("Inventory Scriptale Object")]
     [SerializeField] private InventorySO inventorySO;
+    [Tooltip("Player Object")]
+    [SerializeField] private GameObject playerObject;
 
+    [Space(15)]
     [SerializeField] public NavMeshSurface surface;
 
 
@@ -53,31 +56,29 @@ public class GameController : MonoBehaviour
             Inventory.Instance.InventorySO = inventorySO;
         }
 
-        //GameEvents.instance.OnUpdateNaviMesh += UpdateNavMesh;
         GameEvents.instance.OnLastRoomReady += LastRoomReady;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            //GameEvents.instance.PrepareGame();
-            UpdateNavMesh();
-        }
 
     }
 
-    //to move to another script
     private void UpdateNavMesh()
     {
         surface.BuildNavMesh();
     }
 
+    private void SpawnPlayer()
+    {
+        Instantiate(playerObject);
+    }
+
 
     private void LastRoomReady()
     {
-        Debug.Log("Last Room Ready");
         UpdateNavMesh();
+        SpawnPlayer();
     }
 
     private void OnDisable()
