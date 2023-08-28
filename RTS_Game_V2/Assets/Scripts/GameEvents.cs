@@ -24,7 +24,6 @@ public class GameEvents : MonoBehaviour
     public event Action OnLoadLevel;
     public event Action OnExitToMenu;
     public event Action OnEndGeneratingLevel;
-    public event Action<int> OnOpenRoom;
 
 
     //Spawns ready status

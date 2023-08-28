@@ -66,7 +66,9 @@ public class GameController : MonoBehaviour
 
     private void UpdateNavMesh()
     {
+        Debug.Log("UPDATE siatki");
         surface.BuildNavMesh();
+
     }
 
     private void SpawnPlayer()
@@ -77,7 +79,7 @@ public class GameController : MonoBehaviour
 
     private void LastRoomReady()
     {
-        UpdateNavMesh();
+        //UpdateNavMesh();
         SpawnPlayer();
     }
 

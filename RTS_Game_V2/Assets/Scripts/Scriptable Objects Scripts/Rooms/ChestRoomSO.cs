@@ -51,6 +51,7 @@ public class ChestRoomSO : RoomSO
 
             newChest.transform.rotation = GetChestSpawnRotation();
             newChest.transform.position = GetChestSpawnPosition();
+            newChest.transform.SetParent(roomGameObject.transform);
         }
         if (isLastRoom)
         {
