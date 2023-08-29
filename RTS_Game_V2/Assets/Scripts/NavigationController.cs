@@ -8,7 +8,7 @@ public class NavigationController : MonoBehaviour
 
     public static NavigationController instance;
 
-    private List<NavMeshSurface> surfacesList;
+    [SerializeField] private List<NavMeshSurface> surfacesList;
 
     private void Awake()
     {
