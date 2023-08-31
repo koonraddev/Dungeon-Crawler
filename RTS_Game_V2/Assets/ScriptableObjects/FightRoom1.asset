@@ -19,4 +19,5 @@ MonoBehaviour:
   doorsList:
   - {fileID: 11400000, guid: b43c1e99ff9932249ac4fa0da06fcbd7, type: 2}
   maxDoorsInWall: 2
-  enemyDescription: Tu beda przeciwnicy
+  enemySpawnerObject: {fileID: 5816622439559371117, guid: 816921484448a034bb8f9ca906d2b32f, type: 3}
+  enemySpawnerConfigurationSO: {fileID: 11400000, guid: 400b3017bd748424e99193a722597feb, type: 2}

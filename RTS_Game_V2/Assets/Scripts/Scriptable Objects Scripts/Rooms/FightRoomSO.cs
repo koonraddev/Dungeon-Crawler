@@ -14,8 +14,8 @@ public class FightRoomSO : RoomSO
     [SerializeField] private List<DoorSO> doorsList;
     [SerializeField] private int maxDoorsInWall;
     [Header("Enemy section")]
-    public string enemyDescription;
-    //do uzupelnienia
+    [SerializeField] private GameObject enemySpawnerObject;
+    [SerializeField] private EnemySpawnerConfigurationSO enemySpawnerConfigurationSO;
 
 
     public override GameObject DoorPrefab()
@@ -36,17 +36,19 @@ public class FightRoomSO : RoomSO
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
         roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
-
-        GameObject newCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        newCube.transform.position = roomGameObject.transform.position;
-        newCube.name = enemyDescription;
-        newCube.transform.SetParent(roomGameObject.transform);
+        GameObject spawner = Instantiate(enemySpawnerObject,  roomGameObject.transform.position, roomGameObject.transform.rotation);
+        spawner.SetActive(false);
+        spawner.transform.SetParent(roomGameObject.transform);
+        if(spawner.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
+        {
+            enemySpawner.SetSpawner(enemySpawnerConfigurationSO, roomGameObject);
+            spawner.SetActive(true);
+        }
 
         if (isLastRoom)
         {
             GameEvents.instance.LastRoomReady();
         }
-
     }
 
 
