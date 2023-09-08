@@ -11,14 +11,32 @@ public class Enemy : MonoBehaviour
 
     private float maxHealth;
     private float health;
-    private float movementSpeed;
+    private float armor;
+    private float magicResistance;
+
+    private float physicalDamageMultiplier;
+    private float magicDamageMultiplier;
 
     [SerializeField] EnemyMovement enemyMovement;
+    [SerializeField] EnemyAttack enemyAttack;
 
     private void Awake()
     {
+        maxHealth = enemyConfig.Health;
+        armor = enemyConfig.Armor;
+        magicResistance = enemyConfig.MagicResistance;
+
+        physicalDamageMultiplier = 100 / (100 - armor);
+        magicDamageMultiplier = 100 / (100 - magicResistance);
+
         gameObject.SetActive(false);
     }
+
+    private void OnEnable()
+    {
+        health = maxHealth;
+    }
+
 
     void Start()
     {
@@ -29,13 +47,33 @@ public class Enemy : MonoBehaviour
     {
         this.parentRoom = parentRoom;
         gameObject.transform.SetParent(parentRoom.transform);
+
         if (enemyMovement != null)
         {
             enemyMovement.SetEnemyMovement(enemyConfig.MovementSpeed, enemyConfig.MinMoveInterval, enemyConfig.MaxMoveInterval, parentRoom);
         }
+        if(enemyAttack != null)
+        {
+            enemyAttack.SetEnemyAttack(enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage, enemyConfig.EnemyAttackConfigurationSO);
+        }
     }
 
     void Update()
+    {
+        if(health <= 0)
+        {
+            Die();
+        }
+    }
+
+
+    public void Damage(float physicalDamage, float magicDamage, float trueDamage)
+    {
+        float totalDamage = physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage;
+        health -= totalDamage;
+    }
+
+    private void Die()
     {
 
     }

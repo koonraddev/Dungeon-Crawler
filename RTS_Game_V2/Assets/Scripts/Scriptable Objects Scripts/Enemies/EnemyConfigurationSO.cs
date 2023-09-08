@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newEnemyConfiguration", menuName = "Scriptable Objects/Enemy Configuration")]
+[CreateAssetMenu(fileName = "newEnemyConfiguration", menuName = "Scriptable Objects/Enemy/Enemy Configuration", order = 2)]
 public class EnemyConfigurationSO : ScriptableObject
 {
     [Header("Main section")]
@@ -26,10 +26,14 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private float attackSpeed;
     [Tooltip("Minimum Distance between target to attack")]
     [SerializeField] private float attackRange;
+    [Tooltip("Minimum Distance between target to trigger object")]
+    [SerializeField] private float triggerRange;
     [SerializeField] private float physicalDamage;
     [SerializeField] private float magicDamage;
+    [SerializeField] private float trueDamage;
+    [SerializeField] EnemyAttackConfigurationSO enemyAttackConfigurationSO;
 
-    public float Helath { get => health; }
+    public float Health { get => health; }
     public float MovementSpeed { get => movementSpeed; }
     public int MinMoveInterval { get => minMoveInterval; }
     public int MaxMoveInterval { get => maxMoveInterval; }
@@ -37,6 +41,9 @@ public class EnemyConfigurationSO : ScriptableObject
     public float MagicResistance { get => magicResistance; }
     public float AttackSpeed { get => attackSpeed; }
     public float AttackRange { get => attackRange; }
+    public float TriggerRange { get => triggerRange; }
     public float PhysicalDamage { get => physicalDamage; }
     public float MagicDamage { get => magicDamage; }
+    public float TrueDamage { get => trueDamage; }
+    public EnemyAttackConfigurationSO EnemyAttackConfigurationSO { get => enemyAttackConfigurationSO; }
 }

@@ -143,8 +143,10 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
                 if (treasure is IInventoryItem)
                 {
                     // object myObject implements 
-                    Inventory.Instance.AddItem(treasure as IInventoryItem, SlotNumber);
-                    chestSlot.SetEmptySlot();
+                    if (Inventory.Instance.AddItem(treasure as IInventoryItem, SlotNumber))
+                    {
+                        chestSlot.SetEmptySlot();
+                    }
                 }
             }
         }

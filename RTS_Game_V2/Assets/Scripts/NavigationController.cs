@@ -25,7 +25,7 @@ public class NavigationController : MonoBehaviour
 
     private void Start()
     {
-        GameEvents.instance.OnLastRoomReady += LastRoomReady;
+        //GameEvents.instance.OnLastRoomReady += LastRoomReady;
     }
 
     private void LastRoomReady()

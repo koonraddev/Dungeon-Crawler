@@ -59,6 +59,10 @@ public class EnemyMovement : MonoBehaviour
     {
         navAgent.SetDestination(destination);
     }
+    public void StopMovement()
+    {
+        navAgent.isStopped = true;
+    }
 
     private Vector3 GetRandomPosition()
     {

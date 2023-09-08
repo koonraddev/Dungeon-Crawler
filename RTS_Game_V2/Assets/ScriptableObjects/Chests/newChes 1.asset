@@ -17,10 +17,10 @@ MonoBehaviour:
   chestId: 0
   treasureList:
   - {fileID: 11400000, guid: 61eba1617ee6ab14f85ef895ebf72909, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 61eba1617ee6ab14f85ef895ebf72909, type: 2}
+  - {fileID: 11400000, guid: 61eba1617ee6ab14f85ef895ebf72909, type: 2}
   - {fileID: 11400000, guid: 78f4ba69b54ee094483883509bf0cb38, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

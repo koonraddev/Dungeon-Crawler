@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "newEnemySpanwerConfiguration", menuName = "Scriptable Objects/Spawner Configuration")]
+[CreateAssetMenu(fileName = "newEnemySpanwerConfiguration", menuName = "Scriptable Objects/Enemy/Spawner Configuration",order = 1)]
 public class EnemySpawnerConfigurationSO : ScriptableObject
 {
     [SerializeField] private bool manySpawns;

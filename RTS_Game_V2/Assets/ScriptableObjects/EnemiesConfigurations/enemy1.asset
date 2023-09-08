@@ -19,6 +19,8 @@ MonoBehaviour:
   armor: 10
   magicResistance: 5
   attackSpeed: 5
-  attackRange: 3
+  attackRange: 14
+  triggerRange: 20
   physicalDamage: 20
   magicDamage: 0
+  trueDamage: 0
