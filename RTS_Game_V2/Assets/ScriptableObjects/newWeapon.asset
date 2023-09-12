@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0b7121cb17161469ec8eef0bc754ac, type: 3}
+  m_Name: newWeapon
+  m_EditorClassIdentifier: 
+  nameText: Miecz
+  description: jakis miecz
+  damage: 20
+  attackSpeed: 5
+  weaponThumbnail: {fileID: 21300000, guid: 595bc97bc8e1e0b46bd4c2148ba3723a, type: 3}

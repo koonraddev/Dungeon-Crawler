@@ -16,8 +16,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private bool followMouse;
 
     [Header("Player Section")]
-    [Tooltip("Inventory Scriptale Object")]
+    [Tooltip("Inventory Scriptable Object")]
     [SerializeField] private InventorySO inventorySO;
+    [Tooltip("Equipment Scriptable Object")]
+    [SerializeField] private EquipmentSO equipmentSO;
     [Tooltip("Player Object")]
     [SerializeField] private GameObject playerObject;
 
@@ -54,6 +56,12 @@ public class GameController : MonoBehaviour
         {
             GameObject invenotry = new GameObject("Inventory", typeof(Inventory));
             Inventory.Instance.InventorySO = inventorySO;
+        }
+
+        if (!FindObjectOfType(typeof(Equipment)))
+        {
+            GameObject invenotry = new GameObject("Equipment", typeof(Equipment));
+            Equipment.Instance.EquipmentSO = equipmentSO;
         }
 
         GameEvents.instance.OnLastRoomReady += LastRoomReady;

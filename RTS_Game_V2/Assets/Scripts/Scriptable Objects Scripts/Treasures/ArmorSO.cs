@@ -7,8 +7,17 @@ public class ArmorSO : TreasureSO
 {
     [SerializeField] private string nameText;
     [SerializeField] private string description;
-    [SerializeField] private int armor;
+    [SerializeField] private float armor;
+    [SerializeField] private float magicResistance;
     [SerializeField] private Sprite armorThumbnail;
+
+
+    //public string NameText { get => nameText; }
+    //public string Descritpion { get => description; }
+    //public int Armor { get => armor; }
+    //public int MagicResistance { get => magicResistance; }
+    //public Sprite ArmorThumbnail { get => armorThumbnail; }
+
     public override void TreasureBehavoiur()
     {
         //zamienia zbroje w inventory na ta
@@ -24,9 +33,13 @@ public class ArmorSO : TreasureSO
         return description;
     }
     
-    public int GetArmor()
+    public float GetArmor()
     {
         return armor;
+    }
+    public float GetMagicResistance()
+    {
+        return magicResistance;
     }
 
     public Sprite GetArmorThumbnail()

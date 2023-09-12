@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newInventory", menuName = "Scriptable Objects/Inventory", order = 5)]
+[CreateAssetMenu(fileName = "newInventory", menuName = "Scriptable Objects/Player/Inventory", order = 1)]
 public class InventorySO : ScriptableObject
 {
     [SerializeField] [HideInInspector] private InventorySlot[] itemSlots;

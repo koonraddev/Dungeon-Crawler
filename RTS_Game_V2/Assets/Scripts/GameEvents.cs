@@ -10,6 +10,7 @@ public class GameEvents : MonoBehaviour
         instance = this;
     }
     public event Action OnInventoryUpdate;
+    public event Action OnEquipmentUpdate;
     public event Action OnChestUpdate;
     public event Action<int> OnCloseMessage;
     public event Action<InputManager.InputType> OnInputChange;
@@ -43,6 +44,11 @@ public class GameEvents : MonoBehaviour
     public void UpdateInventoryUI()
     {
         OnInventoryUpdate?.Invoke();
+    }
+
+    public void UpdateEquipmentUI()
+    {
+        OnEquipmentUpdate?.Invoke();
     }
 
     public void CloseMessage(int i)

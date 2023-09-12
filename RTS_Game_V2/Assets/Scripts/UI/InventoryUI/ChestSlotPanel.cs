@@ -139,6 +139,20 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             {
                 chestSO.SwapItems(chestSlot.slotIndex, this.slotIndex);
             }
+
+            EquipmentSlotPanel eqSlot = eventData.pointerDrag.GetComponent<EquipmentSlotPanel>();
+            if(eqSlot != null)
+            {
+                IEquipmentItem eqItem = eqSlot.Item;
+                if(eqItem is TreasureSO)
+                {
+                    if (chestSO.AddTreasure(slotIndex, eqItem as TreasureSO))
+                    {
+                        Equipment.Instance.RemoveItem(eqItem);
+                        SetChestSlotUI(chestSO, eqItem as TreasureSO, Color.white);
+                    }
+                }
+            }
         }
     }
 }
