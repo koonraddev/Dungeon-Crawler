@@ -12,7 +12,6 @@ public class EnemyAttack : MonoBehaviour
     private float physicalDamage;
     private float magicDamage;
     private float trueDamage;
-    private EnemyAttackConfigurationSO enemyAttackConfigurationSO;
 
     private float attackCooldown;
 
@@ -20,9 +19,26 @@ public class EnemyAttack : MonoBehaviour
     private PlayerStatistics playerStats;
     private Vector3 pointToMove;
 
+
+    //[SerializeField] EnemyAttackConfigurationSO enemyAttackConfigurationSO;
+    //private AttackType attackType;
+    //private float effectSpeed;
+    //private GameObject effeectPrefab;
+    //private GameObject effect;
+
+    //private List<GameObject> pooledObjects;
     void Start()
     {
         attackCooldown = 0;
+    }
+
+    private void Awake()
+    {
+        //pooledObjects = new List<GameObject>();
+        //attackType = enemyAttackConfigurationSO.AttackType;
+        //effectSpeed = enemyAttackConfigurationSO.EffectSpeed;
+        //effeectPrefab = enemyAttackConfigurationSO.EffectPrefab;
+        //CreateObject();
     }
 
     void Update()
@@ -31,7 +47,6 @@ public class EnemyAttack : MonoBehaviour
         {
             attackCooldown -= Time.deltaTime;
         }
-
 
         if (playerObject != null)
         {
@@ -51,6 +66,7 @@ public class EnemyAttack : MonoBehaviour
                         return;
                     }
                 }
+
                 if (enemyMovement != null)
                 {
                     if (distance > attackRange)
@@ -89,13 +105,14 @@ public class EnemyAttack : MonoBehaviour
     {
         if (attackCooldown <= 0 && playerStats != null)
         {
+            //AttackEffect();
             playerStats.Damage(physicalDamage, magicDamage, trueDamage);
-            enemyAttackConfigurationSO.AttackEffect(this.gameObject,playerObject);
             attackCooldown = attackSpeed;
+            Debug.Log("Attack damage: PH - " + physicalDamage + "; MA - " + magicDamage + " TR - " + trueDamage);
         }
     }
 
-    public void SetEnemyAttack(float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage, EnemyAttackConfigurationSO enemyAttackConfigurationSO)
+    public void SetEnemyAttack(float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage)
     {
         this.attackSpeed = attackSpeed;
         this.attackRange = attackRange;
@@ -103,7 +120,6 @@ public class EnemyAttack : MonoBehaviour
         this.physicalDamage = physicalDamage;
         this.magicDamage = magicDamage;
         this.trueDamage = trueDamage;
-        this.enemyAttackConfigurationSO = enemyAttackConfigurationSO;
     }
 
     private void OnDrawGizmos()
@@ -111,4 +127,41 @@ public class EnemyAttack : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, triggerRange);
         Gizmos.DrawSphere(pointToMove, 1);
     }
+
+    //private void AttackEffect()
+    //{
+    //    if(effeectPrefab != null)
+    //    {
+    //        if (GetPooledObject() == null)
+    //        {
+    //            CreateObject();
+    //            effect = GetPooledObject();
+    //        }
+    //        else
+    //        {
+    //            effect = GetPooledObject();
+    //        }
+    //        effect.SetActive(true);
+    //    }
+    //}
+
+    //private void CreateObject()
+    //{
+    //    GameObject tmp = Instantiate(effeectPrefab);
+    //    tmp.SetActive(false);
+    //    pooledObjects.Add(tmp);
+    //}
+
+    //private GameObject GetPooledObject()
+    //{
+    //    int objectsInList = pooledObjects.Count;
+    //    for (int i = 0; i < objectsInList; i++)
+    //    {
+    //        if (!pooledObjects[i].activeInHierarchy)
+    //        {
+    //            return pooledObjects[i];
+    //        }
+    //    }
+    //    return null;
+    //}
 }

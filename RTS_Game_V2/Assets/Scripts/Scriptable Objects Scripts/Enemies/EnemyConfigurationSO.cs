@@ -31,7 +31,6 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private float physicalDamage;
     [SerializeField] private float magicDamage;
     [SerializeField] private float trueDamage;
-    [SerializeField] EnemyAttackConfigurationSO enemyAttackConfigurationSO;
 
     public float Health { get => health; }
     public float MovementSpeed { get => movementSpeed; }
@@ -45,5 +44,4 @@ public class EnemyConfigurationSO : ScriptableObject
     public float PhysicalDamage { get => physicalDamage; }
     public float MagicDamage { get => magicDamage; }
     public float TrueDamage { get => trueDamage; }
-    public EnemyAttackConfigurationSO EnemyAttackConfigurationSO { get => enemyAttackConfigurationSO; }
 }

@@ -18,6 +18,9 @@ public class PlayerStatistics : MonoBehaviour
 
 
     //[SerializeField] EquipmentManager playerEq;
+
+    private float interval = 60f;
+    private float timeLeft;
     void Start()
     {
         //GameEvents.instance.OnEquipmentUpdate += UpdateStats;
@@ -26,7 +29,27 @@ public class PlayerStatistics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeLeft -= Time.deltaTime;
+        if(timeLeft <= 0)
+        {
+            Heal(healthRegeneration);
+            timeLeft = interval;
+        }
+    }
 
+
+    private void SetAllStatistics(float armor, float magicResistance, float health, float maxHealth)
+    {
+        SetArmor(armor);
+        SetMagicResistance(magicResistance);
+        this.health = health;
+        SetMaxHealth(maxHealth);
+    }
+
+
+    public void UpdateStats()
+    {
+        //SetAllStatistics();
     }
 
     public void SetArmor(float armor)
@@ -41,9 +64,10 @@ public class PlayerStatistics : MonoBehaviour
         magicDamageMultiplier = 100 / (100 - magicResistance);
     }
 
-    public void UpdateStats()
+
+    public void SetRegeneration()
     {
-        //SetAllStatistics();
+
     }
 
     public void SetMaxHealth(float maxHealth)
@@ -53,17 +77,11 @@ public class PlayerStatistics : MonoBehaviour
         health = healthRatio * this.maxHealth;
     }
 
-    private void SetAllStatistics(float armor, float magicResistance, float health, float maxHealth)
-    {
-        SetArmor(armor);
-        SetMagicResistance(magicResistance);
-        this.health = health;
-        SetMaxHealth(maxHealth);
-    }
 
     public void Damage(float physicalDamage, float magicDamage, float trueDamage)
     {
         float totalDamage = physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage;
+        Debug.Log("LOG. Attack damage gained: PH - " + physicalDamage * physicalDamageMultiplier + "; MA - " + magicDamage * magicDamageMultiplier + " TR - " + trueDamage);
         health -= totalDamage;
     }
 

@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
         }
         if(enemyAttack != null)
         {
-            enemyAttack.SetEnemyAttack(enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage, enemyConfig.EnemyAttackConfigurationSO);
+            enemyAttack.SetEnemyAttack(enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage);
         }
     }
 
@@ -75,6 +75,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-
+        gameObject.SetActive(false);
     }
 }
