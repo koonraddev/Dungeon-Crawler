@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [System.Serializable]
 public class EquipmentSlot
@@ -64,8 +65,8 @@ public class EquipmentSO : ScriptableObject
         {
             if (item.ItemInSlot == itemToRemove)
             {
-                GameEvents.instance.UpdateEquipmentUI();
                 item.ItemInSlot = null;
+                GameEvents.instance.UpdateEquipmentUI();
             }
         }
     }
@@ -76,8 +77,8 @@ public class EquipmentSO : ScriptableObject
         {
             if (item.ItemSlotType == slotToClear)
             {
-                GameEvents.instance.UpdateEquipmentUI();
                 item.ItemInSlot = null;
+                GameEvents.instance.UpdateEquipmentUI();
             }
         }
     }
@@ -95,6 +96,18 @@ public class EquipmentSO : ScriptableObject
             {
                 return eqSlot;
             }
+        }
+        return null;
+    }
+
+    public Dictionary<StatisticType, float> GetStatistics(ItemSlotType itemSlotType)
+    {
+        EquipmentSlot eqSlot = slotsList.Find(sl => sl.ItemSlotType == itemSlotType);
+        IEquipmentItem eqItem = eqSlot.ItemInSlot;
+
+        if(eqItem != null)
+        {
+            return eqItem.Statistics;
         }
         return null;
     }

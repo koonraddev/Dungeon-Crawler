@@ -52,4 +52,9 @@ public class Equipment : MonoBehaviour
     {
         return EquipmentSO.GetEquipmentSlot(itemSlotType);
     }
+
+    public Dictionary<StatisticType, float> GetStatistics(ItemSlotType itemSlotType)
+    {
+        return EquipmentSO.GetStatistics(itemSlotType);
+    }
 }

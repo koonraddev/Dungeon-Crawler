@@ -2,6 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StatisticType
+{
+    MaxHealth,
+    HealthPointsRegeneration,
+    HealthPercentageRegeneration,
+    Armor,
+    MagicResistance,
+    PhysicalDamage,
+    MagicDamage,
+    AttackSpeed,
+    AttackRange
+}
+
+
 public class PlayerStatistics : MonoBehaviour
 {
     private float maxHealth;
@@ -10,6 +24,8 @@ public class PlayerStatistics : MonoBehaviour
     private float magicResistance;
     private float physicalDamageMultiplier;
     private float magicDamageMultiplier;
+    private float attackSpeed;
+    private float attackRange;
 
     //Health Regeneration;
     private float healthRegeneration;// health(Points) per minute (totality)
@@ -23,7 +39,7 @@ public class PlayerStatistics : MonoBehaviour
     private float timeLeft;
     void Start()
     {
-        //GameEvents.instance.OnEquipmentUpdate += UpdateStats;
+        GameEvents.instance.OnEquipmentUpdate += UpdateStats;
     }
 
     // Update is called once per frame
@@ -45,6 +61,75 @@ public class PlayerStatistics : MonoBehaviour
         this.health = health;
         SetMaxHealth(maxHealth);
     }
+
+    private void SetAllStatistics()
+    {
+        float newMaxHealth = 0;
+        float newArmor = 0;
+        float newMagicResist = 0;
+        float newPhysicalDmg = 0;
+        float newMagicDmg = 0;
+        float newhealthPointsRegen = 0;
+        float newhealtPercentageRegen = 0;
+        float newAttackSpeed = 0;
+        float newAttackRange = 0;
+
+        foreach (ItemSlotType slotType in System.Enum.GetValues(typeof(ItemSlotType)))
+        {
+            IDictionary stats = Equipment.Instance.GetStatistics(slotType);
+            foreach (KeyValuePair<StatisticType,float> oneStat in stats)
+            {
+                switch (oneStat.Key)
+                {
+                    case StatisticType.MaxHealth:
+                        newMaxHealth += oneStat.Value;
+                        break;
+                    case StatisticType.HealthPointsRegeneration:
+                        newhealthPointsRegen += oneStat.Value;
+                        break;
+                    case StatisticType.HealthPercentageRegeneration:
+                        newhealtPercentageRegen += oneStat.Value;
+                        break;
+                    case StatisticType.Armor:
+                        newArmor += oneStat.Value;
+                        break;
+                    case StatisticType.MagicResistance:
+                        newMagicResist += oneStat.Value;
+                        break;
+                    case StatisticType.PhysicalDamage:
+                        newPhysicalDmg += oneStat.Value;
+                        break;
+                    case StatisticType.MagicDamage:
+                        newMagicDmg += oneStat.Value;
+                        break;
+                    case StatisticType.AttackSpeed:
+                        newAttackSpeed += oneStat.Value;
+                        break;
+                    case StatisticType.AttackRange:
+                        newAttackRange += oneStat.Value;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            maxHealth = newMaxHealth;
+            healthPointsRegen = newhealthPointsRegen;
+            healthPercentsRegen = newhealtPercentageRegen;
+            armor = newArmor;
+            magicResistance = newMagicResist;
+            attackSpeed = newAttackSpeed;
+            attackRange = newAttackRange;
+
+        }
+
+        //Equipment.Instance.Ge
+        SetArmor(armor);
+        SetMagicResistance(magicResistance);
+        SetMaxHealth(maxHealth);
+    }
+
 
 
     public void UpdateStats()
