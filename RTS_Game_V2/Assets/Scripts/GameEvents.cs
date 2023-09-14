@@ -11,6 +11,7 @@ public class GameEvents : MonoBehaviour
     }
     public event Action OnInventoryUpdate;
     public event Action OnEquipmentUpdate;
+    public event Action OnStatsUpdate;
     public event Action OnChestUpdate;
     public event Action<int> OnCloseMessage;
     public event Action<InputManager.InputType> OnInputChange;
@@ -41,14 +42,19 @@ public class GameEvents : MonoBehaviour
         OnSpawn?.Invoke(id);
     }
 
-    public void UpdateInventoryUI()
+    public void InventoryUpdate()
     {
         OnInventoryUpdate?.Invoke();
     }
 
-    public void UpdateEquipmentUI()
+    public void EquipmentUpdate()
     {
         OnEquipmentUpdate?.Invoke();
+    }
+    
+    public void StatisticsUpdate()
+    {
+        OnStatsUpdate?.Invoke();
     }
 
     public void CloseMessage(int i)

@@ -84,15 +84,6 @@ public class WeaponSO : TreasureSO, IEquipmentItem
         //to do
     }
 
-
-    public void OnEnable()
-    {
-        Debug.Log(statistics[StatisticType.PhysicalDamage]);
-        Debug.Log(statistics[StatisticType.MagicDamage]);
-        Debug.Log(statistics[StatisticType.AttackSpeed]);
-        Debug.Log(statistics[StatisticType.AttackRange]);
-    }
-
     public override string GetName()
     {
         return nameText;

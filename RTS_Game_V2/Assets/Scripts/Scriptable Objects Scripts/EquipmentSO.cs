@@ -33,17 +33,6 @@ public class EquipmentSO : ScriptableObject
         }
     }
 
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public bool AddItem(IEquipmentItem itemToAdd)
     {
         foreach (var item in slotsList)
@@ -51,7 +40,7 @@ public class EquipmentSO : ScriptableObject
             if((item.ItemSlotType == itemToAdd.ItemSlotType) && item.ItemInSlot == null)
             {
                 item.ItemInSlot = itemToAdd;
-                GameEvents.instance.UpdateEquipmentUI();
+                GameEvents.instance.EquipmentUpdate();
                 return true;
             }
         }
@@ -66,7 +55,7 @@ public class EquipmentSO : ScriptableObject
             if (item.ItemInSlot == itemToRemove)
             {
                 item.ItemInSlot = null;
-                GameEvents.instance.UpdateEquipmentUI();
+                GameEvents.instance.EquipmentUpdate();
             }
         }
     }
@@ -78,7 +67,7 @@ public class EquipmentSO : ScriptableObject
             if (item.ItemSlotType == slotToClear)
             {
                 item.ItemInSlot = null;
-                GameEvents.instance.UpdateEquipmentUI();
+                GameEvents.instance.EquipmentUpdate();
             }
         }
     }

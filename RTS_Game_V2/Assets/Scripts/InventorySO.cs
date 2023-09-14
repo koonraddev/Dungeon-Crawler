@@ -75,7 +75,7 @@ public class InventorySO : ScriptableObject
             {
                 invSlot.ItemAmount = 1;
                 itemSlots[i] = invSlot;
-                GameEvents.instance.UpdateInventoryUI();
+                GameEvents.instance.InventoryUpdate();
                 return true;
             }
             else
@@ -85,7 +85,7 @@ public class InventorySO : ScriptableObject
 
                     invSlot.ItemAmount = invSlot.ItemAmount + itemSlots[i].ItemAmount + 1;
                     itemSlots[i] = invSlot;
-                    GameEvents.instance.UpdateInventoryUI();
+                    GameEvents.instance.InventoryUpdate();
                     return true;
 
                 }
@@ -106,7 +106,7 @@ public class InventorySO : ScriptableObject
         {
             invSlot.ItemAmount = 1;
             itemSlots[slotIndex] = invSlot;
-            GameEvents.instance.UpdateInventoryUI();
+            GameEvents.instance.InventoryUpdate();
             return true;
         }
 
@@ -150,7 +150,7 @@ public class InventorySO : ScriptableObject
                 }
             }
         }
-        GameEvents.instance.UpdateInventoryUI();
+        GameEvents.instance.InventoryUpdate();
     }
 
     public void SwapItems(int requestingSlotIndex, int destinationSlotIndex)
@@ -163,7 +163,7 @@ public class InventorySO : ScriptableObject
             itemSlots[requestingSlotIndex] = slotB;
             itemSlots[destinationSlotIndex] = requestingSlot;
         }
-        GameEvents.instance.UpdateInventoryUI();
+        GameEvents.instance.InventoryUpdate();
     }
 
     public void RemoveItem(IInventoryItem itemToRemove)
@@ -182,7 +182,7 @@ public class InventorySO : ScriptableObject
                     {
                         itemSlots[i].ItemAmount--;
                     }
-                    GameEvents.instance.UpdateInventoryUI();
+                    GameEvents.instance.InventoryUpdate();
                     break;
 
                 }
@@ -206,14 +206,14 @@ public class InventorySO : ScriptableObject
             {
                 invSlot.ItemAmount--;
             }
-            GameEvents.instance.UpdateInventoryUI();
+            GameEvents.instance.InventoryUpdate();
         }
     }
 
     public void ClearSlot(int slotNumber)
     {
         itemSlots[slotNumber] = null;
-        GameEvents.instance.UpdateInventoryUI();
+        GameEvents.instance.InventoryUpdate();
     }
 
     public bool CheckItem(IInventoryItem itemToCheck)
