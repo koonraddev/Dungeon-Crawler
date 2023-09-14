@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class InventoryInfoPanel : MonoBehaviour
+public class InformationPanel : MonoBehaviour
 {
     [SerializeField] private GameObject nameObject;
     [SerializeField] private GameObject infoObject;

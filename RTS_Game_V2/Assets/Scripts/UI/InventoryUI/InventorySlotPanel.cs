@@ -14,7 +14,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     private GameObject canvas;
     private UIController uiCtrl;
     private GameObject infoObject;
-    private InventoryInfoPanel infoPanel;
+    private InformationPanel infoPanel;
 
     private GameObject newObj;
     private RectTransform rect;
@@ -27,7 +27,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         canvas = transform.root.gameObject;
         uiCtrl = canvas.GetComponent<UIController>();
         infoObject = uiCtrl.GetInfoPanel();
-        infoPanel = infoObject.GetComponent<InventoryInfoPanel>();
+        infoPanel = infoObject.GetComponent<InformationPanel>();
     }
 
     public void SetInventorySlotUI(IInventoryItem item, int amount, Color slotColor)

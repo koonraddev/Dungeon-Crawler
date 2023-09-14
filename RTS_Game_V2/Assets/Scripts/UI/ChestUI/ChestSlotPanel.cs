@@ -13,7 +13,7 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private GameObject canvas;
     private UIController uiCtrl;
     private GameObject infoObject;
-    private InventoryInfoPanel infoPanel;
+    private InformationPanel infoPanel;
 
     private GameObject newObj;
     private RectTransform rect;
@@ -28,7 +28,7 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         canvas = transform.root.gameObject;
         uiCtrl = canvas.GetComponent<UIController>();
         infoObject = uiCtrl.GetInfoPanel();
-        infoPanel = infoObject.GetComponent<InventoryInfoPanel>();
+        infoPanel = infoObject.GetComponent<InformationPanel>();
         nameHolder = GetComponentInChildren<TMP_Text>();
         textureHolder = GetComponent<Image>();
     }
