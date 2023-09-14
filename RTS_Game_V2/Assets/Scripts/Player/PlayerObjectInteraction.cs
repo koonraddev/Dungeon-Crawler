@@ -10,6 +10,7 @@ public class PlayerObjectInteraction : MonoBehaviour
     [SerializeField] private Color highLightObjectColor;
     [SerializeField] private LayerMask interactiveObjectMask;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerAttack playerAttack;
     [SerializeField] private int minimumDistanceFromObject;
     private float distanceFromObject;
 
@@ -67,14 +68,22 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public void CheckObject(GameObject pointedObject)
     {
-        if (pointedObject != null && pointedObject.TryGetComponent<IInteractionObjects>(out IInteractionObjects pointedScript))
+        if (pointedObject != null)
         {
-            pointedScript.OnMouseEnterObject(highLightObjectColor);
-            if (moveInspectAction.IsPressed())
+            if(pointedObject.TryGetComponent<IInteractionObjects>(out IInteractionObjects pointedScript))
             {
-                StopAllCoroutines();
-                clickedObject = pointedObject;
-                StartCoroutine(InspectObject(pointedScript));
+                pointedScript.OnMouseEnterObject(highLightObjectColor);
+                if (moveInspectAction.IsPressed())
+                {
+                    StopAllCoroutines();
+                    clickedObject = pointedObject;
+                    StartCoroutine(InspectObject(pointedScript));
+                }
+            }
+
+            if (pointedObject.TryGetComponent<Enemy>(out Enemy pointedEnemy))
+            {
+                pointedEnemy.SetEnemy(pointedObject);
             }
         }
     }

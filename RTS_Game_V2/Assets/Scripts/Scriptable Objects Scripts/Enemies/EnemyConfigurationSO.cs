@@ -22,7 +22,7 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private float magicResistance;
 
     [Header("Attack section")]
-    [Tooltip("Attacks per second")]
+    [Tooltip("Attacks per minute")]
     [SerializeField] private float attackSpeed;
     [Tooltip("Minimum Distance between target to attack")]
     [SerializeField] private float attackRange;

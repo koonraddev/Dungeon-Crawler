@@ -13,10 +13,11 @@ public class EnemyAttack : MonoBehaviour
     private float magicDamage;
     private float trueDamage;
 
+    private float timeToWait;
     private float attackCooldown;
 
     private GameObject playerObject;
-    private PlayerStatistics playerStats;
+    private PlayerHealth playerHealthMan;
     private Vector3 pointToMove;
 
 
@@ -95,7 +96,7 @@ public class EnemyAttack : MonoBehaviour
                 {
                     playerObject = collider.gameObject;
                     enemyMovement.StopMovement();
-                    playerStats = playerObject.GetComponent<PlayerStatistics>();
+                    playerHealthMan = playerObject.GetComponent<PlayerHealth>();
                 }
             }
         }
@@ -103,12 +104,11 @@ public class EnemyAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (attackCooldown <= 0 && playerStats != null)
+        if (attackCooldown <= 0 && playerHealthMan != null)
         {
             //AttackEffect();
-            playerStats.Damage(physicalDamage, magicDamage, trueDamage);
-            attackCooldown = attackSpeed;
-            Debug.Log("Attack damage: PH - " + physicalDamage + "; MA - " + magicDamage + " TR - " + trueDamage);
+            playerHealthMan.Damage(physicalDamage, magicDamage, trueDamage);
+            attackCooldown = timeToWait;
         }
     }
 
@@ -120,6 +120,7 @@ public class EnemyAttack : MonoBehaviour
         this.physicalDamage = physicalDamage;
         this.magicDamage = magicDamage;
         this.trueDamage = trueDamage;
+        timeToWait = 60 / attackSpeed;
     }
 
     private void OnDrawGizmos()

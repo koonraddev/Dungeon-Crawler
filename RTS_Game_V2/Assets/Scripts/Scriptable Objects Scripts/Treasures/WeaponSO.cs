@@ -7,6 +7,7 @@ public class WeaponSO : TreasureSO, IEquipmentItem
     [SerializeField] private string nameText;
     [SerializeField] private string description;
     [SerializeField] private float physicalDamage;
+    [SerializeField] private float trueDamage;
     [SerializeField] private float magicDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float attackRange;
@@ -71,6 +72,15 @@ public class WeaponSO : TreasureSO, IEquipmentItem
         else
         {
             statistics[StatisticType.AttackRange] = attackRange;
+        }
+
+        if (!statistics.ContainsKey(StatisticType.TrueDamage))
+        {
+            statistics.Add(StatisticType.TrueDamage, trueDamage);
+        }
+        else
+        {
+            statistics[StatisticType.TrueDamage] = trueDamage;
         }
         //Debug.Log("Validate");
 

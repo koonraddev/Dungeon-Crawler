@@ -6,11 +6,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private PlayerStatistics playerStats;
     private LayerMask groundMask;
     private NavMeshAgent playerAgent;
 
     private PlayerControls playerControls;
     private InputAction moveInspectAction;
+
+    private float movementSpeed;
 
     private void Awake()
     {
@@ -32,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
         playerAgent = gameObject.GetComponent<NavMeshAgent>();
         groundMask = LayerMask.NameToLayer("Ground");
+        UpdateStats();
+        GameEvents.instance.OnStatsUpdate += UpdateStats;
     }
 
 
@@ -48,6 +53,12 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void UpdateStats()
+    {
+        movementSpeed = playerStats.MovementSpeed;
+        playerAgent.speed = movementSpeed;
     }
 
     public void MoveTo(Vector3 destination)

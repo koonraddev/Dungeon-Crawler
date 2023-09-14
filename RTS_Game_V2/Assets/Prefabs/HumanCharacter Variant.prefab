@@ -100,6 +100,32 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.99, z: 0}
+--- !u!114 &-8452055560648588539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222184502115446784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae547a3c9243d44d824fe563838eb8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: a7b220a41dd574c459eef4ed70967764, type: 2}
+--- !u!114 &-7736476395989375232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222184502115446784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ebf619ad4af394cb015894f8ef6ef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: -8452055560648588539}
 --- !u!114 &3871232193948609917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +143,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   playerMovement: {fileID: 3940110844068087954}
+  playerAttack: {fileID: -7736476395989375232}
   minimumDistanceFromObject: 3
 --- !u!114 &3940110844068087954
 MonoBehaviour:
@@ -130,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4abdf708cd6c941808b4b2c40bf6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: -8452055560648588539}
 --- !u!195 &8596881243989432613
 NavMeshAgent:
   m_ObjectHideFlags: 0

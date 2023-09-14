@@ -12,6 +12,7 @@ public enum StatisticType
     MagicResistance,
     PhysicalDamage,
     MagicDamage,
+    TrueDamage,
     AttackSpeed,
     AttackRange
 }
@@ -20,9 +21,7 @@ public enum StatisticType
 public class PlayerStatistics : MonoBehaviour
 {
     [SerializeField] private PlayerBasicStatisticsSO baseStats;
-    private float physicalDamageMultiplier;
-    private float magicDamageMultiplier;
-    private float health;
+
     private float healthRegeneration;// health(Points) per minute (totality)
 
     //BASE
@@ -34,6 +33,7 @@ public class PlayerStatistics : MonoBehaviour
     private float base_attackRange;
     private float base_physicalDamage;
     private float base_magicDamage;
+    private float base_trueDamage;
     private float base_healthPointsRegen;// health regeneration: POINTS (constant) per minute
     private float base_healthPercentsRegen;// health regeneration: PERCENTAGES (of max health) per minute
 
@@ -46,6 +46,7 @@ public class PlayerStatistics : MonoBehaviour
     private float eq_attackRange;
     private float eq_physicalDamage;
     private float eq_magicDamage;
+    private float eq_trueDamage;
     private float eq_healthPointsRegen;// health regeneration: POINTS (constant) per minute
     private float eq_healthPercentsRegen;// health regeneration: PERCENTAGES (of max health) per minute
 
@@ -58,6 +59,7 @@ public class PlayerStatistics : MonoBehaviour
     private float attackRange;
     private float physicalDamage;
     private float magicDamage;
+    private float trueDamage;
     private float healthPointsRegen;// health regeneration: POINTS (constant) per minute
     private float healthPercentsRegen;// health regeneration: PERCENTAGES (of max health) per minute
 
@@ -69,34 +71,17 @@ public class PlayerStatistics : MonoBehaviour
     public float AttackRange { get => attackRange; }
     public float PhysicalDamage { get => physicalDamage; }
     public float MagicDamage { get => magicDamage; }
+    public float TrueDamage { get => trueDamage; }
+    public float HealthRegeneration { get => healthRegeneration; }
     public float HealthPointsRegen { get => healthPointsRegen; }
     public float HealthPercentsRegen { get => healthPercentsRegen; }
 
-    //[SerializeField] EquipmentManager playerEq;
-
-    private float interval = 60f;
-    private float timeLeft;
-
-    private void Awake()
+    void Start()
     {
         SetBasicStatistics();
         SetStatisticsFromEquipment();
         UpdateStats();
-    }
-    void Start()
-    {
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        timeLeft -= Time.deltaTime;
-        if(timeLeft <= 0)
-        {
-            Heal(healthRegeneration);
-            timeLeft = interval;
-        }
     }
 
     private void SetBasicStatistics()
@@ -111,6 +96,7 @@ public class PlayerStatistics : MonoBehaviour
             base_attackRange = baseStats.AttackRange;
             base_physicalDamage = baseStats.PhysicalDamage;
             base_magicDamage = baseStats.MagicDamage;
+            base_trueDamage = baseStats.TrueDamage;
             base_healthPointsRegen = baseStats.HealthPointsRegen;
             base_healthPercentsRegen = baseStats.HealthPercentsRegen;
         }
@@ -125,6 +111,7 @@ public class PlayerStatistics : MonoBehaviour
         float newMagicResist = 0;
         float newPhysicalDmg = 0;
         float newMagicDmg = 0;
+        float newTrueDmg = 0;
         float newHealthPointsRegen = 0;
         float newHealtPercentageRegen = 0;
         float newAttackSpeed = 0;
@@ -161,6 +148,9 @@ public class PlayerStatistics : MonoBehaviour
                     case StatisticType.MagicDamage:
                         newMagicDmg += oneStat.Value;
                         break;
+                    case StatisticType.TrueDamage:
+                        newTrueDmg += oneStat.Value;
+                        break;
                     case StatisticType.AttackSpeed:
                         newAttackSpeed += oneStat.Value;
                         break;
@@ -181,6 +171,7 @@ public class PlayerStatistics : MonoBehaviour
         eq_attackRange = newAttackRange;
         eq_physicalDamage = newPhysicalDmg;
         eq_magicDamage = newMagicDmg;
+        eq_trueDamage = newTrueDmg;
         eq_healthPointsRegen = newHealthPointsRegen;
         eq_healthPercentsRegen = newHealtPercentageRegen;
     }
@@ -200,41 +191,21 @@ public class PlayerStatistics : MonoBehaviour
         attackRange = base_attackRange + eq_attackRange;
         physicalDamage = base_physicalDamage + eq_physicalDamage;
         magicDamage = base_magicDamage + eq_magicDamage;
+        trueDamage = base_trueDamage + eq_trueDamage;
         healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen;
         healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen;
 
-        physicalDamageMultiplier = 100 / (100 - armor);
-        magicDamageMultiplier = 100 / (100 - magicResistance);
+
         healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
 
-        if(health > maxHealth)
-        {
-            Mathf.Clamp(health, 0, maxHealth);
-        }
 
         GameEvents.instance.StatisticsUpdate();
     }
 
-    public void Damage(float physicalDamage, float magicDamage, float trueDamage)
-    {
-        float totalDamage = physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage;
-        Debug.Log("LOG. Attack damage gained: PH - " + physicalDamage * physicalDamageMultiplier + "; MA - " + magicDamage * magicDamageMultiplier + " TR - " + trueDamage);
-        health -= totalDamage;
-    }
 
-    public void Damage(float healthPoints)
-    {
-        health -= healthPoints;
-    }
-
-    public void Heal(float healthPoints)
-    {
-        health += healthPoints;
-        Mathf.Clamp(health, 0, maxHealth);
-    }
 
     void OnDisable()
     {
-        //GameEvents.instance.OnEquipmentUpdate -= UpdateStats;
+        GameEvents.instance.OnEquipmentUpdate -= UpdateStats;
     }
 }
