@@ -24,8 +24,4 @@ public class MysteryBoxSO : TreasureSO
         return mysteryBoxThumbnail;
     }
 
-    public override void TreasureBehavoiur()
-    {
-        throw new System.NotImplementedException();
-    }
 }

@@ -12,10 +12,6 @@ public class AttackSpeedPotionSO : TreasureSO, IInventoryItem
     [field: SerializeField] public Sprite InventoryThumbnail { get; set; }
     [field: SerializeField] public bool IsReusable { get; set; }
     [field: SerializeField] public int attackSpeedPoints { get; set; }
-    public override void TreasureBehavoiur()
-    {
-        Inventory.Instance.AddItem(this);
-    }
 
     public override string GetName()
     {

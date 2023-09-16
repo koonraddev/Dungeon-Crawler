@@ -9,11 +9,6 @@ public class GoldSO : TreasureSO
     [SerializeField] private int goldAmount;
     [SerializeField] private string description;
     [SerializeField] private Sprite goldThumbnail;
-    public override void TreasureBehavoiur()
-    {
-        Inventory.Instance.AddGold(goldAmount);
-        Destroy(this);
-    }
 
     public int GetGoldAmount()
     {

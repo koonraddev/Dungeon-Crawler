@@ -2,22 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StatisticType
-{
-    MaxHealth,
-    MovementSpeed,
-    HealthPointsRegeneration,
-    HealthPercentageRegeneration,
-    Armor,
-    MagicResistance,
-    PhysicalDamage,
-    MagicDamage,
-    TrueDamage,
-    AttackSpeed,
-    AttackRange
-}
-
-
 public class PlayerStatistics : MonoBehaviour
 {
     [SerializeField] private PlayerBasicStatisticsSO baseStats;
@@ -119,46 +103,51 @@ public class PlayerStatistics : MonoBehaviour
 
         foreach (ItemSlotType slotType in System.Enum.GetValues(typeof(ItemSlotType)))
         {
-            IDictionary stats = Equipment.Instance.GetStatistics(slotType);
-            foreach (KeyValuePair<StatisticType,float> oneStat in stats)
+            Debug.Log("slotype: " + slotType);
+            Dictionary<StatisticType, float> stats = Equipment.Instance.GetStatistics(slotType);
+            if(stats != null)
             {
-                switch (oneStat.Key)
+                Debug.Log("nie jeast pusty");
+                foreach (KeyValuePair<StatisticType, float> oneStat in stats)
                 {
-                    case StatisticType.MaxHealth:
-                        newMaxHealth += oneStat.Value;
-                        break;
-                    case StatisticType.MovementSpeed:
-                        newMovementSpeed += oneStat.Value;
-                        break;
-                    case StatisticType.HealthPointsRegeneration:
-                        newHealthPointsRegen += oneStat.Value;
-                        break;
-                    case StatisticType.HealthPercentageRegeneration:
-                        newHealtPercentageRegen += oneStat.Value;
-                        break;
-                    case StatisticType.Armor:
-                        newArmor += oneStat.Value;
-                        break;
-                    case StatisticType.MagicResistance:
-                        newMagicResist += oneStat.Value;
-                        break;
-                    case StatisticType.PhysicalDamage:
-                        newPhysicalDmg += oneStat.Value;
-                        break;
-                    case StatisticType.MagicDamage:
-                        newMagicDmg += oneStat.Value;
-                        break;
-                    case StatisticType.TrueDamage:
-                        newTrueDmg += oneStat.Value;
-                        break;
-                    case StatisticType.AttackSpeed:
-                        newAttackSpeed += oneStat.Value;
-                        break;
-                    case StatisticType.AttackRange:
-                        newAttackRange += oneStat.Value;
-                        break;
-                    default:
-                        break;
+                    switch (oneStat.Key)
+                    {
+                        case StatisticType.MaxHealth:
+                            newMaxHealth += oneStat.Value;
+                            break;
+                        case StatisticType.MovementSpeed:
+                            newMovementSpeed += oneStat.Value;
+                            break;
+                        case StatisticType.HealthPointsRegeneration:
+                            newHealthPointsRegen += oneStat.Value;
+                            break;
+                        case StatisticType.HealthPercentageRegeneration:
+                            newHealtPercentageRegen += oneStat.Value;
+                            break;
+                        case StatisticType.Armor:
+                            newArmor += oneStat.Value;
+                            break;
+                        case StatisticType.MagicResistance:
+                            newMagicResist += oneStat.Value;
+                            break;
+                        case StatisticType.PhysicalDamage:
+                            newPhysicalDmg += oneStat.Value;
+                            break;
+                        case StatisticType.MagicDamage:
+                            newMagicDmg += oneStat.Value;
+                            break;
+                        case StatisticType.TrueDamage:
+                            newTrueDmg += oneStat.Value;
+                            break;
+                        case StatisticType.AttackSpeed:
+                            newAttackSpeed += oneStat.Value;
+                            break;
+                        case StatisticType.AttackRange:
+                            newAttackRange += oneStat.Value;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }

@@ -27,9 +27,4 @@ public class HealthPotionSO : TreasureSO, IInventoryItem
     {
         return InventoryThumbnail;
     }
-
-    public override void TreasureBehavoiur()
-    {
-        Inventory.Instance.AddItem(this);
-    }
 }

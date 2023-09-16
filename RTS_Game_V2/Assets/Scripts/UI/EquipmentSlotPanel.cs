@@ -4,15 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum ItemSlotType
-{
-    HELMET,
-    ARMOR,
-    LEGS,
-    BOOTS,
-    WEAPON,
-    SHIELD
-}
 public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     [SerializeField] private ItemSlotType slotType;
