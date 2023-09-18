@@ -6,9 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private PlayerStatistics playerStats;
     private LayerMask groundMask;
-    private NavMeshAgent playerAgent;
+    [SerializeField]private NavMeshAgent playerAgent;
 
     private PlayerControls playerControls;
     private InputAction moveInspectAction;
@@ -23,20 +22,19 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
+        GameEvents.instance.OnStatisticUpdate += UpdateStats;
     }
     private void OnDisable()
     {
         playerControls.Disable();
     }
 
+
+
     void Start()
     {
         moveInspectAction = playerControls.BasicMovement.Move;
-
-        playerAgent = gameObject.GetComponent<NavMeshAgent>();
         groundMask = LayerMask.NameToLayer("Ground");
-        UpdateStats();
-        GameEvents.instance.OnStatsUpdate += UpdateStats;
     }
 
 
@@ -55,10 +53,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void UpdateStats()
+    public void UpdateStats(StatisticType statisticType, float value)
     {
-        movementSpeed = playerStats.MovementSpeed;
-        playerAgent.speed = movementSpeed;
+        if(statisticType == StatisticType.MovementSpeed)
+        {
+            movementSpeed = value;
+            playerAgent.speed = movementSpeed;
+        }
     }
 
     public void MoveTo(Vector3 destination)

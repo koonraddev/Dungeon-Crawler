@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private PlayerStatistics playerStats;
-
     private float maxHealth;
     private float health;
     private float armor;
     private float magicResistance;
+    private float healthPointsRegen;
+    private float healthPercentsRegen;
     private float healthRegeneration;
 
     private float physicalDamageMultiplier;
@@ -19,10 +19,7 @@ public class PlayerHealth : MonoBehaviour
     private float timeLeft;
     void Start()
     {
-        UpdateStats();
-        health = maxHealth;
-
-        GameEvents.instance.OnStatsUpdate += UpdateStats;
+        GameEvents.instance.OnStatisticUpdate += UpdateStats;
     }
 
     void Update()
@@ -44,15 +41,32 @@ public class PlayerHealth : MonoBehaviour
         health -= totalDamage;
     }
 
-    public void UpdateStats()
+    public void UpdateStats(StatisticType statisticType, float value)
     {
-        maxHealth = playerStats.MaxHealth;
-        armor = playerStats.Armor;
-        magicResistance = playerStats.MagicResistance;
-        healthRegeneration = playerStats.HealthRegeneration;
-
-        physicalDamageMultiplier = 100 / (100 - armor);
-        magicDamageMultiplier = 100 / (100 - magicResistance);
+        switch (statisticType)
+        {
+            case StatisticType.MaxHealth:
+                maxHealth = value;
+                break;
+            case StatisticType.Armor:
+                armor = value;
+                physicalDamageMultiplier = 100 / (100 - armor);
+                break;
+            case StatisticType.MagicResistance:
+                magicResistance = value;
+                magicDamageMultiplier = 100 / (100 - magicResistance);
+                break;
+            case StatisticType.HealthPercentageRegeneration:
+                healthPercentsRegen = value;
+                healthRegeneration = healthPointsRegen + (maxHealth * healthPercentsRegen);
+                break;
+            case StatisticType.HealthPointsRegeneration:
+                healthPointsRegen = value;
+                healthRegeneration = healthPointsRegen + (maxHealth * healthPercentsRegen);
+                break;
+            default:
+                break;
+        }
     }
 
     public void Damage(float healthPoints)
@@ -67,6 +81,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnStatsUpdate -= UpdateStats;
+        GameEvents.instance.OnStatisticUpdate -= UpdateStats;
     }
 }

@@ -9,9 +9,7 @@ public class GameEvents : MonoBehaviour
     {
         instance = this;
     }
-    public event Action OnInventoryUpdate;
-    public event Action OnEquipmentUpdate;
-    public event Action OnStatsUpdate;
+
     public event Action OnChestUpdate;
     public event Action<int> OnCloseMessage;
     public event Action<InputManager.InputType> OnInputChange;
@@ -26,6 +24,10 @@ public class GameEvents : MonoBehaviour
     public event Action OnLoadLevel;
     public event Action OnExitToMenu;
     public event Action OnEndGeneratingLevel;
+
+    public event Action OnInventoryUpdate;
+    public event Action OnEquipmentUpdate;
+    public event Action<StatisticType,float> OnStatisticUpdate;
 
 
     //Spawns ready status
@@ -52,9 +54,10 @@ public class GameEvents : MonoBehaviour
         OnEquipmentUpdate?.Invoke();
     }
     
-    public void StatisticsUpdate()
+
+    public void StatisticUpdate(StatisticType statisticType, float value)
     {
-        OnStatsUpdate?.Invoke();
+        OnStatisticUpdate?.Invoke(statisticType, value);
     }
 
     public void CloseMessage(int i)

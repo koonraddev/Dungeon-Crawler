@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: Zbroja
   description: zwykla zbroja o wartosci 25
-  armor: 22
-  magicResistance: 0
   armorThumbnail: {fileID: 21300000, guid: da545229eea36164d8b8cba2f75a1143, type: 3}
+  itemStatisticsSO: {fileID: 11400000, guid: 476e09a5c03c10b42892723981d0d43d, type: 2}

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private PlayerStatistics playerStats;
     private float attackSpeed;
     private float attackRange;
     private float physicalDamage;
@@ -18,10 +17,14 @@ public class PlayerAttack : MonoBehaviour
 
 
     private float distanceToEnemy;
+
+    private void OnEnable()
+    {
+        GameEvents.instance.OnStatisticUpdate += UpdateStats;
+    }
     void Start()
     {
-        UpdateStats();
-        GameEvents.instance.OnStatsUpdate += UpdateStats;
+
     }
 
     void Update()
@@ -60,15 +63,30 @@ public class PlayerAttack : MonoBehaviour
             enemy = null;
         }
     }
-    public void UpdateStats()
+    public void UpdateStats(StatisticType statisticType, float value)
     {
-        attackSpeed = playerStats.AttackSpeed;
-        attackRange = playerStats.AttackRange;
-        physicalDamage = playerStats.PhysicalDamage;
-        magicDamage = playerStats.MagicDamage;
-        trueDamage = playerStats.TrueDamage;
+        switch (statisticType)
+        {
+            case StatisticType.PhysicalDamage:
+                physicalDamage = value;
+                break;
+            case StatisticType.MagicDamage:
+                magicDamage = value;
+                break;
+            case StatisticType.TrueDamage:
+                trueDamage = value;
+                break;
+            case StatisticType.AttackSpeed:
+                attackSpeed = value;
+                timeToWait = 60 / attackSpeed;
+                break;
+            case StatisticType.AttackRange:
+                attackRange = value;
+                break;
+            default:
+                break;
+        }
 
-        timeToWait = 60 / attackSpeed;
     }
 
     public void Attack()
@@ -82,6 +100,6 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnStatsUpdate -= UpdateStats;
+        GameEvents.instance.OnStatisticUpdate -= UpdateStats;
     }
 }

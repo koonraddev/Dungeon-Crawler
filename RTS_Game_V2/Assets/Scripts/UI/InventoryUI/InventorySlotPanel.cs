@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    [SerializeField] public TMP_Text nameHolder;
     [SerializeField] public TMP_Text amountHolder;
     [SerializeField] private Image textureHolder;
     public IInventoryItem Item { get; private set; }
@@ -33,7 +32,6 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     public void SetInventorySlotUI(IInventoryItem item, int amount, Color slotColor)
     {
         Item = item;
-        nameHolder.text = Item.NameText;
         amountHolder.text = (amount == 1) ? amountHolder.text = "" : amount.ToString();
         textureHolder.color = slotColor;
         textureHolder.sprite = item.InventoryThumbnail;
@@ -41,7 +39,6 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void SetEmptySlot(Sprite slotSprite, Color slotColor)
     {
-        nameHolder.text = "";
         amountHolder.text = "";
         textureHolder.sprite = slotSprite;
         textureHolder.color = slotColor;
@@ -80,7 +77,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (Item != null && infoPanel != null)
         {
-            infoPanel.SetInfoPanel("", "");
+            infoPanel.SetEmpty();
         }
     }
     public void OnBeginDrag(PointerEventData eventData)

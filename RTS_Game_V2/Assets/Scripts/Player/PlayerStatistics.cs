@@ -6,8 +6,6 @@ public class PlayerStatistics : MonoBehaviour
 {
     [SerializeField] private PlayerBasicStatisticsSO baseStats;
 
-    private float healthRegeneration;// health(Points) per minute (totality)
-
     //BASE
     private float base_maxHealth;
     private float base_movementSpeed;
@@ -18,8 +16,8 @@ public class PlayerStatistics : MonoBehaviour
     private float base_physicalDamage;
     private float base_magicDamage;
     private float base_trueDamage;
-    private float base_healthPointsRegen;// health regeneration: POINTS (constant) per minute
-    private float base_healthPercentsRegen;// health regeneration: PERCENTAGES (of max health) per minute
+    private float base_healthPointsRegen;
+    private float base_healthPercentsRegen;
 
     //EQ
     private float eq_maxHealth;
@@ -31,8 +29,8 @@ public class PlayerStatistics : MonoBehaviour
     private float eq_physicalDamage;
     private float eq_magicDamage;
     private float eq_trueDamage;
-    private float eq_healthPointsRegen;// health regeneration: POINTS (constant) per minute
-    private float eq_healthPercentsRegen;// health regeneration: PERCENTAGES (of max health) per minute
+    private float eq_healthPointsRegen;
+    private float eq_healthPercentsRegen;
 
     //TOTAL
     private float maxHealth;
@@ -47,18 +45,20 @@ public class PlayerStatistics : MonoBehaviour
     private float healthPointsRegen;// health regeneration: POINTS (constant) per minute
     private float healthPercentsRegen;// health regeneration: PERCENTAGES (of max health) per minute
 
-    public float MaxHealth { get => maxHealth; }
-    public float MovementSpeed { get => movementSpeed; }
-    public float Armor { get => armor; }
-    public float MagicResistance { get => magicResistance; }
-    public float AttackSpeed { get => attackSpeed; }
-    public float AttackRange { get => attackRange; }
-    public float PhysicalDamage { get => physicalDamage; }
-    public float MagicDamage { get => magicDamage; }
-    public float TrueDamage { get => trueDamage; }
-    public float HealthRegeneration { get => healthRegeneration; }
-    public float HealthPointsRegen { get => healthPointsRegen; }
-    public float HealthPercentsRegen { get => healthPercentsRegen; }
+    private float healthRegeneration;// health(Points) per minute (totality)
+
+    //public float MaxHealth { get => maxHealth; }
+    //public float MovementSpeed { get => movementSpeed; }
+    //public float Armor { get => armor; }
+    //public float MagicResistance { get => magicResistance; }
+    //public float AttackSpeed { get => attackSpeed; }
+    //public float AttackRange { get => attackRange; }
+    //public float PhysicalDamage { get => physicalDamage; }
+    //public float MagicDamage { get => magicDamage; }
+    //public float TrueDamage { get => trueDamage; }
+    //public float HealthRegeneration { get => healthRegeneration; }
+    //public float HealthPointsRegen { get => healthPointsRegen; }
+    //public float HealthPercentsRegen { get => healthPercentsRegen; }
 
     void Start()
     {
@@ -172,23 +172,88 @@ public class PlayerStatistics : MonoBehaviour
 
     public void UpdateStats()
     {
-        maxHealth = base_maxHealth + eq_maxHealth;
-        movementSpeed = base_movementSpeed + eq_movementSpeed;
-        armor = base_armor + eq_armor;
-        magicResistance = base_magicResistance + eq_magicResistance;
-        attackSpeed = base_attackSpeed + eq_attackSpeed;
-        attackRange = base_attackRange + eq_attackRange;
-        physicalDamage = base_physicalDamage + eq_physicalDamage;
-        magicDamage = base_magicDamage + eq_magicDamage;
-        trueDamage = base_trueDamage + eq_trueDamage;
-        healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen;
-        healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen;
+        if(maxHealth != base_maxHealth + eq_maxHealth)
+        {
+            maxHealth = base_maxHealth + eq_maxHealth;
+            GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, maxHealth);
+        }
 
+        //movementSpeed = base_movementSpeed + eq_movementSpeed;
+        //armor = base_armor + eq_armor;
+        //magicResistance = base_magicResistance + eq_magicResistance;
+        //attackSpeed = base_attackSpeed + eq_attackSpeed;
+        //attackRange = base_attackRange + eq_attackRange;
+        //physicalDamage = base_physicalDamage + eq_physicalDamage;
+        //magicDamage = base_magicDamage + eq_magicDamage;
+        //trueDamage = base_trueDamage + eq_trueDamage;
+        //healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen;
+        //healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen;
+        //healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
+        // Aktualizacja movementSpeed
+        if (movementSpeed != base_movementSpeed + eq_movementSpeed)
+        {
+            movementSpeed = base_movementSpeed + eq_movementSpeed;
+            GameEvents.instance.StatisticUpdate(StatisticType.MovementSpeed, movementSpeed);
+        }
 
-        healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
+        if (armor != base_armor + eq_armor)
+        {
+            armor = base_armor + eq_armor;
+            GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
+        }
 
+        if (magicResistance != base_magicResistance + eq_magicResistance)
+        {
+            magicResistance = base_magicResistance + eq_magicResistance;
+            GameEvents.instance.StatisticUpdate(StatisticType.MagicResistance, magicResistance);
+        }
+        if (attackSpeed != base_attackSpeed + eq_attackSpeed)
+        {
+            attackSpeed = base_attackSpeed + eq_attackSpeed;
+            GameEvents.instance.StatisticUpdate(StatisticType.AttackSpeed, attackSpeed);
+        }
 
-        GameEvents.instance.StatisticsUpdate();
+        if (attackRange != base_attackRange + eq_attackRange)
+        {
+            attackRange = base_attackRange + eq_attackRange;
+            GameEvents.instance.StatisticUpdate(StatisticType.AttackRange, attackRange);
+        }
+
+        if (physicalDamage != base_physicalDamage + eq_physicalDamage)
+        {
+            physicalDamage = base_physicalDamage + eq_physicalDamage;
+            GameEvents.instance.StatisticUpdate(StatisticType.PhysicalDamage, physicalDamage);
+        }
+
+        if (magicDamage != base_magicDamage + eq_magicDamage)
+        {
+            magicDamage = base_magicDamage + eq_magicDamage;
+            GameEvents.instance.StatisticUpdate(StatisticType.MagicDamage, magicDamage);
+        }
+
+        if (trueDamage != base_trueDamage + eq_trueDamage)
+        {
+            trueDamage = base_trueDamage + eq_trueDamage;
+            GameEvents.instance.StatisticUpdate(StatisticType.TrueDamage, trueDamage);
+        }
+
+        if (healthPointsRegen != base_healthPointsRegen + eq_healthPointsRegen)
+        {
+            healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen;
+            GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthPointsRegen);
+        }
+
+        if (healthPercentsRegen != base_healthPercentsRegen + eq_healthPercentsRegen)
+        {
+            healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen;
+            GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, healthPercentsRegen);
+        }
+
+        if (healthRegeneration != healthPointsRegen + (healthPercentsRegen * maxHealth))
+        {
+            healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
+            //GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthRegeneration);
+        }
     }
 
 

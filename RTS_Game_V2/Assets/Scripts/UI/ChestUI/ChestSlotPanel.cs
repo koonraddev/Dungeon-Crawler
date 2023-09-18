@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    [SerializeField] public TMP_Text nameHolder;
     [SerializeField] private Image textureHolder;
 
     private GameObject canvas;
@@ -29,7 +28,6 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         uiCtrl = canvas.GetComponent<UIController>();
         infoObject = uiCtrl.GetInfoPanel();
         infoPanel = infoObject.GetComponent<InformationPanel>();
-        nameHolder = GetComponentInChildren<TMP_Text>();
         textureHolder = GetComponent<Image>();
     }
     public void SetChestSlotUI(ChestSO chestSO,TreasureSO treasureSO, Color slotColor)
@@ -41,7 +39,6 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (treasureSO != null)
         {
             this.treasureSO = treasureSO;
-            nameHolder.text = treasureSO.GetName();
             textureHolder.color = slotColor;
             textureHolder.sprite = treasureSO.GetThumbnail();
         }
@@ -59,7 +56,7 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (treasureSO != null && infoPanel != null)
         {
-            infoPanel.SetInfoPanel("", "");
+            infoPanel.SetEmpty();
         }
     }
 
@@ -105,7 +102,6 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         this.panelSlotSprite = panelSlotSprite;
         this.panelSlotColor = panelSlotColor;
 
-        nameHolder.text = "";
         textureHolder.sprite = panelSlotSprite;
         textureHolder.color = panelSlotColor;
         treasureSO = null;
