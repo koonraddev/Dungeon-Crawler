@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Statistics",
+                    "type": "Button",
+                    "id": "beb9f488-bade-4a89-8b51-5dfc7e6ec3f4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -75,6 +84,17 @@
                     "processors": "",
                     "groups": "Mouse",
                     "action": "Inspect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f09f3065-79dc-4a01-8f6a-c82858738b51",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "Statistics",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

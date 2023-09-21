@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0b7121cb17161469ec8eef0bc754ac, type: 3}
   m_Name: newWeapon
   m_EditorClassIdentifier: 
-  nameText: 'Name '
+  nameText: Name bron
   description: sadasdsad
   swordThumbnail: {fileID: 21300000, guid: 3999034958d54364da380a8839a11050, type: 3}
   itemStatisticsSO: {fileID: 11400000, guid: 347b7da08d0eaba42a6532268827110f, type: 2}

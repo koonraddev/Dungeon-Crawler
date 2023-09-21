@@ -53,6 +53,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Statistics"",
+                    ""type"": ""Button"",
+                    ""id"": ""beb9f488-bade-4a89-8b51-5dfc7e6ec3f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -99,6 +108,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Inspect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f09f3065-79dc-4a01-8f6a-c82858738b51"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Statistics"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -138,6 +158,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_BasicMovement_Move = m_BasicMovement.FindAction("Move", throwIfNotFound: true);
         m_BasicMovement_Inventory = m_BasicMovement.FindAction("Inventory", throwIfNotFound: true);
         m_BasicMovement_Inspect = m_BasicMovement.FindAction("Inspect", throwIfNotFound: true);
+        m_BasicMovement_Statistics = m_BasicMovement.FindAction("Statistics", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,6 +221,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_BasicMovement_Move;
     private readonly InputAction m_BasicMovement_Inventory;
     private readonly InputAction m_BasicMovement_Inspect;
+    private readonly InputAction m_BasicMovement_Statistics;
     public struct BasicMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -207,6 +229,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_BasicMovement_Move;
         public InputAction @Inventory => m_Wrapper.m_BasicMovement_Inventory;
         public InputAction @Inspect => m_Wrapper.m_BasicMovement_Inspect;
+        public InputAction @Statistics => m_Wrapper.m_BasicMovement_Statistics;
         public InputActionMap Get() { return m_Wrapper.m_BasicMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -225,6 +248,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Inspect.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnInspect;
                 @Inspect.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnInspect;
                 @Inspect.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnInspect;
+                @Statistics.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnStatistics;
+                @Statistics.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnStatistics;
+                @Statistics.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnStatistics;
             }
             m_Wrapper.m_BasicMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -238,6 +264,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Inspect.started += instance.OnInspect;
                 @Inspect.performed += instance.OnInspect;
                 @Inspect.canceled += instance.OnInspect;
+                @Statistics.started += instance.OnStatistics;
+                @Statistics.performed += instance.OnStatistics;
+                @Statistics.canceled += instance.OnStatistics;
             }
         }
     }
@@ -265,5 +294,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnInspect(InputAction.CallbackContext context);
+        void OnStatistics(InputAction.CallbackContext context);
     }
 }

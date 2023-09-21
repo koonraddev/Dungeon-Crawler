@@ -33,6 +33,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void SetInventorySlotUI(IEquipmentItem item, Color slotColor)
     {
+        Debug.Log("UI");
         Item = item;
         textureHolder.color = slotColor;
         textureHolder.sprite = item.EquipmentThumbnail;

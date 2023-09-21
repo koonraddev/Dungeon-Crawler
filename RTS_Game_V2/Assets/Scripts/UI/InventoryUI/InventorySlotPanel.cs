@@ -7,8 +7,10 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     [SerializeField] public TMP_Text amountHolder;
     [SerializeField] private Image textureHolder;
+    [SerializeField] private int slotNumber;
     public IInventoryItem Item { get; private set; }
-    [HideInInspector] public int SlotNumber { get; set; }
+
+    public int SlotNumber { get => slotNumber;}
 
     private GameObject canvas;
     private UIController uiCtrl;
@@ -70,6 +72,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (Item != null && infoPanel != null)
         {
+            GameEvents.instance.InformationPanel(true);
             infoPanel.SetInfoPanel(Item.NameText, Item.Description);
         }
     }
@@ -78,6 +81,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (Item != null && infoPanel != null)
         {
             infoPanel.SetEmpty();
+            GameEvents.instance.InformationPanel(false);
         }
     }
     public void OnBeginDrag(PointerEventData eventData)

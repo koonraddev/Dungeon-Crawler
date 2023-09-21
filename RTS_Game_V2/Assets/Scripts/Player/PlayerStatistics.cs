@@ -103,11 +103,11 @@ public class PlayerStatistics : MonoBehaviour
 
         foreach (ItemSlotType slotType in System.Enum.GetValues(typeof(ItemSlotType)))
         {
-            Debug.Log("slotype: " + slotType);
+            //Debug.Log("slotype: " + slotType);
             Dictionary<StatisticType, float> stats = Equipment.Instance.GetStatistics(slotType);
             if(stats != null)
             {
-                Debug.Log("nie jeast pusty");
+                //Debug.Log("nie jeast pusty");
                 foreach (KeyValuePair<StatisticType, float> oneStat in stats)
                 {
                     switch (oneStat.Key)
@@ -260,6 +260,6 @@ public class PlayerStatistics : MonoBehaviour
 
     void OnDisable()
     {
-        GameEvents.instance.OnEquipmentUpdate -= UpdateStats;
+        GameEvents.instance.OnEquipmentUpdate -= OnEquipmentUpdate;
     }
 }

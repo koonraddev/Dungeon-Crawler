@@ -10,6 +10,7 @@ public class GameEvents : MonoBehaviour
         instance = this;
     }
 
+
     public event Action OnChestUpdate;
     public event Action<int> OnCloseMessage;
     public event Action<InputManager.InputType> OnInputChange;
@@ -17,7 +18,9 @@ public class GameEvents : MonoBehaviour
     public event Action OnCancelGameObjectAction;
     public event Action OnPrepareGame;
     public event Action<int> OnSpawn;
-    public event Action<bool> OnInventoryPanel;
+    public event Action<bool> OnInventoryPanelOpen;
+    public event Action<bool> OnInformationPanel;
+    public event Action<bool> OnStatisticPanel;
 
     public event Action OnCanSave;
     public event Action OnCannotSave;
@@ -37,6 +40,15 @@ public class GameEvents : MonoBehaviour
     public void LastRoomReady()
     {
         OnLastRoomReady?.Invoke();
+    }
+
+    public void InformationPanel(bool activePanel)
+    {
+        OnInformationPanel?.Invoke(activePanel);
+    }    
+    public void StatisticPanel(bool activePanel)
+    {
+        OnStatisticPanel?.Invoke(activePanel);
     }
 
     public void Spawn(int id)
@@ -82,7 +94,7 @@ public class GameEvents : MonoBehaviour
 
     public void InventoryPanel(bool activePanel)
     {
-        OnInventoryPanel?.Invoke(activePanel);
+        OnInventoryPanelOpen?.Invoke(activePanel);
     }
 
     public void CancelGameObjectAction()

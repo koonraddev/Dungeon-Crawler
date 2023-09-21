@@ -49,6 +49,7 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (treasureSO != null && infoPanel != null)
         {
+            GameEvents.instance.InformationPanel(true);
             infoPanel.SetInfoPanel(treasureSO.GetName(), treasureSO.GetDescription());
         }
     }
@@ -57,6 +58,7 @@ public class ChestSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (treasureSO != null && infoPanel != null)
         {
             infoPanel.SetEmpty();
+            GameEvents.instance.InformationPanel(false);
         }
     }
 
