@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ConsoleLogs"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad2a48d4-9b03-4c69-aeee-9a283ad1be0c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -119,6 +128,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Statistics"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98962a11-dab3-4b66-b0f1-82442c9f745f"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""ConsoleLogs"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -159,6 +179,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_BasicMovement_Inventory = m_BasicMovement.FindAction("Inventory", throwIfNotFound: true);
         m_BasicMovement_Inspect = m_BasicMovement.FindAction("Inspect", throwIfNotFound: true);
         m_BasicMovement_Statistics = m_BasicMovement.FindAction("Statistics", throwIfNotFound: true);
+        m_BasicMovement_ConsoleLogs = m_BasicMovement.FindAction("ConsoleLogs", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -222,6 +243,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_BasicMovement_Inventory;
     private readonly InputAction m_BasicMovement_Inspect;
     private readonly InputAction m_BasicMovement_Statistics;
+    private readonly InputAction m_BasicMovement_ConsoleLogs;
     public struct BasicMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -230,6 +252,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Inventory => m_Wrapper.m_BasicMovement_Inventory;
         public InputAction @Inspect => m_Wrapper.m_BasicMovement_Inspect;
         public InputAction @Statistics => m_Wrapper.m_BasicMovement_Statistics;
+        public InputAction @ConsoleLogs => m_Wrapper.m_BasicMovement_ConsoleLogs;
         public InputActionMap Get() { return m_Wrapper.m_BasicMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -251,6 +274,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Statistics.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnStatistics;
                 @Statistics.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnStatistics;
                 @Statistics.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnStatistics;
+                @ConsoleLogs.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnConsoleLogs;
+                @ConsoleLogs.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnConsoleLogs;
+                @ConsoleLogs.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnConsoleLogs;
             }
             m_Wrapper.m_BasicMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -267,6 +293,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Statistics.started += instance.OnStatistics;
                 @Statistics.performed += instance.OnStatistics;
                 @Statistics.canceled += instance.OnStatistics;
+                @ConsoleLogs.started += instance.OnConsoleLogs;
+                @ConsoleLogs.performed += instance.OnConsoleLogs;
+                @ConsoleLogs.canceled += instance.OnConsoleLogs;
             }
         }
     }
@@ -295,5 +324,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnInventory(InputAction.CallbackContext context);
         void OnInspect(InputAction.CallbackContext context);
         void OnStatistics(InputAction.CallbackContext context);
+        void OnConsoleLogs(InputAction.CallbackContext context);
     }
 }

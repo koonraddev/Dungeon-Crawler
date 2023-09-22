@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyConfigurationSO : ScriptableObject
 {
     [Header("Main section")]
+    [SerializeField] private string enemyName;
     [SerializeField] private float health;
 
     [Header("Movement section")]
@@ -32,6 +33,7 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private float magicDamage;
     [SerializeField] private float trueDamage;
 
+    public string EnemyName { get => enemyName; }
     public float Health { get => health; }
     public float MovementSpeed { get => movementSpeed; }
     public int MinMoveInterval { get => minMoveInterval; }

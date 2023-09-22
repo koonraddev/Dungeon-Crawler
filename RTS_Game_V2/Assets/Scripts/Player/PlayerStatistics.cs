@@ -64,7 +64,6 @@ public class PlayerStatistics : MonoBehaviour
     {
         SetBasicStatistics();
         SetStatisticsFromEquipment();
-        UpdateStats();
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
     }
 
@@ -83,7 +82,32 @@ public class PlayerStatistics : MonoBehaviour
             base_trueDamage = baseStats.TrueDamage;
             base_healthPointsRegen = baseStats.HealthPointsRegen;
             base_healthPercentsRegen = baseStats.HealthPercentsRegen;
+
+            maxHealth = base_maxHealth;
+            movementSpeed = base_movementSpeed;
+            armor = base_armor;
+            magicResistance = base_magicResistance;
+            attackSpeed = base_attackSpeed;
+            attackRange = base_attackRange;
+            physicalDamage = base_physicalDamage;
+            magicDamage = base_magicDamage;
+            trueDamage = base_trueDamage;
+            healthPointsRegen = base_healthPointsRegen;
+            healthPercentsRegen = base_healthPercentsRegen;
         }
+
+        GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, base_maxHealth);
+        GameEvents.instance.StatisticUpdate(StatisticType.MovementSpeed, base_movementSpeed);
+        GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
+        GameEvents.instance.StatisticUpdate(StatisticType.MagicResistance, base_magicResistance);
+        GameEvents.instance.StatisticUpdate(StatisticType.AttackSpeed, base_attackSpeed);
+        GameEvents.instance.StatisticUpdate(StatisticType.AttackRange, base_attackRange);
+        GameEvents.instance.StatisticUpdate(StatisticType.PhysicalDamage, base_physicalDamage);
+        GameEvents.instance.StatisticUpdate(StatisticType.MagicDamage, base_magicDamage);
+        GameEvents.instance.StatisticUpdate(StatisticType.TrueDamage, base_trueDamage);
+        GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, base_healthPointsRegen);
+        GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, base_healthPercentsRegen);
+        GameEvents.instance.UpdateCurrentHP(base_maxHealth);
     }
 
 
@@ -174,22 +198,10 @@ public class PlayerStatistics : MonoBehaviour
     {
         if(maxHealth != base_maxHealth + eq_maxHealth)
         {
+            Debug.Log("update maxHHealth");
             maxHealth = base_maxHealth + eq_maxHealth;
             GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, maxHealth);
         }
-
-        //movementSpeed = base_movementSpeed + eq_movementSpeed;
-        //armor = base_armor + eq_armor;
-        //magicResistance = base_magicResistance + eq_magicResistance;
-        //attackSpeed = base_attackSpeed + eq_attackSpeed;
-        //attackRange = base_attackRange + eq_attackRange;
-        //physicalDamage = base_physicalDamage + eq_physicalDamage;
-        //magicDamage = base_magicDamage + eq_magicDamage;
-        //trueDamage = base_trueDamage + eq_trueDamage;
-        //healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen;
-        //healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen;
-        //healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
-        // Aktualizacja movementSpeed
         if (movementSpeed != base_movementSpeed + eq_movementSpeed)
         {
             movementSpeed = base_movementSpeed + eq_movementSpeed;
@@ -198,6 +210,7 @@ public class PlayerStatistics : MonoBehaviour
 
         if (armor != base_armor + eq_armor)
         {
+            Debug.Log("update armor");
             armor = base_armor + eq_armor;
             GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
         }
@@ -249,15 +262,12 @@ public class PlayerStatistics : MonoBehaviour
             GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, healthPercentsRegen);
         }
 
-        if (healthRegeneration != healthPointsRegen + (healthPercentsRegen * maxHealth))
-        {
-            healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
-            //GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthRegeneration);
-        }
+        //if (healthRegeneration != healthPointsRegen + (healthPercentsRegen * maxHealth))
+        //{
+        //    healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
+        //    //GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthRegeneration);
+        //}
     }
-
-
-
     void OnDisable()
     {
         GameEvents.instance.OnEquipmentUpdate -= OnEquipmentUpdate;

@@ -33,9 +33,19 @@ public class GameEvents : MonoBehaviour
     public event Action<StatisticType,float> OnStatisticUpdate;
 
 
+    public event Action<float> onUpdateCurrentHP;
+    public event Action<float> onUpdateMaxHP;
+
     //Spawns ready status
     //public event Action OnLastSpawnPoint
     public event Action OnLastRoomReady;
+
+
+    public void UpdateCurrentHP(float value)
+    {
+        onUpdateCurrentHP?.Invoke(value);
+    }
+
 
     public void LastRoomReady()
     {

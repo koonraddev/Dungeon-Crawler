@@ -6,6 +6,7 @@ public class EnemyAttack : MonoBehaviour
 {
     [Tooltip("Set Enemy Movement script if you want object to follow target if triggered")]
     [SerializeField] EnemyMovement enemyMovement;
+    private string enemyName;
     private float attackSpeed;
     private float attackRange;
     private float triggerRange;
@@ -107,13 +108,14 @@ public class EnemyAttack : MonoBehaviour
         if (attackCooldown <= 0 && playerHealthMan != null)
         {
             //AttackEffect();
-            playerHealthMan.Damage(physicalDamage, magicDamage, trueDamage);
+            playerHealthMan.Damage(enemyName, physicalDamage, magicDamage, trueDamage);
             attackCooldown = timeToWait;
         }
     }
 
-    public void SetEnemyAttack(float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage)
+    public void SetEnemyAttack(string enemyName, float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage)
     {
+        this.enemyName = enemyName;
         this.attackSpeed = attackSpeed;
         this.attackRange = attackRange;
         this.triggerRange = triggerRange;

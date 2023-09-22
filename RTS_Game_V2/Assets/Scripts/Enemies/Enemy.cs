@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 
     private GameObject parentRoom;
 
+    private string enemyName;
     private float maxHealth;
     private float health;
     private float armor;
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
         maxHealth = enemyConfig.Health;
         armor = enemyConfig.Armor;
         magicResistance = enemyConfig.MagicResistance;
+        enemyName = enemyConfig.EnemyName;
 
         physicalDamageMultiplier = 100 / (100 - armor);
         magicDamageMultiplier = 100 / (100 - magicResistance);
@@ -54,7 +56,7 @@ public class Enemy : MonoBehaviour
         }
         if(enemyAttack != null)
         {
-            enemyAttack.SetEnemyAttack(enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage);
+            enemyAttack.SetEnemyAttack(enemyConfig.EnemyName,enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage);
         }
     }
 

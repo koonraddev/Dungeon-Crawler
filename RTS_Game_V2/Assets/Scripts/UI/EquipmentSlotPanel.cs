@@ -49,22 +49,14 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     private void OnEquipmentUpdate()
     {
         EquipmentSlot eqSlot = Equipment.Instance.GetEquipmentSlot(slotType);
-        if (eqSlot != null)
+        if (eqSlot.ItemInSlot != null)
         {
-            if(eqSlot.ItemInSlot != null)
-            {
-                SetInventorySlotUI(eqSlot.ItemInSlot, Color.white);
-            }
-            else
-            {
-                SetEmptySlot();
-            }
+            SetInventorySlotUI(eqSlot.ItemInSlot, Color.white);
         }
         else
         {
-            Debug.Log("NULL");
+            SetEmptySlot();
         }
-
     }
 
 
