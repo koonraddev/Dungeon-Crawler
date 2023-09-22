@@ -27,9 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         playerControls.Disable();
+        GameEvents.instance.OnStatisticUpdate -= UpdateStats;
     }
-
-
 
     void Start()
     {

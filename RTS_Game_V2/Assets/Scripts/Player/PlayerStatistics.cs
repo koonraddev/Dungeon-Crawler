@@ -64,6 +64,11 @@ public class PlayerStatistics : MonoBehaviour
     {
         SetBasicStatistics();
         SetStatisticsFromEquipment();
+
+    }
+
+    private void OnEnable()
+    {
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
     }
 

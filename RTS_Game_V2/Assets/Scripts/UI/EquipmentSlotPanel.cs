@@ -27,13 +27,15 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         uiCtrl = canvas.GetComponent<UIController>();
         infoObject = uiCtrl.GetInfoPanel();
         infoPanel = infoObject.GetComponent<InformationPanel>();
+    }
 
+    private void OnEnable()
+    {
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
     }
 
     public void SetInventorySlotUI(IEquipmentItem item, Color slotColor)
     {
-        Debug.Log("UI");
         Item = item;
         textureHolder.color = slotColor;
         textureHolder.sprite = item.EquipmentThumbnail;
@@ -117,7 +119,6 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
                 if (treasure is IEquipmentItem)
                 {
-                    // object myObject implements 
                     if (Equipment.Instance.AddItem(treasure as IEquipmentItem))
                     {
                         chestSlot.SetEmptySlot();

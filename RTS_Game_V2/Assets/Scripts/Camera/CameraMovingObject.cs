@@ -6,7 +6,7 @@ public class CameraMovingObject : MonoBehaviour
 {
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private GameObject playerCharacter;
+    public GameObject playerCharacter;
     private bool followPlayerCharacter;
     private bool gameON = true;
 

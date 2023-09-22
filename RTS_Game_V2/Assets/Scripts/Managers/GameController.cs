@@ -25,6 +25,8 @@ public class GameController : MonoBehaviour
 
     [Space(15)]
     [SerializeField] public NavMeshSurface surface;
+    [SerializeField] CameraMovingObject camMovObj;
+
 
 
     //testing
@@ -81,7 +83,11 @@ public class GameController : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Instantiate(playerObject);
+        GameObject gameObj = Instantiate(playerObject);
+        if(camMovObj != null)
+        {
+            camMovObj.playerCharacter = gameObj;
+        }
     }
 
 

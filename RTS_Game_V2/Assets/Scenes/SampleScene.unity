@@ -5432,15 +5432,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87688a5766a8aa43aeffdc577e34ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localOffset: {x: 0, y: 25, z: -18}
+  localOffset: {x: 0, y: 50, z: -45}
   camDistanceMin: 10
-  camDistanceMax: 20
+  camDistanceMax: 60
   scrollSpeed: 5
   zoomSensitivity: 0.166
   canZoom: 1
-  minFov: 20
-  baseFov: 60
-  maxFov: 80
+  minFov: 10
+  baseFov: 10
+  maxFov: 23
   zoomType: 1
 --- !u!1001 &1064299814
 PrefabInstance:
@@ -6381,6 +6381,7 @@ MonoBehaviour:
   equipmentSO: {fileID: 11400000, guid: d23d7d478da671f4ca85f268d0399f5f, type: 2}
   playerObject: {fileID: 2222184502115446784, guid: 1b29b1e1fe5ad734c9707f6b44a87de7, type: 3}
   surface: {fileID: 8584441013237840185, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
+  camMovObj: {fileID: 1374197892}
 --- !u!114 &1285007681
 MonoBehaviour:
   m_ObjectHideFlags: 0
