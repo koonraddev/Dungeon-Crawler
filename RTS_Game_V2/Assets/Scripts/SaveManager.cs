@@ -8,7 +8,7 @@ public class SaveManager : MonoBehaviour
     public static SaveManager Instance { get; private set; }
 
     private TimeSaver timeSaver;
-    private InventorySaver inventorySaver;
+    private PlayerSaver inventorySaver;
     private SettingsSaver settingsSaver;
 
     private string timeSavePath;
@@ -29,7 +29,7 @@ public class SaveManager : MonoBehaviour
 
         // Utworzenie instancji klas podrzêdnych
         timeSaver = new TimeSaver();
-        inventorySaver = new InventorySaver();
+        inventorySaver = new PlayerSaver();
         settingsSaver = new SettingsSaver();
 
         // Ustawienie œcie¿ek do plików zapisu
@@ -43,9 +43,9 @@ public class SaveManager : MonoBehaviour
         timeSaver.SaveTime(timeSavePath);
     }
 
-    public void SaveInventory()
+    public void SavePlayer()
     {
-        inventorySaver.SaveInventory(inventorySavePath);
+        inventorySaver.SavePlayer(inventorySavePath);
     }
 
     public void SaveSettings()

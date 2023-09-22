@@ -27,10 +27,14 @@ public class GameController : MonoBehaviour
     [SerializeField] public NavMeshSurface surface;
     [SerializeField] CameraMovingObject camMovObj;
 
+    [Space(15)]
+    [SerializeField] private RoomsGenerator roomsGenerator;
+    [SerializeField] private RoomsSetSO roomsSet;
 
 
-    //testing
+    [SerializeField] private GameObject startSpawnPoint;
 
+    public int level;
     public enum GameStatus
     {
         START,
@@ -49,6 +53,8 @@ public class GameController : MonoBehaviour
             UIMessageObjectPool.instance.canAddObjects = canAddObjectsToPool;
             UIMessageObjectPool.instance.FollowMouse = followMouse;
         }
+
+        roomsGenerator.SetRoomsGenerator(roomsSet);
     }
 
     private void Start()
@@ -67,11 +73,19 @@ public class GameController : MonoBehaviour
         }
 
         GameEvents.instance.OnLastRoomReady += LastRoomReady;
+
+        StartCoroutine(CreatStartSpawnPoint());
     }
 
     private void Update()
     {
 
+    }
+
+    public IEnumerator CreatStartSpawnPoint()
+    {
+        yield return new WaitForSeconds(1f);
+        Instantiate(startSpawnPoint);
     }
 
     private void UpdateNavMesh()

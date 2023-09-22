@@ -4,7 +4,6 @@ public class Inventory : MonoBehaviour
 {
     private static Inventory _instance;
 
-
     public static Inventory Instance { get { return _instance; } }
 
     public InventorySO InventorySO { get; set; }
