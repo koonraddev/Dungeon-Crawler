@@ -36,9 +36,24 @@ public class GameEvents : MonoBehaviour
     public event Action<float> onUpdateCurrentHP;
     public event Action<float> onUpdateMaxHP;
 
+
+    public event Action OnSavePlayerStuff;
+    public event Action OnLoadPlayerStuff;
+
     //Spawns ready status
     //public event Action OnLastSpawnPoint
     public event Action OnLastRoomReady;
+
+
+    public void SavePlayerStuff()
+    {
+        OnSavePlayerStuff?.Invoke();
+    }
+
+    public void LoadPlayerStuff()
+    {
+        OnLoadPlayerStuff?.Invoke();
+    }
 
 
     public void UpdateCurrentHP(float value)

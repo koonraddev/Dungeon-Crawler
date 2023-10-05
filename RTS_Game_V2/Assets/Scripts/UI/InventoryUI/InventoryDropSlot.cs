@@ -17,6 +17,7 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
             invSlotPanel = eventData.pointerDrag.GetComponent<InventorySlotPanel>();
             if (invSlotPanel != null)
             {
+                InventorySlot slot = invSlotPanel.invSlot;
                 SetContentToDisplay(new Dictionary<string, string> { { "Message", (invSlotPanel.SlotNumber + 1).ToString() } });
                 UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.DROP);
             }
@@ -41,23 +42,16 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
 
         if (playerObject != null)
         {
-            //drop items
-            InventorySO.InventorySlot invSlot = Inventory.Instance.GetInventorySlot(invSlotPanel.SlotNumber);
-
-            IInventoryItem invItem = invSlot.ItemInSlot;
-            int itemAmount = invSlot.ItemAmount;
+            InventorySlot invSlot = InventoryManager.instance.GetInventorySlot(invSlotPanel.SlotNumber);
 
             GameObject dropBagObject = Instantiate(dropObjectPrefab);
+            dropBagObject.transform.position = playerObject.transform.position + new Vector3(0f, 1f, 0f);
             DropBag dropBag = dropBagObject.GetComponent<DropBag>();
 
-            dropBag.invItem = invItem;
-            dropBag.invItemAmount = itemAmount;
+            dropBag.bagSlot.Item = invSlot.Item;
+            dropBag.bagSlot.Amount = invSlot.Amount;
 
-
-            dropBagObject.transform.position = playerObject.transform.position + new Vector3(0f,1f,0f);
-
-            //then
-            Inventory.Instance.ClearSlot(invSlotPanel.SlotNumber);
+            InventoryManager.instance.ClearSlot(invSlotPanel.SlotNumber);
             invSlotPanel = null;
         }
     }

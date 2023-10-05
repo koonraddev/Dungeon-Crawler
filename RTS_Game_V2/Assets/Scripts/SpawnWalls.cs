@@ -25,10 +25,11 @@ public class SpawnWalls : MonoBehaviour
     private bool generateDoorRandomly = true;
 
     private int[] doorsArray;
-
+    private GameObject wallPrefab;
 
     public void SetEssentials(RoomSO roomSO, int[] doorsArray)
     {
+        wallPrefab = Resources.Load("WallPrefab") as GameObject;
         this.doorPrefab = roomSO.DoorPrefab();
         this.doorsArray = doorsArray;
         this.doorsList = roomSO.RoomDoors();
@@ -211,17 +212,21 @@ public class SpawnWalls : MonoBehaviour
     {
         if(doorCollider!= null)
         {
-            GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Vector3 distanceStartEnd = startPoint - endPoint;
+            //GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            if(wallPrefab != null)
+            {
+                GameObject wall = Instantiate(wallPrefab);
+                Vector3 distanceStartEnd = startPoint - endPoint;
 
-            wall.transform.SetParent(gameObject.transform);
-            wall.GetComponent<MeshRenderer>().material = wallMaterial;
-            wall.tag = "Wall";
-            wall.transform.localScale = new Vector3(colliderSize.y /* * doorPrefab.transform.lossyScale.x * 2*/, colliderSize.z / gameObject.transform.lossyScale.z * doorPrefab.transform.lossyScale.z, distanceStartEnd.magnitude);
-            wall.transform.localPosition = (startPoint + endPoint) / 2f+ new Vector3(0f,colliderSize.z/2 / gameObject.transform.lossyScale.z * doorPrefab.transform.lossyScale.z, 0f);
+                wall.transform.SetParent(gameObject.transform);
+                wall.GetComponent<MeshRenderer>().material = wallMaterial;
+                wall.tag = "Wall";
+                wall.transform.localScale = new Vector3(colliderSize.y /* * doorPrefab.transform.lossyScale.x * 2*/, colliderSize.z / gameObject.transform.lossyScale.z * doorPrefab.transform.lossyScale.z, distanceStartEnd.magnitude);
+                wall.transform.localPosition = (startPoint + endPoint) / 2f + new Vector3(0f, colliderSize.z / 2 / gameObject.transform.lossyScale.z * doorPrefab.transform.lossyScale.z, 0f);
 
-            Vector3 lookAtThis = gameObject.transform.position + new Vector3(endPoint.x * gameObject.transform.lossyScale.x,  colliderCenter.z * doorPrefab.transform.lossyScale.z, endPoint.z * gameObject.transform.lossyScale.z);
-            wall.transform.LookAt(lookAtThis);
+                Vector3 lookAtThis = gameObject.transform.position + new Vector3(endPoint.x * gameObject.transform.lossyScale.x, colliderCenter.z * doorPrefab.transform.lossyScale.z, endPoint.z * gameObject.transform.lossyScale.z);
+                wall.transform.LookAt(lookAtThis);
+            }
         }
     }
 

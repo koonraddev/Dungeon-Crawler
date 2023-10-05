@@ -15,4 +15,4 @@ MonoBehaviour:
   <NameText>k__BackingField: Level 1 Door
   <Id>k__BackingField: 11
   <Description>k__BackingField: Requires Level 1 acces key.
-  <keyRequired>k__BackingField: {fileID: 11400000, guid: 61eba1617ee6ab14f85ef895ebf72909, type: 2}
+  <keyRequired>k__BackingField: {fileID: 11400000, guid: 1d2ddd4a5f9d5604d9f1975f7da9b9bb, type: 2}

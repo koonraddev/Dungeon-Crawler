@@ -50,8 +50,7 @@ public class ChestRoomSO : RoomSO
             var clone = Instantiate(item);
             chestScript.SetChest(clone);
 
-            newChest.transform.rotation = GetChestSpawnRotation();
-            newChest.transform.position = GetChestSpawnPosition();
+            newChest.transform.SetPositionAndRotation(GetChestSpawnPosition(), GetChestSpawnRotation());
             newChest.transform.SetParent(roomGameObject.transform);
         }
         if (isLastRoom)

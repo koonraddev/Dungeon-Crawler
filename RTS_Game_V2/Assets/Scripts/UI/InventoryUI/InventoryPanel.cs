@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class InventoryPanel : MonoBehaviour
 {
@@ -18,16 +19,16 @@ public class InventoryPanel : MonoBehaviour
 
     private void OnInventoryUpdate()
     {
-        InventorySO.InventorySlot[] items = Inventory.Instance.GetInventorySlots();
+        List<InventorySlot> items = InventoryManager.instance.GetInventorySlots();
         if(items != null)
         {
-            for (int i = 0; i < items.Length; i++)
+            for (int i = 0; i < items.Count; i++)
             {
                 InventorySlotPanel invInter = panelSlots[i].GetComponent<InventorySlotPanel>();
 
-                if (items[i] != null)
+                if (!items[i].Empty)
                 {
-                    invInter.SetInventorySlotUI(items[i].ItemInSlot, items[i].ItemAmount, Color.white);
+                    invInter.SetInventorySlotUI(items[i].Item, items[i].Amount, Color.white);
                 }
                 else
                 {

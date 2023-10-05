@@ -25,7 +25,6 @@ public class SpawnPoint : MonoBehaviour
     private bool isChecked;
 
     private bool isLastSpawn;
-
     public  enum SpawnStatus
     {
         BLOCKED,

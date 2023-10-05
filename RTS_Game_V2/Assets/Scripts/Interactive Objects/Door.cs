@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Door : MonoBehaviour, IInteractionObjects
 {
     [SerializeField] DoorSO doorSO;
-    private IInventoryItem keyItem;
+    private PassiveItem keyItem;
     private bool opened;
     private bool destroyItemOnUse;
     private bool keyRequired;
@@ -25,7 +25,6 @@ public class Door : MonoBehaviour, IInteractionObjects
     {
         actualDoor = gameObject.transform.parent.gameObject;
         displayInfo = true;
-        CheckKey();
         ChangeDoorStatus(false);
     }
 
@@ -58,18 +57,18 @@ public class Door : MonoBehaviour, IInteractionObjects
             {
                 //wymagaja klucza
 
-                if(Inventory.Instance.CheckItem(keyItem))
+                if (InventoryManager.instance.CheckItem(keyItem))
                 {
                     if (destroyItemOnUse)
                     {
-                        Inventory.Instance.RemoveItem(keyItem);
+                        InventoryManager.instance.RemoveItem(keyItem);
                     }
                     ChangeDoorStatus(true);
                     keyRequired = false;
                 }
                 else
                 {
-                    SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyItem.NameText } });
+                    SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyItem.Name } });
                     UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
                 }
             }
@@ -141,18 +140,18 @@ public class Door : MonoBehaviour, IInteractionObjects
         return contentToDisplay;
     }
 
-    private void CheckKey()
+    private bool CheckKeyRequired()
     {
         if (doorSO.keyRequired != null)
         {
-            keyItem = doorSO.keyRequired;
             destroyItemOnUse = !keyItem.IsReusable;
             keyRequired = true;
-            LockDoor();
+            return true;
         }
         else
         {
             keyRequired = false;
+            return false;
         }
     }
 
@@ -161,7 +160,11 @@ public class Door : MonoBehaviour, IInteractionObjects
         if (newDoor != null)
         {
             doorSO = newDoor;
-            CheckKey();
+            if (CheckKeyRequired())
+            {
+                keyItem = new(doorSO.keyRequired);
+                LockDoor();
+            }
         }
     }
 
@@ -169,7 +172,6 @@ public class Door : MonoBehaviour, IInteractionObjects
     {
         if (keyItem != null)
         {
-            keyRequired = true;
             opened = false;
         }
     }

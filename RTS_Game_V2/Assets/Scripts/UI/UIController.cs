@@ -6,7 +6,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject playerInventoryUI;
     [SerializeField] private GameObject informationPanel;
     [SerializeField] private GameObject equipmentPanel;
-    [SerializeField] private GameObject inventoryDeletePanel;
     [SerializeField] private GameObject inventoryDropPanel;
     [SerializeField] private GameObject chestInfoPanel;
     [SerializeField] private GameObject statisticsPanel;
@@ -57,7 +56,6 @@ public class UIController : MonoBehaviour
         isInventoryActivated = active;
         equipmentPanel.SetActive(active);
         playerInventoryUI.SetActive(active);
-        inventoryDeletePanel.SetActive(active);
         inventoryDropPanel.SetActive(active);
         if (!active)
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyConfigurationSO enemyConfig;
-    [SerializeField] List<TreasureSO> treasureList;
+    [SerializeField] LootSO lootSO;
 
     private GameObject parentRoom;
 

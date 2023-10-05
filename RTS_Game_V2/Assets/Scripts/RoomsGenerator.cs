@@ -26,7 +26,7 @@ public class RoomsGenerator : MonoBehaviour
         startRoom = this.roomsSetSO.StartRoom;
         bossRoom = this.roomsSetSO.BossRoom;
         roomsList = this.roomsSetSO.RoomsList;
-        roomsToGenerate = roomsList.Count+2;
+        roomsToGenerate = roomsList.Count+1;
     }
     public RoomSO GetRoom()
     {

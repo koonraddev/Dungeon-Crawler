@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    [SerializeField] private ItemSlotType slotType;
+    [SerializeField] private EquipmentSlotType slotType;
     [SerializeField] private Image textureHolder;
-    public IEquipmentItem Item { get; private set; }
+    public EquipmentSlot eqSlot { get; private set; }
 
     private GameObject canvas;
     private UIController uiCtrl;
@@ -21,6 +21,11 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private Sprite emptySlotSprite;
     [SerializeField] private Color emptySlotColor;
 
+
+    private void Awake()
+    {
+        eqSlot = new(slotType);
+    }
     void Start()
     {
         canvas = transform.root.gameObject;
@@ -34,58 +39,62 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
     }
 
-    public void SetInventorySlotUI(IEquipmentItem item, Color slotColor)
+    public void SetEquipmentSlotUI(EquipmentItem item,Color slotColor)
     {
-        Item = item;
+        eqSlot.Item = item;
+        eqSlot.Empty = false;
         textureHolder.color = slotColor;
-        textureHolder.sprite = item.EquipmentThumbnail;
+        textureHolder.sprite = item.Sprite;
     }
 
     public void SetEmptySlot()
     {
+        eqSlot.Item = null;
+        eqSlot.Empty = true;
         textureHolder.sprite = emptySlotSprite;
         textureHolder.color = emptySlotColor;
-        Item = null;
     }
 
     private void OnEquipmentUpdate()
     {
-        EquipmentSlot eqSlot = Equipment.Instance.GetEquipmentSlot(slotType);
-        if (eqSlot.ItemInSlot != null)
+        EquipmentSlot eqSlot = EquipmentManager.instance.GetEquipmentSlot(slotType);
+        if (eqSlot.Empty)
         {
-            SetInventorySlotUI(eqSlot.ItemInSlot, Color.white);
+            SetEmptySlot();
         }
         else
         {
-            SetEmptySlot();
+            SetEquipmentSlotUI(eqSlot.Item, Color.white);
         }
     }
 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (Item != null && infoPanel != null)
+        if (!eqSlot.Empty && infoPanel != null)
         {
-            infoPanel.SetInfoPanel(Item.NameText, Item.Description);
+            GameEvents.instance.InformationPanel(true);
+            infoPanel.SetInfoPanel(eqSlot.Item.Name, eqSlot.Item.Description);
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (Item != null && infoPanel != null)
+        if (!eqSlot.Empty && infoPanel != null)
         {
-            infoPanel.SetInfoPanel("", "");
+            infoPanel.SetEmpty();
+            GameEvents.instance.InformationPanel(false);
         }
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (Item != null)
+        if (eqSlot != null)
         {
             newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
             rect = newObj.GetComponent<RectTransform>();
             Image dragImage = newObj.GetComponent<Image>();
             CanvasGroup canvGroup = newObj.GetComponent<CanvasGroup>();
 
-            dragImage.sprite = Item.EquipmentThumbnail;
+            dragImage.sprite = eqSlot.Item.Sprite;
             canvGroup.alpha = 0.6f;
             canvGroup.blocksRaycasts = false;
 
@@ -112,16 +121,16 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (eventData.pointerDrag != null)
         {
-            ChestSlotPanel chestSlot = eventData.pointerDrag.GetComponent<ChestSlotPanel>();
-            if (chestSlot != null)
+            ContainerSlotPanel containerSlotPanel = eventData.pointerDrag.GetComponent<ContainerSlotPanel>();
+            if (containerSlotPanel != null)
             {
-                TreasureSO treasure = chestSlot.GetTreasure();
+                ContainerSlot containerSlot = containerSlotPanel.GetContainerSlot();
 
-                if (treasure is IEquipmentItem)
+                if (containerSlot.Item is EquipmentItem eqItem && eqItem.ItemSlot == slotType)
                 {
-                    if (Equipment.Instance.AddItem(treasure as IEquipmentItem))
+                    if (EquipmentManager.instance.AddItem(containerSlot.Item as EquipmentItem))
                     {
-                        chestSlot.SetEmptySlot();
+                        containerSlotPanel.SetEmptySlot();
                     }
                 }
             }

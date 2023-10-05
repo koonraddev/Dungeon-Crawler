@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStatistics : MonoBehaviour
 {
-    [SerializeField] private PlayerBasicStatisticsSO baseStats;
+    [SerializeField] private StatisticsSO baseStats;
 
     //BASE
     private float base_maxHealth;
@@ -130,13 +130,14 @@ public class PlayerStatistics : MonoBehaviour
         float newAttackSpeed = 0;
         float newAttackRange = 0;
 
-        foreach (ItemSlotType slotType in System.Enum.GetValues(typeof(ItemSlotType)))
+        foreach (EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentSlotType)))
         {
             //Debug.Log("slotype: " + slotType);
-            Dictionary<StatisticType, float> stats = Equipment.Instance.GetStatistics(slotType);
-            if(stats != null)
+            StatisticsSO statsSO = EquipmentManager.instance.GetStatistics(slotType);
+            if(statsSO != null)
             {
                 //Debug.Log("nie jeast pusty");
+                Dictionary<StatisticType, float> stats = statsSO.Statistics;
                 foreach (KeyValuePair<StatisticType, float> oneStat in stats)
                 {
                     switch (oneStat.Key)

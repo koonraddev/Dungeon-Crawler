@@ -6,32 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class DropBag : MonoBehaviour, IInteractionObjects
 {
-    public IInventoryItem invItem { get; set; }
-    public int invItemAmount { get; set; }
+    public ContainerSlot bagSlot;
     private bool displayInfo = true;
     private bool displayMessage = true;
     private Dictionary<string, string> contentToDisplay;
 
     public void DoInteraction()
     {
-        for (int i = 0; i <= invItemAmount; i++)
+        if (InventoryManager.instance.AddItem(bagSlot.Item as InventoryItem, amount: bagSlot.Amount))
         {
-            if (Inventory.Instance.AddItem(invItem))
-            {
-                SetContentToDisplay(new Dictionary<string, string> { { "Message", "You picked up: " + invItem.NameText } });
-                UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
-                invItemAmount--;
-                if (invItemAmount <= 0)
-                {
-                    Destroy(gameObject);
-                }
-            }
-            else
-            {
-                SetContentToDisplay(new Dictionary<string, string> { { "Message", "No empty slot in inventory: " } });
-                UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
-                break;
-            }
+            ConsolePanel.instance.InfoLog("You picked up " + bagSlot.Amount + "x " + bagSlot.Item.Name);
+            Destroy(gameObject);
+        }
+        else
+        {
+        
+            ConsolePanel.instance.InfoLog("No empty slot in inventory");
         }
     }
 
@@ -58,7 +48,7 @@ public class DropBag : MonoBehaviour, IInteractionObjects
     {
         if (displayMessage)
         {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", invItem.NameText }, { "Description", invItemAmount.ToString() +"x "+ invItem.Description } });
+            SetContentToDisplay(new Dictionary<string, string> { { "Name", bagSlot.Amount.ToString() + "x " + bagSlot.Item.Name } });
             UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.TAKE);
         }
     }

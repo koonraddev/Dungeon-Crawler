@@ -5,19 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Chest : MonoBehaviour, IInteractionObjects
 {
-    public  ChestSO chestSO;
     public GameObject panel;
     private Dictionary<string, string> contentToDisplay;
     private bool displayPopup = true;
+
+    public ContainerObject container;
     public void Start()
     {
         ChangeChestStatus(false);
-        panel = ChestInfoPanel.instance.gameObject;
+        panel = ContainerInfoPanel.instance.gameObject;
     }
 
     public void ObjectInteraction()
     {
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.GetNameText() }, { "Description", chestSO.GetDescription() } });
+        SetContentToDisplay(new Dictionary<string, string> { { "Name", container.contName }, { "Description", container.contDesc} });
         UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
     }
 
@@ -43,7 +44,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
         }
         if (displayPopup)
         {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", chestSO.GetNameText() } });
+            SetContentToDisplay(new Dictionary<string, string> { { "Name", container.contName } });
             UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
             displayPopup = false;
         }
@@ -90,7 +91,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
     {
         if (newChest != null)
         {
-            chestSO = newChest;
+            container = new(newChest.GetContainerSlots(), newChest.GetNameText(), newChest.GetDescription());
         }
     }
 
@@ -99,7 +100,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
         if (chestStatus)
         {
             gameObject.transform.DOLocalRotate(new Vector3(-140, 0, 0), 2f).SetEase(Ease.OutBounce);
-            ChestInfoPanel.instance.SetAndActiveChestPanel(chestSO);
+            ContainerInfoPanel.instance.SetAndActiveChestPanel(container);
             GameEvents.instance.InventoryPanel(true);
             GameEvents.instance.OnCancelGameObjectAction += OnCancelGameObject;
         }

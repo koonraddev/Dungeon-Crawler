@@ -13,17 +13,4 @@ public class RoomsSetSO : ScriptableObject
     public RoomSO BossRoom { get => bossRoom; }
     public List<RoomSO> RoomsList { get => roomsList; }
 
-    private void Awake()
-    {
-        roomsList = new();
-        roomsList.Add(null);
-    }
-
-    private void OnValidate()
-    {
-        if(RoomsList.Count == 0)
-        {
-            roomsList.Add(null);
-        }
-    }
 }

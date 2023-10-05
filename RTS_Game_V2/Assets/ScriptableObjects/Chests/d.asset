@@ -7,12 +7,62 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b04252b2c6d642438d79fbf2bdfe0da, type: 3}
+  m_Script: {fileID: 11500000, guid: 5125d5c983fb1ab4186986926980e3ee, type: 3}
   m_Name: d
   m_EditorClassIdentifier: 
   nameText: 
   description: 
-  armor: 0
-  armorThumbnail: {fileID: 0}
+  chestId: 0
+  treasureList:
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
+  - treasure: {fileID: 0}
+    amount: 0
