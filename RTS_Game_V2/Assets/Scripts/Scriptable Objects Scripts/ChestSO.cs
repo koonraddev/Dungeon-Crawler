@@ -8,7 +8,7 @@ public class ChestSlot
     public int amount;
 }
 
-[CreateAssetMenu(fileName = "newChest", menuName = "Scriptable Objects/Chest", order = 1)]
+[CreateAssetMenu(fileName = "newChest", menuName = "Scriptable Objects/Chest")]
 public class ChestSO : ScriptableObject
 {
     [SerializeField] private string nameText;

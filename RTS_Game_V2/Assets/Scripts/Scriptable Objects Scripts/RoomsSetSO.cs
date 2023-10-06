@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newRoomsSet", menuName = "Scriptable Objects/Rooms/Rooms Set")]
+[CreateAssetMenu(fileName = "newRoomsSet", menuName = "Scriptable Objects/Room/Rooms Set")]
 public class RoomsSetSO : ScriptableObject
 {
     [SerializeField] private RoomSO startRoom;

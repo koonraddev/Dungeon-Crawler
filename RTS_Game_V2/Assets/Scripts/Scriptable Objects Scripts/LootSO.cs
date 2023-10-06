@@ -2,68 +2,110 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newLoot", menuName = "Scriptable Objects/Items/Loot")]
+[System.Serializable]
+public class LootSlot
+{
+    public ScriptableObject treasure;
+    public int amount;
+    [Range(0, 100)]
+    public float lootChancePercentage;
+}
+
+[CreateAssetMenu(fileName = "newLoot", menuName = "Scriptable Objects/Loot")]
 public class LootSO : ScriptableObject
 {
-    [SerializeField] List<LootItem> lootItems;
-    List<Item> finalLoot = new List<Item>();
-    public List<Item> LootLogic(bool oneLoot = false)
+    [SerializeField] List<LootSlot> lootSlots = new(10);
+    private List<ContainerSlot> containerSlots;
+    int i;
+    private void OnValidate()
     {
+        if (lootSlots.Count > 10)
+        {
+            int slotsToCreate = lootSlots.Count - 10;
+            for (int i = 0; i < slotsToCreate; i++)
+            {
+                lootSlots.RemoveAt(lootSlots.Count - 1);
+            }
+        }
+        else if (lootSlots.Count < 10)
+        {
+            int slotsToCreate = 10 - lootSlots.Count;
+            for (int i = 0; i < slotsToCreate; i++)
+            {
+                lootSlots.Add(null);
+            }
+        }
+    }
+
+    public List<ContainerSlot> GetLoot(bool oneLoot = false)
+    {
+        containerSlots = new();
+        i = 0;
         float randomValue = Random.Range(0f, 100f);
         if (oneLoot)
         {
-            foreach (LootItem lootItem in lootItems)
+            Debug.Log("one Loot!");
+            foreach (LootSlot ltSlot in lootSlots)
             {
 
-                if (randomValue <= lootItem.lootChancePercentage)
+                if (randomValue <= ltSlot.lootChancePercentage)
                 {
-                    AddLoot(lootItem.item);
+                    AddLoot(ltSlot);
                 }
             }
         }
         else
         {
-            lootItems.Sort((a, b) => b.lootChancePercentage.CompareTo(a.lootChancePercentage));
-
-            foreach (LootItem lootItem in lootItems)
+            Debug.Log("many Loot!");
+            lootSlots.Sort((a, b) => b.lootChancePercentage.CompareTo(a.lootChancePercentage));
+            foreach (LootSlot ltSlot in lootSlots)
             {
-                if (randomValue <= lootItem.lootChancePercentage)
+                if (randomValue <= ltSlot.lootChancePercentage)
                 {
-                    AddLoot(lootItem.item);
+                    AddLoot(ltSlot);
                     break;
                 }
             }
         }
-        return finalLoot;
+
+        return containerSlots;
     }
 
-    private void AddLoot(ScriptableObject item)
+    private void AddLoot(LootSlot ltSlot)
     {
-        if(item is EquipmentItemSO)
+        if(ltSlot.treasure is EquipmentItemSO)
         {
-            Item newItem = new EquipmentItem(item as EquipmentItemSO);
-            finalLoot.Add(newItem);
+            Item newItem = new EquipmentItem(ltSlot.treasure as EquipmentItemSO);
+            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            containerSlots.Add(newSlot);
+            i++;
             return;
         }
 
-        if (item is UnknownItemSO)
+        if (ltSlot.treasure is UnknownItemSO)
         {
-            Item newItem = new UnknownItem(item as UnknownItemSO);
-            finalLoot.Add(newItem);
+            Item newItem = new UnknownItem(ltSlot.treasure as UnknownItemSO);
+            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            containerSlots.Add(newSlot);
+            i++;
             return;
         }
 
-        if (item is UsableItemSO)
+        if (ltSlot.treasure is UsableItemSO)
         {
-            Item newItem = new UsableItem(item as UsableItemSO);
-            finalLoot.Add(newItem);
+            Item newItem = new UsableItem(ltSlot.treasure as UsableItemSO);
+            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            containerSlots.Add(newSlot);
+            i++;
             return;
         }
 
-        if(item is PassiveItemSO)
+        if(ltSlot.treasure is PassiveItemSO)
         {
-            Item newItem = new PassiveItem(item as PassiveItemSO);
-            finalLoot.Add(newItem);
+            Item newItem = new PassiveItem(ltSlot.treasure as PassiveItemSO);
+            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            containerSlots.Add(newSlot);
+            i++;
             return;
         }
     }

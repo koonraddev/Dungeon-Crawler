@@ -76,9 +76,7 @@ public class ConsolePanel : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        Debug.Log("czekam");
         yield return new WaitForSeconds(5f);
-        Debug.Log("zaczynam");
         t1 = mainPanel.DOColor(transparentColor, 2f);
         t2 = consoleText.DOColor(transparentColor, 2f);
         t1.Play();

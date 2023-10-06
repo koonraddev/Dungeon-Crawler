@@ -11,7 +11,7 @@ public class GameEvents : MonoBehaviour
     }
 
 
-    public event Action OnChestUpdate;
+    public event Action OnContainerUpdate;
     public event Action<int> OnCloseMessage;
     public event Action<InputManager.InputType> OnInputChange;
     public event Action<GameController.GameStatus> OnGameStatusChange;
@@ -127,9 +127,9 @@ public class GameEvents : MonoBehaviour
         OnCancelGameObjectAction?.Invoke();
     }
 
-    public void ChestUpdate()
+    public void ContainerUpdate()
     {
-        OnChestUpdate?.Invoke();
+        OnContainerUpdate?.Invoke();
     }
 
     public void EnableSave()

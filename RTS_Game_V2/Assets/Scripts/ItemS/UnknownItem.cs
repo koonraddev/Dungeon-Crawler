@@ -41,6 +41,6 @@ public class UnknownItem : Item, IUsable
 
     public void Use()
     {
-        unknownItemSO.UseItem();
+        unknownItemSO.InspectItem();
     }
 }

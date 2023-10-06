@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5648999909880280093}
   m_Layer: 8
-  m_Name: KeyChest
+  m_Name: ContainerChest
   m_TagString: Chest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

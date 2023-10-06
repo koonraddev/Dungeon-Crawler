@@ -21,7 +21,7 @@ public class ContainerObject
         contSlots[slotIndex].Item = null;
         contSlots[slotIndex].Amount = 0;
         contSlots[slotIndex].Empty = true;
-        GameEvents.instance.ChestUpdate();
+        GameEvents.instance.ContainerUpdate();
     }
 
     public bool AddTreasure(int slotIndex, Item treasureToAdd, int amount = 1)
@@ -31,7 +31,7 @@ public class ContainerObject
             contSlots[slotIndex].Item = treasureToAdd;
             contSlots[slotIndex].Amount = amount;
             contSlots[slotIndex].Empty = false;
-            GameEvents.instance.ChestUpdate();
+            GameEvents.instance.ContainerUpdate();
             return true;
         }
         return false;
@@ -74,6 +74,6 @@ public class ContainerObject
         //Debug.Log(contSlots[slotIndexB].Empty);
         //Debug.Log(contSlots[slotIndexB].Item);
         //Debug.Log(contSlots[slotIndexB].Amount);
-        GameEvents.instance.ChestUpdate();
+        GameEvents.instance.ContainerUpdate();
     }
 }

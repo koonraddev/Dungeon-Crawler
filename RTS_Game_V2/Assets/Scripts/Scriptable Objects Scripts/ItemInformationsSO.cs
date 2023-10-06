@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newItemInformations", menuName = "Scriptable Objects/Items/Item Informations")]
+[CreateAssetMenu(fileName = "newItemInformations", menuName = "Scriptable Objects/Item Informations")]
 public class ItemInformationsSO : ScriptableObject
 {
     [SerializeField] private int itemID;

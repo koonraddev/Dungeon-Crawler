@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyConfigurationSO enemyConfig;
-    [SerializeField] LootSO lootSO;
+    private LootSO lootSO;
 
     private GameObject parentRoom;
 
@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour
         armor = enemyConfig.Armor;
         magicResistance = enemyConfig.MagicResistance;
         enemyName = enemyConfig.EnemyName;
+
+        lootSO = enemyConfig.Loot;
 
         physicalDamageMultiplier = 100 / (100 - armor);
         magicDamageMultiplier = 100 / (100 - magicResistance);
@@ -77,6 +79,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetLoot(), enemyName + "'s loot");
         gameObject.SetActive(false);
     }
 }

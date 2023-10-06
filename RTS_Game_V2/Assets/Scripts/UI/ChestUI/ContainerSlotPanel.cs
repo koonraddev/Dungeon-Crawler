@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     [SerializeField] private Image textureHolder;
     [SerializeField] private TMP_Text amountHolder;
@@ -72,6 +72,24 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         {
             infoPanel.SetEmpty();
             GameEvents.instance.InformationPanel(false);
+        }
+    }
+
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if(contSlot.Item is IUsable usableItem)
+        {
+            usableItem.Use();
+            if(contSlot.Amount > 1)
+            {
+                contSlot.Amount -= 1;
+                GameEvents.instance.ContainerUpdate();
+            }
+            else
+            {
+                SetEmptySlot();
+            }
         }
     }
 

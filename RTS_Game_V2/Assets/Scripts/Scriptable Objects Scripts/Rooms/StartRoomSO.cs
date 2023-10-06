@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
 
-[CreateAssetMenu(fileName = "newStartRoom", menuName = "Scriptable Objects/Room/Start Room", order = 1)]
+[CreateAssetMenu(fileName = "newStartRoom", menuName = "Scriptable Objects/Room/Start Room")]
 public class StartRoomSO : RoomSO
 {
     [Header("Room section")]

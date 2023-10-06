@@ -11,28 +11,28 @@ public class UnknownItemSO : ScriptableObject
     [SerializeField] private bool oneLoot;
     [Range(0, 100)]
     [SerializeField] private float lootChancePercentage;
+    [SerializeField] private GameObject lootContainerPrefab;
     public ItemInformationsSO ItemInformations { get => itemInfos; }
 
-    public void UseItem()
+    public void InspectItem()
     {
 
         float randomValue = Random.Range(0f, 100f);
 
         if (randomValue <= lootChancePercentage)
         {
-            List<Item> lootItems = lootSO.LootLogic(oneLoot);
+            Debug.Log("Loot!");
+            List<ContainerSlot> containerSlots = lootSO.GetLoot(oneLoot);
 
-            if (lootItems != null && lootItems.Count > 0)
+            if (containerSlots != null && containerSlots.Count > 0)
             {
-                foreach (Item item in lootItems)
-                {
-                    //Create loot box
-                }  
+                LootManager.instance.CreateLoot(Vector3.zero, containerSlots, itemInfos.ItemName, itemInfos.ItemDescription);
             }
         }
         else
         {
             //SpawnerLogic
+            Debug.Log("SPAWN!");
         }
 
     }

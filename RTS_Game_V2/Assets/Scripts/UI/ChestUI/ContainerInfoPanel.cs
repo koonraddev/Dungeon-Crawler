@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ContainerInfoPanel : MonoBehaviour
@@ -28,19 +27,20 @@ public class ContainerInfoPanel : MonoBehaviour
 
     private void Start()
     {
-        GameEvents.instance.OnChestUpdate += ChestUpdate;
+        GameEvents.instance.OnContainerUpdate += ContainerUpdate;
     }
 
     public void ResetPanelSlots()
     {
         for (int i = 0; i < panelSlots.Length; i++)
         {
-            ContainerSlotPanel chestSlot = panelSlots[i].GetComponentInChildren<ContainerSlotPanel>();
-            chestSlot.SetEssentials(panelSlotSprite, panelSlotColor, i);
+            ContainerSlotPanel containerSlotPanel = panelSlots[i].GetComponentInChildren<ContainerSlotPanel>();
+            containerSlotPanel.SetEssentials(panelSlotSprite, panelSlotColor, i);
+            containerSlotPanel.gameObject.SetActive(false);
         }
     }
 
-    public void SetAndActiveChestPanel(ContainerObject container)
+    public void SetAndActiveContainerPanel(ContainerObject container)
     {
         gameObject.SetActive(true);
         ResetPanelSlots();
@@ -51,15 +51,16 @@ public class ContainerInfoPanel : MonoBehaviour
 
         for (int i = 0; i < contList.Count; i++)
         {
-            ContainerSlotPanel chestSlotPanel = panelSlots[i].GetComponent<ContainerSlotPanel>();
-            chestSlotPanel.SetContainerSlotUI(container,contList[i], Color.white);
+            ContainerSlotPanel containerSlotPanel = panelSlots[i].GetComponent<ContainerSlotPanel>();
+            containerSlotPanel.SetContainerSlotUI(container,contList[i], Color.white);
+            containerSlotPanel.gameObject.SetActive(true);
         }
 
     }
 
-    public void ChestUpdate()
+    public void ContainerUpdate()
     {
-        SetAndActiveChestPanel(container);
+        SetAndActiveContainerPanel(container);
     }
 
 }

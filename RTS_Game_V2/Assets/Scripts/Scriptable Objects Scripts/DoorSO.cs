@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newDoor", menuName = "Scriptable Objects/Door", order = 3)]
+[CreateAssetMenu(fileName = "newDoor", menuName = "Scriptable Objects/Door")]
 public class DoorSO : ScriptableObject
 {
     [field: SerializeField] public string NameText { get; private set; }

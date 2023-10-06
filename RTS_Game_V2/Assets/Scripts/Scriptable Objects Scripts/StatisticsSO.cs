@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newItemStatistics", menuName = "Scriptable Objects/Items/Item Statistics")]
+[CreateAssetMenu(fileName = "newStatistics", menuName = "Scriptable Objects/Statistics")]
 public class StatisticsSO : ScriptableObject
 {
     [Header("Attack Section")]
