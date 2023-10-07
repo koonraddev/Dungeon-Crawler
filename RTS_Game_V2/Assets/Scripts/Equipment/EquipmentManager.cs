@@ -41,7 +41,7 @@ public class EquipmentManager : MonoBehaviour
     {
         return playerEquipment.GetEquipmentSlot(slotType);
     }
-    public StatisticsSO GetStatistics(EquipmentSlotType itemSlotType)
+    public Dictionary<StatisticType, float> GetStatistics(EquipmentSlotType itemSlotType)
     {
         return playerEquipment.GetStatistics(itemSlotType);
     }

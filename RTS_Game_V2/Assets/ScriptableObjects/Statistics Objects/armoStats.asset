@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalDamage: 0
   trueDamage: 0
-  magicDamage: 0
-  attackSpeed: 0
+  magicDamage: 6
+  attackSpeed: 5
   attackRange: 0
   armor: 40
   magicResistance: 20
   maxHealth: 10
-  healthPointsRegeneration: 0
-  healthPercentageRegeneration: 0
+  healthPointsRegeneration: 3
+  healthPercentageRegeneration: 4
   movementSpeed: 0

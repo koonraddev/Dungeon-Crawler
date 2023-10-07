@@ -29,11 +29,11 @@ public class UnknownItem : Item, IUsable
         set { itemSprite = value; }
     }
 
-    public UnknownItem(UnknownItemSO unknownItemSO) : base(unknownItemSO.ItemInformations)
+    public UnknownItem(UnknownItemSO unknownItemSO) : base(unknownItemSO.ItemInformations, unknownItemSO.ItemID)
     {
         this.unknownItemSO = unknownItemSO;
         itemInfos = unknownItemSO.ItemInformations;
-        itemID = itemInfos.ItemID;
+        itemID = unknownItemSO.ItemID;
         itemName = itemInfos.ItemName;
         itemDescription = itemInfos.ItemDescription;
         itemSprite = itemInfos.ItemSprite;

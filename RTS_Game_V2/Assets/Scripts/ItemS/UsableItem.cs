@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UsableItem : InventoryItem, IUsable
+public class UsableItem : InventoryItem, IUsable, IStatisticItem
 {
     [SerializeField] private UsableItemSO usableItemSO;
     private ItemInformationsSO itemInfos;
+    private Dictionary<StatisticType, float> statistics;
     public override int ID
     {
         get { return itemID; }
@@ -29,13 +30,26 @@ public class UsableItem : InventoryItem, IUsable
         set { itemSprite = value; }
     }
 
-    public UsableItem(UsableItemSO usableItemSO) : base(usableItemSO.ItemInformations)
+    public Dictionary<StatisticType, float> Statistics => statistics;
+
+    public UsableItem(UsableItemSO usableItemSO) : base(usableItemSO.ItemInformations, usableItemSO.ItemID)
     {
         this.usableItemSO = usableItemSO;
         itemInfos = usableItemSO.ItemInformations;
-        itemID = itemInfos.ItemID;
+        statistics = usableItemSO.ItemStatistics.Statistics;
+        itemID = usableItemSO.ItemID;
         itemName = itemInfos.ItemName;
         itemDescription = itemInfos.ItemDescription;
+
+        if (usableItemSO.DurationMode)
+        {
+            itemDescription += "\n Duration: " + usableItemSO.Duration;
+        }
+        else
+        {
+            itemDescription += "\n Cooldown: " + usableItemSO.Cooldown;
+        }
+
         itemSprite = itemInfos.ItemSprite;
     }
 

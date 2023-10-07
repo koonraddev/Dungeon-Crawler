@@ -28,9 +28,8 @@ public class InventoryItem : Item
         set { itemSprite = value; }
     }
 
-    public InventoryItem(ItemInformationsSO itemInformationsSO) : base(itemInformationsSO)
+    public InventoryItem(ItemInformationsSO itemInformationsSO, int id) : base(itemInformationsSO, id)
     {
-        itemID = itemInformationsSO.ItemID;
         itemName = itemInformationsSO.ItemName;
         itemDescription = itemInformationsSO.ItemDescription;
         itemSprite = itemInformationsSO.ItemSprite;

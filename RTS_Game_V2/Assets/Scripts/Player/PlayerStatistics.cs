@@ -132,12 +132,9 @@ public class PlayerStatistics : MonoBehaviour
 
         foreach (EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentSlotType)))
         {
-            //Debug.Log("slotype: " + slotType);
-            StatisticsSO statsSO = EquipmentManager.instance.GetStatistics(slotType);
-            if(statsSO != null)
+            Dictionary<StatisticType, float> stats = EquipmentManager.instance.GetStatistics(slotType);
+            if(stats != null && stats.Count > 0)
             {
-                //Debug.Log("nie jeast pusty");
-                Dictionary<StatisticType, float> stats = statsSO.Statistics;
                 foreach (KeyValuePair<StatisticType, float> oneStat in stats)
                 {
                     switch (oneStat.Key)
@@ -179,7 +176,7 @@ public class PlayerStatistics : MonoBehaviour
                             break;
                     }
                 }
-            }
+            }   
         }
 
         eq_maxHealth = newMaxHealth;

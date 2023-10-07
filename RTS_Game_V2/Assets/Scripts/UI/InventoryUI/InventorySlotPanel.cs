@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     [SerializeField] public TMP_Text amountHolder;
     [SerializeField] private Image textureHolder;
@@ -22,10 +22,14 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private bool getOne;
     private bool merge;
-
+    private Sprite emptySlotSprite;
+    private Color emptySlotColor;
     private void Awake()
     {
         invSlot = new(slotNumber);
+        Image img = gameObject.GetComponent<Image>();
+        emptySlotSprite = img.sprite;
+        emptySlotColor = img.color;
     }
 
     void Start()
@@ -46,11 +50,11 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         textureHolder.sprite = item.Sprite;
     }
 
-    public void SetEmptySlot(Sprite slotSprite, Color slotColor)
+    public void SetEmptySlot()
     {
         amountHolder.text = "";
-        textureHolder.sprite = slotSprite;
-        textureHolder.color = slotColor;
+        textureHolder.sprite = emptySlotSprite;
+        textureHolder.color = emptySlotColor;
         invSlot.Empty = true;
         invSlot.Item = null;
         invSlot.Amount = 0;
@@ -82,7 +86,16 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (!invSlot.Empty && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
-            infoPanel.SetInfoPanel(invSlot.Item.Name, invSlot.Item.Description);
+
+            if (invSlot.Item is IStatisticItem statsItem)
+            {
+                infoPanel.SetInfoPanel(statsItem.Name, statsItem.Description, statsItem.Sprite, statsItem.Statistics);
+            }
+            else
+            {
+                infoPanel.SetInfoPanel(invSlot.Item.Name, invSlot.Item.Description, invSlot.Item.Sprite);
+            }
+
         }
     }
     public void OnPointerExit(PointerEventData eventData)
@@ -93,6 +106,17 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             GameEvents.instance.InformationPanel(false);
         }
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (invSlot.Item is IUsable usableItem)
+        {
+            usableItem.Use();
+            InventoryManager.instance.RemoveItem(slotNumber, amount: 1);
+            GameEvents.instance.InventoryUpdate();
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         if(!invSlot.Empty)

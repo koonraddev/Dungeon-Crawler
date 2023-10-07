@@ -18,8 +18,8 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 
     private ContainerSlot contSlot;
-    public ContainerSlot ContSlot { get => contSlot; set => contSlot = value; }
     private ContainerObject container;
+
     private Sprite panelSlotSprite;
     private Color panelSlotColor;
     public int slotIndex { get; private set; }
@@ -63,7 +63,14 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (contSlot.Item != null && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
-            infoPanel.SetInfoPanel(contSlot.Item.Name, contSlot.Item.Description);
+            if(contSlot.Item is IStatisticItem statsItem)
+            {
+                infoPanel.SetInfoPanel(statsItem.Name, statsItem.Description, statsItem.Sprite, statsItem.Statistics);
+            }
+            else
+            {
+                infoPanel.SetInfoPanel(contSlot.Item.Name, contSlot.Item.Description, contSlot.Item.Sprite);
+            }
         }
     }
     public void OnPointerExit(PointerEventData eventData)

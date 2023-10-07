@@ -1,12 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class EquipmentItem : Item
+public class EquipmentItem : Item , IStatisticItem
 {
     [SerializeField] private EquipmentSlotType itemSlot;
     [SerializeField] private EquipmentItemSO equipmentItemSO;
-    private StatisticsSO itemStatistics;
     private ItemInformationsSO itemInfos;
+    private Dictionary<StatisticType, float> statistics;
 
     public override int ID
     {
@@ -31,14 +32,16 @@ public class EquipmentItem : Item
         set { itemSprite = value; }
     }
     public EquipmentSlotType ItemSlot { get => itemSlot; }
-    public StatisticsSO ItemStatistics { get => itemStatistics; }
-    public EquipmentItem(EquipmentItemSO equipmentItemSO): base(equipmentItemSO.ItemInformations)
+
+    public Dictionary<StatisticType, float> Statistics => statistics;
+
+    public EquipmentItem(EquipmentItemSO equipmentItemSO): base(equipmentItemSO.ItemInformations, equipmentItemSO.ItemID)
     {
         this.equipmentItemSO = equipmentItemSO;
         itemSlot = equipmentItemSO.ItemSlot;
-        itemStatistics = equipmentItemSO.ItemStatistics;
+        statistics = equipmentItemSO.ItemStatistics.Statistics;
         itemInfos = equipmentItemSO.ItemInformations;
-        itemID = itemInfos.ItemID;
+        itemID = equipmentItemSO.ItemID;
         itemName = itemInfos.ItemName;
         itemDescription = itemInfos.ItemDescription;
         itemSprite = itemInfos.ItemSprite;

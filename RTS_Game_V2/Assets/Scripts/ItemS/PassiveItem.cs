@@ -36,11 +36,11 @@ public class PassiveItem : InventoryItem
         set { isReusable = value; }
     }
 
-    public PassiveItem(PassiveItemSO passiveItemSO) : base(passiveItemSO.ItemInformations)
+    public PassiveItem(PassiveItemSO passiveItemSO) : base(passiveItemSO.ItemInformations, passiveItemSO.ItemID)
     {
         this.passiveItemSO = passiveItemSO;
         itemInfos = passiveItemSO.ItemInformations;
-        itemID = itemInfos.ItemID;
+        itemID = passiveItemSO.ItemID;
         itemName = itemInfos.ItemName;
         itemDescription = itemInfos.ItemDescription;
         itemSprite = itemInfos.ItemSprite;

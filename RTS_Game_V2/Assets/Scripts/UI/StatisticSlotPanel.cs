@@ -10,7 +10,7 @@ public class StatisticSlotPanel : MonoBehaviour
 
     private void OnEnable()
     {
-
+        //GameEvents.instance.OnStatisticUpdate += UpdateStatistic;
     }
 
     private void Start()

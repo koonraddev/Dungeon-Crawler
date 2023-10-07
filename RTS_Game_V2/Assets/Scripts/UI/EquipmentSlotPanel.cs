@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -20,7 +21,6 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     [SerializeField] private Sprite emptySlotSprite;
     [SerializeField] private Color emptySlotColor;
-
 
     private void Awake()
     {
@@ -74,7 +74,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (!eqSlot.Empty && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
-            infoPanel.SetInfoPanel(eqSlot.Item.Name, eqSlot.Item.Description);
+            infoPanel.SetInfoPanel(eqSlot.Item.Name, eqSlot.Item.Description, eqSlot.Item.Sprite, eqSlot.Item.Statistics);
         }
     }
     public void OnPointerExit(PointerEventData eventData)

@@ -33,9 +33,9 @@ public class Item : IEquatable<Item>
         set { itemDescription = value; }
     }
 
-    public Item(ItemInformationsSO itemInformationsSO)
+    public Item(ItemInformationsSO itemInformationsSO, int id)
     {
-        itemID = itemInformationsSO.ItemID;
+        itemID = id;
         itemName = itemInformationsSO.ItemName;
         itemDescription = itemInformationsSO.ItemDescription;
         itemSprite = itemInformationsSO.ItemSprite;

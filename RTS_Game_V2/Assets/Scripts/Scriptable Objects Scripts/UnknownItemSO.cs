@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newUnknownItem", menuName = "Scriptable Objects/Items/Unknown Item ")]
 public class UnknownItemSO : ScriptableObject
 {
+    [SerializeField] private int itemID;
     [SerializeField] private ItemInformationsSO itemInfos;
     //[SerializeField] private EnemySpawnerConfigurationSO enemySpawnerSO;
     [SerializeField] private LootSO lootSO;
@@ -13,7 +14,7 @@ public class UnknownItemSO : ScriptableObject
     [SerializeField] private float lootChancePercentage;
     [SerializeField] private GameObject lootContainerPrefab;
     public ItemInformationsSO ItemInformations { get => itemInfos; }
-
+    public int ItemID { get => itemID; }
     public void InspectItem()
     {
 

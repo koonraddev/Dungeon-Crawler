@@ -67,14 +67,14 @@ public class Equipment
         return null;
     }
 
-    public StatisticsSO GetStatistics(EquipmentSlotType itemSlotType)
+    public Dictionary<StatisticType, float> GetStatistics(EquipmentSlotType itemSlotType)
     {
         EquipmentSlot eqSlot = slotsList.Find(sl => sl.SlotType == itemSlotType);
         EquipmentItem eqItem = eqSlot.Item;
 
         if (eqItem != null)
         {
-            return eqItem.ItemStatistics;
+            return eqItem.Statistics;
         }
         return null;
     }

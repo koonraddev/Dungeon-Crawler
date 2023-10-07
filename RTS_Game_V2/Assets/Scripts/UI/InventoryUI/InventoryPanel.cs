@@ -6,13 +6,9 @@ public class InventoryPanel : MonoBehaviour
 {
     [SerializeField] private GameObject[] panelSlots;
     [SerializeField] private Image slotPanel;
-    private Sprite emptySlotSprite;
-    private Color emptySlotColor;
 
     void Start()
     {
-        emptySlotSprite = slotPanel.sprite;
-        emptySlotColor = slotPanel.color;
         GameEvents.instance.OnInventoryUpdate += OnInventoryUpdate;
         OnInventoryUpdate();
     }
@@ -32,7 +28,7 @@ public class InventoryPanel : MonoBehaviour
                 }
                 else
                 {
-                    invInter.SetEmptySlot(emptySlotSprite, emptySlotColor);
+                    invInter.SetEmptySlot();
                 }
             }
         }
