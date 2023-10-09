@@ -35,7 +35,6 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         this.container = container;
         contSlot = containerSlot;
-        Debug.Log("Set");
         if (containerSlot.Empty)
         {
             textureHolder.color = panelSlotColor;

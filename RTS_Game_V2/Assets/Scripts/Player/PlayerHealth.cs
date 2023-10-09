@@ -17,10 +17,17 @@ public class PlayerHealth : MonoBehaviour
 
     private float interval = 5f;
     private float timeLeft;
-    void Start()
+
+
+    private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
     }
+    void Start()
+    {
+        health = maxHealth;
+    }
+
 
     void Update()
     {
@@ -51,6 +58,7 @@ public class PlayerHealth : MonoBehaviour
         {
             case StatisticType.MaxHealth:
                 maxHealth = value;
+                health = Mathf.Clamp(health, 0, maxHealth);
                 break;
             case StatisticType.Armor:
                 armor = value;
