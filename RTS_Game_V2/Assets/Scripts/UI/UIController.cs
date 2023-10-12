@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject inventoryDropPanel;
     [SerializeField] private GameObject chestInfoPanel;
     [SerializeField] private GameObject statisticsPanel;
+    [SerializeField] private GameObject enemyInformationPanel;
 
     private PlayerControls playerControls;
     private InputAction inventoryAction;
@@ -31,6 +32,7 @@ public class UIController : MonoBehaviour
         GameEvents.instance.OnInventoryPanelOpen += InventoryPanelStatus;
         GameEvents.instance.OnInformationPanel += InformationPanelStatus;
         GameEvents.instance.OnStatisticPanel += StatisticsPanelStatus;
+        GameEvents.instance.OnEnemyClick += EnemyClick;
         inventoryAction = playerControls.BasicMovement.Inventory;
         statisticsAction = playerControls.BasicMovement.Statistics;
         InventoryPanelStatus(false);
@@ -50,6 +52,20 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void EnemyClick(Enemy enemy)
+    {
+        if(enemy != null)
+        {
+            enemyInformationPanel.SetActive(true);
+            EnemyInformationPanel enemyInfo = enemyInformationPanel.GetComponent<EnemyInformationPanel>();
+            enemyInfo.SetPanel(enemy);
+        }
+        else
+        {
+            enemyInformationPanel.SetActive(false);
+        }
+
+    }
 
     public void InventoryPanelStatus(bool active)
     {

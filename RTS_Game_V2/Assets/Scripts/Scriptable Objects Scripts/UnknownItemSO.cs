@@ -9,7 +9,6 @@ public class UnknownItemSO : ScriptableObject
     [SerializeField] private ItemInformationsSO itemInfos;
     //[SerializeField] private EnemySpawnerConfigurationSO enemySpawnerSO;
     [SerializeField] private LootSO lootSO;
-    [SerializeField] private bool oneLoot;
     [Range(0, 100)]
     [SerializeField] private float lootChancePercentage;
     [SerializeField] private GameObject lootContainerPrefab;
@@ -23,7 +22,7 @@ public class UnknownItemSO : ScriptableObject
         if (randomValue <= lootChancePercentage)
         {
             Debug.Log("Loot!");
-            List<ContainerSlot> containerSlots = lootSO.GetLoot(oneLoot);
+            List<ContainerSlot> containerSlots = lootSO.GetLoot();
 
             if (containerSlots != null && containerSlots.Count > 0)
             {

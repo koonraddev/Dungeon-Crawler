@@ -70,7 +70,7 @@ public class MessageMenuController : MonoBehaviour
         Positioning();
     }
 
-    public void PrepareMessageMenu(IInteractionObjects intObject, UIMessageObjectPool.MessageType messageType)
+    public void PrepareMessageMenu(IInteractionObject intObject, UIMessageObjectPool.MessageType messageType)
     {
         this.messageType = messageType;
         if (firstRun)
@@ -108,7 +108,7 @@ public class MessageMenuController : MonoBehaviour
                 break;
         }
 
-        objectReq = intObject.GetGameObject();
+        objectReq = intObject.GameObject;
         objectReqPosition = objectReq.transform.position;
         SetTextHolders(intObject);
         CheckTextHolders();
@@ -198,7 +198,7 @@ public class MessageMenuController : MonoBehaviour
 
     private void SetTextHolders(IContentDisplayObject cntObject)
     {
-        Dictionary<string, string> lista = cntObject.GetContentToDisplay();
+        Dictionary<string, string> lista = cntObject.ContentToDisplay;
         if (lista.Count > 0)
         {
             foreach (KeyValuePair<string, string> li in lista)

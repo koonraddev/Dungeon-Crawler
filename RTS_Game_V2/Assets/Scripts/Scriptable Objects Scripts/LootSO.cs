@@ -37,37 +37,19 @@ public class LootSO : ScriptableObject
         }
     }
 
-    public List<ContainerSlot> GetLoot(bool oneLoot = false)
+    public List<ContainerSlot> GetLoot()
     {
         containerSlots = new();
         i = 0;
-        float randomValue = Random.Range(0f, 100f);
-        if (oneLoot)
+        //lootSlots.Sort((a, b) => b.lootChancePercentage.CompareTo(a.lootChancePercentage));
+        foreach (LootSlot ltSlot in lootSlots)
         {
-            Debug.Log("one Loot!");
-            foreach (LootSlot ltSlot in lootSlots)
+            float randomLootChance = Random.Range(0f, 101f);
+            if (randomLootChance <= ltSlot.lootChancePercentage)
             {
-
-                if (randomValue <= ltSlot.lootChancePercentage)
-                {
-                    AddLoot(ltSlot);
-                }
+                AddLoot(ltSlot);
             }
         }
-        else
-        {
-            Debug.Log("many Loot!");
-            lootSlots.Sort((a, b) => b.lootChancePercentage.CompareTo(a.lootChancePercentage));
-            foreach (LootSlot ltSlot in lootSlots)
-            {
-                if (randomValue <= ltSlot.lootChancePercentage)
-                {
-                    AddLoot(ltSlot);
-                    break;
-                }
-            }
-        }
-
         return containerSlots;
     }
 

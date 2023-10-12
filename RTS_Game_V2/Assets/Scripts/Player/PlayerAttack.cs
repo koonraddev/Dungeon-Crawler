@@ -21,6 +21,7 @@ public class PlayerAttack : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
+        GameEvents.instance.OnEnemyClick += SetTarget;
     }
     void Start()
     {
@@ -35,10 +36,10 @@ public class PlayerAttack : MonoBehaviour
         {
 
             distanceToEnemy = Vector3.Distance(transform.position, objectToAttack.transform.position);
-            if(enemy == null)
-            {
-                enemy = objectToAttack.GetComponent<Enemy>();
-            }
+            //if(enemy == null)
+            //{
+            //    enemy = objectToAttack.GetComponent<Enemy>();
+            //}
 
             if (!objectToAttack.activeSelf)
             {
@@ -54,13 +55,17 @@ public class PlayerAttack : MonoBehaviour
         Attack();
     }
 
-    public void SetTarget(GameObject enemyTarget)
+    public void SetTarget(Enemy target)
     {
-        objectToAttack = enemyTarget;
-
-        if(enemyTarget == null)
+        if(target == null)
         {
             enemy = null;
+            objectToAttack = null;
+        }
+        else
+        {
+            objectToAttack = target.transform.gameObject;
+            enemy = target;
         }
     }
     public void UpdateStats(StatisticType statisticType, float value)
@@ -101,5 +106,6 @@ public class PlayerAttack : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
+        GameEvents.instance.OnEnemyClick -= SetTarget;
     }
 }

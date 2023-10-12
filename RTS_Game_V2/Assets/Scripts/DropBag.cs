@@ -4,12 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class DropBag : MonoBehaviour, IInteractionObjects
+public class DropBag : MonoBehaviour, IInteractionObject
 {
     public ContainerSlot bagSlot;
     private bool displayInfo = true;
     private bool displayMessage = true;
+
+
     private Dictionary<string, string> contentToDisplay;
+
+    private int interactionDistance = 3;
+    public GameObject GameObject => gameObject;
+    public int InteractionDistance { get => interactionDistance; }
+    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
     public void DoInteraction()
     {
@@ -25,10 +32,6 @@ public class DropBag : MonoBehaviour, IInteractionObjects
         }
     }
 
-    public Dictionary<string, string> GetContentToDisplay()
-    {
-        return contentToDisplay;
-    }
 
     public GameObject GetGameObject()
     {

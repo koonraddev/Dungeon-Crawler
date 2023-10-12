@@ -4,12 +4,16 @@ using UnityEngine;
 using DG.Tweening;
 
 [RequireComponent(typeof(Collider))]
-public class LootContainer : MonoBehaviour, IInteractionObjects
+public class LootContainer : MonoBehaviour, IInteractionObject
 {
     private Dictionary<string, string> contentToDisplay;
     private bool displayPopup = true;
 
     public ContainerObject container;
+    private int interactionDistance = 3;
+    public GameObject GameObject => gameObject;
+    public int InteractionDistance { get => interactionDistance; }
+    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
     public void Start()
     {

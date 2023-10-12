@@ -9,6 +9,7 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private string enemyName;
     [SerializeField] private float health;
     [SerializeField] private LootSO enemyLoot;
+    [SerializeField] private Sprite enemySprite;
 
     [Header("Movement section")]
     [SerializeField] private float movementSpeed;
@@ -37,6 +38,7 @@ public class EnemyConfigurationSO : ScriptableObject
     public string EnemyName { get => enemyName; }
     public float Health { get => health; }
     public LootSO Loot { get => enemyLoot; }
+    public Sprite Sprite { get => enemySprite; }
     public float MovementSpeed { get => movementSpeed; }
     public int MinMoveInterval { get => minMoveInterval; }
     public int MaxMoveInterval { get => maxMoveInterval; }

@@ -46,9 +46,17 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (hitPoint.collider.gameObject.layer == groundMask)
                 {
+                    GameEvents.instance.CancelActions();
                     MoveTo(hitPoint.point);
                 }
             }
+        }
+
+        if (playerAgent.isOnOffMeshLink)
+        {
+            Debug.LogWarning("STOP");
+            GameEvents.instance.CancelActions();
+            GameEvents.instance.CancelGameObjectAction();
         }
     }
 

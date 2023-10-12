@@ -40,10 +40,23 @@ public class GameEvents : MonoBehaviour
     public event Action OnSavePlayerStuff;
     public event Action OnLoadPlayerStuff;
 
+    public event Action<Enemy> OnEnemyClick;
+    public event Action OnCancelActions;
+
+
     //Spawns ready status
     //public event Action OnLastSpawnPoint
     public event Action OnLastRoomReady;
 
+    public void EnemyClick(Enemy enemy)
+    {
+        OnEnemyClick?.Invoke(enemy);
+    }
+
+    public void CancelActions()
+    {
+        OnCancelActions?.Invoke();
+    }
 
     public void SavePlayerStuff()
     {

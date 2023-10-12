@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IInteractionObject
 {
     [SerializeField] private EnemyConfigurationSO enemyConfig;
     private LootSO lootSO;
@@ -17,12 +18,28 @@ public class Enemy : MonoBehaviour
 
     private float physicalDamageMultiplier;
     private float magicDamageMultiplier;
+    
 
     [SerializeField] EnemyMovement enemyMovement;
     [SerializeField] EnemyAttack enemyAttack;
+    private Sprite enemySprite;
+
+    public float MaxHealth { get => maxHealth; }
+    public float Health { get => health; }
+    public string Name { get => enemyName; }
+    public Sprite Sprite { get => enemySprite; }
+
+    private int interactionDistance = 9999;
+    public GameObject GameObject => gameObject;
+    public int InteractionDistance { get => interactionDistance; }
+    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
+
+    private Dictionary<string, string> contentToDisplay;
+    private bool displayPopup = true;
 
     private void Awake()
     {
+        enemySprite = enemyConfig.Sprite;
         maxHealth = enemyConfig.Health;
         armor = enemyConfig.Armor;
         magicResistance = enemyConfig.MagicResistance;
@@ -39,12 +56,6 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         health = maxHealth;
-    }
-
-
-    void Start()
-    {
-
     }
 
     public void SetEnemy(GameObject parentRoom)
@@ -79,7 +90,75 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        GameEvents.instance.EnemyClick(null);
         LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetLoot(), enemyName + "'s loot");
         gameObject.SetActive(false);
+    }
+
+    public void ObjectInteraction()
+    {
+        DoInteraction();
+    }
+
+    public void DoInteraction()
+    {
+        GameEvents.instance.EnemyClick(this);
+        GameEvents.instance.OnCancelGameObjectAction += OnCancelGameObject;
+    }
+
+    public void OnMouseEnterObject(Color highLightColor)
+    {
+        Material[] objectMaterials;
+        objectMaterials = gameObject.GetComponent<Renderer>().materials;
+        if (objectMaterials != null)
+        {
+            foreach (Material objMaterial in objectMaterials)
+            {
+                if (objMaterial.color != highLightColor)
+                {
+                    objMaterial.DOColor(highLightColor, "_Color", 0.5f);
+                }
+            }
+        }
+        if (displayPopup)
+        {
+            SetContentToDisplay(new Dictionary<string, string> { { "Name", enemyName } });
+            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+            displayPopup = false;
+        }
+    }
+
+    public void OnMouseExitObject()
+    {
+        Material[] objectMaterials;
+        objectMaterials = gameObject.GetComponent<Renderer>().materials;
+        if (objectMaterials != null)
+        {
+            foreach (Material objMaterial in objectMaterials)
+            {
+                if (objMaterial.color != Color.white)
+                {
+                    objMaterial.DOColor(Color.white, "_Color", 0.5f);
+                }
+            }
+        }
+        GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
+        displayPopup = false;
+    }
+
+    private void OnCancelGameObject()
+    {
+        GameEvents.instance.EnemyClick(null);
+        GameEvents.instance.OnCancelGameObjectAction -= OnCancelGameObject;
+    }
+
+
+    private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
+    {
+        contentToDisplay = new Dictionary<string, string> { };
+        foreach (KeyValuePair<string, string> li in contentDictionary)
+        {
+            contentToDisplay.Add(li.Key, li.Value);
+        }
     }
 }

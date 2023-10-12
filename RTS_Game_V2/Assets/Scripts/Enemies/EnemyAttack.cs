@@ -52,7 +52,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (playerObject != null)
         {
-            transform.LookAt(playerObject.transform);
+            transform.LookAt(playerObject.transform, Vector3.up);
             float distance = Vector3.Distance(transform.position, playerObject.transform.position);
             if (distance > triggerRange)
             {

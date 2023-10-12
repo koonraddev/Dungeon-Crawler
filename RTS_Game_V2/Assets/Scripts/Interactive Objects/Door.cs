@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
-public class Door : MonoBehaviour, IInteractionObjects
+public class Door : MonoBehaviour, IInteractionObject
 {
     [SerializeField] DoorSO doorSO;
     private PassiveItem keyItem;
@@ -15,7 +15,7 @@ public class Door : MonoBehaviour, IInteractionObjects
     private GameObject actualDoor;
     private Dictionary<string, string> contentToDisplay;
     private OffMeshLink meshLink;
-
+    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
     private void Awake()
     {
         meshLink = GetComponent<OffMeshLink>();
@@ -27,6 +27,11 @@ public class Door : MonoBehaviour, IInteractionObjects
         displayInfo = true;
         ChangeDoorStatus(false);
     }
+
+    private int interactionDistance = 3;
+    public GameObject GameObject => gameObject;
+    public int InteractionDistance { get => interactionDistance; }
+
 
     public void ObjectInteraction()
     {
@@ -120,11 +125,6 @@ public class Door : MonoBehaviour, IInteractionObjects
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-
     private  void SetContentToDisplay(Dictionary<string, string> contentDictionary)
     {
         contentToDisplay = new Dictionary<string, string> { };
@@ -135,15 +135,12 @@ public class Door : MonoBehaviour, IInteractionObjects
         }
     }
 
-    public Dictionary<string, string> GetContentToDisplay()
-    {
-        return contentToDisplay;
-    }
 
     private bool CheckKeyRequired()
     {
         if (doorSO.keyRequired != null)
         {
+            keyItem = new(doorSO.keyRequired);
             destroyItemOnUse = !keyItem.IsReusable;
             keyRequired = true;
             return true;
@@ -162,7 +159,6 @@ public class Door : MonoBehaviour, IInteractionObjects
             doorSO = newDoor;
             if (CheckKeyRequired())
             {
-                keyItem = new(doorSO.keyRequired);
                 LockDoor();
             }
         }

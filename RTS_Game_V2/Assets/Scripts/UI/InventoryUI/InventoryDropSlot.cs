@@ -10,6 +10,7 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
     [SerializeField] private GameObject dropObjectPrefab;
     private GameObject playerObject;
 
+    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
@@ -64,10 +65,5 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
     public InventorySlotPanel GetRequestingSlot()
     {
         return invSlotPanel;
-    }
-
-    public Dictionary<string, string> GetContentToDisplay()
-    {
-        return contentToDisplay;
     }
 }

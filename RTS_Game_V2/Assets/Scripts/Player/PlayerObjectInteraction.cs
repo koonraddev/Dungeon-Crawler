@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System;
 
 public class PlayerObjectInteraction : MonoBehaviour
 {
@@ -11,12 +12,13 @@ public class PlayerObjectInteraction : MonoBehaviour
     [SerializeField] private LayerMask interactiveObjectMask;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttack playerAttack;
-    [SerializeField] private int minimumDistanceFromObject;
+    private int minimumDistanceFromObject;
     private float distanceFromObject;
 
     private PlayerControls playerControls;
     private InputAction moveInspectAction;
 
+    private IEnumerator inspectCor;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -25,10 +27,12 @@ public class PlayerObjectInteraction : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
+        GameEvents.instance.OnCancelActions += CancelAction;
     }
     private void OnDisable()
     {
         playerControls.Disable();
+        GameEvents.instance.OnCancelActions -= CancelAction;
     }
 
     void Start()
@@ -40,7 +44,7 @@ public class PlayerObjectInteraction : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (Physics.Raycast(ray, out RaycastHit hitPoint, 1000f, interactiveObjectMask))
+        if (Physics.Raycast(ray, out RaycastHit hitPoint, 1000f))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
@@ -63,6 +67,7 @@ public class PlayerObjectInteraction : MonoBehaviour
         if (clickedObject != null)
         {
             distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
+            //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
         }
     }
 
@@ -70,48 +75,72 @@ public class PlayerObjectInteraction : MonoBehaviour
     {
         if (pointedObject != null)
         {
-            if(pointedObject.TryGetComponent<IInteractionObjects>(out IInteractionObjects pointedScript))
+            if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
             {
                 pointedScript.OnMouseEnterObject(highLightObjectColor);
                 if (moveInspectAction.IsPressed())
                 {
                     StopAllCoroutines();
                     clickedObject = pointedObject;
-                    StartCoroutine(InspectObject(pointedScript));
+                    inspectCor = InspectObject(pointedScript);
+                    StartCoroutine(inspectCor);
                 }
-            }
-
-            if (pointedObject.TryGetComponent<Enemy>(out Enemy pointedEnemy))
-            {
-                pointedEnemy.SetEnemy(pointedObject);
             }
         }
     }
 
     public void UncheckObject(GameObject pointedObject)
     {
-        if (pointedObject != null && pointedObject.TryGetComponent<IInteractionObjects>(out IInteractionObjects pointedScript))
+        if (pointedObject != null)
         {
-            pointedScript.OnMouseExitObject();
+            if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
+            {
+                pointedScript.OnMouseExitObject();
+            }
         }
     }
 
-    public IEnumerator InspectObject(IInteractionObjects objectToInspect)
+    public IEnumerator InspectObject(IInteractionObject objectToInspect)
     {
-        if (distanceFromObject > 3 && playerMovement != null) 
+        minimumDistanceFromObject = objectToInspect.InteractionDistance;
+        //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
+        float distToMove = minimumDistanceFromObject;
+        if (distanceFromObject > minimumDistanceFromObject && playerMovement != null) 
         {
-            playerMovement.MoveTo(clickedObject.transform.position);
+            Vector3 dirToTarget = clickedObject.transform.position - this.transform.position;
+            Vector3 dirToTargetNorm = dirToTarget.normalized;
+            float distToTarget = dirToTarget.magnitude;
+            distToMove = distToTarget - minimumDistanceFromObject;
+            Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
+            playerMovement.MoveTo(pointToMove);
         }
-        yield return new WaitUntil(() => distanceFromObject <= minimumDistanceFromObject);
+        yield return new WaitUntil(() => distanceFromObject <= distToMove);
 
         objectToInspect.ObjectInteraction();
-        StartCoroutine(IfInspectingObject());
+        StartCoroutine(InspectingObject());
     }
 
-    public IEnumerator IfInspectingObject()
+    public IEnumerator InspectingObject()
     {
-        yield return new WaitUntil(() => distanceFromObject >= minimumDistanceFromObject);
-        GameEvents.instance.InventoryPanel(false);
+        Debug.Log("start");
+        yield return new WaitUntil(() => distanceFromObject > minimumDistanceFromObject);
+        Debug.Log("distance > min distance");
         GameEvents.instance.CancelGameObjectAction();
+        clickedObject = null;
     }
+
+    private void CancelAction()
+    {
+        Debug.Log("Cancel");
+        if(inspectCor != null)
+        {
+            StopCoroutine(inspectCor);
+        }
+        else
+        {
+
+        }
+        //GameEvents.instance.CancelGameObjectAction();
+    }
+
 }

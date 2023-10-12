@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Chest : MonoBehaviour, IInteractionObjects
+public class Chest : MonoBehaviour, IInteractionObject
 {
     private Dictionary<string, string> contentToDisplay;
     private bool displayPopup = true;
 
     public ContainerObject container;
+    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
+
     public void Start()
     {
         ChangeChestStatus(false);
     }
+
+    private int interactionDistance = 3;
+    public GameObject GameObject => gameObject;
+    public int InteractionDistance { get => interactionDistance; }
 
     public void ObjectInteraction()
     {
@@ -76,14 +82,6 @@ public class Chest : MonoBehaviour, IInteractionObjects
         }
     }
 
-    public Dictionary<string, string> GetContentToDisplay()
-    {
-        return contentToDisplay;
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
 
     public void SetChest(ChestSO newChest)
     {
@@ -105,6 +103,7 @@ public class Chest : MonoBehaviour, IInteractionObjects
         else
         {
             gameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 2f).SetEase(Ease.Linear);
+            GameEvents.instance.InventoryPanel(false);
             GameEvents.instance.OnCancelGameObjectAction -= OnCancelGameObject;
         }
     }

@@ -1,11 +1,11 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-public interface IInteractionObjects : IContentDisplayObject
+public interface IInteractionObject : IContentDisplayObject
 {
     public void ObjectInteraction();
     public void DoInteraction();
     public void OnMouseEnterObject(Color highLightColor);
     public void OnMouseExitObject();
-    public GameObject GetGameObject();
+    public GameObject GameObject { get; }
+    public int InteractionDistance { get; }
 }

@@ -15,8 +15,8 @@ MonoBehaviour:
   physicalDamage: 5
   trueDamage: 0
   magicDamage: 0
-  attackSpeed: 0
-  attackRange: 0
+  attackSpeed: 20
+  attackRange: 2
   armor: 5
   magicResistance: 0
   maxHealth: 200

@@ -41,7 +41,7 @@ public class UIMessageObjectPool : MonoBehaviour
         return null;
     }
 
-    public void DisplayMessage(IInteractionObjects gameObjectReq, MessageType messageType )
+    public void DisplayMessage(IInteractionObject gameObjectReq, MessageType messageType )
     {
         if (GetPooledObject() == null)
         {
