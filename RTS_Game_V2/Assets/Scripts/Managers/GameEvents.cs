@@ -34,7 +34,6 @@ public class GameEvents : MonoBehaviour
 
 
     public event Action<float> onUpdateCurrentHP;
-    public event Action<float> onUpdateMaxHP;
 
 
     public event Action OnSavePlayerStuff;

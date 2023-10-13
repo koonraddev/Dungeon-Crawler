@@ -18,7 +18,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 
     private ContainerSlot contSlot;
-    private ContainerObject container;
+    private Container container;
 
     private Sprite panelSlotSprite;
     private Color panelSlotColor;
@@ -31,7 +31,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         infoPanel = infoObject.GetComponent<InformationPanel>();
         textureHolder = GetComponent<Image>();
     }
-    public void SetContainerSlotUI(ContainerObject container,ContainerSlot containerSlot, Color slotColor)
+    public void SetContainerSlotUI(Container container,ContainerSlot containerSlot, Color slotColor)
     {
         this.container = container;
         contSlot = containerSlot;

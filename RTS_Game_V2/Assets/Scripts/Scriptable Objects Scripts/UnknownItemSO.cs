@@ -22,11 +22,12 @@ public class UnknownItemSO : ScriptableObject
         if (randomValue <= lootChancePercentage)
         {
             Debug.Log("Loot!");
-            List<ContainerSlot> containerSlots = lootSO.GetLoot();
+            Container container = lootSO.GetContainer(itemInfos.ItemName);
+            List<ContainerSlot> containerSlots = container.Slots;
 
             if (containerSlots != null && containerSlots.Count > 0)
             {
-                LootManager.instance.CreateLoot(Vector3.zero, containerSlots, itemInfos.ItemName, lootSO.LootTimeExisting, itemInfos.ItemDescription);
+                LootManager.instance.CreateLoot(Vector3.zero, container, lootSO.LootTimeExisting);
             }
         }
         else

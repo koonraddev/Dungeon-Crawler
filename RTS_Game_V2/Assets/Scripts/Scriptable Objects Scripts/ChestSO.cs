@@ -17,7 +17,6 @@ public class ChestSO : ScriptableObject
     [SerializeField] List<ChestSlot> treasureList = new(25);
     private List<ContainerSlot> contSlots = new(25);
 
-
     private void Awake()
     {
         if (treasureList == null)
@@ -50,65 +49,57 @@ public class ChestSO : ScriptableObject
             }
         }
     }
-    
-    public int GetId()
+
+    public Container Container
     {
-        return chestId;
-    }
-    public  string GetNameText()
-    {
-        return nameText;
-    }
-    public string GetDescription()
-    {
-        return description;
-    }
-    public List<ContainerSlot> GetContainerSlots()
-    {
-        contSlots = new();
-        for (int i = 0; i < treasureList.Count; i++)
+        get
         {
-            ChestSlot itemSO = treasureList[i];
-            if (itemSO.treasure == null)
+            contSlots = new();
+            for (int i = 0; i < treasureList.Count; i++)
             {
-                ContainerSlot newSlot = new(i);
-                contSlots.Add(newSlot);
+                ChestSlot itemSO = treasureList[i];
+                if (itemSO.treasure == null)
+                {
+                    ContainerSlot newSlot = new(i);
+                    contSlots.Add(newSlot);
+                }
+                else
+                {
+                    if (itemSO.treasure is EquipmentItemSO)
+                    {
+                        Item newItem = new EquipmentItem(itemSO.treasure as EquipmentItemSO);
+                        ContainerSlot newSlot = new(i, newItem, itemSO.amount);
+                        contSlots.Add(newSlot);
+                        continue;
+                    }
+
+                    if (itemSO.treasure is UnknownItemSO)
+                    {
+                        Item newItem = new UnknownItem(itemSO.treasure as UnknownItemSO);
+                        ContainerSlot newSlot = new(i, newItem, itemSO.amount);
+                        contSlots.Add(newSlot);
+                        continue;
+                    }
+
+                    if (itemSO.treasure is UsableItemSO)
+                    {
+                        Item newItem = new UsableItem(itemSO.treasure as UsableItemSO);
+                        ContainerSlot newSlot = new(i, newItem, itemSO.amount);
+                        contSlots.Add(newSlot);
+                        continue;
+                    }
+
+                    if (itemSO.treasure is PassiveItemSO)
+                    {
+                        Item newItem = new PassiveItem(itemSO.treasure as PassiveItemSO);
+                        ContainerSlot newSlot = new(i, newItem, itemSO.amount);
+                        contSlots.Add(newSlot);
+                        continue;
+                    }
+                }
             }
-            else
-            {
-                if (itemSO.treasure is EquipmentItemSO)
-                {
-                    Item newItem = new EquipmentItem(itemSO.treasure as EquipmentItemSO);
-                    ContainerSlot newSlot = new(i,newItem, itemSO.amount);
-                    contSlots.Add(newSlot);
-                    continue;
-                }
-
-                if (itemSO.treasure is UnknownItemSO)
-                {
-                    Item newItem = new UnknownItem(itemSO.treasure as UnknownItemSO);
-                    ContainerSlot newSlot = new(i, newItem, itemSO.amount);
-                    contSlots.Add(newSlot);
-                    continue;
-                }
-
-                if (itemSO.treasure is UsableItemSO)
-                {
-                    Item newItem = new UsableItem(itemSO.treasure as UsableItemSO);
-                    ContainerSlot newSlot = new(i, newItem, itemSO.amount);
-                    contSlots.Add(newSlot);
-                    continue;
-                }
-
-                if (itemSO.treasure is PassiveItemSO)
-                {
-                    Item newItem = new PassiveItem(itemSO.treasure as PassiveItemSO);
-                    ContainerSlot newSlot = new(i, newItem, itemSO.amount);
-                    contSlots.Add(newSlot);
-                    continue;
-                }
-            }
+            Container container = new(contSlots, nameText, description);
+            return container;
         }
-        return contSlots;
     }
 }

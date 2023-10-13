@@ -46,9 +46,9 @@ public class ChestRoomSO : RoomSO
         foreach (var item in chestList)
         {
             GameObject newChest = Instantiate(chestPrefab);
-            Chest chestScript = newChest.GetComponentInChildren<Chest>();
+            ContainerObject chestScript = newChest.GetComponentInChildren<ContainerObject>();
             var clone = Instantiate(item);
-            chestScript.SetChest(clone);
+            chestScript.SetContainer(clone.Container);
 
             newChest.transform.SetPositionAndRotation(GetChestSpawnPosition(), GetChestSpawnRotation());
             newChest.transform.SetParent(roomGameObject.transform);

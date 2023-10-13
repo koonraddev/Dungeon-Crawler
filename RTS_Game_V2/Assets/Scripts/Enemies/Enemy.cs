@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour, IInteractionObject
     {
         GameEvents.instance.EnemyClick(null);
 
-        LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetLoot(), enemyName + "'s loot",lootSO.LootTimeExisting);
+        LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetContainer(enemyName),lootSO.LootTimeExisting);
         gameObject.SetActive(false);
     }
 

@@ -162,8 +162,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4081190167339703231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54e684849d7fc9c44b8777fd28887e17, type: 3}
+  m_Script: {fileID: 11500000, guid: effb594c51857d0479ad4faff1805234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestSO: {fileID: 11400000, guid: a35eaf609ba482342a51a91b4ec355f1, type: 2}
-  panel: {fileID: 0}
+  parentObject: {fileID: 1850066015614315132}

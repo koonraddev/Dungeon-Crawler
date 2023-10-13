@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ContainerObject
+public class Container
 {
-    public List<ContainerSlot> contSlots;
-    public string contName;
-    public string contDesc;
+    private List<ContainerSlot> contSlots;
+    private string contName;
+    private string contDesc;
+    private bool canAddTreasures;
 
-    public ContainerObject(List<ContainerSlot> containerSlots, string containerName, string containerDescription)
+    public string Name { get => contName;}
+    public string Description { get => contDesc; }
+    public List<ContainerSlot> Slots { get => contSlots;}
+
+    public Container(List<ContainerSlot> containerSlots, string containerName, string containerDescription, bool canAddTreasures = true)
     {
         contSlots = containerSlots;
         contName = containerName;
         contDesc = containerDescription;
+        this.canAddTreasures = canAddTreasures;
     }
 
     public void RemoveTreasure(int slotIndex)
@@ -26,7 +32,7 @@ public class ContainerObject
 
     public bool AddTreasure(int slotIndex, Item treasureToAdd, int amount = 1)
     {
-        if(contSlots[slotIndex].Empty)
+        if(contSlots[slotIndex].Empty && canAddTreasures)
         {
             contSlots[slotIndex].Item = treasureToAdd;
             contSlots[slotIndex].Amount = amount;

@@ -13,7 +13,7 @@ public class ContainerInfoPanel : MonoBehaviour
     [SerializeField] private Color panelSlotColor;
     private Image slotPanel;
 
-    private ContainerObject container;
+    private Container container;
 
     private void Awake()
     {
@@ -40,14 +40,14 @@ public class ContainerInfoPanel : MonoBehaviour
         }
     }
 
-    public void SetAndActiveContainerPanel(ContainerObject container)
+    public void SetAndActiveContainerPanel(Container container)
     {
         gameObject.SetActive(true);
         ResetPanelSlots();
 
         this.container = container;
-        headerText.text = container.contName;
-        List<ContainerSlot> contList = container.contSlots;
+        headerText.text = container.Name;
+        List<ContainerSlot> contList = container.Slots;
 
         for (int i = 0; i < contList.Count; i++)
         {

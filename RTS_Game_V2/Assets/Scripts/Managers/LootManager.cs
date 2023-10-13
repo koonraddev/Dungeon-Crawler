@@ -12,7 +12,7 @@ public class LootManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        if(lootPrefab.GetComponentInChildren<LootContainer>() != null)
+        if(lootPrefab.GetComponentInChildren<ContainerObject>() != null)
         {
             canCreateLoot = true;
             Debug.Log("true");
@@ -24,12 +24,12 @@ public class LootManager : MonoBehaviour
         }
     }
     
-    public void CreateLoot(Vector3 position,List<ContainerSlot> lootSlots, string lootName,float lootExistingTime ,string lootDescription = "")
+    public void CreateLoot(Vector3 position, Container container,float lootExistingTime = 0)
     {
         if (canCreateLoot)
         {
             GameObject containerObject = null;
-            LootContainer ltContainer;
+            ContainerObject ltContainer;
             if (createdContainers.Count > 0)
             {
                 foreach (var item in createdContainers)
@@ -48,8 +48,8 @@ public class LootManager : MonoBehaviour
                 createdContainers.Add(containerObject);
             }
             containerObject.transform.position = position;
-            ltContainer = containerObject.GetComponentInChildren<LootContainer>();
-            ltContainer.SetLoot(lootSlots, lootName, lootDescription, lootExistingTime);
+            ltContainer = containerObject.GetComponentInChildren<ContainerObject>();
+            ltContainer.SetContainer(container, lootExistingTime);
             containerObject.SetActive(true);
         }
     }

@@ -39,7 +39,7 @@ public class LootSO : ScriptableObject
         }
     }
 
-    public List<ContainerSlot> GetLoot()
+    public Container GetContainer(string containerName)
     {
         containerSlots = new();
         i = 0;
@@ -52,7 +52,9 @@ public class LootSO : ScriptableObject
                 AddLoot(ltSlot);
             }
         }
-        return containerSlots;
+        string contName = containerName + "'s loot";
+        Container container = new(containerSlots, contName, "", false);
+        return container;
     }
 
     private void AddLoot(LootSlot ltSlot)
