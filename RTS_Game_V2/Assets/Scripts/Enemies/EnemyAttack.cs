@@ -52,7 +52,13 @@ public class EnemyAttack : MonoBehaviour
 
         if (playerObject != null)
         {
-            transform.LookAt(playerObject.transform, Vector3.up);
+            Vector3 lookAt = new Vector3
+                (playerObject.transform.position.x,
+                this.gameObject.transform.position.y,
+                playerObject.transform.position.z
+                );
+            transform.LookAt(lookAt);
+
             float distance = Vector3.Distance(transform.position, playerObject.transform.position);
             if (distance > triggerRange)
             {
@@ -76,7 +82,7 @@ public class EnemyAttack : MonoBehaviour
                         Vector3 dirToTarget = playerObject.transform.position - this.transform.position;
                         Vector3 dirToTargetNorm = dirToTarget.normalized;
                         float distToTarget = dirToTarget.magnitude;
-                        float distToMove = distToTarget - attackRange;
+                        float distToMove = Mathf.Ceil(distToTarget - attackRange);
                         pointToMove = this.transform.position + dirToTargetNorm * distToMove;
                         enemyMovement.MoveTo(pointToMove);
                     }

@@ -45,9 +45,9 @@ public class PlayerHealth : MonoBehaviour
     }
     public void Damage(string enemyName,float physicalDamage, float magicDamage, float trueDamage)
     {
-        float totalDamage = physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage;
+        float totalDamage = Mathf.RoundToInt(physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage);
         //Console Log
-        ConsolePanel.instance.DamageLog(enemyName, totalDamage);
+        ConsolePanel.instance.PlayerTakeDamage(enemyName, totalDamage);
         health -= totalDamage;
     }
 

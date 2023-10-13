@@ -26,7 +26,7 @@ public class UnknownItemSO : ScriptableObject
 
             if (containerSlots != null && containerSlots.Count > 0)
             {
-                LootManager.instance.CreateLoot(Vector3.zero, containerSlots, itemInfos.ItemName, itemInfos.ItemDescription);
+                LootManager.instance.CreateLoot(Vector3.zero, containerSlots, itemInfos.ItemName, lootSO.LootTimeExisting, itemInfos.ItemDescription);
             }
         }
         else

@@ -9,19 +9,22 @@ public class PlayerAttack : MonoBehaviour
     private float physicalDamage;
     private float magicDamage;
     private float trueDamage;
-    private GameObject objectToAttack;
-    private Enemy enemy;
 
     private float timeToWait;
     private float attackCooldown;
-
-
     private float distanceToEnemy;
+
+    private GameObject objectToAttack;
+    private Enemy enemy;
+    [SerializeField] PlayerMovement playerMov;
+    [SerializeField] private bool followTarget;
+    private bool follow;
 
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
         GameEvents.instance.OnEnemyClick += SetTarget;
+        GameEvents.instance.OnCancelActions += DontFollow;
     }
     void Start()
     {
@@ -34,39 +37,57 @@ public class PlayerAttack : MonoBehaviour
 
         if(objectToAttack!= null)
         {
-
-            distanceToEnemy = Vector3.Distance(transform.position, objectToAttack.transform.position);
-            //if(enemy == null)
-            //{
-            //    enemy = objectToAttack.GetComponent<Enemy>();
-            //}
-
             if (!objectToAttack.activeSelf)
             {
                 objectToAttack = null;
                 enemy = null;
+                return;
             }
+            distanceToEnemy = Vector3.Distance(transform.position, objectToAttack.transform.position);
+            if (followTarget && follow)
+            {
+                if (playerMov != null && distanceToEnemy > attackRange)
+                {
+                    Vector3 dirToTarget = objectToAttack.transform.position - this.transform.position;
+                    Vector3 dirToTargetNorm = dirToTarget.normalized;
+                    float distToTarget = dirToTarget.magnitude;
+                    float distToMove = Mathf.Ceil(distToTarget - attackRange);
+                    Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
+                    playerMov.MoveTo(pointToMove);
+                }
+            }
+            Attack();
         }
-        else
-        {
-            enemy = null;
-        }
+    }
 
-        Attack();
+    public void Attack()
+    {
+        if (attackCooldown <= 0 && distanceToEnemy <= attackRange)
+        {
+            enemy.Damage(physicalDamage, magicDamage, trueDamage);
+            attackCooldown = timeToWait;
+        }
     }
 
     public void SetTarget(Enemy target)
-    {
-        if(target == null)
+    { 
+        if (target == null)
         {
             enemy = null;
             objectToAttack = null;
+            follow = false;
         }
         else
         {
             objectToAttack = target.transform.gameObject;
             enemy = target;
+            follow = true;
         }
+    }
+
+    private void DontFollow()
+    {
+        follow = false;
     }
     public void UpdateStats(StatisticType statisticType, float value)
     {
@@ -94,18 +115,10 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
-    public void Attack()
-    {
-        if (attackCooldown <= 0 && distanceToEnemy <= attackRange && enemy != null)
-        {
-            enemy.Damage(physicalDamage, magicDamage, trueDamage);
-            attackCooldown = timeToWait;   
-        }
-    }
-
     private void OnDisable()
     {
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
         GameEvents.instance.OnEnemyClick -= SetTarget;
+        GameEvents.instance.OnCancelActions -= DontFollow;
     }
 }

@@ -6,22 +6,54 @@ using DG.Tweening;
 [RequireComponent(typeof(Collider))]
 public class LootContainer : MonoBehaviour, IInteractionObject
 {
+    [SerializeField] private GameObject ParentObject;
     private Dictionary<string, string> contentToDisplay;
     private bool displayPopup = true;
 
-    public ContainerObject container;
+    private ContainerObject container;
     private int interactionDistance = 3;
     public GameObject GameObject => gameObject;
     public int InteractionDistance { get => interactionDistance; }
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
+    float existingTime;
+    float existingTimeLeft;
+    bool disappearON = false;
+    bool stopExistingTime;
     public void Start()
     {
         ChangeChestStatus(false);
     }
-    public void SetLoot(List<ContainerSlot> slots, string lootName, string lootDescription)
+
+    private void Update()
+    {
+        if (disappearON)
+        {
+            if (!stopExistingTime)
+            {
+                existingTimeLeft -= Time.deltaTime;
+            }
+
+            if(existingTimeLeft <= 0)
+            {
+                ParentObject.SetActive(false);
+            }
+        }
+    }
+    public void SetLoot(List<ContainerSlot> slots, string lootName, string lootDescription, float lootExistingTime = 0)
     {
         container = new(slots, lootName, lootDescription);
+
+        if(lootExistingTime > 0)
+        {
+            disappearON = true;
+            existingTimeLeft = lootExistingTime;
+            existingTime = lootExistingTime;
+        }
+        else
+        {
+            disappearON = false;
+        }
     }
 
     public void ObjectInteraction()
@@ -43,9 +75,12 @@ public class LootContainer : MonoBehaviour, IInteractionObject
             ContainerInfoPanel.instance.SetAndActiveContainerPanel(container);
             GameEvents.instance.InventoryPanel(true);
             GameEvents.instance.OnCancelGameObjectAction += OnCancelGameObject;
+            stopExistingTime = true;
+            existingTimeLeft = existingTime;                  
         }
         else
         {
+            stopExistingTime = false;
             gameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 2f).SetEase(Ease.Linear);
             GameEvents.instance.OnCancelGameObjectAction -= OnCancelGameObject;
         }
@@ -96,10 +131,6 @@ public class LootContainer : MonoBehaviour, IInteractionObject
         displayPopup = false;
     }
 
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
 
     public Dictionary<string, string> GetContentToDisplay()
     {

@@ -71,6 +71,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FollowEnemy"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca6dfcc6-bcdf-4d86-8e23-89508ca9c417"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -139,6 +148,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""ConsoleLogs"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48f788c8-fa45-4056-86fe-4018ffcfb6c0"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""FollowEnemy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -180,6 +200,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_BasicMovement_Inspect = m_BasicMovement.FindAction("Inspect", throwIfNotFound: true);
         m_BasicMovement_Statistics = m_BasicMovement.FindAction("Statistics", throwIfNotFound: true);
         m_BasicMovement_ConsoleLogs = m_BasicMovement.FindAction("ConsoleLogs", throwIfNotFound: true);
+        m_BasicMovement_FollowEnemy = m_BasicMovement.FindAction("FollowEnemy", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +265,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_BasicMovement_Inspect;
     private readonly InputAction m_BasicMovement_Statistics;
     private readonly InputAction m_BasicMovement_ConsoleLogs;
+    private readonly InputAction m_BasicMovement_FollowEnemy;
     public struct BasicMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -253,6 +275,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Inspect => m_Wrapper.m_BasicMovement_Inspect;
         public InputAction @Statistics => m_Wrapper.m_BasicMovement_Statistics;
         public InputAction @ConsoleLogs => m_Wrapper.m_BasicMovement_ConsoleLogs;
+        public InputAction @FollowEnemy => m_Wrapper.m_BasicMovement_FollowEnemy;
         public InputActionMap Get() { return m_Wrapper.m_BasicMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -277,6 +300,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ConsoleLogs.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnConsoleLogs;
                 @ConsoleLogs.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnConsoleLogs;
                 @ConsoleLogs.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnConsoleLogs;
+                @FollowEnemy.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnFollowEnemy;
+                @FollowEnemy.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnFollowEnemy;
+                @FollowEnemy.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnFollowEnemy;
             }
             m_Wrapper.m_BasicMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -296,6 +322,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ConsoleLogs.started += instance.OnConsoleLogs;
                 @ConsoleLogs.performed += instance.OnConsoleLogs;
                 @ConsoleLogs.canceled += instance.OnConsoleLogs;
+                @FollowEnemy.started += instance.OnFollowEnemy;
+                @FollowEnemy.performed += instance.OnFollowEnemy;
+                @FollowEnemy.canceled += instance.OnFollowEnemy;
             }
         }
     }
@@ -325,5 +354,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnInspect(InputAction.CallbackContext context);
         void OnStatistics(InputAction.CallbackContext context);
         void OnConsoleLogs(InputAction.CallbackContext context);
+        void OnFollowEnemy(InputAction.CallbackContext context);
     }
 }

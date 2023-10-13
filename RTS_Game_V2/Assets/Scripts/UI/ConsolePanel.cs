@@ -83,7 +83,7 @@ public class ConsolePanel : MonoBehaviour
         t2.Play();
     }
 
-    public void AttackLog(string enemyName, float damage)
+    public void EnemyTakeDamage(string enemyName, float damage)
     {
         consoleText.text += "An " + enemyName + " <color=#5ef0f7>loses</color> " + damage + " hitpoints due to your attack\n";
         if (CheckConsole())
@@ -93,7 +93,7 @@ public class ConsolePanel : MonoBehaviour
         }   
     }
 
-    public void DamageLog(string enemyName, float damage)
+    public void PlayerTakeDamage(string enemyName, float damage)
     {
         consoleText.text += "You <color=#f55649>lose</color> " + damage + " hitpoints due to an attack by " + enemyName + "\n";
         if (CheckConsole())

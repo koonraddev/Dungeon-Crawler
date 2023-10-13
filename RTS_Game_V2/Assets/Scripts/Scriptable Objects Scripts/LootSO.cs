@@ -15,6 +15,8 @@ public class LootSlot
 public class LootSO : ScriptableObject
 {
     [SerializeField] List<LootSlot> lootSlots = new(10);
+    [SerializeField] private int lootTimeExisting;
+    public int LootTimeExisting { get => lootTimeExisting; }
     private List<ContainerSlot> containerSlots;
     int i;
     private void OnValidate()

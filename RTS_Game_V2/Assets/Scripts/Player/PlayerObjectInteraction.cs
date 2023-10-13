@@ -80,6 +80,7 @@ public class PlayerObjectInteraction : MonoBehaviour
                 pointedScript.OnMouseEnterObject(highLightObjectColor);
                 if (moveInspectAction.IsPressed())
                 {
+                    GameEvents.instance.CancelGameObjectAction();
                     StopAllCoroutines();
                     clickedObject = pointedObject;
                     inspectCor = InspectObject(pointedScript);
@@ -105,16 +106,17 @@ public class PlayerObjectInteraction : MonoBehaviour
         minimumDistanceFromObject = objectToInspect.InteractionDistance;
         //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
         float distToMove = minimumDistanceFromObject;
+        distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
         if (distanceFromObject > minimumDistanceFromObject && playerMovement != null) 
         {
             Vector3 dirToTarget = clickedObject.transform.position - this.transform.position;
             Vector3 dirToTargetNorm = dirToTarget.normalized;
             float distToTarget = dirToTarget.magnitude;
-            distToMove = distToTarget - minimumDistanceFromObject;
+            distToMove = Mathf.Ceil(distToTarget - minimumDistanceFromObject);
             Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
             playerMovement.MoveTo(pointToMove);
         }
-        yield return new WaitUntil(() => distanceFromObject <= distToMove);
+        yield return new WaitUntil(() => distanceFromObject <= minimumDistanceFromObject);
 
         objectToInspect.ObjectInteraction();
         StartCoroutine(InspectingObject());

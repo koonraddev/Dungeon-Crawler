@@ -84,14 +84,16 @@ public class Enemy : MonoBehaviour, IInteractionObject
 
     public void Damage(float physicalDamage, float magicDamage, float trueDamage)
     {
-        float totalDamage = physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage;
+        float totalDamage = Mathf.RoundToInt(physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage);
         health -= totalDamage;
+        ConsolePanel.instance.EnemyTakeDamage(Name, totalDamage);
     }
 
     private void Die()
     {
         GameEvents.instance.EnemyClick(null);
-        LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetLoot(), enemyName + "'s loot");
+
+        LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetLoot(), enemyName + "'s loot",lootSO.LootTimeExisting);
         gameObject.SetActive(false);
     }
 

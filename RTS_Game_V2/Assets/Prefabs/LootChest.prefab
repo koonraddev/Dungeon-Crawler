@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6714d09372fee034aa1f804fc2fa382b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentObject: {fileID: 3192698796234218776}
   container:
     contSlots: []
     contName: 

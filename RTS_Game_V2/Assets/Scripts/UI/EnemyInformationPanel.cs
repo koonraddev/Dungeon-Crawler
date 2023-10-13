@@ -23,7 +23,7 @@ public class EnemyInformationPanel : MonoBehaviour
         {
             currentHP = enemy.Health;
             slider.value = currentHP / maxHP;
-            currentHPTextObject.text = currentHP.ToString();
+            currentHPTextObject.text = Mathf.RoundToInt(currentHP).ToString();
         }
 
         slider.value = Mathf.Clamp(slider.value, 0, 1);
@@ -35,8 +35,8 @@ public class EnemyInformationPanel : MonoBehaviour
         currentHP = enemy.Health;
         maxHP = enemy.MaxHealth;
 
-        currentHPTextObject.text = currentHP.ToString();
-        maxHPTextObject.text = maxHP.ToString();
+        currentHPTextObject.text = Mathf.RoundToInt(currentHP).ToString();
+        maxHPTextObject.text = Mathf.RoundToInt(maxHP).ToString();
         nameTextObject.text = enemy.Name;
         imageObject.sprite = enemy.Sprite;
     }

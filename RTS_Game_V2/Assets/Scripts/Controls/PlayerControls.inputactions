@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FollowEnemy",
+                    "type": "Button",
+                    "id": "ca6dfcc6-bcdf-4d86-8e23-89508ca9c417",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -115,6 +124,17 @@
                     "processors": "",
                     "groups": "Mouse",
                     "action": "ConsoleLogs",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48f788c8-fa45-4056-86fe-4018ffcfb6c0",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "FollowEnemy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
