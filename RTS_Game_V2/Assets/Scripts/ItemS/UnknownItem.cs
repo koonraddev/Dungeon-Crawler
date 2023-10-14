@@ -39,8 +39,8 @@ public class UnknownItem : Item, IUsable
         itemSprite = itemInfos.ItemSprite;
     }
 
-    public void Use()
+    public bool Use()
     {
-        unknownItemSO.InspectItem();
+        return unknownItemSO.InspectItem();
     }
 }

@@ -31,6 +31,19 @@ public class PlayerStatistics : MonoBehaviour
     private float eq_trueDamage;
     private float eq_healthPointsRegen;
     private float eq_healthPercentsRegen;
+    
+    //BUFF
+    private float buff_maxHealth;
+    private float buff_movementSpeed;
+    private float buff_armor;
+    private float buff_magicResistance;
+    private float buff_attackSpeed;
+    private float buff_attackRange;
+    private float buff_physicalDamage;
+    private float buff_magicDamage;
+    private float buff_trueDamage;
+    private float buff_healthPointsRegen;
+    private float buff_healthPercentsRegen;
 
     //TOTAL
     private float maxHealth;
@@ -70,6 +83,8 @@ public class PlayerStatistics : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
+        GameEvents.instance.onBuffActivate += ActivateBuff;
+        GameEvents.instance.onBuffDeactivate += DeactivateBuff;
     }
 
     private void SetBasicStatistics()
@@ -114,7 +129,6 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, base_healthPercentsRegen);
         GameEvents.instance.UpdateCurrentHP(base_maxHealth);
     }
-
 
     private void SetStatisticsFromEquipment()
     {
@@ -197,71 +211,157 @@ public class PlayerStatistics : MonoBehaviour
         UpdateStats();
     }
 
+    public void ActivateBuff(StatisticType buffType, float buffValue, float duration)
+    {
+        switch (buffType)
+        {
+            case StatisticType.MaxHealth:
+                buff_maxHealth += buffValue;
+                break;
+            case StatisticType.MovementSpeed:
+                buff_movementSpeed += buffValue;
+                break;
+            case StatisticType.HealthPointsRegeneration:
+                buff_healthPointsRegen += buffValue;
+                break;
+            case StatisticType.HealthPercentageRegeneration:
+                buff_healthPercentsRegen += buffValue;
+                break;
+            case StatisticType.Armor:
+                buff_armor += buffValue;
+                break;
+            case StatisticType.MagicResistance:
+                buff_magicResistance += buffValue;
+                break;
+            case StatisticType.PhysicalDamage:
+                buff_physicalDamage += buffValue;
+                break;
+            case StatisticType.MagicDamage:
+                buff_magicDamage += buffValue;
+                break;
+            case StatisticType.TrueDamage:
+                buff_trueDamage += buffValue;
+                break;
+            case StatisticType.AttackSpeed:
+                buff_attackSpeed += buffValue;
+                break;
+            case StatisticType.AttackRange:
+                buff_attackRange += buffValue;
+                break;
+            default:
+                break;
+        }
+
+        UpdateStats();
+    }
+
+    public void DeactivateBuff(StatisticType buffType, float value)
+    {
+        switch (buffType)
+        {
+            case StatisticType.MaxHealth:
+                buff_maxHealth -= value;
+                break;
+            case StatisticType.MovementSpeed:
+                buff_movementSpeed -= value;
+                break;
+            case StatisticType.HealthPointsRegeneration:
+                buff_healthPointsRegen -= value;
+                break;
+            case StatisticType.HealthPercentageRegeneration:
+                buff_healthPercentsRegen -= value;
+                break;
+            case StatisticType.Armor:
+                buff_armor -= value;
+                break;
+            case StatisticType.MagicResistance:
+                buff_magicResistance -= value;
+                break;
+            case StatisticType.PhysicalDamage:
+                buff_physicalDamage -= value;
+                break;
+            case StatisticType.MagicDamage:
+                buff_magicDamage -= value;
+                break;
+            case StatisticType.TrueDamage:
+                buff_trueDamage -= value;
+                break;
+            case StatisticType.AttackSpeed:
+                buff_attackSpeed -= value;
+                break;
+            case StatisticType.AttackRange:
+                buff_attackRange -= value;
+                break;
+            default:
+                break;
+        }
+
+        UpdateStats();
+    }
+
     public void UpdateStats()
     {
-        if(maxHealth != base_maxHealth + eq_maxHealth)
+        if (maxHealth != base_maxHealth + eq_maxHealth + buff_maxHealth)
         {
-            Debug.Log("update maxHHealth");
-            maxHealth = base_maxHealth + eq_maxHealth;
+            maxHealth = base_maxHealth + eq_maxHealth + buff_maxHealth;
             GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, maxHealth);
         }
-        if (movementSpeed != base_movementSpeed + eq_movementSpeed)
+        if (movementSpeed != base_movementSpeed + eq_movementSpeed + buff_movementSpeed)
         {
-            movementSpeed = base_movementSpeed + eq_movementSpeed;
+            movementSpeed = base_movementSpeed + eq_movementSpeed + buff_movementSpeed;
             GameEvents.instance.StatisticUpdate(StatisticType.MovementSpeed, movementSpeed);
         }
 
-        if (armor != base_armor + eq_armor)
+        if (armor != base_armor + eq_armor + buff_armor)
         {
-            Debug.Log("update armor");
-            armor = base_armor + eq_armor;
+            armor = base_armor + eq_armor + buff_armor;
             GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
         }
 
-        if (magicResistance != base_magicResistance + eq_magicResistance)
+        if (magicResistance != base_magicResistance + eq_magicResistance + buff_magicResistance)
         {
-            magicResistance = base_magicResistance + eq_magicResistance;
+            magicResistance = base_magicResistance + eq_magicResistance + buff_magicResistance;
             GameEvents.instance.StatisticUpdate(StatisticType.MagicResistance, magicResistance);
         }
-        if (attackSpeed != base_attackSpeed + eq_attackSpeed)
+        if (attackSpeed != base_attackSpeed + eq_attackSpeed + buff_attackSpeed)
         {
-            attackSpeed = base_attackSpeed + eq_attackSpeed;
+            attackSpeed = base_attackSpeed + eq_attackSpeed + buff_attackSpeed;
             GameEvents.instance.StatisticUpdate(StatisticType.AttackSpeed, attackSpeed);
         }
 
-        if (attackRange != base_attackRange + eq_attackRange)
+        if (attackRange != base_attackRange + eq_attackRange + buff_attackRange)
         {
-            attackRange = base_attackRange + eq_attackRange;
+            attackRange = base_attackRange + eq_attackRange + buff_attackRange;
             GameEvents.instance.StatisticUpdate(StatisticType.AttackRange, attackRange);
         }
 
-        if (physicalDamage != base_physicalDamage + eq_physicalDamage)
+        if (physicalDamage != base_physicalDamage + eq_physicalDamage + buff_physicalDamage)
         {
-            physicalDamage = base_physicalDamage + eq_physicalDamage;
+            physicalDamage = base_physicalDamage + eq_physicalDamage + buff_physicalDamage;
             GameEvents.instance.StatisticUpdate(StatisticType.PhysicalDamage, physicalDamage);
         }
 
-        if (magicDamage != base_magicDamage + eq_magicDamage)
+        if (magicDamage != base_magicDamage + eq_magicDamage + buff_magicDamage)
         {
-            magicDamage = base_magicDamage + eq_magicDamage;
+            magicDamage = base_magicDamage + eq_magicDamage + buff_magicDamage;
             GameEvents.instance.StatisticUpdate(StatisticType.MagicDamage, magicDamage);
         }
 
-        if (trueDamage != base_trueDamage + eq_trueDamage)
+        if (trueDamage != base_trueDamage + eq_trueDamage + buff_trueDamage)
         {
-            trueDamage = base_trueDamage + eq_trueDamage;
+            trueDamage = base_trueDamage + eq_trueDamage + buff_trueDamage;
             GameEvents.instance.StatisticUpdate(StatisticType.TrueDamage, trueDamage);
         }
 
-        if (healthPointsRegen != base_healthPointsRegen + eq_healthPointsRegen)
+        if (healthPointsRegen != base_healthPointsRegen + eq_healthPointsRegen + buff_healthPointsRegen)
         {
-            healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen;
+            healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen + buff_healthPointsRegen;
             GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthPointsRegen);
         }
 
-        if (healthPercentsRegen != base_healthPercentsRegen + eq_healthPercentsRegen)
+        if (healthPercentsRegen != base_healthPercentsRegen + eq_healthPercentsRegen + buff_healthPercentsRegen)
         {
-            healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen;
+            healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen + buff_healthPercentsRegen;
             GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, healthPercentsRegen);
         }
 
@@ -271,8 +371,12 @@ public class PlayerStatistics : MonoBehaviour
         //    //GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthRegeneration);
         //}
     }
+
     void OnDisable()
     {
         GameEvents.instance.OnEquipmentUpdate -= OnEquipmentUpdate;
+        GameEvents.instance.onBuffActivate -= ActivateBuff;
+        GameEvents.instance.onBuffDeactivate -= DeactivateBuff;
     }
+
 }

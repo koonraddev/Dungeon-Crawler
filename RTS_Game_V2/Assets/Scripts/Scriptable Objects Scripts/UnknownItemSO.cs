@@ -14,9 +14,8 @@ public class UnknownItemSO : ScriptableObject
     [SerializeField] private GameObject lootContainerPrefab;
     public ItemInformationsSO ItemInformations { get => itemInfos; }
     public int ItemID { get => itemID; }
-    public void InspectItem()
+    public bool InspectItem()
     {
-
         float randomValue = Random.Range(0f, 100f);
 
         if (randomValue <= lootChancePercentage)
@@ -36,5 +35,6 @@ public class UnknownItemSO : ScriptableObject
             Debug.Log("SPAWN!");
         }
 
+        return true;
     }
 }

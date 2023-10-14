@@ -18,8 +18,8 @@ public class UsableItemSO : ScriptableObject
     public bool DurationMode { get => durationMode; }
     public float Duration { get => duration; }
     public float Cooldown { get => cooldown; }
-    public void UseItem()
+    public bool UseItem()
     {
-        //to do logic; example: potion logic
+        return BuffManager.instance.Buff(itemStatistics.Statistics, Duration);
     }
 }

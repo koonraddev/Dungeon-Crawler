@@ -40,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Damage("Monster",20, 0, 0);
+            Damage("Monster", 20, 0, 0);
         }
     }
     public void Damage(string enemyName,float physicalDamage, float magicDamage, float trueDamage)

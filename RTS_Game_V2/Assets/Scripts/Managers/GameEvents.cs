@@ -31,10 +31,13 @@ public class GameEvents : MonoBehaviour
     public event Action OnInventoryUpdate;
     public event Action OnEquipmentUpdate;
     public event Action<StatisticType,float> OnStatisticUpdate;
+    public event Action<StatisticType,float> On;
 
 
-    public event Action<float> onUpdateCurrentHP;
+    public event Action<float> OnUpdateCurrentHP;
 
+    public event Action<StatisticType, float, float> onBuffActivate;
+    public event Action<StatisticType, float> onBuffDeactivate;
 
     public event Action OnSavePlayerStuff;
     public event Action OnLoadPlayerStuff;
@@ -46,6 +49,16 @@ public class GameEvents : MonoBehaviour
     //Spawns ready status
     //public event Action OnLastSpawnPoint
     public event Action OnLastRoomReady;
+
+    public void BuffActivate(StatisticType statType, float statValue, float duration)
+    {
+        onBuffActivate?.Invoke(statType,statValue, duration);
+    }
+
+    public void BuffDeactivate(StatisticType statType, float statValue)
+    {
+        onBuffDeactivate?.Invoke(statType, statValue);
+    }
 
     public void EnemyClick(Enemy enemy)
     {
@@ -70,7 +83,7 @@ public class GameEvents : MonoBehaviour
 
     public void UpdateCurrentHP(float value)
     {
-        onUpdateCurrentHP?.Invoke(value);
+        OnUpdateCurrentHP?.Invoke(value);
     }
 
 

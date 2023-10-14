@@ -111,9 +111,11 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (invSlot.Item is IUsable usableItem)
         {
-            usableItem.Use();
-            InventoryManager.instance.RemoveItem(slotNumber, amount: 1);
-            GameEvents.instance.InventoryUpdate();
+            if (usableItem.Use())
+            {
+                InventoryManager.instance.RemoveItem(slotNumber, amount: 1);
+                GameEvents.instance.InventoryUpdate();
+            }
         }
     }
 

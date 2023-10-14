@@ -15,7 +15,7 @@ public class HealthBarPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.instance.onUpdateCurrentHP += UpdateCurrentHP;
+        GameEvents.instance.OnUpdateCurrentHP += UpdateCurrentHP;
         GameEvents.instance.OnStatisticUpdate += UpdateMaxHP;
     }
 
@@ -46,7 +46,7 @@ public class HealthBarPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.onUpdateCurrentHP -= UpdateCurrentHP;
+        GameEvents.instance.OnUpdateCurrentHP -= UpdateCurrentHP;
         GameEvents.instance.OnStatisticUpdate -= UpdateMaxHP;
     }
 }

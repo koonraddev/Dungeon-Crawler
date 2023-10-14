@@ -53,8 +53,8 @@ public class UsableItem : InventoryItem, IUsable, IStatisticItem
         itemSprite = itemInfos.ItemSprite;
     }
 
-    public void Use()
+    public bool Use()
     {
-        usableItemSO.UseItem();
+        return usableItemSO.UseItem();
     }
 }
