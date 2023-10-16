@@ -36,8 +36,8 @@ MonoBehaviour:
     amount: 2
   - treasure: {fileID: 11400000, guid: 1d2ddd4a5f9d5604d9f1975f7da9b9bb, type: 2}
     amount: 3
-  - treasure: {fileID: 0}
-    amount: 0
+  - treasure: {fileID: 11400000, guid: caeb25817549e5146801b631d0acd2ce, type: 2}
+    amount: 4
   - treasure: {fileID: 0}
     amount: 0
   - treasure: {fileID: 0}

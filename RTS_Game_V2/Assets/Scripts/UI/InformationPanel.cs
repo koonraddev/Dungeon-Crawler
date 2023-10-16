@@ -3,6 +3,7 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 public class InformationPanel : MonoBehaviour
 {
@@ -86,59 +87,59 @@ public class InformationPanel : MonoBehaviour
 
         if (stats != null)
         {
+            var notZero = stats.Where(a => a.Value != 0);
             int iterator = 0;
-            foreach (KeyValuePair<StatisticType, float> pair in stats)
+            foreach (KeyValuePair<StatisticType, float> pair in notZero)
             {
-                if (pair.Value > 0)
+
+                GameObject oneStatObj = statsObjectList[iterator];
+                TMP_Text label = oneStatObj.transform.GetChild(0).gameObject.GetComponent<TMP_Text>();
+                TMP_Text value = oneStatObj.transform.GetChild(1).gameObject.GetComponent<TMP_Text>();
+                
+                switch (pair.Key)
                 {
-                    GameObject oneStatObj = statsObjectList[iterator];
-                    TMP_Text label = oneStatObj.transform.GetChild(0).gameObject.GetComponent<TMP_Text>();
-                    TMP_Text value = oneStatObj.transform.GetChild(1).gameObject.GetComponent<TMP_Text>();
-
-                    switch (pair.Key)
-                    {
-                        case StatisticType.MaxHealth:
-                            label.text = "Max Health";
-                            break;
-                        case StatisticType.MovementSpeed:
-                            label.text = "Movement Speed";
-                            break;
-                        case StatisticType.HealthPointsRegeneration:
-                            label.text = "Health Points Regeneration";
-                            break;
-                        case StatisticType.HealthPercentageRegeneration:
-                            label.text = "Health Percentage Regeneration";
-                            break;
-                        case StatisticType.Armor:
-                            label.text = "Armor";
-                            break;
-                        case StatisticType.MagicResistance:
-                            label.text = "Magic Resistance";
-                            break;
-                        case StatisticType.PhysicalDamage:
-                            label.text = "Physical Damage";
-                            break;
-                        case StatisticType.MagicDamage:
-                            label.text = "Magic Damage";
-                            break;
-                        case StatisticType.TrueDamage:
-                            label.text = "True Damage";
-                            break;
-                        case StatisticType.AttackSpeed:
-                            label.text = "Attack Speed";
-                            break;
-                        case StatisticType.AttackRange:
-                            label.text = "Attack Range";
-                            break;
-                        default:
-                            break;
-                    }
-
-                    value.text = pair.Value.ToString();
-                    oneStatObj.SetActive(true);
-
-                    iterator++;
+                    case StatisticType.MaxHealth:
+                        label.text = "Max Health";
+                        break;
+                    case StatisticType.MovementSpeed:
+                        label.text = "Movement Speed";
+                        break;
+                    case StatisticType.HealthPointsRegeneration:
+                        label.text = "Health Points Regeneration";
+                        break;
+                    case StatisticType.HealthPercentageRegeneration:
+                        label.text = "Health Percentage Regeneration";
+                        break;
+                    case StatisticType.Armor:
+                        label.text = "Armor";
+                        break;
+                    case StatisticType.MagicResistance:
+                        label.text = "Magic Resistance";
+                        break;
+                    case StatisticType.PhysicalDamage:
+                        label.text = "Physical Damage";
+                        break;
+                    case StatisticType.MagicDamage:
+                        label.text = "Magic Damage";
+                        break;
+                    case StatisticType.TrueDamage:
+                        label.text = "True Damage";
+                        break;
+                    case StatisticType.AttackSpeed:
+                        label.text = "Attack Speed";
+                        break;
+                    case StatisticType.AttackRange:
+                        label.text = "Attack Range";
+                        break;
+                    default:
+                        break;
                 }
+                
+                value.text = pair.Value.ToString();
+                oneStatObj.SetActive(true);
+                
+                iterator++;
+                
             }
             enabledAmount = iterator;
 

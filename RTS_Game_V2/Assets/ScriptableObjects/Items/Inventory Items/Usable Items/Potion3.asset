@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a815bb13cfea16d4bb613e3530c8c39a, type: 3}
-  m_Name: Potion 2
+  m_Name: Potion3
   m_EditorClassIdentifier: 
-  itemID: 458
-  itemInfos: {fileID: 11400000, guid: 10996e83898cdd1439649c47d65a2e56, type: 2}
-  itemStatistics: {fileID: 11400000, guid: ee6c0be0275fc444c9ece69543950869, type: 2}
+  itemID: 567
+  itemInfos: {fileID: 11400000, guid: b3b8baa4c01507f43ada082214f617e7, type: 2}
+  itemStatistics: {fileID: 11400000, guid: 3b0dca285ab0f0148a313c297faf7cf6, type: 2}
   cooldown: 0
   durationMode: 1
   duration: 30

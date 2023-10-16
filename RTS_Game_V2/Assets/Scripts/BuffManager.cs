@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public class BuffManager : MonoBehaviour
 {
@@ -14,15 +16,26 @@ public class BuffManager : MonoBehaviour
         instance = this;
         buffs = new Dictionary<StatisticType, bool>();
         debuffs = new Dictionary<StatisticType, bool>();
+
+        foreach (StatisticType type in Enum.GetValues(typeof(StatisticType)))
+        {
+            buffs.Add(type, false);
+            debuffs.Add(type, false);
+        }
     }
+
 
     public bool Buff(Dictionary<StatisticType, float> buffsDict, float duration)
     {
-        foreach (var item in buffsDict)
+        var notZero = buffsDict.Where(a => a.Value != 0);
+
+        Debug.Log(notZero);
+
+        foreach (var item in notZero)
         {
             if(item.Key > 0)
             {
-                if (buffs[item.Key])
+                if (!buffs[item.Key])
                 {
                     continue;
                 }
@@ -33,7 +46,7 @@ public class BuffManager : MonoBehaviour
             }
             else
             {
-                if (buffs[item.Key])
+                if (!buffs[item.Key])
                 {
                     continue;
                 }
@@ -44,7 +57,7 @@ public class BuffManager : MonoBehaviour
             }
         }
 
-        foreach (var item in buffsDict)
+        foreach (var item in notZero)
         {
             if(item.Key > 0)
             {
@@ -61,19 +74,18 @@ public class BuffManager : MonoBehaviour
         return true;
     }
 
-    public void Debuff(Dictionary<StatisticType, float> debuffsDict)
+    public void Debuff(StatisticType statType, float value)
     {
-        foreach (var item in debuffsDict)
+
+        if (value > 0)
         {
-            if (item.Key > 0)
-            {
-                buffs[item.Key] = false;
-            }
-            else
-            {
-                debuffs[item.Key] = false;
-            }
-            GameEvents.instance.BuffDeactivate(item.Key, item.Value);
+            buffs[statType] = false;
         }
+        else
+        {
+            debuffs[statType] = false;
+        }
+        GameEvents.instance.BuffDeactivate(statType, value);
+        
     }
 }

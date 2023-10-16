@@ -86,7 +86,6 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if(contSlot.Item is IUsable usableItem)
         {
-            usableItem.Use();
             if (usableItem.Use())
             {
                 if (contSlot.Amount > 1)

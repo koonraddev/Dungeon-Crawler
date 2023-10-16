@@ -20,6 +20,11 @@ public class UsableItemSO : ScriptableObject
     public float Cooldown { get => cooldown; }
     public bool UseItem()
     {
-        return BuffManager.instance.Buff(itemStatistics.Statistics, Duration);
+        if (DurationMode)
+        {
+            return BuffManager.instance.Buff(itemStatistics.Statistics, Duration);
+        }
+        Debug.Log("NULL ACTION");
+        return false;
     }
 }
