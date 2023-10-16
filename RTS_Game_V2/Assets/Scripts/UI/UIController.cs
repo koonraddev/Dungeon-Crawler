@@ -42,7 +42,7 @@ public class UIController : MonoBehaviour
     {
         if (inventoryAction.triggered)
         {
-            InventoryPanelStatus(!isInventoryActivated);
+            GameEvents.instance.InventoryPanel(!isInventoryActivated);
             GameEvents.instance.CancelGameObjectAction();
         }
 

@@ -42,6 +42,7 @@ public class ConsolePanel : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
+        GameEvents.instance.OnConsolePanel += ConsoleStatus;
     }
 
     private void ConsoleStatus(bool activePanel)
@@ -53,7 +54,7 @@ public class ConsolePanel : MonoBehaviour
     {
         if (switchConsoleStatus.triggered)
         {
-            ConsoleStatus(!consoleIsOn);
+            GameEvents.instance.ConsolePanel(!consoleIsOn);
             StartCoroutine(FadeOut());
         }
 
@@ -132,5 +133,9 @@ public class ConsolePanel : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(FadeOut());
         }
+    }
+    private void OnDisable()
+    {
+        GameEvents.instance.OnConsolePanel -= ConsoleStatus;
     }
 }

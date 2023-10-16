@@ -18,9 +18,13 @@ public class GameEvents : MonoBehaviour
     public event Action OnCancelGameObjectAction;
     public event Action OnPrepareGame;
     public event Action<int> OnSpawn;
+
+    //Panels
     public event Action<bool> OnInventoryPanelOpen;
     public event Action<bool> OnInformationPanel;
     public event Action<bool> OnStatisticPanel;
+    public event Action<bool> OnConsolePanel;
+    public event Action<bool> OnMenuPanel;
 
     public event Action OnCanSave;
     public event Action OnCannotSave;
@@ -99,6 +103,16 @@ public class GameEvents : MonoBehaviour
     public void StatisticPanel(bool activePanel)
     {
         OnStatisticPanel?.Invoke(activePanel);
+    }
+
+    public void ConsolePanel(bool activePanel)
+    {
+        OnConsolePanel?.Invoke(activePanel);
+    }
+
+    public void MenuPanel(bool activePanel)
+    {
+        OnMenuPanel?.Invoke(activePanel);
     }
 
     public void Spawn(int id)
