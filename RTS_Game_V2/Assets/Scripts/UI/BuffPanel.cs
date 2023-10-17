@@ -62,7 +62,7 @@ public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             canvGroup.blocksRaycasts = false;
 
             tmpObj.transform.SetParent(GameObject.Find("BuffPanelMain").transform);
-            rect.transform.localPosition = rectTrans.localPosition - new Vector3(0,rectTrans.rect.height);
+            rect.transform.localPosition = rectTrans.localPosition - new Vector3(0,rectTrans.rect.height,0);
             textObject = tmpObj.GetComponentInChildren<TMP_Text>();
             textObject.text = popupInfo;
         }

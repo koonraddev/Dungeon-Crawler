@@ -14,6 +14,7 @@ public class ContainerInfoPanel : MonoBehaviour
     private Image slotPanel;
 
     private Container container;
+    private Vector3 startPos;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class ContainerInfoPanel : MonoBehaviour
         panelSlotSprite = slotPanel.sprite;
         panelSlotColor = slotPanel.color;
 
-        gameObject.SetActive(false);
+        startPos = gameObject.transform.position;
     }
 
     private void Start()
@@ -42,7 +43,8 @@ public class ContainerInfoPanel : MonoBehaviour
 
     public void SetAndActiveContainerPanel(Container container)
     {
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
+        this.transform.position = startPos;
         ResetPanelSlots();
 
         this.container = container;
