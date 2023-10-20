@@ -6,6 +6,7 @@ public class Equipment
 {
     [SerializeField] private List<EquipmentSlot> slotsList;
 
+    public List<EquipmentSlot> Slots { get => slotsList; }
     public Equipment()
     {
         slotsList = new();
@@ -48,11 +49,6 @@ public class Equipment
             }
         }
         return null;
-    }
-
-    public List<EquipmentSlot> GetEquipmentSlots()
-    {
-        return slotsList;
     }
 
     public EquipmentSlot GetEquipmentSlot(EquipmentSlotType slotType)

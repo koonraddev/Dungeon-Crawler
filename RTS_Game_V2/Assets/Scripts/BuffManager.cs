@@ -6,13 +6,34 @@ using System;
 
 public class BuffManager : MonoBehaviour
 {
+
+    //Temporary
+    public StatisticsSO playerBaseStats;
+    //
     Dictionary<StatisticType, bool> buffs;
     Dictionary<StatisticType, bool> debuffs;
 
     public static BuffManager instance;
 
+    private List<Buff> buffList;
+    private List<Buff> itemsToRemove;
+
+    public List<Buff> Buffs 
+    { 
+        get => buffList; 
+        set 
+        {
+            List<Buff> loadedBuffs = value;
+            foreach (var item in loadedBuffs)
+            {
+                //to do odczytywanie
+            }
+        } 
+    }
     private void Awake()
     {
+        itemsToRemove = new();
+        buffList = new();
         instance = this;
         buffs = new Dictionary<StatisticType, bool>();
         debuffs = new Dictionary<StatisticType, bool>();
@@ -21,6 +42,26 @@ public class BuffManager : MonoBehaviour
         {
             buffs.Add(type, false);
             debuffs.Add(type, false);
+        }
+    }
+
+    private void Update()
+    {
+        itemsToRemove.Clear();
+
+        foreach (var item in buffList)
+        {
+            item.Update();
+            if(item.TimeLeft <= 0)
+            {
+                Debuff(item.StatType, item.StatValue);
+                itemsToRemove.Add(item);
+            }
+        }
+
+        foreach (var itemToRemove in itemsToRemove)
+        {
+            buffList.Remove(itemToRemove);
         }
     }
 
@@ -67,7 +108,8 @@ public class BuffManager : MonoBehaviour
             {
                 debuffs[item.Key] = true;
             }
-
+            Buff bf = new(item.Key, item.Value, duration);
+            buffList.Add(bf);
             GameEvents.instance.BuffActivate(item.Key, item.Value, duration);
         }
 
@@ -86,6 +128,5 @@ public class BuffManager : MonoBehaviour
             debuffs[statType] = false;
         }
         GameEvents.instance.BuffDeactivate(statType, value);
-        
     }
 }

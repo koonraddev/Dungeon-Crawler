@@ -83,8 +83,8 @@ public class PlayerStatistics : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
-        GameEvents.instance.onBuffActivate += ActivateBuff;
-        GameEvents.instance.onBuffDeactivate += DeactivateBuff;
+        GameEvents.instance.OnBuffActivate += ActivateBuff;
+        GameEvents.instance.OnBuffDeactivate += DeactivateBuff;
     }
 
     private void SetBasicStatistics()
@@ -375,8 +375,8 @@ public class PlayerStatistics : MonoBehaviour
     void OnDisable()
     {
         GameEvents.instance.OnEquipmentUpdate -= OnEquipmentUpdate;
-        GameEvents.instance.onBuffActivate -= ActivateBuff;
-        GameEvents.instance.onBuffDeactivate -= DeactivateBuff;
+        GameEvents.instance.OnBuffActivate -= ActivateBuff;
+        GameEvents.instance.OnBuffDeactivate -= DeactivateBuff;
     }
 
 }

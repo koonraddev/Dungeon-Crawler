@@ -7,6 +7,8 @@ public class EquipmentManager : MonoBehaviour
 
     [SerializeField] private Equipment playerEquipment;
 
+    public Equipment Equipment { get => playerEquipment; set => playerEquipment = value; }
+    public List<EquipmentSlot> Slots { get => playerEquipment.Slots; }
     private void Awake() {
         instance = this;
         playerEquipment = new();
@@ -22,21 +24,6 @@ public class EquipmentManager : MonoBehaviour
         return playerEquipment.RemoveItem(itemToRemove);
     }
 
-    public void LoadEquipment(Equipment eqtoLoad)
-    {
-        playerEquipment = eqtoLoad;
-    }
-
-    public Equipment GetEquipment()
-    {
-        return playerEquipment;
-    }
-
-    public List<EquipmentSlot> GetSlots()
-    {
-        return playerEquipment.GetEquipmentSlots();
-    }
-
     public EquipmentSlot GetEquipmentSlot(EquipmentSlotType slotType)
     {
         return playerEquipment.GetEquipmentSlot(slotType);
@@ -45,16 +32,4 @@ public class EquipmentManager : MonoBehaviour
     {
         return playerEquipment.GetStatistics(itemSlotType);
     }
-
-    void Test()
-    {
-        List<Item> items = new();
-
-        //Item itA = new InventoryItem();
-        //Item itB = new PassiveItem();
-        //Item itC = new UsableItem();
-        //Item itD = new UnknownItem();
-
-    }
-
 }

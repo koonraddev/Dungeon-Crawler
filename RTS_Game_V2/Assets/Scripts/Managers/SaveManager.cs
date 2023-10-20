@@ -8,15 +8,13 @@ public class PlayerData
 {
     public Equipment equipment;
     public Inventory inventory;
-    //public string jsonBasicStatistics;
+    public List<Buff> activeBuffsList;
+    public StatisticsSO playerBaseStatistics;
 }
 
 public class SaveManager : MonoBehaviour
 {
     public string savePath;
-    public EquipmentItemSO eqItemSO;
-    public PassiveItemSO passiveItemSO;
-    public UsableItemSO usableSO;
     void Start()
     {
         //GameEvents.instance.onSave += SaveEquipment;
@@ -29,46 +27,6 @@ public class SaveManager : MonoBehaviour
             SaveEquipment(savePath);
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            EquipmentItem item = new(eqItemSO);
-
-            EquipmentManager.instance.AddItem(item);
-
-            InventoryItem invItem = new PassiveItem(passiveItemSO);
-            InventoryItem invItem2 = new UsableItem(usableSO);
-            InventoryManager.instance.AddItem(invItem, slotIndex: 5);
-            InventoryManager.instance.AddItem(invItem2, amount: 3);
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            List<EquipmentSlot> slots = EquipmentManager.instance.GetSlots();
-
-
-            foreach (var eqSlot in slots)
-            {
-                Debug.Log("----------------------");
-                Debug.Log(eqSlot.SlotType);
-                if(!eqSlot.Empty)
-                {
-                    Debug.Log(eqSlot.Item.Name);
-                }
-            }
-
-            Debug.Log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-            List<InventorySlot> invSlots = InventoryManager.instance.GetInventorySlots();
-            foreach (var invSlot in invSlots)
-            {
-                Debug.Log("----------------------");
-                Debug.Log(invSlot.Item);
-                if (invSlot.Item != null)
-                {
-                    Debug.Log(invSlot.Item.Name);
-                }
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.L))
         {
             LoadEquipment(savePath);
@@ -79,19 +37,16 @@ public class SaveManager : MonoBehaviour
     {
         Debug.Log(savePath);
 
-        PlayerData data = new PlayerData();
-        data.equipment = EquipmentManager.instance.GetEquipment();
-        data.inventory = InventoryManager.instance.GetInventory();
+        PlayerData data = new();
+        data.equipment = EquipmentManager.instance.Equipment;
+        data.inventory = InventoryManager.instance.Inventory;
+        data.activeBuffsList = BuffManager.instance.Buffs;
+        data.playerBaseStatistics = BuffManager.instance.playerBaseStats;
         Debug.Log(Application.persistentDataPath);
 
         string allData = JsonUtility.ToJson(data);
         
         File.WriteAllText(savePath + "/sejw.json", allData);
-
-
-
-
-        //
     }
 
 
@@ -105,15 +60,20 @@ public class SaveManager : MonoBehaviour
             PlayerData loadedData = JsonUtility.FromJson<PlayerData>(save);
 
             Equipment loadedEq = loadedData.equipment;
-            EquipmentManager.instance.LoadEquipment(loadedEq);
             Inventory loadedInv = loadedData.inventory;
+            List<Buff> loadedActiveBuffsList = loadedData.activeBuffsList;
+            StatisticsSO loadedPlayerBaseStatistics = loadedData.playerBaseStatistics;
+
+            EquipmentManager.instance.Equipment = loadedEq;
             InventoryManager.instance.LoadInventory(loadedInv);
+            BuffManager.instance.playerBaseStats = loadedPlayerBaseStatistics;
+            BuffManager.instance.Buffs = loadedActiveBuffsList;
 
 
 
 
-            List<EquipmentSlot> eqSlots = EquipmentManager.instance.GetSlots();
-            List<InventorySlot> invSlots = InventoryManager.instance.GetInventorySlots();
+            List<EquipmentSlot> eqSlots = EquipmentManager.instance.Slots;
+            List<InventorySlot> invSlots = InventoryManager.instance.Slots;
 
             foreach (var item in eqSlots)
             {

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryPanel
 {
     private InventorySlotPanel invSlotPanel;
+    public InventorySlotPanel RequestingSlot { get => invSlotPanel; }
     private Dictionary<string, string> contentToDisplay;
     [SerializeField] private GameObject dropObjectPrefab;
     private GameObject playerObject;
@@ -34,7 +35,7 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
         }
     }
 
-    public void DropAllSlotItems()
+    private void DropAllSlotItems()
     {
         if (playerObject == null)
         {
@@ -43,7 +44,7 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
 
         if (playerObject != null)
         {
-            InventorySlot invSlot = InventoryManager.instance.GetInventorySlot(invSlotPanel.SlotNumber);
+            InventorySlot invSlot = InventoryManager.instance.Slots[invSlotPanel.SlotNumber];
 
             GameObject dropBagObject = Instantiate(dropObjectPrefab);
             dropBagObject.transform.position = playerObject.transform.position + new Vector3(0f, 1f, 0f);
@@ -60,10 +61,5 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
     public void DoSpecialIntercation()
     {
         DropAllSlotItems();
-    }
-
-    public InventorySlotPanel GetRequestingSlot()
-    {
-        return invSlotPanel;
     }
 }

@@ -118,7 +118,7 @@ public class MessageMenuController : MonoBehaviour
     public void PrepareMessageMenu(ISpecialInventoryPanel specialSlot, UIMessageObjectPool.MessageType messageType)
     {
         this.messageType = messageType;
-        InventorySlotPanel invSlotpanel = specialSlot.GetRequestingSlot();
+        InventorySlotPanel invSlotpanel = specialSlot.RequestingSlot;
 
         if (firstRun)
         {

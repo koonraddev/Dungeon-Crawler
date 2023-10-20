@@ -2,18 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public struct BuffsSettings
+{
+    public StatisticType statisticType;
+    public Sprite sprite;
+}
 public class BuffPanelMain : MonoBehaviour
 {
     [SerializeField] private GameObject panelPrefab;
 
     List<GameObject> leftPanels = new();
 
+    [SerializeField] BuffsSettings[] buffsSettings;
+    private Dictionary<StatisticType, Sprite> spriteDict;
+
     private void OnEnable()
     {
-        GameEvents.instance.onBuffActivate += Buff;
-        GameEvents.instance.onBuffDeactivate += UpdateUI;
+        GameEvents.instance.OnBuffActivate += Buff;
+        GameEvents.instance.OnBuffDeactivate += UpdateUI;
     }
-
+    private void Awake()
+    {
+        spriteDict = new();
+        foreach (var item in buffsSettings)
+        {
+            spriteDict.Add(item.statisticType, item.sprite);
+        }
+    }
 
     public void Buff(StatisticType statType, float statValue, float duration)
     {
@@ -25,14 +42,14 @@ public class BuffPanelMain : MonoBehaviour
             leftPanels.Add(panel);
             BuffPanel buffPanel = panel.GetComponent<BuffPanel>();
             panel.transform.SetParent(this.transform);
-            buffPanel.SetBuffPanel(statType, statValue, duration);
+            buffPanel.SetBuffPanel(statType, statValue, duration, spriteDict[statType]);
             panel.SetActive(true);
         }
         else
         {
             panel = GetPooledObject();
             BuffPanel buffPanel = panel.GetComponent<BuffPanel>();
-            buffPanel.SetBuffPanel(statType, statValue, duration);
+            buffPanel.SetBuffPanel(statType, statValue, duration, spriteDict[statType]);
             panel.SetActive(true);
         }
 
@@ -67,7 +84,7 @@ public class BuffPanelMain : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.onBuffActivate -= Buff;
-        GameEvents.instance.onBuffDeactivate -= UpdateUI;
+        GameEvents.instance.OnBuffActivate -= Buff;
+        GameEvents.instance.OnBuffDeactivate -= UpdateUI;
     }
 }

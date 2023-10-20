@@ -7,7 +7,7 @@ public class Inventory
 {
     [SerializeField] private List<InventorySlot> slotsList;
     [SerializeField] private int playerGold;
-    
+    public List<InventorySlot> Slots { get => slotsList; }
     public Inventory()
     {
         slotsList = new();
@@ -133,10 +133,6 @@ public class Inventory
         }
     }
 
-    public List<InventorySlot> GetInventorySlots()
-    {
-        return slotsList;
-    }
 
     public bool CheckItem(InventoryItem invToCheck, int amount = 1)
     {
@@ -154,7 +150,6 @@ public class Inventory
     public void MoveOnePiece(int fromSlotAIndex, int toSlotBIndex)
     {
         InventorySlot donorSlot = slotsList[fromSlotAIndex];
-        InventorySlot destSlot = slotsList[toSlotBIndex];
 
         if(!donorSlot.Empty)
         {
@@ -217,11 +212,6 @@ public class Inventory
         }
 
         GameEvents.instance.InventoryUpdate();
-    }
-
-    public InventorySlot GetInventorySlot(int inventorySlotIndex)
-    {
-        return slotsList[inventorySlotIndex];
     }
 
     public void ClearSlot(int slotIndex)

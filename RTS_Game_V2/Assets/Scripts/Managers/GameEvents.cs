@@ -40,8 +40,8 @@ public class GameEvents : MonoBehaviour
 
     public event Action<float> OnUpdateCurrentHP;
 
-    public event Action<StatisticType, float, float> onBuffActivate;
-    public event Action<StatisticType, float> onBuffDeactivate;
+    public event Action<StatisticType, float, float> OnBuffActivate;
+    public event Action<StatisticType, float> OnBuffDeactivate;
 
     public event Action OnSavePlayerStuff;
     public event Action OnLoadPlayerStuff;
@@ -62,12 +62,12 @@ public class GameEvents : MonoBehaviour
 
     public void BuffActivate(StatisticType statType, float statValue, float duration)
     {
-        onBuffActivate?.Invoke(statType,statValue, duration);
+        OnBuffActivate?.Invoke(statType,statValue, duration);
     }
 
     public void BuffDeactivate(StatisticType statType, float statValue)
     {
-        onBuffDeactivate?.Invoke(statType, statValue);
+        OnBuffDeactivate?.Invoke(statType, statValue);
     }
 
     public void EnemyClick(Enemy enemy)

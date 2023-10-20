@@ -15,7 +15,7 @@ public class InventoryPanel : MonoBehaviour
 
     private void OnInventoryUpdate()
     {
-        List<InventorySlot> items = InventoryManager.instance.GetInventorySlots();
+        List<InventorySlot> items = InventoryManager.instance.Slots;
         if(items != null)
         {
             for (int i = 0; i < items.Count; i++)

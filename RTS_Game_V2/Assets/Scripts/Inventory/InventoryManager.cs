@@ -7,6 +7,9 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] private Inventory playerInventory;
 
+    public Inventory Inventory { get => playerInventory; set => playerInventory = value; }
+    public List<InventorySlot> Slots { get => playerInventory.Slots; }
+
     private void Awake() 
     {
         instance = this;
@@ -53,15 +56,6 @@ public class InventoryManager : MonoBehaviour
         playerInventory.MergeItems(mergeFromSlotIndex, mergeToSlotIndex);
     }
 
-    public List<InventorySlot> GetInventorySlots()
-    {
-        return playerInventory.GetInventorySlots();
-    }
-
-    public Inventory GetInventory()
-    {
-        return playerInventory;
-    }
 
     public void LoadInventory(Inventory invToLoad)
     {
@@ -78,8 +72,4 @@ public class InventoryManager : MonoBehaviour
         playerInventory.ClearSlot(slotIndex);
     }
 
-    public InventorySlot GetInventorySlot(int inventorySlotIndex)
-    {
-        return playerInventory.GetInventorySlot(inventorySlotIndex);
-    }
 }

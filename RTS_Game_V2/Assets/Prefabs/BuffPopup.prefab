@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 7541254532797723959}
   - component: {fileID: 7541254532797723952}
   - component: {fileID: 1702134344309339816}
+  - component: {fileID: 142756211825032239}
   m_Layer: 5
   m_Name: BuffPopup
   m_TagString: Untagged
@@ -225,3 +226,16 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &142756211825032239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7541254532797723954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5f23f38a83d4b4f93c8bd021972f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textObject: {fileID: 7541254532389818111}
