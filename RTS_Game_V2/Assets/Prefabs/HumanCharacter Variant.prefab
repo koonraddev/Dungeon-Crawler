@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ebf619ad4af394cb015894f8ef6ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followTarget: 0
   playerMov: {fileID: 3940110844068087954}
+  followTarget: 1
 --- !u!114 &3797590189318510952
 MonoBehaviour:
   m_ObjectHideFlags: 0

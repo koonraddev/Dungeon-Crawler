@@ -133,8 +133,8 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, triggerRange);
-        Gizmos.DrawSphere(pointToMove, 1);
+        //Gizmos.DrawWireSphere(transform.position, triggerRange);
+        //Gizmos.DrawSphere(pointToMove, 1);
     }
 
     //private void AttackEffect()

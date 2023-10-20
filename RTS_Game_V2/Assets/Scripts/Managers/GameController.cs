@@ -26,8 +26,6 @@ public class GameController : MonoBehaviour
     [Space(15)]
     [SerializeField] private RoomsGenerator roomsGenerator;
     [SerializeField] private RoomsSetSO roomsSet;
-
-
     [SerializeField] private GameObject startSpawnPoint;
 
     public int level;
@@ -51,6 +49,19 @@ public class GameController : MonoBehaviour
         }
 
         roomsGenerator.SetRoomsGenerator(roomsSet);
+
+
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.instance.OnLoadLevel += LoadLevel;
+    }
+
+
+    public void LoadLevel()
+    {
+
     }
 
     private void Start()
@@ -110,6 +121,7 @@ public class GameController : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnLastRoomReady -= LastRoomReady;
+        GameEvents.instance.OnLoadLevel -= LoadLevel;
     }
 
 }

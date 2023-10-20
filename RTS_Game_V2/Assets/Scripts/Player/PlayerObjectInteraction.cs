@@ -19,6 +19,7 @@ public class PlayerObjectInteraction : MonoBehaviour
     private InputAction moveInspectAction;
 
     private IEnumerator inspectCor;
+    private bool canInteract;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -67,7 +68,24 @@ public class PlayerObjectInteraction : MonoBehaviour
         if (clickedObject != null)
         {
             distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
-            //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
+            Vector3 dir = clickedObject.transform.position - transform.position;
+            Ray playerRay = new(this.transform.position, dir);
+            //Debug.DrawRay(transform.position, dir, Color.yellow);
+            if (Physics.Raycast(playerRay, out RaycastHit hitObject))
+            {
+                //Vector3 dir2 = hitObject.point - transform.position;
+                if (hitObject.transform.gameObject == clickedObject)
+                {
+                    distanceFromObject = Vector3.Distance(gameObject.transform.position, hitObject.point);
+                    canInteract = true;
+                    //Debug.DrawRay(transform.position, dir2, Color.green);
+                }
+                else
+                {
+                    canInteract = false;
+                    //Debug.DrawRay(transform.position, dir2, Color.red);
+                }
+            }
         }
     }
 
@@ -105,27 +123,28 @@ public class PlayerObjectInteraction : MonoBehaviour
     {
         minimumDistanceFromObject = objectToInspect.InteractionDistance;
         //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
-        float distToMove = minimumDistanceFromObject;
-        distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
-        if (distanceFromObject > minimumDistanceFromObject && playerMovement != null) 
+        Debug.Log("INSPECt");
+        if (distanceFromObject > minimumDistanceFromObject && playerMovement != null)
         {
             Vector3 dirToTarget = clickedObject.transform.position - this.transform.position;
             Vector3 dirToTargetNorm = dirToTarget.normalized;
-            float distToTarget = dirToTarget.magnitude;
-            distToMove = Mathf.Ceil(distToTarget - minimumDistanceFromObject);
+            float distToTarget = distanceFromObject;// dirToTarget.magnitude;
+            float distToMove = Mathf.Ceil(distToTarget - minimumDistanceFromObject);
             Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
             playerMovement.MoveTo(pointToMove);
+            Debug.Log("NEED MOVe");
         }
-        yield return new WaitUntil(() => distanceFromObject <= minimumDistanceFromObject);
-
+        yield return new WaitUntil(() => (distanceFromObject <= minimumDistanceFromObject) && (canInteract));
+        Debug.Log("CAN INSPECt");
+        playerMovement.StopMovement();
         objectToInspect.ObjectInteraction();
         StartCoroutine(InspectingObject());
     }
 
     public IEnumerator InspectingObject()
     {
-        Debug.Log("start");
-        yield return new WaitUntil(() => distanceFromObject > minimumDistanceFromObject);
+        Debug.Log("inspecting");
+        yield return new WaitUntil(() => (distanceFromObject > minimumDistanceFromObject) || (!canInteract));
         Debug.Log("distance > min distance");
         GameEvents.instance.CancelGameObjectAction();
         clickedObject = null;

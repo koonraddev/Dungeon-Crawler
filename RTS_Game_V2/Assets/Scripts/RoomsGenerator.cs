@@ -26,7 +26,7 @@ public class RoomsGenerator : MonoBehaviour
         startRoom = this.roomsSetSO.StartRoom;
         bossRoom = this.roomsSetSO.BossRoom;
         roomsList = this.roomsSetSO.RoomsList;
-        roomsToGenerate = roomsList.Count+1;
+        roomsToGenerate = this.roomsSetSO.RoomsAmount;
     }
     public RoomSO GetRoom()
     {
@@ -34,7 +34,6 @@ public class RoomsGenerator : MonoBehaviour
         if (firstRoom)
         {
             roomSo = startRoom;
-            roomsToGenerate--;
             firstRoom = false;
         }
         else
@@ -47,7 +46,6 @@ public class RoomsGenerator : MonoBehaviour
             {
                 int index = rand.Next(0, roomsList.Count);
                 roomSo = roomsList[index];
-                roomsList.RemoveAt(index);
             }
         }
         roomsToGenerate--;

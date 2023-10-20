@@ -9,6 +9,7 @@ public class BossRoomSO : RoomSO
     [SerializeField] private GameObject roomPlane;
     [SerializeField] private Material roomWallMaterial;
     [SerializeField] private Material roomFloorMaterial;
+    [SerializeField] private GameObject bossObject;
     [Header("Door section")]
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
@@ -28,6 +29,9 @@ public class BossRoomSO : RoomSO
     {
         roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
 
+        GameObject boss = Instantiate(bossObject, roomGameObject.transform.position,Quaternion.identity);
+        boss.transform.SetParent(roomGameObject.transform);
+        boss.GetComponent<Enemy>().SetEnemy(roomGameObject);
         if (isLastRoom)
         {
             GameEvents.instance.LastRoomReady();

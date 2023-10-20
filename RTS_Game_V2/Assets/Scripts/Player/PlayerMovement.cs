@@ -58,6 +58,11 @@ public class PlayerMovement : MonoBehaviour
             GameEvents.instance.CancelActions();
             GameEvents.instance.CancelGameObjectAction();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StopMovement();
+        }
     }
 
     public void UpdateStats(StatisticType statisticType, float value)
@@ -71,7 +76,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveTo(Vector3 destination)
     {
+        playerAgent.isStopped = false;
         //SoundManager.PlaySound(pointDestinationSound, 1f);
+
+        //Debug.Log(destination);
         playerAgent.SetDestination(destination);
+    }
+
+    public void StopMovement()
+    {
+        Debug.Log("STOP MOVE");
+        playerAgent.isStopped = true;
     }
 }

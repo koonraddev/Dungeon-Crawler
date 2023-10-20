@@ -135,11 +135,6 @@ public class ContainerObject : MonoBehaviour, IInteractionObject
     }
 
 
-    public Dictionary<string, string> GetContentToDisplay()
-    {
-        return contentToDisplay;
-    }
-
     private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
     {
         contentToDisplay = new Dictionary<string, string>();

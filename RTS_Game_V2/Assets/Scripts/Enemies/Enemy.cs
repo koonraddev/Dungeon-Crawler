@@ -6,7 +6,7 @@ using DG.Tweening;
 public class Enemy : MonoBehaviour, IInteractionObject
 {
     [SerializeField] private EnemyConfigurationSO enemyConfig;
-    private LootSO lootSO;
+    protected LootSO lootSO;
 
     private GameObject parentRoom;
 
@@ -18,24 +18,22 @@ public class Enemy : MonoBehaviour, IInteractionObject
 
     private float physicalDamageMultiplier;
     private float magicDamageMultiplier;
-    
 
+    private int interactionDistance = 9999;
     [SerializeField] EnemyMovement enemyMovement;
     [SerializeField] EnemyAttack enemyAttack;
     private Sprite enemySprite;
+    private Dictionary<string, string> contentToDisplay;
+    private bool displayPopup = true;
 
     public float MaxHealth { get => maxHealth; }
     public float Health { get => health; }
     public string Name { get => enemyName; }
     public Sprite Sprite { get => enemySprite; }
-
-    private int interactionDistance = 9999;
     public GameObject GameObject => gameObject;
     public int InteractionDistance { get => interactionDistance; }
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
-    private Dictionary<string, string> contentToDisplay;
-    private bool displayPopup = true;
 
     private void Awake()
     {
@@ -89,11 +87,17 @@ public class Enemy : MonoBehaviour, IInteractionObject
         ConsolePanel.instance.EnemyTakeDamage(Name, totalDamage);
     }
 
-    private void Die()
+    protected virtual void Die()
     {
+        Debug.LogWarning("DEAD");
         GameEvents.instance.EnemyClick(null);
 
         LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetContainer(enemyName),lootSO.LootTimeExisting);
+
+        if (enemyConfig.Boss)
+        {
+            GameEvents.instance.ActivateTeleport();
+        }
         gameObject.SetActive(false);
     }
 

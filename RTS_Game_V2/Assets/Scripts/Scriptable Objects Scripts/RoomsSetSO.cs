@@ -8,9 +8,9 @@ public class RoomsSetSO : ScriptableObject
     [SerializeField] private RoomSO startRoom;
     [SerializeField] private RoomSO bossRoom;
     [SerializeField] private List<RoomSO> roomsList;
-
+    [SerializeField] private int roomsAmount;
     public RoomSO StartRoom { get => startRoom; }
     public RoomSO BossRoom { get => bossRoom; }
     public List<RoomSO> RoomsList { get => roomsList; }
-
+    public int RoomsAmount { get => roomsAmount; }
 }

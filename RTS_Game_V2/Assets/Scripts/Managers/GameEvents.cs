@@ -48,11 +48,17 @@ public class GameEvents : MonoBehaviour
 
     public event Action<Enemy> OnEnemyClick;
     public event Action OnCancelActions;
-
+    public event Action OnActivateTeleport;
 
     //Spawns ready status
     //public event Action OnLastSpawnPoint
     public event Action OnLastRoomReady;
+
+
+    public void ActivateTeleport()
+    {
+        OnActivateTeleport?.Invoke();
+    }
 
     public void BuffActivate(StatisticType statType, float statValue, float duration)
     {
