@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     private float maxHealth;
-    private float health;
+    private float health = 1;
     private float armor;
     private float magicResistance;
     private float healthPointsRegen;
@@ -38,10 +38,10 @@ public class PlayerHealth : MonoBehaviour
             timeLeft = interval;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Damage("Monster", 20, 0, 0);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    Damage("Monster", 20, 0, 0);
+        //}
     }
     public void Damage(string enemyName,float physicalDamage, float magicDamage, float trueDamage)
     {

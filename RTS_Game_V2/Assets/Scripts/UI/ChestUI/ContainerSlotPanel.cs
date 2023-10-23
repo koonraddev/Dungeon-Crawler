@@ -103,7 +103,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (contSlot.Item != null)
+        if (!contSlot.Empty)
         {
             newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
             rect = newObj.GetComponent<RectTransform>();
