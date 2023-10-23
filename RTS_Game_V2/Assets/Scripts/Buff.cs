@@ -5,9 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class Buff
 {
-    private float timeleft;
-    private float statValue;
-    private StatisticType statType;
+    [SerializeField] private float timeleft;
+    [SerializeField] private float statValue;
+    [SerializeField] private StatisticType statType;
     public StatisticType StatType { get => statType; }
     public float StatValue { get => statValue; }
     public float TimeLeft { get => timeleft; }

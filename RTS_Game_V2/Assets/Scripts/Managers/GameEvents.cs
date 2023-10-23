@@ -35,7 +35,7 @@ public class GameEvents : MonoBehaviour
     public event Action OnInventoryUpdate;
     public event Action OnEquipmentUpdate;
     public event Action<StatisticType,float> OnStatisticUpdate;
-    public event Action<StatisticType,float> On;
+    public event Action OnBasicStatistics;
 
 
     public event Action<float> OnUpdateCurrentHP;
@@ -55,6 +55,11 @@ public class GameEvents : MonoBehaviour
     public event Action OnLastRoomReady;
 
 
+
+    public void BasicStatistics()
+    {
+        OnBasicStatistics?.Invoke();
+    }
     public void ActivateTeleport()
     {
         OnActivateTeleport?.Invoke();

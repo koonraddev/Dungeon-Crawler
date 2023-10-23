@@ -8,7 +8,20 @@ public class BuffManager : MonoBehaviour
 {
 
     //Temporary
-    public StatisticsSO playerBaseStats;
+
+    private PlayerBasicStatistics playerBaseStats;
+
+    public PlayerBasicStatistics PlayerBasicStatistics
+    {
+        get { return playerBaseStats; }
+        set 
+        { 
+            playerBaseStats = value;
+            GameEvents.instance.BasicStatistics();
+        }
+    }
+
+
     //
     Dictionary<StatisticType, bool> buffs;
     Dictionary<StatisticType, bool> debuffs;
@@ -23,10 +36,15 @@ public class BuffManager : MonoBehaviour
         get => buffList; 
         set 
         {
+            foreach (var item in buffList)
+            {
+                GameEvents.instance.BuffDeactivate(item.StatType, item.StatValue);
+            }
+
             List<Buff> loadedBuffs = value;
             foreach (var item in loadedBuffs)
             {
-                //to do odczytywanie
+                LoadBuff(item.StatType, item.StatValue, item.TimeLeft);
             }
         } 
     }
@@ -65,6 +83,12 @@ public class BuffManager : MonoBehaviour
         }
     }
 
+    private void LoadBuff(StatisticType statType, float statValue, float duration)
+    {
+        Buff bf = new(statType, statValue, duration);
+        buffList.Add(bf);
+        GameEvents.instance.BuffActivate(statType, statValue, duration);
+    }
 
     public bool Buff(Dictionary<StatisticType, float> buffsDict, float duration)
     {

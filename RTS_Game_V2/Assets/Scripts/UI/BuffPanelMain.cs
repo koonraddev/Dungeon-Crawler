@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
-public struct BuffsSettings
-{
-    public StatisticType statisticType;
-    public Sprite sprite;
-}
 public class BuffPanelMain : MonoBehaviour
 {
+    [System.Serializable]
+    public struct BuffsSettings
+    {
+        public StatisticType statisticType;
+        public Sprite sprite;
+    }
+
     [SerializeField] private GameObject panelPrefab;
 
     List<GameObject> leftPanels = new();
@@ -24,6 +25,15 @@ public class BuffPanelMain : MonoBehaviour
         GameEvents.instance.OnBuffDeactivate += UpdateUI;
     }
     private void Awake()
+    {
+        //spriteDict = new();
+        //foreach (var item in buffsSettings)
+        //{
+        //    spriteDict.Add(item.statisticType, item.sprite);
+        //}
+    }
+
+    private void Start()
     {
         spriteDict = new();
         foreach (var item in buffsSettings)

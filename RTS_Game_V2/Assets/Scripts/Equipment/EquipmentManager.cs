@@ -7,7 +7,15 @@ public class EquipmentManager : MonoBehaviour
 
     [SerializeField] private Equipment playerEquipment;
 
-    public Equipment Equipment { get => playerEquipment; set => playerEquipment = value; }
+    public Equipment Equipment 
+    {
+        get { return playerEquipment; } 
+        set 
+        { 
+            playerEquipment = value;
+            GameEvents.instance.EquipmentUpdate();
+        }
+    }
     public List<EquipmentSlot> Slots { get => playerEquipment.Slots; }
     private void Awake() {
         instance = this;

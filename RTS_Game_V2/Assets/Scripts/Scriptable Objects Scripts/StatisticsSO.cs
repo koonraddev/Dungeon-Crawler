@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
 [CreateAssetMenu(fileName = "newStatistics", menuName = "Scriptable Objects/Statistics")]
 public class StatisticsSO : ScriptableObject
 {
@@ -48,6 +47,9 @@ public class StatisticsSO : ScriptableObject
             statistics = new Dictionary<StatisticType, float>();
         }
 
+        if (!statistics.ContainsKey(StatisticType.PhysicalDamage)) statistics.Add(StatisticType.PhysicalDamage, physicalDamage);
+        else statistics[StatisticType.PhysicalDamage] = physicalDamage;
+
         if (!statistics.ContainsKey(StatisticType.TrueDamage)) statistics.Add(StatisticType.TrueDamage, trueDamage);
         else statistics[StatisticType.TrueDamage] = trueDamage;
 
@@ -74,6 +76,8 @@ public class StatisticsSO : ScriptableObject
 
         if (!statistics.ContainsKey(StatisticType.HealthPercentageRegeneration)) statistics.Add(StatisticType.HealthPercentageRegeneration, healthPercentageRegeneration);
         else statistics[StatisticType.HealthPercentageRegeneration] = healthPercentageRegeneration;
-    
+
+        if (!statistics.ContainsKey(StatisticType.MovementSpeed)) statistics.Add(StatisticType.MovementSpeed, movementSpeed);
+        else statistics[StatisticType.MovementSpeed] = movementSpeed;
     }
 }

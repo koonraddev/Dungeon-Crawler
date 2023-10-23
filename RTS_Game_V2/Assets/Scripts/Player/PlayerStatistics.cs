@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStatistics : MonoBehaviour
 {
-    [SerializeField] private StatisticsSO baseStats;
+    private PlayerBasicStatistics baseStats;
 
     //BASE
     private float base_maxHealth;
@@ -85,10 +85,12 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
         GameEvents.instance.OnBuffActivate += ActivateBuff;
         GameEvents.instance.OnBuffDeactivate += DeactivateBuff;
+        GameEvents.instance.OnBasicStatistics += SetBasicStatistics;
     }
 
     private void SetBasicStatistics()
     {
+        baseStats = BuffManager.instance.PlayerBasicStatistics;
         if (baseStats != null)
         {
             base_maxHealth = baseStats.MaxHealth;
@@ -204,6 +206,7 @@ public class PlayerStatistics : MonoBehaviour
         eq_trueDamage = newTrueDmg;
         eq_healthPointsRegen = newHealthPointsRegen;
         eq_healthPercentsRegen = newHealtPercentageRegen;
+        UpdateStats();
     }
     public void OnEquipmentUpdate()
     {
@@ -377,6 +380,7 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate -= OnEquipmentUpdate;
         GameEvents.instance.OnBuffActivate -= ActivateBuff;
         GameEvents.instance.OnBuffDeactivate -= DeactivateBuff;
+        GameEvents.instance.OnBasicStatistics -= SetBasicStatistics;
     }
 
 }
