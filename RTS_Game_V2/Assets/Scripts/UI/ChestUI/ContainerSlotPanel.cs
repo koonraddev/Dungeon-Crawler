@@ -22,7 +22,9 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private Sprite panelSlotSprite;
     private Color panelSlotColor;
-    public int slotIndex { get; private set; }
+
+    private int slotIndex;
+    public int SlotIndex { get { return slotIndex; } private set { slotIndex = value; } }
     private void Awake()
     {
         canvas = transform.root.gameObject;
@@ -139,7 +141,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void SetEssentials(Sprite panelSlotSprite, Color panelSlotColor, int slotIndex)
     {
-        this.slotIndex = slotIndex;
+        this.SlotIndex = slotIndex;
         this.panelSlotSprite = panelSlotSprite;
         this.panelSlotColor = panelSlotColor;
 
@@ -150,7 +152,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void SetEmptySlot()
     {
-        container.RemoveTreasure(slotIndex);
+        container.RemoveTreasure(SlotIndex);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -162,7 +164,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             {
                 InventorySlot contSlot = invSlotPanel.invSlot;
 
-                if (container.AddTreasure(slotIndex, contSlot.Item, contSlot.Amount))
+                if (container.AddTreasure(SlotIndex, contSlot.Item, contSlot.Amount))
                 {
                     InventoryManager.instance.RemoveItem(invSlotPanel.SlotNumber,contSlot.Amount);
                 }
@@ -172,14 +174,14 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             ContainerSlotPanel containerSlotPanel = eventData.pointerDrag.GetComponent<ContainerSlotPanel>();
             if (containerSlotPanel != null)
             {
-                container.SwapItems(containerSlotPanel.slotIndex, this.slotIndex);
+                container.SwapItems(containerSlotPanel.SlotIndex, this.SlotIndex);
             }
 
             EquipmentSlotPanel eqSlotPanel = eventData.pointerDrag.GetComponent<EquipmentSlotPanel>();
             if(eqSlotPanel != null)
             {
                 EquipmentItem eqItem = eqSlotPanel.eqSlot.Item;
-                if (container.AddTreasure(slotIndex, eqItem))
+                if (container.AddTreasure(SlotIndex, eqItem))
                 {
                     EquipmentManager.instance.RemoveItem(eqItem);
                 }

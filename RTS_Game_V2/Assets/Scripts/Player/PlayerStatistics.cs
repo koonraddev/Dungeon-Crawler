@@ -75,14 +75,14 @@ public class PlayerStatistics : MonoBehaviour
 
     void Start()
     {
-        SetBasicStatistics();
-        SetStatisticsFromEquipment();
-        UpdateStats();
+        //SetBasicStatistics();
+        //SetStatisticsFromEquipment();
+        //UpdateStats();
     }
 
     private void OnEnable()
     {
-        GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
+        GameEvents.instance.OnEquipmentUpdate += SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate += ActivateBuff;
         GameEvents.instance.OnBuffDeactivate += DeactivateBuff;
         GameEvents.instance.OnBasicStatistics += SetBasicStatistics;
@@ -117,19 +117,20 @@ public class PlayerStatistics : MonoBehaviour
             healthPointsRegen = base_healthPointsRegen;
             healthPercentsRegen = base_healthPercentsRegen;
         }
+        UpdateStats();
 
-        GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, base_maxHealth);
-        GameEvents.instance.StatisticUpdate(StatisticType.MovementSpeed, base_movementSpeed);
-        GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
-        GameEvents.instance.StatisticUpdate(StatisticType.MagicResistance, base_magicResistance);
-        GameEvents.instance.StatisticUpdate(StatisticType.AttackSpeed, base_attackSpeed);
-        GameEvents.instance.StatisticUpdate(StatisticType.AttackRange, base_attackRange);
-        GameEvents.instance.StatisticUpdate(StatisticType.PhysicalDamage, base_physicalDamage);
-        GameEvents.instance.StatisticUpdate(StatisticType.MagicDamage, base_magicDamage);
-        GameEvents.instance.StatisticUpdate(StatisticType.TrueDamage, base_trueDamage);
-        GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, base_healthPointsRegen);
-        GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, base_healthPercentsRegen);
-        GameEvents.instance.UpdateCurrentHP(base_maxHealth);
+        //GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, base_maxHealth);
+        //GameEvents.instance.StatisticUpdate(StatisticType.MovementSpeed, base_movementSpeed);
+        //GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
+        //GameEvents.instance.StatisticUpdate(StatisticType.MagicResistance, base_magicResistance);
+        //GameEvents.instance.StatisticUpdate(StatisticType.AttackSpeed, base_attackSpeed);
+        //GameEvents.instance.StatisticUpdate(StatisticType.AttackRange, base_attackRange);
+        //GameEvents.instance.StatisticUpdate(StatisticType.PhysicalDamage, base_physicalDamage);
+        //GameEvents.instance.StatisticUpdate(StatisticType.MagicDamage, base_magicDamage);
+        //GameEvents.instance.StatisticUpdate(StatisticType.TrueDamage, base_trueDamage);
+        //GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, base_healthPointsRegen);
+        //GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, base_healthPercentsRegen);
+        //GameEvents.instance.UpdateCurrentHP(base_maxHealth);
     }
 
     private void SetStatisticsFromEquipment()
@@ -206,11 +207,6 @@ public class PlayerStatistics : MonoBehaviour
         eq_trueDamage = newTrueDmg;
         eq_healthPointsRegen = newHealthPointsRegen;
         eq_healthPercentsRegen = newHealtPercentageRegen;
-        UpdateStats();
-    }
-    public void OnEquipmentUpdate()
-    {
-        SetStatisticsFromEquipment();
         UpdateStats();
     }
 
@@ -377,7 +373,7 @@ public class PlayerStatistics : MonoBehaviour
 
     void OnDisable()
     {
-        GameEvents.instance.OnEquipmentUpdate -= OnEquipmentUpdate;
+        GameEvents.instance.OnEquipmentUpdate -= SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate -= ActivateBuff;
         GameEvents.instance.OnBuffDeactivate -= DeactivateBuff;
         GameEvents.instance.OnBasicStatistics -= SetBasicStatistics;

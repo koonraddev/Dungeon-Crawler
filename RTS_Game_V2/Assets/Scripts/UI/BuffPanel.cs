@@ -16,7 +16,6 @@ public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private float statValue;
 
     [SerializeField] private GameObject infoObject;
-    private TMP_Text textObject;
     private GameObject tmpObj;
     private void Awake()
     {

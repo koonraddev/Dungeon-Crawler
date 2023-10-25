@@ -31,18 +31,15 @@ public class Teleport : MonoBehaviour, IInteractionObject
     }
     public void DoInteraction()
     {
-        Debug.Log("Do Interakcja ");
         if (activated)
         {
             //teleport logic
-            Debug.LogWarning("TELEPORT");
             GameEvents.instance.LoadLevel();
         }
         else
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Message", "Teleport is unactive. Defeat Dungeon Boss."} });
             UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
-            Debug.Log("nie jest aktywowany ");
         }
     }
 
@@ -50,7 +47,6 @@ public class Teleport : MonoBehaviour, IInteractionObject
     {
         SetContentToDisplay(new Dictionary<string, string> { { "Name", "Teleport" }, { "Description", "Teleport to another level of dungeon."} });
         UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
-        Debug.Log("Interakcja ");
     }
 
     public void OnMouseEnterObject(Color highLightColor)

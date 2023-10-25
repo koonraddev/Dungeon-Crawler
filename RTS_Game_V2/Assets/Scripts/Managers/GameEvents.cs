@@ -16,7 +16,6 @@ public class GameEvents : MonoBehaviour
     public event Action<InputManager.InputType> OnInputChange;
     public event Action<GameController.GameStatus> OnGameStatusChange;
     public event Action OnCancelGameObjectAction;
-    public event Action OnPrepareGame;
     public event Action<int> OnSpawn;
 
     //Panels
@@ -26,8 +25,6 @@ public class GameEvents : MonoBehaviour
     public event Action<bool> OnConsolePanel;
     public event Action<bool> OnMenuPanel;
 
-    public event Action OnCanSave;
-    public event Action OnCannotSave;
     public event Action OnLoadLevel;
     public event Action OnExitToMenu;
     public event Action OnEndGeneratingLevel;
@@ -43,8 +40,8 @@ public class GameEvents : MonoBehaviour
     public event Action<StatisticType, float, float> OnBuffActivate;
     public event Action<StatisticType, float> OnBuffDeactivate;
 
-    public event Action OnSavePlayerStuff;
-    public event Action OnLoadPlayerStuff;
+    public event Action OnSavedPlayerData;
+    public event Action OnLoadedPlayerData;
 
     public event Action<Enemy> OnEnemyClick;
     public event Action OnCancelActions;
@@ -53,7 +50,6 @@ public class GameEvents : MonoBehaviour
     //Spawns ready status
     //public event Action OnLastSpawnPoint
     public event Action OnLastRoomReady;
-
 
 
     public void BasicStatistics()
@@ -85,14 +81,14 @@ public class GameEvents : MonoBehaviour
         OnCancelActions?.Invoke();
     }
 
-    public void SavePlayerStuff()
+    public void PlayerDataSaved()
     {
-        OnSavePlayerStuff?.Invoke();
+        OnSavedPlayerData?.Invoke();
     }
 
-    public void LoadPlayerStuff()
+    public void PlayerDataLoaded()
     {
-        OnLoadPlayerStuff?.Invoke();
+        OnLoadedPlayerData?.Invoke();
     }
 
 
@@ -161,12 +157,6 @@ public class GameEvents : MonoBehaviour
     {
         OnGameStatusChange?.Invoke(gameStatus);
     }
-
-    public void PrepareGame()
-    {
-        OnPrepareGame?.Invoke();
-    }
-
     public void InventoryPanel(bool activePanel)
     {
         OnInventoryPanelOpen?.Invoke(activePanel);
@@ -180,16 +170,6 @@ public class GameEvents : MonoBehaviour
     public void ContainerUpdate()
     {
         OnContainerUpdate?.Invoke();
-    }
-
-    public void EnableSave()
-    {
-        OnCanSave?.Invoke();
-    }
-
-    public void DisableSave()
-    {
-        OnCannotSave?.Invoke();
     }
 
     public void LoadLevel()

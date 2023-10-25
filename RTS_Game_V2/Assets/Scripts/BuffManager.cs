@@ -6,9 +6,6 @@ using System;
 
 public class BuffManager : MonoBehaviour
 {
-
-    //Temporary
-
     private PlayerBasicStatistics playerBaseStats;
 
     public PlayerBasicStatistics PlayerBasicStatistics
@@ -21,8 +18,6 @@ public class BuffManager : MonoBehaviour
         }
     }
 
-
-    //
     Dictionary<StatisticType, bool> buffs;
     Dictionary<StatisticType, bool> debuffs;
 
@@ -30,6 +25,8 @@ public class BuffManager : MonoBehaviour
 
     private List<Buff> buffList;
     private List<Buff> itemsToRemove;
+
+    private bool countBuffTimes = false;
 
     public List<Buff> Buffs 
     { 
@@ -63,23 +60,43 @@ public class BuffManager : MonoBehaviour
         }
     }
 
+
+    private void OnEnable()
+    {
+        GameEvents.instance.OnLastRoomReady += CountBuffTimes;
+        GameEvents.instance.OnLoadLevel += DoNotCountBuffTimes;
+    }
+
+    private void CountBuffTimes()
+    {
+        countBuffTimes = true;
+    }
+
+    private void DoNotCountBuffTimes()
+    {
+        countBuffTimes = false;
+    }
+
     private void Update()
     {
-        itemsToRemove.Clear();
-
-        foreach (var item in buffList)
+        if (countBuffTimes)
         {
-            item.Update();
-            if(item.TimeLeft <= 0)
+            itemsToRemove.Clear();
+
+            foreach (var item in buffList)
             {
-                Debuff(item.StatType, item.StatValue);
-                itemsToRemove.Add(item);
+                item.Update();
+                if (item.TimeLeft <= 0)
+                {
+                    BuffEnd(item.StatType, item.StatValue);
+                    itemsToRemove.Add(item);
+                }
             }
-        }
 
-        foreach (var itemToRemove in itemsToRemove)
-        {
-            buffList.Remove(itemToRemove);
+            foreach (var itemToRemove in itemsToRemove)
+            {
+                buffList.Remove(itemToRemove);
+            }
         }
     }
 
@@ -140,7 +157,7 @@ public class BuffManager : MonoBehaviour
         return true;
     }
 
-    public void Debuff(StatisticType statType, float value)
+    public void BuffEnd(StatisticType statType, float value)
     {
 
         if (value > 0)
@@ -152,5 +169,11 @@ public class BuffManager : MonoBehaviour
             debuffs[statType] = false;
         }
         GameEvents.instance.BuffDeactivate(statType, value);
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.instance.OnLastRoomReady -= CountBuffTimes;
+        GameEvents.instance.OnLoadLevel -= DoNotCountBuffTimes;
     }
 }

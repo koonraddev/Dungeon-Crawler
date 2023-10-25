@@ -53,6 +53,7 @@ public class SaveManager : MonoBehaviour
         string allData = JsonUtility.ToJson(data);
         
         File.WriteAllText(savePath + "/sejw.json", allData);
+        GameEvents.instance.PlayerDataSaved();
     }
 
 
@@ -75,7 +76,7 @@ public class SaveManager : MonoBehaviour
             InventoryManager.instance.Inventory = loadedInv;
             BuffManager.instance.Buffs = loadedActiveBuffsList;
 
-
+            GameEvents.instance.PlayerDataLoaded();
             //List<EquipmentSlot> eqSlots = EquipmentManager.instance.Slots;
             //List<InventorySlot> invSlots = InventoryManager.instance.Slots;
 

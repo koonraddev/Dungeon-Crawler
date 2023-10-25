@@ -4,10 +4,14 @@ public class UIMessageObjectPool : MonoBehaviour
 {
     public static UIMessageObjectPool instance;
     private List<GameObject> pooledObjects;
-    public GameObject MessageObjectToPool { get; set; }
-    public int AmountToPool { get; set; }
-    public bool canAddObjects { get; set; }
-    public bool FollowMouse { get; set; }
+    [Tooltip("Message Prefab")]
+    [SerializeField] private GameObject objectToPool;
+    [Tooltip("Number of prefab to pool")]
+    [SerializeField] private int amountToPool;
+    [Tooltip("Specify whether the Object Pooler can create extra objects at runtime when there is a need for them")]
+    [SerializeField] private bool canAddObjects;
+    [Tooltip("Specify whether the Message Menu should follow mouse when on top of a object")]
+    [SerializeField] private bool followMouse;
     public enum MessageType
     {
         POPUP,
@@ -26,7 +30,7 @@ public class UIMessageObjectPool : MonoBehaviour
 
     void Start()
     {
-        CreateObjects(AmountToPool);   
+        CreateObjects(amountToPool);   
     }
     public GameObject GetPooledObject()
     {
@@ -88,15 +92,15 @@ public class UIMessageObjectPool : MonoBehaviour
 
     private void CreateObjects(int amountToCreate)
     {
-        if (MessageObjectToPool.GetComponent<MessageMenuController>() != null)
+        if (objectToPool.GetComponent<MessageMenuController>() != null)
         {
             GameObject tmp;
-            if (amountToCreate > 0 && MessageObjectToPool != null)
+            if (amountToCreate > 0 && objectToPool != null)
             {
                 for (int i = 0; i < amountToCreate; i++)
                 {
-                    tmp = Instantiate(MessageObjectToPool);
-                    tmp.GetComponent<MessageMenuController>().FollowMouse = FollowMouse;
+                    tmp = Instantiate(objectToPool);
+                    tmp.GetComponent<MessageMenuController>().FollowMouse = followMouse;
                     tmp.SetActive(false);
                     pooledObjects.Add(tmp);
                 }

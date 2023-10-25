@@ -22,10 +22,14 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
+        GameEvents.instance.OnLoadedPlayerData += StartGame;
     }
-    void Start()
+
+
+    private void StartGame()
     {
         health = maxHealth;
+        GameEvents.instance.UpdateCurrentHP(health);
     }
 
 
@@ -49,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
         //Console Log
         ConsolePanel.instance.PlayerTakeDamage(enemyName, totalDamage);
         health -= totalDamage;
+        GameEvents.instance.UpdateCurrentHP(health);
     }
 
 
@@ -59,6 +64,7 @@ public class PlayerHealth : MonoBehaviour
             case StatisticType.MaxHealth:
                 maxHealth = value;
                 health = Mathf.Clamp(health, 0, maxHealth);
+                GameEvents.instance.UpdateCurrentHP(health);
                 break;
             case StatisticType.Armor:
                 armor = value;
@@ -104,5 +110,6 @@ public class PlayerHealth : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
+        GameEvents.instance.OnLoadedPlayerData -= StartGame;
     }
 }
