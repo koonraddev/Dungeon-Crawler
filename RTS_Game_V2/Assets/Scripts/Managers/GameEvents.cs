@@ -1,6 +1,11 @@
 using System;
 using UnityEngine;
 
+public enum LoadType
+{
+    SAVE_AND_LOAD,
+    LOAD
+}
 public class GameEvents : MonoBehaviour
 {
     public static GameEvents instance;
@@ -32,7 +37,6 @@ public class GameEvents : MonoBehaviour
     public event Action OnInventoryUpdate;
     public event Action OnEquipmentUpdate;
     public event Action<StatisticType,float> OnStatisticUpdate;
-    public event Action OnBasicStatistics;
 
 
     public event Action<float> OnUpdateCurrentHP;
@@ -51,11 +55,20 @@ public class GameEvents : MonoBehaviour
     //public event Action OnLastSpawnPoint
     public event Action OnLastRoomReady;
 
+    public event Action OnSwitchScene;
 
-    public void BasicStatistics()
+    public event Action OnStartLevel;
+
+    public void StartLevel()
     {
-        OnBasicStatistics?.Invoke();
+        OnStartLevel?.Invoke();
     }
+
+    public void SwitchScene()
+    {
+        OnSwitchScene?.Invoke();
+    }
+
     public void ActivateTeleport()
     {
         OnActivateTeleport?.Invoke();

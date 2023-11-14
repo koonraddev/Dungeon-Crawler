@@ -12,6 +12,8 @@ TagManager:
   - Spawner
   - ActivatedSpawner
   - UnactivatedSpawner
+  - EndTeleport
+  - StartTeleport
   layers:
   - Default
   - TransparentFX

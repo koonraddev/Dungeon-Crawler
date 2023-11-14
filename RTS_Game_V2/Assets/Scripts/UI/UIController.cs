@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject containerPanel;
     [SerializeField] private GameObject statisticsPanel;
     [SerializeField] private GameObject enemyInformationPanel;
+    [SerializeField] private GameObject loadingPanel;
 
     private Vector3 playerUIPos, infoPanelPos, eqPanelPos, invDropPanelPos, containerPanelPos, statsPanelPos, enemyPanelPos;
 
@@ -41,6 +42,7 @@ public class UIController : MonoBehaviour
         GameEvents.instance.OnInformationPanel += InformationPanelStatus;
         GameEvents.instance.OnStatisticPanel += StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick += EnemyClick;
+        GameEvents.instance.OnLoadLevel += ActiveLoadingPanel;
         inventoryAction = playerControls.BasicMovement.Inventory;
         statisticsAction = playerControls.BasicMovement.Statistics;
         InventoryPanelStatus(false);
@@ -62,6 +64,12 @@ public class UIController : MonoBehaviour
             GameEvents.instance.StatisticPanel(!isStatisticsActivated);
         }
     }
+
+    public void ActiveLoadingPanel()
+    {
+        loadingPanel.SetActive(true);
+    }
+
 
     public void EnemyClick(Enemy enemy)
     {
@@ -143,6 +151,9 @@ public class UIController : MonoBehaviour
     {
         GameEvents.instance.OnInventoryPanelOpen -= InventoryPanelStatus;
         GameEvents.instance.OnInformationPanel -= InformationPanelStatus;
+        GameEvents.instance.OnStatisticPanel -= StatisticsPanelStatus;
+        GameEvents.instance.OnEnemyClick -= EnemyClick;
+        GameEvents.instance.OnLoadLevel -= ActiveLoadingPanel;
     }
 
     public GameObject GetInfoPanel()

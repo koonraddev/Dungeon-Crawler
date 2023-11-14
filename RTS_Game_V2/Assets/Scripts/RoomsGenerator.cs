@@ -7,6 +7,15 @@ public class RoomsGenerator : MonoBehaviour
     public static RoomsGenerator instance;
     System.Random rand;
 
+    public int RoomsToGenerate 
+    { 
+        get=>roomsToGenerate; 
+        set 
+        {
+            int range = (value - 1) / 5;
+            roomsToGenerate = (range + 1) * 5;
+        } 
+    }
     private int roomsToGenerate;
     private bool firstRoom = true;
     private List<RoomSO> roomsList;
@@ -14,6 +23,8 @@ public class RoomsGenerator : MonoBehaviour
     private RoomSO bossRoom;
     private RoomsSetSO roomsSetSO;
     [SerializeField] private RoomsSetSO roomSet;
+
+
     private void Awake()
     {
         rand = new System.Random();

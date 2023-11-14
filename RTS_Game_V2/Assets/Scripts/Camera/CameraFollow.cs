@@ -26,6 +26,9 @@ public class CameraFollow : MonoBehaviour
     private float dist;
     private float input;
 
+    public Vector3 BaseLocalOffset { get => localOffset; }
+    public float BaseFov { get => baseFov; }
+
     [SerializeField] private ZoomType zoomType;
     public enum ZoomType
     {

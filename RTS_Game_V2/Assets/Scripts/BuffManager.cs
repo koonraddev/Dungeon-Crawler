@@ -14,7 +14,6 @@ public class BuffManager : MonoBehaviour
         set 
         { 
             playerBaseStats = value;
-            GameEvents.instance.BasicStatistics();
         }
     }
 

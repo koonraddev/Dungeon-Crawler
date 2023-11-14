@@ -85,7 +85,7 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate += SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate += ActivateBuff;
         GameEvents.instance.OnBuffDeactivate += DeactivateBuff;
-        GameEvents.instance.OnBasicStatistics += SetBasicStatistics;
+        GameEvents.instance.OnLoadedPlayerData += SetBasicStatistics;
     }
 
     private void SetBasicStatistics()
@@ -376,7 +376,7 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate -= SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate -= ActivateBuff;
         GameEvents.instance.OnBuffDeactivate -= DeactivateBuff;
-        GameEvents.instance.OnBasicStatistics -= SetBasicStatistics;
+        GameEvents.instance.OnLoadedPlayerData -= SetBasicStatistics;
     }
 
 }

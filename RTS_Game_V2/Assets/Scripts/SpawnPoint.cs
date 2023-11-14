@@ -39,9 +39,14 @@ public class SpawnPoint : MonoBehaviour
         spawnId = gameObject.GetInstanceID();
         spawnStatus = SpawnStatus.EMPTY;
     }
-    void Start()
+
+    private void OnEnable()
     {
         GameEvents.instance.OnSpawn += SpawnRoom;
+    }
+    void Start()
+    {
+
         rb.mass = 0;
         rb.useGravity = false;
         coll.isTrigger = true;
@@ -96,6 +101,7 @@ public class SpawnPoint : MonoBehaviour
         {
             RoomSO newRoomSO = RoomsGenerator.instance.GetRoom();
             GameObject newRoom = Instantiate(newRoomSO.RoomPlane(), gameObject.transform.position, Quaternion.identity);
+            GameController.spawnedRooms.Add(newRoom);
             newRoom.SetActive(false);
             Room roomScript = newRoom.AddComponent(typeof(Room)) as Room;
             if (isStartSpawnPoint)
@@ -157,5 +163,10 @@ public class SpawnPoint : MonoBehaviour
     public SpawnStatus GetSpawnStatus()
     {
         return spawnStatus;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.instance.OnSpawn -= SpawnRoom;
     }
 }
