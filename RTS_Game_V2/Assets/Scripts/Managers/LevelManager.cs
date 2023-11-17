@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     private void LoadLevel()
     {
         level += 1;
-        RoomsGenerator.instance.RoomsToGenerate = level;
+        RoomsGenerator.instance.SetRoomsGenerator(level);
     }
     void Start()
     {

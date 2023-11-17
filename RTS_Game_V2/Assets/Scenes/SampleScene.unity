@@ -2379,7 +2379,7 @@ MonoBehaviour:
   containerPanel: {fileID: 516781932}
   statisticsPanel: {fileID: 1643871867}
   enemyInformationPanel: {fileID: 1857417859}
-  loadingPanel: {fileID: 0}
+  loadingPanel: {fileID: 808970905}
 --- !u!114 &231731584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6850,7 +6850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a996efaa078e3418b783dfea45e18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tmpText: {fileID: 0}
+  tmpText: {fileID: 1623884676}
 --- !u!1001 &813021319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10675,7 +10675,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09010887bce02f4ba000c2817d80738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  defaultRoomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  defaultRoomsAmount: 3
+  levelRangeSetsList:
+  - levelRange: 5
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 10
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 15
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 20
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 25
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 30
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 35
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 40
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 45
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 50
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 55
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 60
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 65
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 70
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 75
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 80
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 85
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 90
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 95
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  - levelRange: 100
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+  levelExcSetsList:
+  - level: 4
+    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsAmount: 3
 --- !u!114 &1285007685
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class PlayerData
     public Inventory inventory;
     public List<Buff> activeBuffsList;
     public PlayerBasicStatistics playerBasicStatistics;
+    //temporary
     public int levelCompleted;
 }
 
@@ -25,6 +26,7 @@ public class SaveManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnLoadLevel += SaveEquipment;
+        GameEvents.instance.OnPlayerSpawn += LoadEquipment;
     }
 
     private void Awake()
@@ -117,5 +119,6 @@ public class SaveManager : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnLoadLevel -= SaveEquipment;
+        GameEvents.instance.OnPlayerSpawn -= LoadEquipment;
     }
 }

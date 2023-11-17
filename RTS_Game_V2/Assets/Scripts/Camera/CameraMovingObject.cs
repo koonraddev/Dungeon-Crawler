@@ -6,7 +6,17 @@ public class CameraMovingObject : MonoBehaviour
 {
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
-    public GameObject playerCharacter;
+    private GameObject playerCharacter;
+
+    public GameObject PlayerCharacter 
+    { 
+        get => playerCharacter;
+        set
+        {
+            playerCharacter = value;
+            transform.position = playerCharacter.transform.position;
+        }
+    }
     private bool followPlayerCharacter;
     private bool gameON = true;
 
@@ -45,6 +55,22 @@ public class CameraMovingObject : MonoBehaviour
     void Start()
     {
         GameEvents.instance.OnInputChange += ChangeInput;
+    }
+
+    public void SetPositionToTarget(GameObject targetObject = null)
+    {
+        transform.position = Vector3.zero;
+        if (targetObject == null)
+        {
+            if(playerCharacter != null)
+            {
+                transform.position = playerCharacter.transform.position;
+            }
+        }
+        else
+        {
+            transform.position = targetObject.transform.position;
+        }
     }
 
     private void Update()

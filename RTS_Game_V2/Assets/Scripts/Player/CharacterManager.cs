@@ -6,6 +6,7 @@ public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerObject;
     [SerializeField] CameraMovingObject camMovObj;
+    GameObject gameObj;
     private void OnEnable()
     {
         GameEvents.instance.OnLastRoomReady += SpawnPlayer;
@@ -13,10 +14,22 @@ public class CharacterManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        GameObject gameObj = Instantiate(playerObject);
-        if (camMovObj != null)
+        if(gameObj == null)
         {
-            camMovObj.playerCharacter = gameObj;
+            gameObj = Instantiate(playerObject);
+            if (camMovObj != null)
+            {
+                camMovObj.PlayerCharacter = gameObj;
+            }
+            GameEvents.instance.PlayerSpawn();
+        }
+        else
+        {
+            gameObj.SetActive(false);
+            gameObj.transform.position = Vector3.zero;
+            gameObj.SetActive(true);
+
+            camMovObj.SetPositionToTarget();
         }
     }
 

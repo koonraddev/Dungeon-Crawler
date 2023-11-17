@@ -58,7 +58,12 @@ public class GameEvents : MonoBehaviour
     public event Action OnSwitchScene;
 
     public event Action OnStartLevel;
+    public event Action OnPlayerSpawn;
 
+    public void PlayerSpawn()
+    {
+        OnPlayerSpawn?.Invoke();
+    }
     public void StartLevel()
     {
         OnStartLevel?.Invoke();

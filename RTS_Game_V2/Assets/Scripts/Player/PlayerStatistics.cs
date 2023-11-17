@@ -75,9 +75,9 @@ public class PlayerStatistics : MonoBehaviour
 
     void Start()
     {
-        //SetBasicStatistics();
-        //SetStatisticsFromEquipment();
-        //UpdateStats();
+        SetBasicStatistics();
+        SetStatisticsFromEquipment();
+        UpdateStats();
     }
 
     private void OnEnable()

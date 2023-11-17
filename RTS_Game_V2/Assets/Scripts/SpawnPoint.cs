@@ -110,7 +110,7 @@ public class SpawnPoint : MonoBehaviour
             }
             else
             {
-                if(RoomsGenerator.instance.GetRoomsLeft() == 0)
+                if(RoomsGenerator.instance.RoomsToGenerate == 0)
                 {
                     isLastSpawn = true;
                 }
@@ -126,7 +126,7 @@ public class SpawnPoint : MonoBehaviour
 
     private bool CheckRoomsLeft()
     {
-        int roomsLeft = RoomsGenerator.instance.GetRoomsLeft();
+        int roomsLeft = RoomsGenerator.instance.RoomsToGenerate;
         if (roomsLeft > 0)
         {
             return true;
