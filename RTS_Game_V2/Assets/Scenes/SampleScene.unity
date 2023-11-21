@@ -2766,7 +2766,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.243
+  m_Value: 0.767
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5451,7 +5451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82f360332e410441b34df83eeea0e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHP: 0
 --- !u!1001 &565907890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6778,7 +6777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &808970906
 RectTransform:
   m_ObjectHideFlags: 0

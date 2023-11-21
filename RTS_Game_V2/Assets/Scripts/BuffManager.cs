@@ -12,14 +12,12 @@ public class BuffManager : MonoBehaviour
     public float PlayerHP
     {
         get => playerHP;
+        set => playerHP = value;
     }
     public PlayerBasicStatistics PlayerBasicStatistics
     {
-        get { return playerBaseStats; }
-        set 
-        { 
-            playerBaseStats = value;
-        }
+        get => playerBaseStats;
+        set => playerBaseStats = value;
     }
 
     Dictionary<StatisticType, bool> buffs;
@@ -30,7 +28,6 @@ public class BuffManager : MonoBehaviour
     private List<Buff> buffList;
     private List<Buff> itemsToRemove;
 
-    private bool countBuffTimes = false;
     private bool playerSpawned;
 
     public List<Buff> Buffs 
@@ -64,31 +61,19 @@ public class BuffManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.instance.OnLastRoomReady += CountBuffTimes;
-        GameEvents.instance.OnLoadNextLevel += DoNotCountBuffTimes;
         GameEvents.instance.OnPlayerSpawn += OnPlayerSpawned;
-        GameEvents.instance.OnStartLevel += CountBuffTimes;
-        GameEvents.instance.OnUpdateCurrentHP += OnUpdateHP;
+        //GameEvents.instance.OnUpdateCurrentHP += OnUpdateHP;
     }
 
-    private void OnUpdateHP(float hpValue)
-    {
-        playerHP = hpValue;
-    }
+    //private void OnUpdateHP(float hpValue)
+    //{
+    //    playerHP = hpValue;
+    //}
 
-    private void CountBuffTimes()
-    {
-        countBuffTimes = true;
-    }
-
-    private void DoNotCountBuffTimes()
-    {
-        countBuffTimes = false;
-    }
 
     private void Update()
     {
-        if (countBuffTimes)
+        if (GameController.GameStatus == GameStatus.ON)
         {
             itemsToRemove.Clear();
 
@@ -200,10 +185,7 @@ public class BuffManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnLastRoomReady -= CountBuffTimes;
-        GameEvents.instance.OnLoadNextLevel -= DoNotCountBuffTimes;
         GameEvents.instance.OnPlayerSpawn -= OnPlayerSpawned;
-        GameEvents.instance.OnStartLevel -= CountBuffTimes;
-        GameEvents.instance.OnUpdateCurrentHP -= OnUpdateHP;
+        //GameEvents.instance.OnUpdateCurrentHP -= OnUpdateHP;
     }
 }

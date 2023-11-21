@@ -61,159 +61,66 @@ public class GameEvents : MonoBehaviour
 
     public event Action OnStartLevel;
     public event Action OnPlayerSpawn;
+    public event Action OnPauseGame;
 
-    public void LevelSettingsSet()
-    {
-        OnLevelSettingsSet?.Invoke();
-    }
-    public void PlayerSpawn()
-    {
-        OnPlayerSpawn?.Invoke();
-    }
-    public void StartLevel()
-    {
-        OnStartLevel?.Invoke();
-    }
+    public void PasueGame() => OnPauseGame?.Invoke();
 
-    public void SwitchScene()
-    {
-        OnSwitchScene?.Invoke();
-    }
+    public void LevelSettingsSet() => OnLevelSettingsSet?.Invoke();
+    public void PlayerSpawn() => OnPlayerSpawn?.Invoke();
+    public void StartLevel() => OnStartLevel?.Invoke();
 
-    public void ActivateTeleport()
-    {
-        OnActivateTeleport?.Invoke();
-    }
+    public void SwitchScene() => OnSwitchScene?.Invoke();
 
-    public void BuffActivate(StatisticType statType, float statValue, float duration)
-    {
-        OnBuffActivate?.Invoke(statType,statValue, duration);
-    }
+    public void ActivateTeleport() => OnActivateTeleport?.Invoke();
 
-    public void BuffDeactivate(StatisticType statType, float statValue)
-    {
-        OnBuffDeactivate?.Invoke(statType, statValue);
-    }
+    public void BuffActivate(StatisticType statType, float statValue, float duration) => OnBuffActivate?.Invoke(statType, statValue, duration);
 
-    public void EnemyClick(Enemy enemy)
-    {
-        OnEnemyClick?.Invoke(enemy);
-    }
+    public void BuffDeactivate(StatisticType statType, float statValue) => OnBuffDeactivate?.Invoke(statType, statValue);
 
-    public void CancelActions()
-    {
-        OnCancelActions?.Invoke();
-    }
+    public void EnemyClick(Enemy enemy) => OnEnemyClick?.Invoke(enemy);
 
-    public void PlayerDataSaved()
-    {
-        OnSavedPlayerData?.Invoke();
-    }
+    public void CancelActions() => OnCancelActions?.Invoke();
 
-    public void PlayerDataLoaded()
-    {
-        OnLoadedPlayerData?.Invoke();
-    }
+    public void PlayerDataSaved() => OnSavedPlayerData?.Invoke();
 
+    public void PlayerDataLoaded() => OnLoadedPlayerData?.Invoke();
 
-    public void UpdateCurrentHP(float value)
-    {
-        OnUpdateCurrentHP?.Invoke(value);
-    }
+    public void UpdateCurrentHP(float value) => OnUpdateCurrentHP?.Invoke(value);
 
+    public void LastRoomReady() => OnLastRoomReady?.Invoke();
 
-    public void LastRoomReady()
-    {
-        OnLastRoomReady?.Invoke();
-    }
-
-    public void InformationPanel(bool activePanel)
-    {
-        OnInformationPanel?.Invoke(activePanel);
-    }    
-    public void StatisticPanel(bool activePanel)
-    {
-        OnStatisticPanel?.Invoke(activePanel);
-    }
-
-    public void ConsolePanel(bool activePanel)
-    {
-        OnConsolePanel?.Invoke(activePanel);
-    }
-
-    public void MenuPanel(bool activePanel)
-    {
-        OnMenuPanel?.Invoke(activePanel);
-    }
-
-    public void Spawn(int id)
-    {
-        OnSpawn?.Invoke(id);
-    }
-
-    public void InventoryUpdate()
-    {
-        OnInventoryUpdate?.Invoke();
-    }
-
-    public void EquipmentUpdate()
-    {
-        OnEquipmentUpdate?.Invoke();
-    }
+    public void InformationPanel(bool activePanel) => OnInformationPanel?.Invoke(activePanel);
     
+    public void StatisticPanel(bool activePanel) => OnStatisticPanel?.Invoke(activePanel);
 
-    public void StatisticUpdate(StatisticType statisticType, float value)
-    {
-        OnStatisticUpdate?.Invoke(statisticType, value);
-    }
+    public void ConsolePanel(bool activePanel) => OnConsolePanel?.Invoke(activePanel);
 
-    public void CloseMessage(int i)
-    {
-        OnCloseMessage?.Invoke(i);
-    }
+    public void MenuPanel(bool activePanel) => OnMenuPanel?.Invoke(activePanel);
 
-    public void SwitchInput(InputManager.InputType inputType)
-    {
-        OnInputChange?.Invoke(inputType);
-    }
+    public void Spawn(int id) => OnSpawn?.Invoke(id);
 
-    public void ChangeGameStatus(GameStatus gameStatus)
-    {
-        OnGameStatusChange?.Invoke(gameStatus);
-    }
-    public void InventoryPanel(bool activePanel)
-    {
-        OnInventoryPanelOpen?.Invoke(activePanel);
-    }
+    public void InventoryUpdate() => OnInventoryUpdate?.Invoke();
 
-    public void CancelGameObjectAction()
-    {
-        OnCancelGameObjectAction?.Invoke();
-    }
+    public void EquipmentUpdate() => OnEquipmentUpdate?.Invoke();
 
-    public void ContainerUpdate()
-    {
-        OnContainerUpdate?.Invoke();
-    }
+    public void StatisticUpdate(StatisticType statisticType, float value) => OnStatisticUpdate?.Invoke(statisticType, value);
 
-    public void LoadNextLevel()
-    {
-        OnLoadNextLevel?.Invoke();
-    }
+    public void CloseMessage(int i) => OnCloseMessage?.Invoke(i);
 
-    public void LoadLevel()
-    {
-        OnLoadLevel?.Invoke();
-    }
+    public void SwitchInput(InputManager.InputType inputType) => OnInputChange?.Invoke(inputType);
 
-    public void ExitToMenu()
-    {
-        OnExitToMenu?.Invoke();
-    }
+    public void ChangeGameStatus(GameStatus gameStatus) => OnGameStatusChange?.Invoke(gameStatus);
+    public void InventoryPanel(bool activePanel) => OnInventoryPanelOpen?.Invoke(activePanel);
 
-    public void EndGeneratingLevel()
-    {
-        OnEndGeneratingLevel?.Invoke();
-    }
+    public void CancelGameObjectAction() => OnCancelGameObjectAction?.Invoke();
 
+    public void ContainerUpdate() => OnContainerUpdate?.Invoke();
+
+    public void LoadNextLevel() => OnLoadNextLevel?.Invoke();
+
+    public void LoadLevel() => OnLoadLevel?.Invoke();
+
+    public void ExitToMenu() => OnExitToMenu?.Invoke();
+
+    public void EndGeneratingLevel() => OnEndGeneratingLevel?.Invoke();
 }

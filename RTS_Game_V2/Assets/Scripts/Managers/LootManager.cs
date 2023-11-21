@@ -15,12 +15,10 @@ public class LootManager : MonoBehaviour
         if(lootPrefab.GetComponentInChildren<ContainerObject>() != null)
         {
             canCreateLoot = true;
-            Debug.Log("true");
         }
         else
         {
             canCreateLoot = false;
-            Debug.Log("false");
         }
     }
     

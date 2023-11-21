@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private float maxHealth = 100;
-    private float health = 100;
+    private float maxHealth;
+    private float health;
     private float armor;
     private float magicResistance;
     private float healthPointsRegen;
@@ -24,18 +24,23 @@ public class PlayerHealth : MonoBehaviour
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
     }
 
-    private void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForEndOfFrame();
         health = BuffManager.instance.PlayerHP;
+        GameEvents.instance.UpdateCurrentHP(health);
     }
 
     void Update()
     {
-        timeLeft -= Time.deltaTime;
-        if (timeLeft <= 0 && (health < maxHealth))
+        if(GameController.GameStatus == GameStatus.ON)
         {
-            Heal(healthRegeneration/12);
-            timeLeft = interval;
+            timeLeft -= Time.deltaTime;
+            if (timeLeft <= 0 && (health < maxHealth))
+            {
+                Heal(healthRegeneration / 12);
+                timeLeft = interval;
+            }
         }
     }
     public void Damage(string enemyName,float physicalDamage, float magicDamage, float trueDamage)

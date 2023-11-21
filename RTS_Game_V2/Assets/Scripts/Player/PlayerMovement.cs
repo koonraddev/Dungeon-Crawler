@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(statisticType == StatisticType.MovementSpeed)
         {
+            Debug.Log("SET SPEED");
             movementSpeed = value;
             playerAgent.speed = movementSpeed;
         }

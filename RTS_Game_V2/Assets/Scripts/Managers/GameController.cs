@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
 using UnityEngine;
 public enum GameStatus
 {
     START,
-    RUN,
-    PAUSE,
+    ON,
+    PREPARING,
+    PAUSED,
     END
 }
 public class GameController : MonoBehaviour
@@ -15,7 +15,8 @@ public class GameController : MonoBehaviour
     [SerializeField] public static List<GameObject> spawnedRooms;
     private GameObject startSP;
 
-
+    private static GameStatus gameStatus;
+    public static GameStatus GameStatus { get => gameStatus; }
     private void Awake()
     {
         spawnedRooms = new();
@@ -24,11 +25,23 @@ public class GameController : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnLevelSettingsSet += Respawn;
+        GameEvents.instance.OnStartLevel += SetGameStatusON;
+        GameEvents.instance.OnLoadNextLevel += SetGameStatusPreparing;
+        GameEvents.instance.OnPauseGame += SetGameStatusPaused;
     }
 
-    private void OnDisable()
+    private void SetGameStatusON()
     {
-        GameEvents.instance.OnLevelSettingsSet -= Respawn;
+        gameStatus = GameStatus.ON;
+    }
+    private void SetGameStatusPreparing()
+    {
+        gameStatus = GameStatus.PREPARING;
+    }
+
+    private void SetGameStatusPaused()
+    {
+        gameStatus = GameStatus.PAUSED;
     }
 
     public void Respawn()
@@ -42,7 +55,6 @@ public class GameController : MonoBehaviour
     {
         GameEvents.instance.ChangeGameStatus(GameStatus.START);
         GameEvents.instance.LoadLevel();
-        //StartCoroutine(CreatStartSpawnPoint());
     }
 
     public IEnumerator CreatStartSpawnPoint()
@@ -60,6 +72,15 @@ public class GameController : MonoBehaviour
         }
 
         spawnedRooms.Clear();
+    }
+
+    
+    private void OnDisable()
+    {
+        GameEvents.instance.OnLevelSettingsSet += Respawn;
+        GameEvents.instance.OnStartLevel -= SetGameStatusON;
+        GameEvents.instance.OnLoadNextLevel -= SetGameStatusPreparing;
+        GameEvents.instance.OnPauseGame -= SetGameStatusPaused;
     }
 
 }

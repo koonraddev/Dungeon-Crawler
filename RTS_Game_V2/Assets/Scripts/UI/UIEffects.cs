@@ -17,16 +17,16 @@ public class UIEffects : MonoBehaviour
     {
         switch (gameStatus)
         {
-            case GameController.GameStatus.START:
+            case GameStatus.START:
                 textGameStatusObj.text = "GAME START";
                 break;
-            case GameController.GameStatus.RUN:
+            case GameStatus.ON:
                 textGameStatusObj.text = "GAME RUN";
                 break;
-            case GameController.GameStatus.PAUSE:
+            case GameStatus.PAUSED:
                 textGameStatusObj.text = "GAME PAUSE";
                 break;
-            case GameController.GameStatus.END:
+            case GameStatus.END:
                 textGameStatusObj.text = "GAME END";
                 break;
             default:

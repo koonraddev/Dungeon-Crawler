@@ -74,7 +74,6 @@ public class SaveManager : MonoBehaviour
     {
         if (File.Exists(savePath + "/sejw.json"))
         {
-            Debug.Log("istnieje");
             string save = File.ReadAllText(savePath + "/sejw.json");
 
             PlayerData loadedData = JsonUtility.FromJson<PlayerData>(save);
@@ -90,8 +89,10 @@ public class SaveManager : MonoBehaviour
             EquipmentManager.instance.Equipment = loadedEq;
             InventoryManager.instance.Inventory = loadedInv;
             BuffManager.instance.Buffs = loadedActiveBuffsList;
-            BuffManager.instance.PlayerHP = loadedPlayerHP;
             LevelManager.instance.Level = loadedCompletedLevel;
+            //GameEvents.instance.UpdateCurrentHP(loadedPlayerHP);
+            BuffManager.instance.PlayerHP = loadedPlayerHP;
+
 
             GameEvents.instance.PlayerDataLoaded();
             //List<EquipmentSlot> eqSlots = EquipmentManager.instance.Slots;

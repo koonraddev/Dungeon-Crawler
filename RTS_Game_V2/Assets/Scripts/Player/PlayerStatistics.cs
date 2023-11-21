@@ -85,14 +85,17 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate += SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate += ActivateBuff;
         GameEvents.instance.OnBuffDeactivate += DeactivateBuff;
-        GameEvents.instance.OnLoadedPlayerData += SetBasicStatistics;
+        //GameEvents.instance.OnLoadedPlayerData += SetBasicStatistics;
+
     }
+
 
     private void SetBasicStatistics()
     {
         baseStats = BuffManager.instance.PlayerBasicStatistics;
         if (baseStats != null)
         {
+            //Debug.Log("base STATS NOT NULL");
             base_maxHealth = baseStats.MaxHealth;
             base_movementSpeed = baseStats.MovementSpeed;
             base_armor = baseStats.Armor;
@@ -105,17 +108,17 @@ public class PlayerStatistics : MonoBehaviour
             base_healthPointsRegen = baseStats.HealthPointsRegen;
             base_healthPercentsRegen = baseStats.HealthPercentsRegen;
 
-            maxHealth = base_maxHealth;
-            movementSpeed = base_movementSpeed;
-            armor = base_armor;
-            magicResistance = base_magicResistance;
-            attackSpeed = base_attackSpeed;
-            attackRange = base_attackRange;
-            physicalDamage = base_physicalDamage;
-            magicDamage = base_magicDamage;
-            trueDamage = base_trueDamage;
-            healthPointsRegen = base_healthPointsRegen;
-            healthPercentsRegen = base_healthPercentsRegen;
+            //maxHealth = base_maxHealth;
+            //movementSpeed = base_movementSpeed;
+            //armor = base_armor;
+            //magicResistance = base_magicResistance;
+            //attackSpeed = base_attackSpeed;
+            //attackRange = base_attackRange;
+            //physicalDamage = base_physicalDamage;
+            //magicDamage = base_magicDamage;
+            //trueDamage = base_trueDamage;
+            //healthPointsRegen = base_healthPointsRegen;
+            //healthPercentsRegen = base_healthPercentsRegen;
         }
         UpdateStats();
 
@@ -300,67 +303,67 @@ public class PlayerStatistics : MonoBehaviour
 
     public void UpdateStats()
     {
-        if (maxHealth != base_maxHealth + eq_maxHealth + buff_maxHealth)
+        if (maxHealth != (base_maxHealth + eq_maxHealth + buff_maxHealth))
         {
-            maxHealth = base_maxHealth + eq_maxHealth + buff_maxHealth;
+            maxHealth = (base_maxHealth + eq_maxHealth + buff_maxHealth);
             GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, maxHealth);
         }
-        if (movementSpeed != base_movementSpeed + eq_movementSpeed + buff_movementSpeed)
+        if (movementSpeed != (base_movementSpeed + eq_movementSpeed + buff_movementSpeed))
         {
-            movementSpeed = base_movementSpeed + eq_movementSpeed + buff_movementSpeed;
+            movementSpeed = (base_movementSpeed + eq_movementSpeed + buff_movementSpeed);
             GameEvents.instance.StatisticUpdate(StatisticType.MovementSpeed, movementSpeed);
         }
 
-        if (armor != base_armor + eq_armor + buff_armor)
+        if (armor != (base_armor + eq_armor + buff_armor))
         {
-            armor = base_armor + eq_armor + buff_armor;
+            armor = (base_armor + eq_armor + buff_armor);
             GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
         }
 
-        if (magicResistance != base_magicResistance + eq_magicResistance + buff_magicResistance)
+        if (magicResistance != (base_magicResistance + eq_magicResistance + buff_magicResistance))
         {
-            magicResistance = base_magicResistance + eq_magicResistance + buff_magicResistance;
+            magicResistance = (base_magicResistance + eq_magicResistance + buff_magicResistance);
             GameEvents.instance.StatisticUpdate(StatisticType.MagicResistance, magicResistance);
         }
-        if (attackSpeed != base_attackSpeed + eq_attackSpeed + buff_attackSpeed)
+        if (attackSpeed != (base_attackSpeed + eq_attackSpeed + buff_attackSpeed))
         {
-            attackSpeed = base_attackSpeed + eq_attackSpeed + buff_attackSpeed;
+            attackSpeed = (base_attackSpeed + eq_attackSpeed + buff_attackSpeed);
             GameEvents.instance.StatisticUpdate(StatisticType.AttackSpeed, attackSpeed);
         }
 
-        if (attackRange != base_attackRange + eq_attackRange + buff_attackRange)
+        if (attackRange != (base_attackRange + eq_attackRange + buff_attackRange))
         {
-            attackRange = base_attackRange + eq_attackRange + buff_attackRange;
+            attackRange = (base_attackRange + eq_attackRange + buff_attackRange);
             GameEvents.instance.StatisticUpdate(StatisticType.AttackRange, attackRange);
         }
 
-        if (physicalDamage != base_physicalDamage + eq_physicalDamage + buff_physicalDamage)
+        if (physicalDamage != (base_physicalDamage + eq_physicalDamage + buff_physicalDamage))
         {
-            physicalDamage = base_physicalDamage + eq_physicalDamage + buff_physicalDamage;
+            physicalDamage = (base_physicalDamage + eq_physicalDamage + buff_physicalDamage);
             GameEvents.instance.StatisticUpdate(StatisticType.PhysicalDamage, physicalDamage);
         }
 
-        if (magicDamage != base_magicDamage + eq_magicDamage + buff_magicDamage)
+        if (magicDamage != (base_magicDamage + eq_magicDamage + buff_magicDamage))
         {
-            magicDamage = base_magicDamage + eq_magicDamage + buff_magicDamage;
+            magicDamage = (base_magicDamage + eq_magicDamage + buff_magicDamage);
             GameEvents.instance.StatisticUpdate(StatisticType.MagicDamage, magicDamage);
         }
 
-        if (trueDamage != base_trueDamage + eq_trueDamage + buff_trueDamage)
+        if (trueDamage != (base_trueDamage + eq_trueDamage + buff_trueDamage))
         {
-            trueDamage = base_trueDamage + eq_trueDamage + buff_trueDamage;
+            trueDamage = (base_trueDamage + eq_trueDamage + buff_trueDamage);
             GameEvents.instance.StatisticUpdate(StatisticType.TrueDamage, trueDamage);
         }
 
-        if (healthPointsRegen != base_healthPointsRegen + eq_healthPointsRegen + buff_healthPointsRegen)
+        if (healthPointsRegen != (base_healthPointsRegen + eq_healthPointsRegen + buff_healthPointsRegen))
         {
-            healthPointsRegen = base_healthPointsRegen + eq_healthPointsRegen + buff_healthPointsRegen;
+            healthPointsRegen = (base_healthPointsRegen + eq_healthPointsRegen + buff_healthPointsRegen);
             GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthPointsRegen);
         }
 
-        if (healthPercentsRegen != base_healthPercentsRegen + eq_healthPercentsRegen + buff_healthPercentsRegen)
+        if (healthPercentsRegen != (base_healthPercentsRegen + eq_healthPercentsRegen + buff_healthPercentsRegen))
         {
-            healthPercentsRegen = base_healthPercentsRegen + eq_healthPercentsRegen + buff_healthPercentsRegen;
+            healthPercentsRegen = (base_healthPercentsRegen + eq_healthPercentsRegen + buff_healthPercentsRegen);
             GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, healthPercentsRegen);
         }
 
@@ -376,7 +379,7 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate -= SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate -= ActivateBuff;
         GameEvents.instance.OnBuffDeactivate -= DeactivateBuff;
-        GameEvents.instance.OnLoadedPlayerData -= SetBasicStatistics;
+        //GameEvents.instance.OnLoadedPlayerData -= SetBasicStatistics;
+        
     }
-
 }
