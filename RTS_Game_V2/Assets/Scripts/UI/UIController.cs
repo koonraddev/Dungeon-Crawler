@@ -42,7 +42,7 @@ public class UIController : MonoBehaviour
         GameEvents.instance.OnInformationPanel += InformationPanelStatus;
         GameEvents.instance.OnStatisticPanel += StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick += EnemyClick;
-        GameEvents.instance.OnLoadLevel += ActiveLoadingPanel;
+        GameEvents.instance.OnLoadNextLevel += ActiveLoadingPanel;
         inventoryAction = playerControls.BasicMovement.Inventory;
         statisticsAction = playerControls.BasicMovement.Statistics;
         InventoryPanelStatus(false);
@@ -153,7 +153,7 @@ public class UIController : MonoBehaviour
         GameEvents.instance.OnInformationPanel -= InformationPanelStatus;
         GameEvents.instance.OnStatisticPanel -= StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick -= EnemyClick;
-        GameEvents.instance.OnLoadLevel -= ActiveLoadingPanel;
+        GameEvents.instance.OnLoadNextLevel -= ActiveLoadingPanel;
     }
 
     public GameObject GetInfoPanel()

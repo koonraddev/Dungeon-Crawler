@@ -34,7 +34,7 @@ public class Teleport : MonoBehaviour, IInteractionObject
         if (activated)
         {
             //teleport logic
-            GameEvents.instance.LoadLevel();
+            GameEvents.instance.LoadNextLevel();
         }
         else
         {

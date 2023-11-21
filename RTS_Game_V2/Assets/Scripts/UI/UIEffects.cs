@@ -13,7 +13,7 @@ public class UIEffects : MonoBehaviour
         GameEvents.instance.OnGameStatusChange += ChangeGameStatus;
     }
 
-    private void ChangeGameStatus(GameController.GameStatus gameStatus)
+    private void ChangeGameStatus(GameStatus gameStatus)
     {
         switch (gameStatus)
         {

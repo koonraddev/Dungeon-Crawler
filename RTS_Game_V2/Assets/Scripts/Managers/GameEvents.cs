@@ -19,7 +19,7 @@ public class GameEvents : MonoBehaviour
     public event Action OnContainerUpdate;
     public event Action<int> OnCloseMessage;
     public event Action<InputManager.InputType> OnInputChange;
-    public event Action<GameController.GameStatus> OnGameStatusChange;
+    public event Action<GameStatus> OnGameStatusChange;
     public event Action OnCancelGameObjectAction;
     public event Action<int> OnSpawn;
 
@@ -30,6 +30,7 @@ public class GameEvents : MonoBehaviour
     public event Action<bool> OnConsolePanel;
     public event Action<bool> OnMenuPanel;
 
+    public event Action OnLoadNextLevel;
     public event Action OnLoadLevel;
     public event Action OnExitToMenu;
     public event Action OnEndGeneratingLevel;
@@ -50,6 +51,7 @@ public class GameEvents : MonoBehaviour
     public event Action<Enemy> OnEnemyClick;
     public event Action OnCancelActions;
     public event Action OnActivateTeleport;
+    public event Action OnLevelSettingsSet;
 
     //Spawns ready status
     //public event Action OnLastSpawnPoint
@@ -60,6 +62,10 @@ public class GameEvents : MonoBehaviour
     public event Action OnStartLevel;
     public event Action OnPlayerSpawn;
 
+    public void LevelSettingsSet()
+    {
+        OnLevelSettingsSet?.Invoke();
+    }
     public void PlayerSpawn()
     {
         OnPlayerSpawn?.Invoke();
@@ -171,7 +177,7 @@ public class GameEvents : MonoBehaviour
         OnInputChange?.Invoke(inputType);
     }
 
-    public void ChangeGameStatus(GameController.GameStatus gameStatus)
+    public void ChangeGameStatus(GameStatus gameStatus)
     {
         OnGameStatusChange?.Invoke(gameStatus);
     }
@@ -188,6 +194,11 @@ public class GameEvents : MonoBehaviour
     public void ContainerUpdate()
     {
         OnContainerUpdate?.Invoke();
+    }
+
+    public void LoadNextLevel()
+    {
+        OnLoadNextLevel?.Invoke();
     }
 
     public void LoadLevel()

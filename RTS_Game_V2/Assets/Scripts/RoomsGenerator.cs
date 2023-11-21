@@ -57,8 +57,8 @@ public class RoomsGenerator : MonoBehaviour
     private RoomsSetSO roomsSetSO;
     [SerializeField] private RoomsSetSO defaultRoomsSet;
     [SerializeField] private int defaultRoomsAmount;
-    [SerializeField] private List<LevelsRangeSetiings> levelRangeSetsList = new();
-    [SerializeField] private List<LevelException> levelExcSetsList = new();
+    [SerializeField] private List<LevelsRangeSetiings> levelRangeSetsList;
+    [SerializeField] private List<LevelException> levelExcSetsList;
     public int RoomsToGenerate { get => roomsToGenerate; }
 
     private void Awake()
@@ -66,7 +66,7 @@ public class RoomsGenerator : MonoBehaviour
         rand = new System.Random();
         instance = this;
         arrayLength = levelRangeValues.Length;
-        SetRoomsGenerator(1);
+        //SetRoomsGenerator(1);
     }
 
 
@@ -76,7 +76,6 @@ public class RoomsGenerator : MonoBehaviour
         int range = (level - 1) / 5;
         range = Mathf.Clamp(range, 0, arrayLength - 1);
         LevelRange lr = (LevelRange)levelRangeValues.GetValue(range);
-
         RoomsSetSO tmpSet = null;
 
         foreach (var item in levelExcSetsList)
@@ -93,7 +92,7 @@ public class RoomsGenerator : MonoBehaviour
         {
             foreach (var item in levelRangeSetsList)
             {
-                if (item.levelRange.Equals(lr))
+                if (item.levelRange == lr)
                 {
                     tmpSet = item.roomsSet;
                     roomsToGenerate = (int)item.levelRange;
@@ -118,6 +117,7 @@ public class RoomsGenerator : MonoBehaviour
 
     public RoomSO GetRoom()
     {
+        //Debug.Log("ROOMS LEFT  = " + roomsToGenerate);
         RoomSO roomSo;
         if (firstRoom)
         {

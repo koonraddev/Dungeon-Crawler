@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private float maxHealth;
-    private float health = 1;
+    private float maxHealth = 100;
+    private float health = 100;
     private float armor;
     private float magicResistance;
     private float healthPointsRegen;
@@ -15,23 +15,19 @@ public class PlayerHealth : MonoBehaviour
     private float physicalDamageMultiplier;
     private float magicDamageMultiplier;
 
-    private float interval = 5f;
+    private const float interval = 5f;
     private float timeLeft;
 
 
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
-        GameEvents.instance.OnLoadedPlayerData += StartGame;
     }
 
-
-    private void StartGame()
+    private void Start()
     {
-        health = maxHealth;
-        GameEvents.instance.UpdateCurrentHP(health);
+        health = BuffManager.instance.PlayerHP;
     }
-
 
     void Update()
     {
@@ -41,11 +37,6 @@ public class PlayerHealth : MonoBehaviour
             Heal(healthRegeneration/12);
             timeLeft = interval;
         }
-
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    Damage("Monster", 20, 0, 0);
-        //}
     }
     public void Damage(string enemyName,float physicalDamage, float magicDamage, float trueDamage)
     {
@@ -110,6 +101,5 @@ public class PlayerHealth : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
-        GameEvents.instance.OnLoadedPlayerData -= StartGame;
     }
 }

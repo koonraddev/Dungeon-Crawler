@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
-    private int level;
+    private int currentLevel;
 
     private void Awake()
     {
@@ -13,20 +13,33 @@ public class LevelManager : MonoBehaviour
     }
     public int Level
     {
-        get { return level; }
-        set { level = value+1; }
+        get { return currentLevel; }
+        set { currentLevel = value +1; }
     }
 
     private void OnEnable()
     {
-        GameEvents.instance.OnSavedPlayerData += LoadLevel;
+        GameEvents.instance.OnSavedPlayerData += LoadNextLevel;
+        GameEvents.instance.OnLoadedPlayerData += LoadLevel;
     }
 
     private void LoadLevel()
     {
-        level += 1;
-        RoomsGenerator.instance.SetRoomsGenerator(level);
+        OnLoadingStuff();
     }
+
+    private void LoadNextLevel()
+    {
+        currentLevel++;
+        OnLoadingStuff();
+    }
+
+    private void OnLoadingStuff()
+    {
+        RoomsGenerator.instance.SetRoomsGenerator(currentLevel);
+        GameEvents.instance.LevelSettingsSet();
+    }
+
     void Start()
     {
         
@@ -45,5 +58,6 @@ public class LevelManager : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnSavedPlayerData -= LoadLevel;
+        GameEvents.instance.OnLoadedPlayerData -= LoadLevel;
     }
 }

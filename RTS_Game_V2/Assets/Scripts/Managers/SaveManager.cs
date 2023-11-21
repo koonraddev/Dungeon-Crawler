@@ -10,6 +10,7 @@ public class PlayerData
     public Inventory inventory;
     public List<Buff> activeBuffsList;
     public PlayerBasicStatistics playerBasicStatistics;
+    public float playerHP;
     //temporary
     public int levelCompleted;
 }
@@ -25,8 +26,8 @@ public class SaveManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.instance.OnLoadLevel += SaveEquipment;
-        GameEvents.instance.OnPlayerSpawn += LoadEquipment;
+        GameEvents.instance.OnLoadNextLevel += SaveEquipment;
+        GameEvents.instance.OnLoadLevel += LoadEquipment;
     }
 
     private void Awake()
@@ -56,7 +57,9 @@ public class SaveManager : MonoBehaviour
         data.inventory = InventoryManager.instance.Inventory;
         data.activeBuffsList = BuffManager.instance.Buffs;
         data.playerBasicStatistics = BuffManager.instance.PlayerBasicStatistics;
+        data.playerHP = BuffManager.instance.PlayerHP;
         data.levelCompleted = LevelManager.instance.Level;
+
         Debug.Log(Application.persistentDataPath);
 
         string allData = JsonUtility.ToJson(data);
@@ -81,11 +84,13 @@ public class SaveManager : MonoBehaviour
             List<Buff> loadedActiveBuffsList = loadedData.activeBuffsList;
             PlayerBasicStatistics loadedPlayerBaseStatistics = loadedData.playerBasicStatistics;
             int loadedCompletedLevel = loadedData.levelCompleted;
+            float loadedPlayerHP = loadedData.playerHP;
 
             BuffManager.instance.PlayerBasicStatistics = loadedPlayerBaseStatistics;
             EquipmentManager.instance.Equipment = loadedEq;
             InventoryManager.instance.Inventory = loadedInv;
             BuffManager.instance.Buffs = loadedActiveBuffsList;
+            BuffManager.instance.PlayerHP = loadedPlayerHP;
             LevelManager.instance.Level = loadedCompletedLevel;
 
             GameEvents.instance.PlayerDataLoaded();
@@ -99,7 +104,7 @@ public class SaveManager : MonoBehaviour
             //    Debug.Log(item.Item);
             //    if (item.Item != null)
             //    {
-            //        Debug.Log(item.Item.Name);
+            //        Debug.Log(item.Item.Name); 
             //    }
             //}
 
@@ -118,7 +123,7 @@ public class SaveManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnLoadLevel -= SaveEquipment;
-        GameEvents.instance.OnPlayerSpawn -= LoadEquipment;
+        GameEvents.instance.OnLoadNextLevel -= SaveEquipment;
+        GameEvents.instance.OnLoadLevel -= LoadEquipment;
     }
 }

@@ -7,7 +7,12 @@ using System;
 public class BuffManager : MonoBehaviour
 {
     private PlayerBasicStatistics playerBaseStats;
-
+    //PUBLIC
+    private float playerHP;
+    public float PlayerHP
+    {
+        get => playerHP;
+    }
     public PlayerBasicStatistics PlayerBasicStatistics
     {
         get { return playerBaseStats; }
@@ -26,6 +31,7 @@ public class BuffManager : MonoBehaviour
     private List<Buff> itemsToRemove;
 
     private bool countBuffTimes = false;
+    private bool playerSpawned;
 
     public List<Buff> Buffs 
     { 
@@ -37,11 +43,7 @@ public class BuffManager : MonoBehaviour
                 GameEvents.instance.BuffDeactivate(item.StatType, item.StatValue);
             }
 
-            List<Buff> loadedBuffs = value;
-            foreach (var item in loadedBuffs)
-            {
-                LoadBuff(item.StatType, item.StatValue, item.TimeLeft);
-            }
+            StartCoroutine(WaitForCharacterSpawned(value));
         } 
     }
     private void Awake()
@@ -63,7 +65,15 @@ public class BuffManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnLastRoomReady += CountBuffTimes;
-        GameEvents.instance.OnLoadLevel += DoNotCountBuffTimes;
+        GameEvents.instance.OnLoadNextLevel += DoNotCountBuffTimes;
+        GameEvents.instance.OnPlayerSpawn += OnPlayerSpawned;
+        GameEvents.instance.OnStartLevel += CountBuffTimes;
+        GameEvents.instance.OnUpdateCurrentHP += OnUpdateHP;
+    }
+
+    private void OnUpdateHP(float hpValue)
+    {
+        playerHP = hpValue;
     }
 
     private void CountBuffTimes()
@@ -98,6 +108,24 @@ public class BuffManager : MonoBehaviour
             }
         }
     }
+
+    private void OnPlayerSpawned()
+    {
+        playerSpawned = true;
+    }
+
+    private IEnumerator WaitForCharacterSpawned(List<Buff> loadedBuffs)
+    {
+        yield return new WaitUntil(()=> playerSpawned);
+
+        List<Buff> buffs = loadedBuffs;
+        foreach (var item in buffs)
+        {
+            LoadBuff(item.StatType, item.StatValue, item.TimeLeft);
+        }
+    }
+
+
 
     private void LoadBuff(StatisticType statType, float statValue, float duration)
     {
@@ -173,6 +201,9 @@ public class BuffManager : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnLastRoomReady -= CountBuffTimes;
-        GameEvents.instance.OnLoadLevel -= DoNotCountBuffTimes;
+        GameEvents.instance.OnLoadNextLevel -= DoNotCountBuffTimes;
+        GameEvents.instance.OnPlayerSpawn -= OnPlayerSpawned;
+        GameEvents.instance.OnStartLevel -= CountBuffTimes;
+        GameEvents.instance.OnUpdateCurrentHP -= OnUpdateHP;
     }
 }
