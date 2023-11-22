@@ -5,7 +5,7 @@ public class EquipmentManager : MonoBehaviour
 {
     public static EquipmentManager instance;
 
-    [SerializeField] private Equipment playerEquipment;
+    [SerializeReference] private Equipment playerEquipment;
 
     public Equipment Equipment 
     {

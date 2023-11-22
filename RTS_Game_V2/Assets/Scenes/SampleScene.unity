@@ -5150,6 +5150,7 @@ MonoBehaviour:
         itemSprite: {fileID: 0}
         itemSlot: 0
         equipmentItemSO: {fileID: 0}
+        itemInfos: {fileID: 0}
     - slotType: 1
       empty: 1
       item:
@@ -5159,6 +5160,7 @@ MonoBehaviour:
         itemSprite: {fileID: 0}
         itemSlot: 0
         equipmentItemSO: {fileID: 0}
+        itemInfos: {fileID: 0}
     - slotType: 2
       empty: 1
       item:
@@ -5168,6 +5170,7 @@ MonoBehaviour:
         itemSprite: {fileID: 0}
         itemSlot: 0
         equipmentItemSO: {fileID: 0}
+        itemInfos: {fileID: 0}
     - slotType: 3
       empty: 1
       item:
@@ -5177,6 +5180,7 @@ MonoBehaviour:
         itemSprite: {fileID: 0}
         itemSlot: 0
         equipmentItemSO: {fileID: 0}
+        itemInfos: {fileID: 0}
     - slotType: 4
       empty: 1
       item:
@@ -5186,6 +5190,7 @@ MonoBehaviour:
         itemSprite: {fileID: 0}
         itemSlot: 0
         equipmentItemSO: {fileID: 0}
+        itemInfos: {fileID: 0}
     - slotType: 5
       empty: 1
       item:
@@ -5195,6 +5200,7 @@ MonoBehaviour:
         itemSprite: {fileID: 0}
         itemSlot: 0
         equipmentItemSO: {fileID: 0}
+        itemInfos: {fileID: 0}
 --- !u!114 &565383342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6777,7 +6783,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &808970906
 RectTransform:
   m_ObjectHideFlags: 0

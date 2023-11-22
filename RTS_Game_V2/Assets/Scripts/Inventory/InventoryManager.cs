@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
 
-    [SerializeField] private Inventory playerInventory;
+    private Inventory playerInventory;
 
     public Inventory Inventory 
     {

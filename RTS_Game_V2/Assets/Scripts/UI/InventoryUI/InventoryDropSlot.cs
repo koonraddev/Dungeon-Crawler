@@ -19,7 +19,7 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
             invSlotPanel = eventData.pointerDrag.GetComponent<InventorySlotPanel>();
             if (invSlotPanel != null)
             {
-                InventorySlot slot = invSlotPanel.invSlot;
+                InventorySlot slot = invSlotPanel.InvSlot;
                 SetContentToDisplay(new Dictionary<string, string> { { "Message", (invSlotPanel.SlotNumber + 1).ToString() } });
                 UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.DROP);
             }

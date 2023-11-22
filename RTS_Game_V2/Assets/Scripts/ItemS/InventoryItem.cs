@@ -35,4 +35,5 @@ public class InventoryItem : Item
         itemSprite = itemInformationsSO.ItemSprite;
     }
 
+
 }

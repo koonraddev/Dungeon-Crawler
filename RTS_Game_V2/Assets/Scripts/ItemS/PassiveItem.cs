@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PassiveItem : InventoryItem
 {
-    [SerializeField] private PassiveItemSO passiveItemSO;
-    private ItemInformationsSO itemInfos;
     private bool isReusable;
     public override int ID
     {
@@ -38,12 +37,10 @@ public class PassiveItem : InventoryItem
 
     public PassiveItem(PassiveItemSO passiveItemSO) : base(passiveItemSO.ItemInformations, passiveItemSO.ItemID)
     {
-        this.passiveItemSO = passiveItemSO;
-        itemInfos = passiveItemSO.ItemInformations;
         itemID = passiveItemSO.ItemID;
-        itemName = itemInfos.ItemName;
-        itemDescription = itemInfos.ItemDescription;
-        itemSprite = itemInfos.ItemSprite;
+        itemName = passiveItemSO.ItemInformations.ItemName;
+        itemDescription = passiveItemSO.ItemInformations.ItemDescription;
+        itemSprite = passiveItemSO.ItemInformations.ItemSprite;
         isReusable = passiveItemSO.IsReusable;
     }
 }

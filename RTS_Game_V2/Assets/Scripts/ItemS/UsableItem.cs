@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UsableItem : InventoryItem, IUsable, IStatisticItem
+[System.Serializable]
+public class UsableItem : InventoryItem, IUsable, IStatisticItem, ISerializationCallbackReceiver
 {
     [SerializeField] private UsableItemSO usableItemSO;
-    private ItemInformationsSO itemInfos;
     private Dictionary<StatisticType, float> statistics;
+    [SerializeField] private List<StatisticType> statTypes;
+    [SerializeField] private List<float> statValues;
     public override int ID
     {
         get { return itemID; }
@@ -34,12 +36,12 @@ public class UsableItem : InventoryItem, IUsable, IStatisticItem
 
     public UsableItem(UsableItemSO usableItemSO) : base(usableItemSO.ItemInformations, usableItemSO.ItemID)
     {
-        this.usableItemSO = usableItemSO;
-        itemInfos = usableItemSO.ItemInformations;
-        statistics = usableItemSO.ItemStatistics.Statistics;
         itemID = usableItemSO.ItemID;
-        itemName = itemInfos.ItemName;
-        itemDescription = itemInfos.ItemDescription;
+        itemName = usableItemSO.ItemInformations.ItemName;
+        itemDescription = usableItemSO.ItemInformations.ItemDescription;
+        itemSprite = usableItemSO.ItemInformations.ItemSprite;
+        statistics = usableItemSO.ItemStatistics.Statistics;
+        this.usableItemSO = usableItemSO;
 
         if (usableItemSO.DurationMode)
         {
@@ -50,11 +52,48 @@ public class UsableItem : InventoryItem, IUsable, IStatisticItem
             itemDescription += "\n Cooldown: " + usableItemSO.Cooldown;
         }
 
-        itemSprite = itemInfos.ItemSprite;
+
     }
 
     public bool Use()
     {
         return usableItemSO.UseItem();
+    }
+
+    public void OnBeforeSerialize()
+    {
+        if (statTypes == null)
+        {
+            statTypes = new();
+        }
+
+        if (statValues == null)
+        {
+            statValues = new();
+        }
+
+        if (statistics == null)
+        {
+            statistics = new();
+        }
+
+        statTypes.Clear();
+        statValues.Clear();
+
+        foreach (var item in statistics)
+        {
+            statTypes.Add(item.Key);
+            statValues.Add(item.Value);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        statistics = new Dictionary<StatisticType, float>();
+
+        for (int i = 0; i < Mathf.Min(statTypes.Count, statValues.Count); i++)
+        {
+            statistics.Add(statTypes[i], statValues[i]);
+        }
     }
 }

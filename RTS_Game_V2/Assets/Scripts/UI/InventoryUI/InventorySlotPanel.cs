@@ -8,7 +8,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] public TMP_Text amountHolder;
     [SerializeField] private Image textureHolder;
     [SerializeField] private int slotNumber;
-    public InventorySlot invSlot { get; private set; }
+    public InventorySlot InvSlot { get; private set; }
 
     public int SlotNumber { get => slotNumber;}
 
@@ -26,7 +26,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     private Color emptySlotColor;
     private void Awake()
     {
-        invSlot = new(slotNumber);
+        InvSlot = new(slotNumber);
         Image img = gameObject.GetComponent<Image>();
         emptySlotSprite = img.sprite;
         emptySlotColor = img.color;
@@ -42,9 +42,9 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void SetInventorySlotUI(InventoryItem item, int amount, Color slotColor)
     {
-        invSlot.Item = item;
-        invSlot.Amount = amount;
-        invSlot.Empty = false;
+        InvSlot.Item = item;
+        InvSlot.Amount = amount;
+        InvSlot.Empty = false;
         amountHolder.text = (amount == 1) ? amountHolder.text = "" : amount.ToString();
         textureHolder.color = slotColor;
         textureHolder.sprite = item.Sprite;
@@ -55,9 +55,9 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         amountHolder.text = "";
         textureHolder.sprite = emptySlotSprite;
         textureHolder.color = emptySlotColor;
-        invSlot.Empty = true;
-        invSlot.Item = null;
-        invSlot.Amount = 0;
+        InvSlot.Empty = true;
+        InvSlot.Item = null;
+        InvSlot.Amount = 0;
     }
 
     private void Update()
@@ -83,24 +83,24 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!invSlot.Empty && infoPanel != null)
+        if (!InvSlot.Empty && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
 
-            if (invSlot.Item is IStatisticItem statsItem)
+            if (InvSlot.Item is IStatisticItem statsItem)
             {
                 infoPanel.SetInfoPanel(statsItem.Name, statsItem.Description, statsItem.Sprite, statsItem.Statistics);
             }
             else
             {
-                infoPanel.SetInfoPanel(invSlot.Item.Name, invSlot.Item.Description, invSlot.Item.Sprite);
+                infoPanel.SetInfoPanel(InvSlot.Item.Name, InvSlot.Item.Description, InvSlot.Item.Sprite);
             }
 
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!invSlot.Empty && infoPanel != null)
+        if (!InvSlot.Empty && infoPanel != null)
         {
             infoPanel.SetEmpty();
             GameEvents.instance.InformationPanel(false);
@@ -109,7 +109,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (invSlot.Item is IUsable usableItem)
+        if (InvSlot.Item is IUsable usableItem)
         {
             if (usableItem.Use())
             {
@@ -120,14 +120,14 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!invSlot.Empty)
+        if(!InvSlot.Empty)
         {
             newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
             rect = newObj.GetComponent<RectTransform>();
             Image dragImage = newObj.GetComponent<Image>();
             CanvasGroup canvGroup = newObj.GetComponent<CanvasGroup>();
             
-            dragImage.sprite = invSlot.Item.Sprite;
+            dragImage.sprite = InvSlot.Item.Sprite;
             canvGroup.alpha = 0.6f;
             canvGroup.blocksRaycasts = false;
             

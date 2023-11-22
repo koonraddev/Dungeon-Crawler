@@ -44,7 +44,8 @@ public class SaveManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            LoadEquipment();
+            //LoadEquipment();
+            //GameEvents.instance.PlayerDataLoaded();
         }
     }
 

@@ -5,7 +5,7 @@ public class InventorySlot
 {
     [SerializeField] private int slotIndex;
     [SerializeField] private bool empty;
-    [SerializeField] private InventoryItem item;
+    [SerializeReference] private InventoryItem item;
     [SerializeField] private int amount;
 
     public InventoryItem Item

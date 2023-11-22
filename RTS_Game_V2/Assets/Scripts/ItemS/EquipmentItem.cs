@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class EquipmentItem : Item , IStatisticItem
+public class EquipmentItem : Item , IStatisticItem, ISerializationCallbackReceiver
 {
     [SerializeField] private EquipmentSlotType itemSlot;
-    [SerializeField] private EquipmentItemSO equipmentItemSO;
-    private ItemInformationsSO itemInfos;
     private Dictionary<StatisticType, float> statistics;
+    [SerializeField] private List<StatisticType> statTypes;
+    [SerializeField] private List<float> statValues;
 
     public override int ID
     {
@@ -37,13 +38,48 @@ public class EquipmentItem : Item , IStatisticItem
 
     public EquipmentItem(EquipmentItemSO equipmentItemSO): base(equipmentItemSO.ItemInformations, equipmentItemSO.ItemID)
     {
-        this.equipmentItemSO = equipmentItemSO;
-        itemSlot = equipmentItemSO.ItemSlot;
-        statistics = equipmentItemSO.ItemStatistics.Statistics;
-        itemInfos = equipmentItemSO.ItemInformations;
         itemID = equipmentItemSO.ItemID;
-        itemName = itemInfos.ItemName;
-        itemDescription = itemInfos.ItemDescription;
-        itemSprite = itemInfos.ItemSprite;
+        itemName = equipmentItemSO.ItemInformations.ItemName;
+        itemDescription = equipmentItemSO.ItemInformations.ItemDescription;
+        itemSprite = equipmentItemSO.ItemInformations.ItemSprite;
+        statistics = equipmentItemSO.ItemStatistics.Statistics;
+        itemSlot = equipmentItemSO.ItemSlot;
+    }
+
+    public void OnBeforeSerialize()
+    {
+        if (statTypes == null)
+        {
+            statTypes = new();
+        }
+
+        if (statValues == null)
+        {
+            statValues = new();
+        }
+
+        if (statistics == null)
+        {
+            statistics = new();
+        }
+
+        statTypes.Clear();
+        statValues.Clear();
+
+        foreach (var item in statistics)
+        {
+            statTypes.Add(item.Key);
+            statValues.Add(item.Value);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        statistics = new Dictionary<StatisticType, float>();
+
+        for (int i = 0; i < Mathf.Min(statTypes.Count, statValues.Count); i++)
+        {
+            statistics.Add(statTypes[i], statValues[i]);
+        }
     }
 }

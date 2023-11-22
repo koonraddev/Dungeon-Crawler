@@ -162,7 +162,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             InventorySlotPanel invSlotPanel = eventData.pointerDrag.GetComponent<InventorySlotPanel>();
             if (invSlotPanel != null)
             {
-                InventorySlot contSlot = invSlotPanel.invSlot;
+                InventorySlot contSlot = invSlotPanel.InvSlot;
 
                 if (container.AddTreasure(SlotIndex, contSlot.Item, contSlot.Amount))
                 {
