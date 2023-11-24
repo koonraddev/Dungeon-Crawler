@@ -7,13 +7,14 @@ using System;
 public class BuffManager : MonoBehaviour
 {
     private PlayerBasicStatistics playerBaseStats;
-    //PUBLIC
     private float playerHP;
+
     public float PlayerHP
     {
         get => playerHP;
         set => playerHP = value;
     }
+
     public PlayerBasicStatistics PlayerBasicStatistics
     {
         get => playerBaseStats;
@@ -62,13 +63,13 @@ public class BuffManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnPlayerSpawn += OnPlayerSpawned;
-        //GameEvents.instance.OnUpdateCurrentHP += OnUpdateHP;
+        GameEvents.instance.OnUpdateCurrentHP += OnUpdateHP;
     }
 
-    //private void OnUpdateHP(float hpValue)
-    //{
-    //    playerHP = hpValue;
-    //}
+    private void OnUpdateHP(float hpValue)
+    {
+        playerHP = hpValue;
+    }
 
 
     private void Update()
@@ -186,6 +187,6 @@ public class BuffManager : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnPlayerSpawn -= OnPlayerSpawned;
-        //GameEvents.instance.OnUpdateCurrentHP -= OnUpdateHP;
+        GameEvents.instance.OnUpdateCurrentHP -= OnUpdateHP;
     }
 }

@@ -28,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         health = BuffManager.instance.PlayerHP;
+        Debug.Log("HEALTH " + health);
         GameEvents.instance.UpdateCurrentHP(health);
     }
 
@@ -58,8 +59,19 @@ public class PlayerHealth : MonoBehaviour
         switch (statisticType)
         {
             case StatisticType.MaxHealth:
+                float diff = value - maxHealth;
                 maxHealth = value;
-                health = Mathf.Clamp(health, 0, maxHealth);
+                health += diff;
+
+                if(health <= 0)
+                {
+                    if(GameController.GameStatus == GameStatus.ON)
+                    {
+                        Debug.LogWarning("DEATH");
+                        //Death
+                        
+                    }
+                }
                 GameEvents.instance.UpdateCurrentHP(health);
                 break;
             case StatisticType.Armor:

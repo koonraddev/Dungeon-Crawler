@@ -17,9 +17,11 @@ public class GameController : MonoBehaviour
 
     private static GameStatus gameStatus;
     public static GameStatus GameStatus { get => gameStatus; }
+
     private void Awake()
     {
         spawnedRooms = new();
+        gameStatus = GameStatus.PREPARING;
     }
 
     private void OnEnable()
@@ -29,7 +31,6 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnLoadNextLevel += SetGameStatusPreparing;
         GameEvents.instance.OnPauseGame += SetGameStatusPaused;
     }
-
     private void SetGameStatusON()
     {
         gameStatus = GameStatus.ON;

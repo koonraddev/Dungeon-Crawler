@@ -58,8 +58,6 @@ public class PlayerStatistics : MonoBehaviour
     private float healthPointsRegen;// health regeneration: POINTS (constant) per minute
     private float healthPercentsRegen;// health regeneration: PERCENTAGES (of max health) per minute
 
-    private float healthRegeneration;// health(Points) per minute (totality)
-
     //public float MaxHealth { get => maxHealth; }
     //public float MovementSpeed { get => movementSpeed; }
     //public float Armor { get => armor; }
@@ -85,7 +83,7 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate += SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate += ActivateBuff;
         GameEvents.instance.OnBuffDeactivate += DeactivateBuff;
-        //GameEvents.instance.OnLoadedPlayerData += SetBasicStatistics;
+        GameEvents.instance.OnLoadedPlayerData += SetBasicStatistics;
 
     }
 
@@ -95,7 +93,6 @@ public class PlayerStatistics : MonoBehaviour
         baseStats = BuffManager.instance.PlayerBasicStatistics;
         if (baseStats != null)
         {
-            //Debug.Log("base STATS NOT NULL");
             base_maxHealth = baseStats.MaxHealth;
             base_movementSpeed = baseStats.MovementSpeed;
             base_armor = baseStats.Armor;
@@ -107,33 +104,8 @@ public class PlayerStatistics : MonoBehaviour
             base_trueDamage = baseStats.TrueDamage;
             base_healthPointsRegen = baseStats.HealthPointsRegen;
             base_healthPercentsRegen = baseStats.HealthPercentsRegen;
-
-            //maxHealth = base_maxHealth;
-            //movementSpeed = base_movementSpeed;
-            //armor = base_armor;
-            //magicResistance = base_magicResistance;
-            //attackSpeed = base_attackSpeed;
-            //attackRange = base_attackRange;
-            //physicalDamage = base_physicalDamage;
-            //magicDamage = base_magicDamage;
-            //trueDamage = base_trueDamage;
-            //healthPointsRegen = base_healthPointsRegen;
-            //healthPercentsRegen = base_healthPercentsRegen;
         }
         UpdateStats();
-
-        //GameEvents.instance.StatisticUpdate(StatisticType.MaxHealth, base_maxHealth);
-        //GameEvents.instance.StatisticUpdate(StatisticType.MovementSpeed, base_movementSpeed);
-        //GameEvents.instance.StatisticUpdate(StatisticType.Armor, armor);
-        //GameEvents.instance.StatisticUpdate(StatisticType.MagicResistance, base_magicResistance);
-        //GameEvents.instance.StatisticUpdate(StatisticType.AttackSpeed, base_attackSpeed);
-        //GameEvents.instance.StatisticUpdate(StatisticType.AttackRange, base_attackRange);
-        //GameEvents.instance.StatisticUpdate(StatisticType.PhysicalDamage, base_physicalDamage);
-        //GameEvents.instance.StatisticUpdate(StatisticType.MagicDamage, base_magicDamage);
-        //GameEvents.instance.StatisticUpdate(StatisticType.TrueDamage, base_trueDamage);
-        //GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, base_healthPointsRegen);
-        //GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, base_healthPercentsRegen);
-        //GameEvents.instance.UpdateCurrentHP(base_maxHealth);
     }
 
     private void SetStatisticsFromEquipment()
@@ -366,12 +338,6 @@ public class PlayerStatistics : MonoBehaviour
             healthPercentsRegen = (base_healthPercentsRegen + eq_healthPercentsRegen + buff_healthPercentsRegen);
             GameEvents.instance.StatisticUpdate(StatisticType.HealthPercentageRegeneration, healthPercentsRegen);
         }
-
-        //if (healthRegeneration != healthPointsRegen + (healthPercentsRegen * maxHealth))
-        //{
-        //    healthRegeneration = healthPointsRegen + (healthPercentsRegen * maxHealth);
-        //    //GameEvents.instance.StatisticUpdate(StatisticType.HealthPointsRegeneration, healthRegeneration);
-        //}
     }
 
     void OnDisable()
@@ -379,7 +345,6 @@ public class PlayerStatistics : MonoBehaviour
         GameEvents.instance.OnEquipmentUpdate -= SetStatisticsFromEquipment;
         GameEvents.instance.OnBuffActivate -= ActivateBuff;
         GameEvents.instance.OnBuffDeactivate -= DeactivateBuff;
-        //GameEvents.instance.OnLoadedPlayerData -= SetBasicStatistics;
-        
+        GameEvents.instance.OnLoadedPlayerData -= SetBasicStatistics;
     }
 }
