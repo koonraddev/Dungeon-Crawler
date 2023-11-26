@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8560555264838856002, guid: 193589a958880c647aef9f012928e618, type: 3}
       propertyPath: m_Name
-      value: StartSpawnPoint
+      value: StartSpawnPoint Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8560555264838856004, guid: 193589a958880c647aef9f012928e618, type: 3}
       propertyPath: m_RootOrder
@@ -55,6 +55,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8560555264838856006, guid: 193589a958880c647aef9f012928e618, type: 3}
+      propertyPath: m_Mass
+      value: 0.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8560555264838856007, guid: 193589a958880c647aef9f012928e618, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 956097187356216996}
+    - target: {fileID: 8560555264838856007, guid: 193589a958880c647aef9f012928e618, type: 3}
+      propertyPath: coll
+      value: 
+      objectReference: {fileID: 956097187356217051}
     - target: {fileID: 8560555264838856007, guid: 193589a958880c647aef9f012928e618, type: 3}
       propertyPath: isempty
       value: 0
@@ -77,3 +89,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 193589a958880c647aef9f012928e618, type: 3}
+--- !u!54 &956097187356216996 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 8560555264838856006, guid: 193589a958880c647aef9f012928e618, type: 3}
+  m_PrefabInstance: {fileID: 8901803350917374946}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &956097187356217051 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 8560555264838855993, guid: 193589a958880c647aef9f012928e618, type: 3}
+  m_PrefabInstance: {fileID: 8901803350917374946}
+  m_PrefabAsset: {fileID: 0}

@@ -9,7 +9,7 @@ public class CharacterManager : MonoBehaviour
     GameObject gameObj;
     private void OnEnable()
     {
-        GameEvents.instance.OnLastRoomReady += SpawnPlayer;
+        GameEvents.instance.OnGeneratingReady += SpawnPlayer;
     }
 
     private void SpawnPlayer()
@@ -36,6 +36,6 @@ public class CharacterManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnLastRoomReady -= SpawnPlayer;
+        GameEvents.instance.OnGeneratingReady -= SpawnPlayer;
     }
 }

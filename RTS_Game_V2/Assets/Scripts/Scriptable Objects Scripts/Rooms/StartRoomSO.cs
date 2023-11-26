@@ -36,11 +36,6 @@ public class StartRoomSO : RoomSO
         roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
         NavMeshSurface surface = roomPlane.GetComponent<NavMeshSurface>();
         NavigationController.instance.AddNavSurface(surface);
-
-        if (isLastRoom)
-        {
-            GameEvents.instance.LastRoomReady();
-        }
     }
 
     public override List<DoorSO> RoomDoors()

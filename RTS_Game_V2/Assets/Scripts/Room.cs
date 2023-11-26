@@ -14,12 +14,10 @@ public class Room : MonoBehaviour
     private int[] doorsArray = new int[4];
     private RoomSO roomSO;
     private HashSet<int> exclude = new HashSet<int>() { };
-    private int spawnersToActivate;
-    private bool readyTo;
     private GameObject spawner;
-    private bool pointsCanBeChecked;
 
     public bool isLastRoom;
+    int spawnersToActivate;
     private void Awake()
     {
         planeSize = GetComponent<Collider>().bounds.size;
@@ -36,11 +34,10 @@ public class Room : MonoBehaviour
                 spawnersToActivate--;
             }
         }
-        StartCoroutine(SpawnPoints());
+        SpawnPoints();
     }
 
-
-    public void SetEssentials(RoomSO roomSO, SpawnPoint.SpawnType spawnToExclude, bool isLastRoom)
+    public void SetEssentials(RoomSO roomSO, SpawnPoint.SpawnType spawnToExclude, bool isLastRoom = false)
     {
         this.roomSO = roomSO;
         this.isLastRoom = isLastRoom;
@@ -61,7 +58,6 @@ public class Room : MonoBehaviour
             default:
                 break;
         }
-
     }
 
     public void SetEssentials(RoomSO roomSO)
@@ -69,120 +65,87 @@ public class Room : MonoBehaviour
         this.roomSO = roomSO;
     }
 
-
-    public IEnumerator SpawnPoints()
+    public void SpawnPoints()
     {
         northSpawnPointObject = Instantiate(spawner, gameObject.transform.position + new Vector3(0f, 0f, planeSize.z), Quaternion.identity);
         northSpawnPointObject.name = "NorthSpawnPoint";
-        northSpawnPointObject.tag = "UnactivatedSpawner";
         northSpawnPointObject.transform.SetParent(gameObject.transform);
         northSpawnPoint = northSpawnPointObject.GetComponent<SpawnPoint>();
-        northSpawnPoint.spawnType = SpawnPoint.SpawnType.NORTH;
-
-        yield return new WaitForEndOfFrame();
+        northSpawnPoint.SpawnerType = SpawnPoint.SpawnType.NORTH;
 
         eastSpawnPointObject = Instantiate(spawner, gameObject.transform.position + new Vector3(planeSize.x, 0f, 0f), Quaternion.identity);
         eastSpawnPointObject.name = "EastSpawnPoint";
-        eastSpawnPointObject.tag = "UnactivatedSpawner";
         eastSpawnPointObject.transform.SetParent(gameObject.transform);
         eastSpawnPoint = eastSpawnPointObject.GetComponent<SpawnPoint>();
-        eastSpawnPoint.spawnType = SpawnPoint.SpawnType.EAST;
-
-        yield return new WaitForEndOfFrame();
+        eastSpawnPoint.SpawnerType = SpawnPoint.SpawnType.EAST;
 
         southSpawnPointObject = Instantiate(spawner, gameObject.transform.position + new Vector3(0f, 0f, -planeSize.z), Quaternion.identity);
         southSpawnPointObject.name = "SouthSpawnPoint";
-        southSpawnPointObject.tag = "UnactivatedSpawner";
         southSpawnPointObject.transform.SetParent(gameObject.transform);
         southSpawnPoint = southSpawnPointObject.GetComponent<SpawnPoint>();
-        southSpawnPoint.spawnType = SpawnPoint.SpawnType.SOUTH;
-
-        yield return new WaitForEndOfFrame();
+        southSpawnPoint.SpawnerType = SpawnPoint.SpawnType.SOUTH;
 
         westSpawnPointObject = Instantiate(spawner, gameObject.transform.position + new Vector3(-planeSize.x, 0f, 0f), Quaternion.identity);
         westSpawnPointObject.name = "WestSpawnPoint";
-        westSpawnPointObject.tag = "UnactivatedSpawner";
         westSpawnPointObject.transform.SetParent(gameObject.transform);
         westSpawnPoint = westSpawnPointObject.GetComponent<SpawnPoint>();
-        westSpawnPoint.spawnType = SpawnPoint.SpawnType.WEST;
+        westSpawnPoint.SpawnerType = SpawnPoint.SpawnType.WEST;
 
         spawnsArray[0] = northSpawnPoint;
         spawnsArray[1] = eastSpawnPoint;
         spawnsArray[2] = southSpawnPoint;
         spawnsArray[3] = westSpawnPoint;
-        pointsCanBeChecked = true;
+
+        StartCoroutine(SO());
     }
 
-    public void Update()
+
+    IEnumerator SO()
     {
-        if (pointsCanBeChecked)
+        yield return new WaitForSeconds(0.5f);
+        var rand = new System.Random();
+        var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));
+
+        for (int i = 0; i < spawnsArray.Length; i++)
         {
-            ActivatePoints();
-            if(!readyTo)
+            if(spawnersToActivate == 0)
             {
-                readyTo = AreSpawnersReady();
+                break;
+            }
+            if (!exclude.Contains(i))
+            {
+                if(spawnersToActivate > 0)
+                {
+                    int index = rand.Next(0, 4 - exclude.Count());
+                    int newValue = range.ElementAt(index);
+                    exclude.Add(newValue);
+
+                    spawnsArray[newValue].ActiveSpawner();
+
+                    spawnersToActivate--;
+                }
             }
         }
 
+        Check();
     }
 
-    private bool AreSpawnersReady()
-    {
-        foreach (SpawnPoint spawn in spawnsArray)
-        {
-            if (!spawn.IsChecked())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    private void ActivatePoints()
-    {
-        if (spawnersToActivate > 0)
-        {
-            var rand = new System.Random();
-
-            var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));
-            int index = rand.Next(0, 4 - exclude.Count());
-            int newValue = range.ElementAt(index);
-            exclude.Add(newValue);
-
-            spawnsArray[newValue].ActiveSpawner();
-
-            spawnersToActivate--;
-
-        }
-        else
-        {
-            if (spawnersToActivate == 0)
-            {
-                StartCoroutine(Check());
-            }
-            spawnersToActivate--;
-        }
-    }
-
-    IEnumerator Check()
+    void Check()
     { 
-        yield return new WaitWhile(() => readyTo == false); 
         var rand = new System.Random();
         int iterator = 0;
         foreach (SpawnPoint spawnPoint in spawnsArray)
         {
-            switch (spawnPoint.GetSpawnStatus())
+            switch (spawnPoint.SpawnStatus)
             {
-                case SpawnPoint.SpawnStatus.BLOCKED:
+                case SpawnPoint.SpawnerStatus.BLOCKED:
                     doorsArray[iterator] = -1; 
                     break;
-                case SpawnPoint.SpawnStatus.EMPTY:
+                case SpawnPoint.SpawnerStatus.EMPTY:
                     doorsArray[iterator] = 0;
                     break;
-                case SpawnPoint.SpawnStatus.SPAWNED:
+                case SpawnPoint.SpawnerStatus.ENABLED:
                     doorsArray[iterator] = rand.Next(1, roomSO.MaxDoorsInWall() + 1);
-                    GameEvents.instance.Spawn(spawnPoint.spawnId);
                     break;
                 default:
                     break;
@@ -194,6 +157,14 @@ public class Room : MonoBehaviour
         SpawnWalls spawnScript = gameObject.AddComponent(typeof(SpawnWalls)) as SpawnWalls;
         spawnScript.SetEssentials(roomSO, doorsArray);
         roomSO.RoomBehavoiur(gameObject, isLastRoom);
-    }
 
+        if (isLastRoom)
+        {
+            GameEvents.instance.LastRoomReady();
+        }
+        else
+        {
+            RoomsGenerator.instance.RunNextSpawner();
+        }
+    }
 }

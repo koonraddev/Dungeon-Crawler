@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody),typeof(BoxCollider))]
 public class SpawnPoint : MonoBehaviour
 {
+    public Renderer render;
     public enum SpawnType
     {
         NORTH,
@@ -12,96 +13,62 @@ public class SpawnPoint : MonoBehaviour
         SOUTH,
         WEST,
     }
-    private BoxCollider coll;
-    private Rigidbody rb;
-    public SpawnType spawnType;
-    public bool isStartSpawnPoint;
-    public bool isEmpty;
-    public bool isBlocked;
-    public bool isBlockedByRoom;
-    public bool isActivated;
-    public int spawnId;
-    public SpawnStatus spawnStatus;
-    private bool isChecked;
 
-    private bool isLastSpawn;
-    public  enum SpawnStatus
+    public enum SpawnerStatus
     {
+        UNCHECKED,
         BLOCKED,
         EMPTY,
-        SPAWNED
+        ENABLED
     }
+
+    [SerializeField] private BoxCollider coll;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private bool isStartSpawnPoint;
+
+    private SpawnerStatus spawnStatus;
+
+    
+    public SpawnType SpawnerType { get; set; }
+    public SpawnerStatus SpawnStatus { get => spawnStatus; }
 
     private void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
-        coll = gameObject.GetComponent<BoxCollider>();
-        spawnId = gameObject.GetInstanceID();
-        spawnStatus = SpawnStatus.EMPTY;
-    }
-
-    private void OnEnable()
-    {
-        GameEvents.instance.OnSpawn += SpawnRoom;
-    }
-    void Start()
-    {
-
         rb.mass = 0;
         rb.useGravity = false;
         coll.isTrigger = true;
+        spawnStatus = SpawnerStatus.EMPTY;
+    }
+
+    private void Start()
+    {
         if (isStartSpawnPoint)
         {
-            spawnStatus = SpawnStatus.SPAWNED;
             ActiveSpawner();
-            GameEvents.instance.Spawn(spawnId);
+            RoomsGenerator.instance.RunNextSpawner();
         }
-        StartCoroutine(Checking());
     }
 
-
-
-    public void Update()
+    public bool ActiveSpawner()
     {
-        if (!isBlocked)
+        if (RoomsGenerator.instance.RoomsLeft > 0)
         {
-            if (CheckRoomsLeft() && isActivated)
-            {
-                spawnStatus = SpawnStatus.SPAWNED;
-            }
-            else
-            {
-                spawnStatus = SpawnStatus.EMPTY;
-            }
+            spawnStatus = SpawnerStatus.ENABLED;
+            RoomsGenerator.instance.AddSpawnPoint(this);
+            return true;
         }
-        else
-        {
-            if (isBlockedByRoom)
-            {
-                spawnStatus = SpawnStatus.BLOCKED;
-            }
-            else
-            {
-                spawnStatus = SpawnStatus.EMPTY;
-            }
-        }
+
+        spawnStatus = SpawnerStatus.EMPTY;
+        return false;
     }
 
-
-    private IEnumerator Checking()
+    public bool EnableSpawn()
     {
-        yield return new WaitForSeconds(1f);
-        isChecked = true;
-    }
-
-
-    private void SpawnRoom(int spawnId)
-    {
-        if(spawnStatus == SpawnStatus.SPAWNED)
+        if(spawnStatus == SpawnerStatus.ENABLED)
         {
             RoomSO newRoomSO = RoomsGenerator.instance.GetRoom();
             GameObject newRoom = Instantiate(newRoomSO.RoomPlane(), gameObject.transform.position, Quaternion.identity);
-            GameController.spawnedRooms.Add(newRoom);
+            GameController.instance.spawnedRooms.Add(newRoom);
             newRoom.SetActive(false);
             Room roomScript = newRoom.AddComponent(typeof(Room)) as Room;
             if (isStartSpawnPoint)
@@ -110,63 +77,49 @@ public class SpawnPoint : MonoBehaviour
             }
             else
             {
-                if(RoomsGenerator.instance.RoomsToGenerate == 0)
+                if (RoomsGenerator.instance.RoomsLeft == 0)
                 {
-                    isLastSpawn = true;
+                    roomScript.SetEssentials(newRoomSO, SpawnerType, true);
                 }
-                roomScript.SetEssentials(newRoomSO, spawnType, isLastSpawn);
+                roomScript.SetEssentials(newRoomSO, SpawnerType);
             }
             newRoom.SetActive(true);
-
-        }
-
-        gameObject.tag = "UnactivatedSpawner";
-        GameEvents.instance.OnSpawn -= SpawnRoom;
-    }
-
-    private bool CheckRoomsLeft()
-    {
-        int roomsLeft = RoomsGenerator.instance.RoomsToGenerate;
-        if (roomsLeft > 0)
-        {
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
+
+    private void Update()
+    {
+        //delete in final
+        switch (spawnStatus)
+        {
+            case SpawnerStatus.UNCHECKED:
+                render.material.color = Color.white;
+                break;
+            case SpawnerStatus.BLOCKED:
+                render.material.color = Color.red;
+                break;
+            case SpawnerStatus.EMPTY:
+                render.material.color = Color.blue;
+                break;
+            case SpawnerStatus.ENABLED:
+                render.material.color = Color.green;
+                break;
+            default:
+                break;
+        }
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("RoomPlane"))
         {
-            isBlocked = true;
-            isBlockedByRoom = true;
-            gameObject.tag = "UnactivatedSpawner";
+            spawnStatus = SpawnerStatus.BLOCKED;
         }
-
-        if (other.CompareTag("ActivatedSpawner"))
-        {
-            isBlocked = true;
-            gameObject.tag = "UnactivatedSpawner";
-        }
-    }
-    public void ActiveSpawner()
-    {
-        isActivated = true;
-        gameObject.tag = "ActivatedSpawner";
-    }
-
-    public bool IsChecked()
-    {
-        return isChecked;
-    }
-
-    public SpawnStatus GetSpawnStatus()
-    {
-        return spawnStatus;
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.instance.OnSpawn -= SpawnRoom;
     }
 }

@@ -15,7 +15,7 @@ public class CameraEffects : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameEvents.instance.OnLastRoomReady += FindTeleportObject;
+        GameEvents.instance.OnGeneratingReady += FindTeleportObject;
         GameEvents.instance.OnSavedPlayerData += SavedData;
         GameEvents.instance.OnStartLevel += StartLevel;
     }
@@ -79,7 +79,7 @@ public class CameraEffects : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnLastRoomReady -= FindTeleportObject;
+        GameEvents.instance.OnGeneratingReady -= FindTeleportObject;
         GameEvents.instance.OnSavedPlayerData -= SavedData;
         GameEvents.instance.OnStartLevel -= StartLevel;
     }

@@ -55,6 +55,7 @@ public class GameEvents : MonoBehaviour
 
     //Spawns ready status
     //public event Action OnLastSpawnPoint
+    public event Action OnGeneratingReady;
     public event Action OnLastRoomReady;
 
     public event Action OnSwitchScene;
@@ -63,6 +64,7 @@ public class GameEvents : MonoBehaviour
     public event Action OnPlayerSpawn;
     public event Action OnPauseGame;
 
+    public void GeneratingReady() => OnGeneratingReady?.Invoke();
     public void PasueGame() => OnPauseGame?.Invoke();
 
     public void LevelSettingsSet() => OnLevelSettingsSet?.Invoke();

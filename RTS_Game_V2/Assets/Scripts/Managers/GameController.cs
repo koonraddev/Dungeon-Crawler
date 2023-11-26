@@ -12,14 +12,18 @@ public enum GameStatus
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject startSpawnPoint;
-    [SerializeField] public static List<GameObject> spawnedRooms;
+    public List<GameObject> spawnedRooms;
     private GameObject startSP;
 
     private static GameStatus gameStatus;
     public static GameStatus GameStatus { get => gameStatus; }
 
+    public static GameController instance;
+    
+
     private void Awake()
     {
+        instance = this;
         spawnedRooms = new();
         gameStatus = GameStatus.PREPARING;
     }
@@ -30,11 +34,27 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnStartLevel += SetGameStatusON;
         GameEvents.instance.OnLoadNextLevel += SetGameStatusPreparing;
         GameEvents.instance.OnPauseGame += SetGameStatusPaused;
+        GameEvents.instance.OnLastRoomReady += CheckRoomsAmount;
     }
+
+    private void CheckRoomsAmount()
+    {
+        if(spawnedRooms.Count == RoomsGenerator.instance.RoomsToGenerate)
+        {
+            GameEvents.instance.GeneratingReady();
+        }
+        else
+        {
+            RoomsGenerator.instance.ResetRooms();
+            Respawn();
+        }
+    }
+
     private void SetGameStatusON()
     {
         gameStatus = GameStatus.ON;
     }
+
     private void SetGameStatusPreparing()
     {
         gameStatus = GameStatus.PREPARING;
@@ -50,7 +70,6 @@ public class GameController : MonoBehaviour
         DestoryOldRooms();
         StartCoroutine(CreatStartSpawnPoint());
     }
-
 
     private void Start()
     {
@@ -78,10 +97,10 @@ public class GameController : MonoBehaviour
     
     private void OnDisable()
     {
-        GameEvents.instance.OnLevelSettingsSet += Respawn;
+        GameEvents.instance.OnLevelSettingsSet -= Respawn;
         GameEvents.instance.OnStartLevel -= SetGameStatusON;
         GameEvents.instance.OnLoadNextLevel -= SetGameStatusPreparing;
         GameEvents.instance.OnPauseGame -= SetGameStatusPaused;
+        GameEvents.instance.OnLastRoomReady -= CheckRoomsAmount;
     }
-
 }

@@ -32,10 +32,6 @@ public class BossRoomSO : RoomSO
         GameObject boss = Instantiate(bossObject, roomGameObject.transform.position,Quaternion.identity);
         boss.transform.SetParent(roomGameObject.transform);
         boss.GetComponent<Enemy>().SetEnemy(roomGameObject);
-        if (isLastRoom)
-        {
-            GameEvents.instance.LastRoomReady();
-        }
     }
 
     public override List<DoorSO> RoomDoors()

@@ -50,6 +50,7 @@ public class RoomsGenerator : MonoBehaviour
     int arrayLength;
 
     private int roomsToGenerate;
+    private int roomsLeft;
     private bool firstRoom;
     private List<RoomSO> roomsList;
     private RoomSO startRoom;
@@ -59,17 +60,56 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] private int defaultRoomsAmount;
     [SerializeField] private List<LevelsRangeSetiings> levelRangeSetsList;
     [SerializeField] private List<LevelException> levelExcSetsList;
+    public int RoomsLeft { get => roomsLeft; }
+    private int roomsLeftToGenerate;
     public int RoomsToGenerate { get => roomsToGenerate; }
+    private List<SpawnPoint> spawnPoints = new();
 
     private void Awake()
     {
         rand = new System.Random();
         instance = this;
         arrayLength = levelRangeValues.Length;
-        //SetRoomsGenerator(1);
     }
 
+    public void ResetRooms()
+    {
+        roomsLeft = roomsToGenerate;
+        roomsLeftToGenerate = roomsToGenerate;
+        firstRoom = true;
+    }
 
+    public void AddSpawnPoint(SpawnPoint spawnPoint)
+    {
+        spawnPoints.Add(spawnPoint);
+        roomsLeft--;
+    }
+
+    public void RunNextSpawner()
+    {
+        if (spawnPoints.Count > 0)
+        {
+            SpawnPoint sp = spawnPoints[0];
+            if (!sp.EnableSpawn())
+            {
+                roomsLeft++;
+                StartCoroutine(SP());
+            }
+            spawnPoints.Remove(sp);
+        }
+        else
+        {
+            GameEvents.instance.LastRoomReady();
+        }
+
+    }
+
+    private IEnumerator SP()
+    {
+        yield return new WaitForEndOfFrame();
+        RunNextSpawner();
+
+    }
     public void SetRoomsGenerator(int level)
     {
         firstRoom = true;
@@ -107,17 +147,18 @@ public class RoomsGenerator : MonoBehaviour
             roomsToGenerate = defaultRoomsAmount;
         }
 
+
         roomsSetSO = Instantiate(tmpSet);
 
         startRoom = roomsSetSO.StartRoom;
         bossRoom = roomsSetSO.BossRoom;
         roomsList = roomsSetSO.RoomsList;
+        ResetRooms();
     }
 
 
     public RoomSO GetRoom()
     {
-        //Debug.Log("ROOMS LEFT  = " + roomsToGenerate);
         RoomSO roomSo;
         if (firstRoom)
         {
@@ -126,7 +167,7 @@ public class RoomsGenerator : MonoBehaviour
         }
         else
         {
-            if (roomsToGenerate == 1)
+            if (roomsLeftToGenerate == 1)
             {
                 roomSo = bossRoom;
             }
@@ -136,7 +177,7 @@ public class RoomsGenerator : MonoBehaviour
                 roomSo = roomsList[index];
             }
         }
-        roomsToGenerate--;
+        roomsLeftToGenerate--;
         return roomSo;
     }
 }

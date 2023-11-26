@@ -10,7 +10,7 @@ public class LoadingPanel : MonoBehaviour
     private bool loadingComplete;
     private void OnEnable()
     {
-        GameEvents.instance.OnLastRoomReady += GameIsReady;
+        GameEvents.instance.OnGeneratingReady += GameIsReady;
         loadingComplete = false;
         SetText("Loading level...");
     }
@@ -36,7 +36,7 @@ public class LoadingPanel : MonoBehaviour
     }
     private void OnDisable()
     {
-        GameEvents.instance.OnLastRoomReady -= GameIsReady;
+        GameEvents.instance.OnGeneratingReady -= GameIsReady;
     }
 
 }

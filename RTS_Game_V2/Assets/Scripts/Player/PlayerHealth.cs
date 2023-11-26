@@ -28,7 +28,6 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         health = BuffManager.instance.PlayerHP;
-        Debug.Log("HEALTH " + health);
         GameEvents.instance.UpdateCurrentHP(health);
     }
 

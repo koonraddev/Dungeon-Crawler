@@ -44,11 +44,6 @@ public class FightRoomSO : RoomSO
             enemySpawner.SetSpawner(enemySpawnerConfigurationSO, roomGameObject);
             spawner.SetActive(true);
         }
-
-        if (isLastRoom)
-        {
-            GameEvents.instance.LastRoomReady();
-        }
     }
 
 

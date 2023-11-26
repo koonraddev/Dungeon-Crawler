@@ -42,6 +42,6 @@ public class NavigationController : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnLastRoomReady -= LastRoomReady;
+        GameEvents.instance.OnGeneratingReady -= LastRoomReady;
     }
 }
