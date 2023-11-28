@@ -6,19 +6,21 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Collider))]
 public class Door : MonoBehaviour, IInteractionObject
 {
-    [SerializeField] DoorSO doorSO;
+    DoorSO doorSO;
     private PassiveItem keyItem;
     private bool destroyItemOnUse;
     private bool keyRequired;
     private bool displayInfo;
-    [SerializeField] GameObject actualDoor;
+    //[SerializeField] GameObject actualDoor;
     private Dictionary<string, string> contentToDisplay;
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
+
+    [SerializeField] private RoomTeleport roomTeleport;
+
 
     public void Start()
     {
         displayInfo = true;
-        ChangeDoorStatus(false);
     }
 
     private int interactionDistance = 3;
@@ -46,7 +48,7 @@ public class Door : MonoBehaviour, IInteractionObject
 
     public void DoInteraction()
     {
-
+        Debug.Log("DO INTERACTION");
         //Sa zamkniete
         if (keyRequired)
         {
@@ -59,6 +61,7 @@ public class Door : MonoBehaviour, IInteractionObject
                     InventoryManager.instance.RemoveItem(keyItem);
                 }
                 keyRequired = false;
+                roomTeleport.ActiveTeleport(true);
                 Teleport();
             }
             else
@@ -77,6 +80,7 @@ public class Door : MonoBehaviour, IInteractionObject
 
     private void Teleport()
     {
+        Debug.Log("teleportuje");
         if(interactingObject != null)
         {
             if(interactingObject.TryGetComponent(out PlayerMovement playerMovement))
@@ -100,21 +104,23 @@ public class Door : MonoBehaviour, IInteractionObject
 
     public void OnMouseEnterObject(Color highLightColor)
     {
-        Material[] objectMaterials;
-        objectMaterials = actualDoor.GetComponent<Renderer>().materials;
-        if (objectMaterials != null)
-        {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != highLightColor)
-                {
-                    objMaterial.DOColor(highLightColor, "_Color", 0.5f);
-                }
-            }
-        }
+        //Material[] objectMaterials;
+        //objectMaterials = actualDoor.GetComponent<Renderer>().materials;
+        //if (objectMaterials != null)
+        //{
+        //    foreach (Material objMaterial in objectMaterials)
+        //    {
+        //        if (objMaterial.color != highLightColor)
+        //        {
+        //            objMaterial.DOColor(highLightColor, "_Color", 0.5f);
+        //        }
+        //    }
+        //}
         if (!keyRequired)
         {
-            ChangeDoorStatus(true);
+            //ChangeDoorStatus(true);
+            roomTeleport.ActiveParticles(!keyRequired);
+
         }
 
         if (displayInfo)
@@ -127,21 +133,22 @@ public class Door : MonoBehaviour, IInteractionObject
 
     public void OnMouseExitObject()
     {
-        Material[] objectMaterials;
-        objectMaterials = actualDoor.GetComponent<Renderer>().materials;
-        if (objectMaterials != null)
-        {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != Color.white)
-                {
-                    objMaterial.DOColor(Color.white, "_Color", 0.5f);
-                }
-            }
-        }
+        //Material[] objectMaterials;
+        //objectMaterials = actualDoor.GetComponent<Renderer>().materials;
+        //if (objectMaterials != null)
+        //{
+        //    foreach (Material objMaterial in objectMaterials)
+        //    {
+        //        if (objMaterial.color != Color.white)
+        //        {
+        //            objMaterial.DOColor(Color.white, "_Color", 0.5f);
+        //        }
+        //    }
+        //}
         displayInfo = true;
 
-        ChangeDoorStatus(false);
+        //ChangeDoorStatus(false);
+        roomTeleport.ActiveParticles(false);
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
@@ -156,43 +163,38 @@ public class Door : MonoBehaviour, IInteractionObject
     }
 
 
-    private bool CheckKeyRequired()
-    {
-        if (doorSO.keyRequired != null)
-        {
-            keyItem = new(doorSO.keyRequired);
-            destroyItemOnUse = !keyItem.IsReusable;
-            keyRequired = true;
-            return true;
-        }
-        else
-        {
-            keyRequired = false;
-            return false;
-        }
-    }
-
     public void SetDoor(DoorSO newDoor)
     {
         if (newDoor != null)
         {
             doorSO = newDoor;
+            if (doorSO.keyRequired != null)
+            {
+                keyItem = new(doorSO.keyRequired);
+                destroyItemOnUse = !keyItem.IsReusable;
+                keyRequired = true;
+            }
+            else
+            {
+                keyRequired = false;
+            }
+            roomTeleport.ActiveTeleport(!keyRequired);
         }
     }
 
 
 
-    private void ChangeDoorStatus(bool doorOpened)
-    {
-        if (doorOpened)
-        {
-            actualDoor.transform.DOLocalRotate(new Vector3(90f,15f, 0), 0.25f).SetEase(Ease.Linear);
-        }
-        else
-        {
-            actualDoor.transform.DOLocalRotate(new Vector3(90f, 0, 0), 0.25f).SetEase(Ease.Linear);
-        }
-    }
+    //private void ChangeDoorStatus(bool doorOpened)
+    //{
+    //    if (doorOpened)
+    //    {
+    //        actualDoor.transform.DOLocalRotate(new Vector3(90f,15f, 0), 0.25f).SetEase(Ease.Linear);
+    //    }
+    //    else
+    //    {
+    //        actualDoor.transform.DOLocalRotate(new Vector3(90f, 0, 0), 0.25f).SetEase(Ease.Linear);
+    //    }
+    //}
 
     private void OnDestroy()
     {

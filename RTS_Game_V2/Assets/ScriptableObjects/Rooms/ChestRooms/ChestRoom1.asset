@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad6c2c867ec8b04abef599ee1a1345c, type: 3}
   m_Name: ChestRoom1
   m_EditorClassIdentifier: 
-  roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
-  roomWallMaterial: {fileID: 2100000, guid: b9f2116ed3a734a7fbd443757fad6430, type: 2}
-  roomFloorMaterial: {fileID: 2100000, guid: 897bc507617104ed0af3e9c46b43d9c0, type: 2}
-  doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
+  roomPlane: {fileID: 8696219440333952196, guid: 858f6e7235f665940b91078e18f0ab49, type: 3}
   doorsList:
   - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}
   chestList:

@@ -30,9 +30,9 @@ public class SpawnWalls : MonoBehaviour
     public void SetEssentials(RoomSO roomSO, int[] doorsArray)
     {
         wallPrefab = Resources.Load("WallPrefab") as GameObject;
-        this.doorPrefab = roomSO.DoorPrefab();
+        //this.doorPrefab = roomSO.DoorPrefab()
         this.doorsArray = doorsArray;
-        this.doorsList = roomSO.RoomDoors();
+        this.doorsList = roomSO.RoomDoors;
         this.roomSO = roomSO;
 
         doorCollider = doorPrefab.GetComponent<BoxCollider>();
@@ -258,7 +258,7 @@ public class SpawnWalls : MonoBehaviour
                 endPoint = Vector3.zero;
                 break;
         }
-        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
+        //GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
     }
 
     private void MultipleDoors(int[] doorsArray, int wallIndex, List<DoorClass> newList)
@@ -298,7 +298,7 @@ public class SpawnWalls : MonoBehaviour
                     endPoint = newList[j].DoorObject.transform.localPosition - doorPrefabOffset;
                     if (Vector3.Distance(startPoint, endPoint) >= colliderSize.x/2)
                     {
-                        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
+                        //GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
                     }
 
                 }
@@ -310,7 +310,7 @@ public class SpawnWalls : MonoBehaviour
                     float distance = Vector3.Distance(newList[j - 1].DoorObject.transform.localPosition, newList[j].DoorObject.transform.localPosition);
                     if (distance >= colliderSize.x / 2 / gameObject.transform.lossyScale.x * doorPrefab.transform.lossyScale.x)
                     {
-                        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
+                        //GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
                     }
                 }
 
@@ -327,7 +327,7 @@ public class SpawnWalls : MonoBehaviour
                     };
                     if (Vector3.Distance(startPoint, endPoint) >= colliderSize.x/2)
                     {
-                        GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
+                        //GenerateWall(startPoint, endPoint, roomSO.RoomWallMaterial());
                     }
                 }
                 numberOfDoors--;

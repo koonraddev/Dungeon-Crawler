@@ -7,35 +7,23 @@ public class FightRoomSO : RoomSO
 {
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
-    [SerializeField] private Material roomWallMaterial;
-    [SerializeField] private Material roomFloorMaterial;
     [Header("Door section")]
-    [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
     [SerializeField] private int maxDoorsInWall;
     [Header("Enemy section")]
     [SerializeField] private GameObject enemySpawnerObject;
     [SerializeField] private EnemySpawnerConfigurationSO enemySpawnerConfigurationSO;
 
+    public override int MaxDoorsInWall => maxDoorsInWall;
 
-    public override GameObject DoorPrefab()
-    {
-        return doorPrefab;
-    }
+    public override List<DoorSO> RoomDoors => doorsList;
 
-    public override int MaxDoorsInWall()
-    {
-        return maxDoorsInWall;
-    }
+    public override GameObject RoomPlane => roomPlane;
 
-    public override Material RoomFloorMaterial()
-    {
-        return roomFloorMaterial;
-    }
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
+        //roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
         GameObject spawner = Instantiate(enemySpawnerObject,  roomGameObject.transform.position, roomGameObject.transform.rotation);
         spawner.SetActive(false);
         spawner.transform.SetParent(roomGameObject.transform);
@@ -44,21 +32,5 @@ public class FightRoomSO : RoomSO
             enemySpawner.SetSpawner(enemySpawnerConfigurationSO, roomGameObject);
             spawner.SetActive(true);
         }
-    }
-
-
-    public override List<DoorSO> RoomDoors()
-    {
-        return doorsList;
-    }
-
-    public override GameObject RoomPlane()
-    {
-        return roomPlane;
-    }
-
-    public override Material RoomWallMaterial()
-    {
-        return roomWallMaterial;
     }
 }

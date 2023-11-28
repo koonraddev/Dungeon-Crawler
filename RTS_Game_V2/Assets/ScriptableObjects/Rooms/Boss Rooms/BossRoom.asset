@@ -12,10 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c84d7c70c54e2547a8309cc73fb7e58, type: 3}
   m_Name: BossRoom
   m_EditorClassIdentifier: 
-  roomPlane: {fileID: 6318649012883418699, guid: 708e619f8c732aa4cad2fe42824a40e2, type: 3}
-  roomWallMaterial: {fileID: 2100000, guid: 094c835627124fe4bbbaa762d2240cb1, type: 2}
-  roomFloorMaterial: {fileID: 2100000, guid: 5f73475cf0cad364b9800b85c2a229fc, type: 2}
-  teleportObject: {fileID: 1538318259684226390, guid: 81ba6286d1a13b74d803c0b86e5299e5, type: 3}
-  bossObject: {fileID: 1908352225517845668, guid: b693ebc64cfafb542b71185f890d366d, type: 3}
-  doorPrefab: {fileID: 4475833871529060043, guid: b93bcc1a296b1a841846b927a706f0b8, type: 3}
+  roomPlane: {fileID: 6649246559777706992, guid: 7971ced3de1514c41ac7ee4cf5b27bd7, type: 3}
+  bossObject: {fileID: 0}
   doorsList: []

@@ -8,10 +8,7 @@ public class ChestRoomSO : RoomSO
 {
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
-    [SerializeField] private Material roomWallMaterial;
-    [SerializeField] private Material roomFloorMaterial;
     [Header("Door section")]
-    [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
     [Header("Chest section")]
     [SerializeField] private List<ChestSO> chestList;
@@ -24,19 +21,16 @@ public class ChestRoomSO : RoomSO
     private float spawnPlaneSizeZ;
     private Vector3 planePos;
 
-    public override GameObject DoorPrefab()
-    {
-        return doorPrefab;
-    }
+    public override int MaxDoorsInWall => maxDoorsInWall;
 
-    public override int MaxDoorsInWall()
-    {
-        return maxDoorsInWall;
-    }
+    public override List<DoorSO> RoomDoors => doorsList;
+
+    public override GameObject RoomPlane => roomPlane;
+
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
+        //roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
 
         mColl = roomGameObject.GetComponent<MeshCollider>();
         spawnPlaneSizeX = mColl.bounds.size.x;
@@ -86,25 +80,5 @@ public class ChestRoomSO : RoomSO
     private Quaternion GetChestSpawnRotation()
     {
         return Quaternion.Euler(0f, Random.Range(0, 360), 0f);
-    }
-
-    public override List<DoorSO> RoomDoors()
-    {
-        return doorsList;
-    }
-
-    public override GameObject RoomPlane()
-    {
-        return roomPlane;
-    }
-
-    public override Material RoomWallMaterial()
-    {
-        return roomWallMaterial;
-    }
-
-    public override Material RoomFloorMaterial()
-    {
-        return roomFloorMaterial;
     }
 }

@@ -7,45 +7,19 @@ public class EmptyRoomSO : RoomSO
 {
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
-    [SerializeField] private Material roomWallMaterial;
-    [SerializeField] private Material roomFloorMaterial;
     [Header("Door section")]
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
     private int maxDoorsInWall = 1;
 
-    public override GameObject DoorPrefab()
-    {
-        return doorPrefab;
-    }
+    public override int MaxDoorsInWall => maxDoorsInWall;
 
-    public override int MaxDoorsInWall()
-    {
-        return maxDoorsInWall;
-    }
+    public override List<DoorSO> RoomDoors => doorsList;
 
-    public override Material RoomFloorMaterial()
-    {
-        return roomFloorMaterial;
-    }
+    public override GameObject RoomPlane => roomPlane;
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
-    }
-
-    public override List<DoorSO> RoomDoors()
-    {
-        return doorsList;
-    }
-
-    public override GameObject RoomPlane()
-    {
-        return roomPlane;
-    }
-
-    public override Material RoomWallMaterial()
-    {
-        return roomWallMaterial;
+        //roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
     }
 }

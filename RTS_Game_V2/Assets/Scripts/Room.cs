@@ -45,15 +45,19 @@ public class Room : MonoBehaviour
         {
             case SpawnPoint.SpawnType.NORTH:
                 exclude.Add(2);
+                doorsArray[2] = 0;
                 break;
             case SpawnPoint.SpawnType.EAST:
                 exclude.Add(3);
+                doorsArray[3] = 0;
                 break;
             case SpawnPoint.SpawnType.SOUTH:
                 exclude.Add(0);
+                doorsArray[0] = 0;
                 break;
             case SpawnPoint.SpawnType.WEST:
                 exclude.Add(1);
+                doorsArray[1] = 0;
                 break;
             default:
                 break;
@@ -139,13 +143,11 @@ public class Room : MonoBehaviour
             switch (spawnPoint.SpawnStatus)
             {
                 case SpawnPoint.SpawnerStatus.BLOCKED:
-                    doorsArray[iterator] = -1; 
-                    break;
                 case SpawnPoint.SpawnerStatus.EMPTY:
                     doorsArray[iterator] = 0;
                     break;
                 case SpawnPoint.SpawnerStatus.ENABLED:
-                    doorsArray[iterator] = rand.Next(1, roomSO.MaxDoorsInWall() + 1);
+                    doorsArray[iterator] = rand.Next(1, roomSO.MaxDoorsInWall + 1);
                     break;
                 default:
                     break;
@@ -154,8 +156,10 @@ public class Room : MonoBehaviour
             iterator++;
         }
 
-        SpawnWalls spawnScript = gameObject.AddComponent(typeof(SpawnWalls)) as SpawnWalls;
-        spawnScript.SetEssentials(roomSO, doorsArray);
+        //SpawnWalls spawnScript = gameObject.AddComponent(typeof(SpawnWalls)) as SpawnWalls;
+        //spawnScript.SetEssentials(roomSO, doorsArray);
+        PortalSpawner portalSpawner = gameObject.AddComponent(typeof(PortalSpawner)) as PortalSpawner;
+        portalSpawner.SetEssentials(roomSO, doorsArray);
         roomSO.RoomBehavoiur(gameObject, isLastRoom);
 
         if (isLastRoom)

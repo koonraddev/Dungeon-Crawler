@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8719e15f1431b1e42986c45e85bae515, type: 3}
   m_Name: EmptyRoom1
   m_EditorClassIdentifier: 
-  roomPlane: {fileID: 6318649012883418699, guid: f5bfed5ee8c7ee544b8e58e5c66a370a, type: 3}
-  roomWallMaterial: {fileID: 2100000, guid: d8c1f73efa86eb643818c08548596967, type: 2}
-  roomFloorMaterial: {fileID: 2100000, guid: 0fbb5906a12ff0246ada62b37f9418df, type: 2}
-  doorPrefab: {fileID: 4475833871529060043, guid: fb5d54d3be21fa34b8036d5b1aa30af9, type: 3}
+  roomPlane: {fileID: 9196992797379739296, guid: 5424fb1c741da9d438dc4291dd300c3c, type: 3}
+  doorPrefab: {fileID: 4745123749188427589, guid: 572b702054504404b81480d60bd9c69c, type: 3}
   doorsList:
   - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}

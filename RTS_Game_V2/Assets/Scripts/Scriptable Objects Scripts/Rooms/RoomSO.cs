@@ -4,11 +4,8 @@ using UnityEngine;
 
 public abstract class RoomSO: ScriptableObject
 {
-    public abstract int MaxDoorsInWall();
-    public abstract List<DoorSO> RoomDoors();
-    public abstract GameObject DoorPrefab();
-    public abstract GameObject RoomPlane();
-    public abstract Material RoomWallMaterial();
-    public abstract Material RoomFloorMaterial();
+    public abstract int MaxDoorsInWall { get; }
+    public abstract List<DoorSO> RoomDoors { get; }
+    public abstract GameObject RoomPlane { get; }
     public abstract void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false);
 }

@@ -67,7 +67,7 @@ public class SpawnPoint : MonoBehaviour
         if(spawnStatus == SpawnerStatus.ENABLED)
         {
             RoomSO newRoomSO = RoomsGenerator.instance.GetRoom();
-            GameObject newRoom = Instantiate(newRoomSO.RoomPlane(), gameObject.transform.position, Quaternion.identity);
+            GameObject newRoom = Instantiate(newRoomSO.RoomPlane, gameObject.transform.position, Quaternion.identity);
             GameController.instance.spawnedRooms.Add(newRoom);
             newRoom.SetActive(false);
             Room roomScript = newRoom.AddComponent(typeof(Room)) as Room;
