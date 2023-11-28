@@ -45,7 +45,7 @@ public class PlayerObjectInteraction : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (Physics.Raycast(ray, out RaycastHit hitPoint, 1000f))
+        if (Physics.Raycast(ray, out RaycastHit hitPoint))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
@@ -91,6 +91,7 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public void CheckObject(GameObject pointedObject)
     {
+        Debug.Log("Check");
         if (pointedObject != null)
         {
             if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
@@ -110,6 +111,7 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public void UncheckObject(GameObject pointedObject)
     {
+        Debug.Log("Uncheck");
         if (pointedObject != null)
         {
             if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
@@ -137,7 +139,7 @@ public class PlayerObjectInteraction : MonoBehaviour
         yield return new WaitUntil(() => (distanceFromObject <= minimumDistanceFromObject) && (canInteract));
         Debug.Log("CAN INSPECt");
         playerMovement.StopMovement();
-        objectToInspect.ObjectInteraction();
+        objectToInspect.ObjectInteraction(this.gameObject);
         StartCoroutine(InspectingObject());
     }
 

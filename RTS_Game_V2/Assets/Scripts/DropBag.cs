@@ -47,7 +47,7 @@ public class DropBag : MonoBehaviour, IInteractionObject
         }
     }
 
-    public void ObjectInteraction()
+    public void ObjectInteraction(GameObject interactingObject = null)
     {
         if (displayMessage)
         {

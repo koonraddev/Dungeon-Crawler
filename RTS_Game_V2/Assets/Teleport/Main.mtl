@@ -1,0 +1,12 @@
+newmtl Portal_Background_Material
+Kd 0 0 0
+d 1
+
+newmtl Portal_Main_Material
+Kd 0.3962264 0.3962264 0.3962264
+d 1
+
+newmtl Portal_Main_2
+Kd 1 1 1
+d 1
+

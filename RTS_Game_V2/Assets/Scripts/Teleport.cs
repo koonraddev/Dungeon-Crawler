@@ -43,7 +43,7 @@ public class Teleport : MonoBehaviour, IInteractionObject
         }
     }
 
-    public void ObjectInteraction()
+    public void ObjectInteraction(GameObject interactingObject = null)
     {
         SetContentToDisplay(new Dictionary<string, string> { { "Name", "Teleport" }, { "Description", "Teleport to another level of dungeon."} });
         UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);

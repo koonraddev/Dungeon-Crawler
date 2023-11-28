@@ -83,6 +83,11 @@ public class PlayerMovement : MonoBehaviour
         playerAgent.SetDestination(destination);
     }
 
+    public void TeleportTo(Vector3 destination)
+    {
+        playerAgent.Warp(destination);
+    }
+
     public void StopMovement()
     {
         Debug.Log("STOP MOVE");

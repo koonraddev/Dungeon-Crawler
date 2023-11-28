@@ -57,7 +57,7 @@ public class ContainerObject : MonoBehaviour, IInteractionObject
         }
     }
 
-    public void ObjectInteraction()
+    public void ObjectInteraction(GameObject interactingObject = null)
     {
         SetContentToDisplay(new Dictionary<string, string> { { "Name", container.Name }, { "Description", container.Description } });
         UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);

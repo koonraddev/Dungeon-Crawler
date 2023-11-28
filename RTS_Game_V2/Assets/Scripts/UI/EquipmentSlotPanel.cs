@@ -44,7 +44,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         eqSlot.Item = item;
         eqSlot.Empty = false;
         textureHolder.color = slotColor;
-        textureHolder.sprite = item.Sprite;
+        //textureHolder.sprite = item.Sprite;
     }
 
     public void SetEmptySlot()

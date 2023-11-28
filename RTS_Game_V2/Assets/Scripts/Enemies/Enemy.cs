@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour, IInteractionObject
         gameObject.SetActive(false);
     }
 
-    public void ObjectInteraction()
+    public void ObjectInteraction(GameObject interactingObject = null)
     {
         DoInteraction();
     }

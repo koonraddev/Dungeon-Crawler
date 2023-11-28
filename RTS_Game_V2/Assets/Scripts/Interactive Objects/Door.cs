@@ -8,22 +8,15 @@ public class Door : MonoBehaviour, IInteractionObject
 {
     [SerializeField] DoorSO doorSO;
     private PassiveItem keyItem;
-    private bool opened;
     private bool destroyItemOnUse;
     private bool keyRequired;
     private bool displayInfo;
-    private GameObject actualDoor;
+    [SerializeField] GameObject actualDoor;
     private Dictionary<string, string> contentToDisplay;
-    private OffMeshLink meshLink;
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
-    private void Awake()
-    {
-        meshLink = GetComponent<OffMeshLink>();
-        meshLink.activated = false;
-    }
+
     public void Start()
     {
-        actualDoor = gameObject.transform.parent.gameObject;
         displayInfo = true;
         ChangeDoorStatus(false);
     }
@@ -33,10 +26,14 @@ public class Door : MonoBehaviour, IInteractionObject
     public int InteractionDistance { get => interactionDistance; }
 
 
-    public void ObjectInteraction()
+    //NOWE
+    public List<Transform> sides;
+    private GameObject interactingObject;
+    public void ObjectInteraction(GameObject interactingObject)
     {
+        this.interactingObject = interactingObject;
         //Debug.Log("Drzwi");
-        if (keyRequired && !opened)
+        if (keyRequired)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText }, { "Description", doorSO.Description } });
             UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
@@ -49,38 +46,54 @@ public class Door : MonoBehaviour, IInteractionObject
 
     public void DoInteraction()
     {
-        //Interakcja
-        if (opened)
-        {
-            //Sa otwarte
-            //ChangeDoorStatus(false);
-        }
-        else
-        {
-            //Sa zamkniete
-            if (keyRequired)
-            {
-                //wymagaja klucza
 
-                if (InventoryManager.instance.CheckItem(keyItem))
+        //Sa zamkniete
+        if (keyRequired)
+        {
+            //wymagaja klucza
+        
+            if (InventoryManager.instance.CheckItem(keyItem))
+            {
+                if (destroyItemOnUse)
                 {
-                    if (destroyItemOnUse)
-                    {
-                        InventoryManager.instance.RemoveItem(keyItem);
-                    }
-                    ChangeDoorStatus(true);
-                    keyRequired = false;
+                    InventoryManager.instance.RemoveItem(keyItem);
                 }
-                else
-                {
-                    SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyItem.Name } });
-                    UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
-                }
+                keyRequired = false;
+                Teleport();
             }
             else
             {
-                //nie wymagaja klucza
-                ChangeDoorStatus(true);
+                SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyItem.Name } });
+                UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
+            }
+        }
+        else
+        {
+            //nie wymagaja klucza
+            Teleport();
+        }
+        
+    }
+
+    private void Teleport()
+    {
+        if(interactingObject != null)
+        {
+            if(interactingObject.TryGetComponent(out PlayerMovement playerMovement))
+            {
+                float dist = 0;
+                Transform farPoint = sides[0];
+                foreach (var item in sides)
+                {
+                    float tmpDist = Vector3.Distance(interactingObject.transform.position, item.position);
+                    if (tmpDist > dist)
+                    {
+                        dist = tmpDist;
+                        farPoint = item;
+                    }
+                }
+
+                playerMovement.TeleportTo(farPoint.position);
             }
         }
     }
@@ -88,7 +101,7 @@ public class Door : MonoBehaviour, IInteractionObject
     public void OnMouseEnterObject(Color highLightColor)
     {
         Material[] objectMaterials;
-        objectMaterials = gameObject.GetComponent<Renderer>().materials;
+        objectMaterials = actualDoor.GetComponent<Renderer>().materials;
         if (objectMaterials != null)
         {
             foreach (Material objMaterial in objectMaterials)
@@ -99,6 +112,11 @@ public class Door : MonoBehaviour, IInteractionObject
                 }
             }
         }
+        if (!keyRequired)
+        {
+            ChangeDoorStatus(true);
+        }
+
         if (displayInfo)
         {
             SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText } });
@@ -110,7 +128,7 @@ public class Door : MonoBehaviour, IInteractionObject
     public void OnMouseExitObject()
     {
         Material[] objectMaterials;
-        objectMaterials = gameObject.GetComponent<Renderer>().materials;
+        objectMaterials = actualDoor.GetComponent<Renderer>().materials;
         if (objectMaterials != null)
         {
             foreach (Material objMaterial in objectMaterials)
@@ -122,6 +140,8 @@ public class Door : MonoBehaviour, IInteractionObject
             }
         }
         displayInfo = true;
+
+        ChangeDoorStatus(false);
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
@@ -157,33 +177,20 @@ public class Door : MonoBehaviour, IInteractionObject
         if (newDoor != null)
         {
             doorSO = newDoor;
-            if (CheckKeyRequired())
-            {
-                LockDoor();
-            }
         }
     }
 
-    public void LockDoor()
-    {
-        if (keyItem != null)
-        {
-            opened = false;
-        }
-    }
+
 
     private void ChangeDoorStatus(bool doorOpened)
     {
         if (doorOpened)
         {
-            actualDoor.transform.DOLocalRotate(new Vector3(0, 0, 90f), 2f).SetEase(Ease.Linear);
-            opened = true;
-            meshLink.activated = true;
+            actualDoor.transform.DOLocalRotate(new Vector3(90f,15f, 0), 0.25f).SetEase(Ease.Linear);
         }
         else
         {
-            actualDoor.transform.DOLocalRotate(new Vector3(0, 0, 0f), 2f).SetEase(Ease.Linear);
-            opened = false;
+            actualDoor.transform.DOLocalRotate(new Vector3(90f, 0, 0), 0.25f).SetEase(Ease.Linear);
         }
     }
 
