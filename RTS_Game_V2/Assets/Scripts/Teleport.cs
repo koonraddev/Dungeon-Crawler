@@ -10,7 +10,6 @@ public class Teleport : MonoBehaviour, IInteractionObject
     private bool displayPopup = true;
     private bool activated = false;
     public GameObject GameObject => gameObject;
-
     public int InteractionDistance => interactionDistance;
 
     public Dictionary<string, string> ContentToDisplay => contentToDisplay;

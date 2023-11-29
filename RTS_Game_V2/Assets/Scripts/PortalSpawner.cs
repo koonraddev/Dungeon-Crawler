@@ -121,10 +121,14 @@ public class PortalSpawner : MonoBehaviour
                 GameObject door = Instantiate(doorPrefab);
                 door.transform.SetParent(gameObject.transform);
                 door.transform.SetLocalPositionAndRotation(pos, rot);
-                Door doorScript = door.GetComponentInChildren<Door>();
 
+                door.transform.SetParent(null);
+                Door doorScript = door.GetComponentInChildren<Door>();
+                RoomFader roomFade = door.GetComponent<RoomFader>();
+                roomFade.ParentObject = gameObject;
                 doorScript.SetDoor(doorsList[Random.Range(0, doorsList.Count)]);
 
+                GameController.instance.spawnedPortals.Add(doorScript.GameObject);
                 DoorClass doorClass = new DoorClass(i, positionInWall, door);
                 doorClassList.Add(doorClass);
 

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody),typeof(BoxCollider))]
 public class SpawnPoint : MonoBehaviour
 {
-    public Renderer render;
+    //public Renderer render;
     public enum SpawnType
     {
         NORTH,
@@ -94,24 +94,24 @@ public class SpawnPoint : MonoBehaviour
 
     private void Update()
     {
-        //delete in final
-        switch (spawnStatus)
-        {
-            case SpawnerStatus.UNCHECKED:
-                render.material.color = Color.white;
-                break;
-            case SpawnerStatus.BLOCKED:
-                render.material.color = Color.red;
-                break;
-            case SpawnerStatus.EMPTY:
-                render.material.color = Color.blue;
-                break;
-            case SpawnerStatus.ENABLED:
-                render.material.color = Color.green;
-                break;
-            default:
-                break;
-        }
+        ////delete in final
+        //switch (spawnStatus)
+        //{
+        //    case SpawnerStatus.UNCHECKED:
+        //        render.material.color = Color.white;
+        //        break;
+        //    case SpawnerStatus.BLOCKED:
+        //        render.material.color = Color.red;
+        //        break;
+        //    case SpawnerStatus.EMPTY:
+        //        render.material.color = Color.blue;
+        //        break;
+        //    case SpawnerStatus.ENABLED:
+        //        render.material.color = Color.green;
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
 

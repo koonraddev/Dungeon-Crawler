@@ -10,10 +10,10 @@ TagManager:
   - Wall
   - RoomPlane
   - Spawner
-  - ActivatedSpawner
-  - UnactivatedSpawner
   - EndTeleport
   - StartTeleport
+  - ActiveSpawner
+  - UnactiveSpawner
   layers:
   - Default
   - TransparentFX
@@ -27,7 +27,7 @@ TagManager:
   - Pointer
   - Door
   - Hide
-  - 
+  - HiddenGround
   - 
   - 
   - 

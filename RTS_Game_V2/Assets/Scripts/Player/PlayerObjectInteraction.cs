@@ -91,7 +91,7 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public void CheckObject(GameObject pointedObject)
     {
-        Debug.Log("Check");
+        //Debug.Log("Check");
         if (pointedObject != null)
         {
             if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
@@ -111,7 +111,7 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public void UncheckObject(GameObject pointedObject)
     {
-        Debug.Log("Uncheck");
+        //Debug.Log("Uncheck");
         if (pointedObject != null)
         {
             if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
@@ -125,7 +125,7 @@ public class PlayerObjectInteraction : MonoBehaviour
     {
         minimumDistanceFromObject = objectToInspect.InteractionDistance;
         //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
-        Debug.Log("INSPECt");
+        //Debug.Log("INSPECt");
         if (distanceFromObject > minimumDistanceFromObject && playerMovement != null)
         {
             Vector3 dirToTarget = clickedObject.transform.position - this.transform.position;
@@ -134,10 +134,10 @@ public class PlayerObjectInteraction : MonoBehaviour
             float distToMove = Mathf.Ceil(distToTarget - minimumDistanceFromObject);
             Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
             playerMovement.MoveTo(pointToMove);
-            Debug.Log("NEED MOVe");
+            //Debug.Log("NEED MOVe");
         }
         yield return new WaitUntil(() => (distanceFromObject <= minimumDistanceFromObject) && (canInteract));
-        Debug.Log("CAN INSPECt");
+        //Debug.Log("CAN INSPECt");
         playerMovement.StopMovement();
         objectToInspect.ObjectInteraction(this.gameObject);
         StartCoroutine(InspectingObject());
@@ -145,16 +145,16 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public IEnumerator InspectingObject()
     {
-        Debug.Log("inspecting");
+        //Debug.Log("inspecting");
         yield return new WaitUntil(() => (distanceFromObject > minimumDistanceFromObject) || (!canInteract));
-        Debug.Log("distance > min distance");
+        //Debug.Log("distance > min distance");
         GameEvents.instance.CancelGameObjectAction();
         clickedObject = null;
     }
 
     private void CancelAction()
     {
-        Debug.Log("Cancel");
+        //Debug.Log("Cancel");
         if(inspectCor != null)
         {
             StopCoroutine(inspectCor);

@@ -54,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerAgent.isOnOffMeshLink)
         {
-            Debug.LogWarning("STOP");
             GameEvents.instance.CancelActions();
             GameEvents.instance.CancelGameObjectAction();
         }
@@ -90,7 +89,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopMovement()
     {
-        Debug.Log("STOP MOVE");
         playerAgent.isStopped = true;
     }
 }

@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7762191498677894190, guid: 193589a958880c647aef9f012928e618, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8560555264838856002, guid: 193589a958880c647aef9f012928e618, type: 3}
       propertyPath: m_Name
       value: StartSpawnPoint Variant

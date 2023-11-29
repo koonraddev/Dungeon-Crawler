@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject startSpawnPoint;
     public List<GameObject> spawnedRooms;
+    public List<GameObject> spawnedPortals;
     private GameObject startSP;
 
     private static GameStatus gameStatus;
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour
     {
         instance = this;
         spawnedRooms = new();
+        spawnedPortals = new();
         gameStatus = GameStatus.PREPARING;
     }
 
@@ -67,6 +69,7 @@ public class GameController : MonoBehaviour
 
     public void Respawn()
     {
+        DestroyOldPortals();
         DestoryOldRooms();
         StartCoroutine(CreatStartSpawnPoint());
     }
@@ -83,6 +86,13 @@ public class GameController : MonoBehaviour
         startSP = Instantiate(startSpawnPoint);
     }
 
+    private void DestroyOldPortals()
+    {
+        foreach (var item in spawnedPortals)
+        {
+            Destroy(item);
+        }
+    }
     private void DestoryOldRooms()
     {
         Destroy(startSP);
