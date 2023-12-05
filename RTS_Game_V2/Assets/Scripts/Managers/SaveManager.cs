@@ -17,7 +17,7 @@ public class PlayerData
 
 public class SaveManager : MonoBehaviour
 {
-    public string savePath;
+    [SerializeField] private string savesPath;
     [SerializeField] private StatisticsSO playerBaseStats;
     void Start()
     {
@@ -28,11 +28,12 @@ public class SaveManager : MonoBehaviour
     {
         GameEvents.instance.OnLoadNextLevel += SaveEquipment;
         GameEvents.instance.OnLoadLevel += LoadEquipment;
+        
     }
 
     private void Awake()
     {
-        BuffManager.instance.PlayerBasicStatistics = new(playerBaseStats);   
+        //BuffManager.instance.PlayerBasicStatistics = new(playerBaseStats);   
     }
 
     private void Update()
@@ -51,7 +52,7 @@ public class SaveManager : MonoBehaviour
 
     public void SaveEquipment()
     {
-        Debug.Log(savePath);
+        Debug.Log(savesPath);
 
         PlayerData data = new();
         data.equipment = EquipmentManager.instance.Equipment;
@@ -65,7 +66,7 @@ public class SaveManager : MonoBehaviour
 
         string allData = JsonUtility.ToJson(data);
         
-        File.WriteAllText(savePath + "/sejw.json", allData);
+        File.WriteAllText(savesPath + "/sejw.json", allData);
         GameEvents.instance.PlayerDataSaved();
         Debug.LogWarning("GAME SAVED");
     }
@@ -73,9 +74,9 @@ public class SaveManager : MonoBehaviour
 
     public void LoadEquipment()
     {
-        if (File.Exists(savePath + "/sejw.json"))
+        if (File.Exists(savesPath + "/sejw.json"))
         {
-            string save = File.ReadAllText(savePath + "/sejw.json");
+            string save = File.ReadAllText(savesPath + "/sejw.json");
 
             PlayerData loadedData = JsonUtility.FromJson<PlayerData>(save);
 
