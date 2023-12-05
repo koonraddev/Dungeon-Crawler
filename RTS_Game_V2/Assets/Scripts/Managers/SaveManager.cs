@@ -11,49 +11,23 @@ public class PlayerData
     public List<Buff> activeBuffsList;
     public PlayerBasicStatistics playerBasicStatistics;
     public float playerHP;
-    //temporary
+    public string characterName;
     public int levelCompleted;
 }
 
 public class SaveManager : MonoBehaviour
 {
-    [SerializeField] private string savesPath;
-    [SerializeField] private StatisticsSO playerBaseStats;
-    void Start()
-    {
-        //GameEvents.instance.onSave += SaveEquipment;
-    }
+    private int chosenSlotIndex;
+    public int ChosenSlotIndex { get => chosenSlotIndex; set => chosenSlotIndex = value; }
 
     private void OnEnable()
     {
         GameEvents.instance.OnLoadNextLevel += SaveEquipment;
-        GameEvents.instance.OnLoadLevel += LoadEquipment;
-        
-    }
-
-    private void Awake()
-    {
-        //BuffManager.instance.PlayerBasicStatistics = new(playerBaseStats);   
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SaveEquipment();
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            //LoadEquipment();
-            //GameEvents.instance.PlayerDataLoaded();
-        }
+        GameEvents.instance.OnLoadLevel += LoadSave;
     }
 
     public void SaveEquipment()
     {
-        Debug.Log(savesPath);
-
         PlayerData data = new();
         data.equipment = EquipmentManager.instance.Equipment;
         data.inventory = InventoryManager.instance.Inventory;
@@ -62,71 +36,70 @@ public class SaveManager : MonoBehaviour
         data.playerHP = BuffManager.instance.PlayerHP;
         data.levelCompleted = LevelManager.instance.Level;
 
-        Debug.Log(Application.persistentDataPath);
-
         string allData = JsonUtility.ToJson(data);
-        
-        File.WriteAllText(savesPath + "/sejw.json", allData);
+        string path = GetPath(chosenSlotIndex);
+        File.WriteAllText(path, allData);
         GameEvents.instance.PlayerDataSaved();
-        Debug.LogWarning("GAME SAVED");
     }
 
-
-    public void LoadEquipment()
+    public void CreateSave(int slot, PlayerData playerData)
     {
-        if (File.Exists(savesPath + "/sejw.json"))
+        string path = GetPath(slot);
+        string allData = JsonUtility.ToJson(playerData);
+        File.WriteAllText(path, allData);
+    }
+
+    private string GetPath(int slot)
+    {
+        string path = "C:/saves";
+        switch (slot)
         {
-            string save = File.ReadAllText(savesPath + "/sejw.json");
+            case 1:
+                path += "saveslot1.json";
+                break;
+            case 2:
+                path += "saveslot2.json";
+                break;
+            case 3:
+                path += "saveslot3.json";
+                break;
+            default:
+                break;
+        }
+        return path;
+    }
+    public bool GetPlayerData(int slot, out PlayerData playerData)
+    {
+        string path = GetPath(slot);
+        playerData = null;
+        if (File.Exists(path))
+        {
+            string save = File.ReadAllText(path);
 
-            PlayerData loadedData = JsonUtility.FromJson<PlayerData>(save);
+            playerData = JsonUtility.FromJson<PlayerData>(save);
+            return true;
+        }
+        return false;
+    }
 
-            Equipment loadedEq = loadedData.equipment;
-            Inventory loadedInv = loadedData.inventory;
-            List<Buff> loadedActiveBuffsList = loadedData.activeBuffsList;
-            PlayerBasicStatistics loadedPlayerBaseStatistics = loadedData.playerBasicStatistics;
-            int loadedCompletedLevel = loadedData.levelCompleted;
-            float loadedPlayerHP = loadedData.playerHP;
-
-            BuffManager.instance.PlayerBasicStatistics = loadedPlayerBaseStatistics;
-            EquipmentManager.instance.Equipment = loadedEq;
-            InventoryManager.instance.Inventory = loadedInv;
-            BuffManager.instance.Buffs = loadedActiveBuffsList;
-            LevelManager.instance.Level = loadedCompletedLevel;
-            //GameEvents.instance.UpdateCurrentHP(loadedPlayerHP);
-            BuffManager.instance.PlayerHP = loadedPlayerHP;
-
+    public void LoadSave()
+    {
+        if (GetPlayerData(chosenSlotIndex,out PlayerData loadedData))
+        {
+            BuffManager.instance.PlayerBasicStatistics = loadedData.playerBasicStatistics;
+            EquipmentManager.instance.Equipment = loadedData.equipment;
+            InventoryManager.instance.Inventory = loadedData.inventory;
+            BuffManager.instance.Buffs = loadedData.activeBuffsList;
+            LevelManager.instance.Level = loadedData.levelCompleted;
+            BuffManager.instance.PlayerHP = loadedData.playerHP;
 
             GameEvents.instance.PlayerDataLoaded();
-            //List<EquipmentSlot> eqSlots = EquipmentManager.instance.Slots;
-            //List<InventorySlot> invSlots = InventoryManager.instance.Slots;
-
-            //foreach (var item in eqSlots)
-            //{
-            //    Debug.Log("----------------------");
-            //    Debug.Log(item.SlotType);
-            //    Debug.Log(item.Item);
-            //    if (item.Item != null)
-            //    {
-            //        Debug.Log(item.Item.Name); 
-            //    }
-            //}
-
-            //Debug.Log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-            //foreach (var item in invSlots)
-            //{
-            //    Debug.Log("----------------------");
-            //    Debug.Log(item.Item);
-            //    if (item.Item != null)
-            //    {
-            //        Debug.Log(item.Item.Name);
-            //    }
-            //}
-        }   
+        } 
     }
 
     private void OnDisable()
     {
         GameEvents.instance.OnLoadNextLevel -= SaveEquipment;
-        GameEvents.instance.OnLoadLevel -= LoadEquipment;
+        GameEvents.instance.OnLoadLevel -= LoadSave;
     }
 }

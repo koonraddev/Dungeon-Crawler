@@ -10393,6 +10393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startSpawnPoint: {fileID: 956097187356216992, guid: 1b438ef41382fdf4cb2530cc4ba18471, type: 3}
   spawnedRooms: []
+  spawnedPortals: []
 --- !u!114 &1285007681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10529,7 +10530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d3049d815077449923e6ad68634d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savePath: C:/Saves
+  savesPath: C:/saves
   playerBaseStats: {fileID: 11400000, guid: f4bdefb2784a1234eb163f1fc8403dad, type: 2}
 --- !u!114 &1285007689
 MonoBehaviour:
@@ -12208,7 +12209,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 321655061}
   m_HandleRect: {fileID: 321655060}
   m_Direction: 2
-  m_Value: 0.4999996
+  m_Value: 0.5
   m_Size: 0.8345156
   m_NumberOfSteps: 0
   m_OnValueChanged:

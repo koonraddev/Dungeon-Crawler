@@ -35,22 +35,35 @@ public class StatisticCreator
     }
 }
 
-public class NewPlayerPanel : MonoBehaviour
+public class NewCharacterPanel : MonoBehaviour
 {
     [SerializeField] private Color inactiveButtonColor, activeButtonColor;
     [SerializeField] private TMP_Text pointsText;
     [SerializeField] private List<StatisticCreator> statsList;
     [SerializeField] private int startPoints;
     private int points;
+
+    [SerializeField] private InputField nameInputField;
+    [SerializeField] private ButtonManager nextButton;
+
     public Color InactiveButtonColor { get => inactiveButtonColor; }
     public Color ActiveButtonColor { get => activeButtonColor; }
     public int PointsLeft { get => points; }
     public List<StatisticCreator> StatsList { get => statsList; }
-
+    public string CharacterName { get => nameInputField.text; }
 
     void Update()
     {
         pointsText.text = points.ToString();
+
+        if(nameInputField.text.Length > 0)
+        {
+            nextButton.ActivateButton();
+        }
+        else
+        {
+            nextButton.DeactivateButton();
+        }
     }
     private void OnEnable()
     {
@@ -61,8 +74,6 @@ public class NewPlayerPanel : MonoBehaviour
             GameEvents.instance.StatisticUpdate(item.StatisticType, item.BaseStatisticValue + item.AddedValue);
         }
     }
-
-
 
     public void AddPointToStatistic(StatisticType statisticType)
     {

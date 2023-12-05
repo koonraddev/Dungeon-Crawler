@@ -2,28 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class PlusMinusButton : MonoBehaviour
 {
-    [SerializeField] private NewPlayerPanel newPlayerPanel;
+    [SerializeField] private NewCharacterPanel newPlayerPanel;
     [SerializeField] private StatisticType statisticType;
-    private Image buttonImage;
-    private Button button;
+
     [SerializeField] private bool positiveButton;
-    private int requirePoints;
-    private Color inactiveButtonColor, activeButtonColor;
-    StatisticCreator ss;
-    private float baseValue, pointsLeft;
+    [SerializeField] private ButtonManager buttonManager;
+    StatisticCreator statCreator;
     private void Awake()
     {
-        buttonImage = GetComponent<Image>();
-        button = GetComponent<Button>();
-        inactiveButtonColor = newPlayerPanel.InactiveButtonColor;
-        activeButtonColor = newPlayerPanel.ActiveButtonColor;
-        ss = newPlayerPanel.StatsList.Where(x => x.StatisticType == statisticType).ToList()[0];
-        requirePoints = ss.RequirePoints;
-        baseValue = ss.BaseStatisticValue;
+
+        statCreator = newPlayerPanel.StatsList.Where(x => x.StatisticType == statisticType).ToList()[0];
     }
 
 
@@ -41,29 +33,24 @@ public class PlusMinusButton : MonoBehaviour
     {
         if (positiveButton)
         {
-            if(newPlayerPanel.PointsLeft > 0 &&  newPlayerPanel.PointsLeft >= requirePoints)
+            if(newPlayerPanel.PointsLeft > 0 &&  newPlayerPanel.PointsLeft >= statCreator.RequirePoints)
             {
-                buttonImage.color = activeButtonColor;
-                button.enabled = true;
+                buttonManager.ActivateButton();
             }
             else
             {
-
-                buttonImage.color = inactiveButtonColor;
-                button.enabled = false;
+                buttonManager.DeactivateButton();
             }
         }
         else
         {
-            if(ss.AddedValue != 0)
+            if(statCreator.AddedValue != 0)
             {
-                buttonImage.color = activeButtonColor;
-                button.enabled = true;
+                buttonManager.ActivateButton();
             }
             else
             {
-                buttonImage.color = inactiveButtonColor;
-                button.enabled = false;
+                buttonManager.DeactivateButton();
             }
         }
 

@@ -14,19 +14,16 @@ public class LevelManager : MonoBehaviour
     public int Level
     {
         get { return currentLevel; }
-        set { currentLevel = value +1; }
+        set { currentLevel = value; }
     }
 
     private void OnEnable()
     {
         GameEvents.instance.OnSavedPlayerData += LoadNextLevel;
-        GameEvents.instance.OnLoadedPlayerData += LoadLevel;
+        GameEvents.instance.OnLoadedPlayerData += LoadNextLevel;
     }
 
-    private void LoadLevel()
-    {
-        OnLoadingStuff();
-    }
+
 
     private void LoadNextLevel()
     {
@@ -57,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnSavedPlayerData -= LoadLevel;
-        GameEvents.instance.OnLoadedPlayerData -= LoadLevel;
+        GameEvents.instance.OnSavedPlayerData -= LoadNextLevel;
+        GameEvents.instance.OnLoadedPlayerData -= LoadNextLevel;
     }
 }
