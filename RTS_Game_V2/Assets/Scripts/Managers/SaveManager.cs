@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 [System.Serializable]
 public class PlayerData
@@ -13,10 +14,12 @@ public class PlayerData
     public float playerHP;
     public string characterName;
     public int levelCompleted;
+    public DateTime dateTime;
 }
 
 public class SaveManager : MonoBehaviour
 {
+    [SerializeField] private SceneLoader sceneLoader;
     private int chosenSlotIndex;
     public int ChosenSlotIndex { get => chosenSlotIndex; set => chosenSlotIndex = value; }
 
@@ -28,22 +31,35 @@ public class SaveManager : MonoBehaviour
 
     public void SaveEquipment()
     {
-        PlayerData data = new();
-        data.equipment = EquipmentManager.instance.Equipment;
-        data.inventory = InventoryManager.instance.Inventory;
-        data.activeBuffsList = BuffManager.instance.Buffs;
-        data.playerBasicStatistics = BuffManager.instance.PlayerBasicStatistics;
-        data.playerHP = BuffManager.instance.PlayerHP;
-        data.levelCompleted = LevelManager.instance.Level;
+        PlayerData playerData = new();
 
-        string allData = JsonUtility.ToJson(data);
+        playerData.equipment = EquipmentManager.instance.Equipment;
+        playerData.inventory = InventoryManager.instance.Inventory;
+        playerData.activeBuffsList = BuffManager.instance.Buffs;
+        playerData.playerBasicStatistics = BuffManager.instance.PlayerBasicStatistics;
+        playerData.playerHP = BuffManager.instance.PlayerHP;
+        playerData.levelCompleted = LevelManager.instance.Level;
+        playerData.dateTime = DateTime.Now;
+
+        string allData = JsonUtility.ToJson(playerData);
         string path = GetPath(chosenSlotIndex);
         File.WriteAllText(path, allData);
         GameEvents.instance.PlayerDataSaved();
     }
 
-    public void CreateSave(int slot, PlayerData playerData)
+    public void CreateSave(int slot, string characterName, PlayerBasicStatistics playerBasicStatisitcs)
     {
+        PlayerData playerData = new();
+
+        playerData.equipment = new();
+        playerData.inventory = new();
+        playerData.activeBuffsList = new();
+        playerData.playerBasicStatistics = playerBasicStatisitcs;
+        playerData.playerHP = playerBasicStatisitcs.MaxHealth;
+        playerData.characterName = characterName;
+        playerData.levelCompleted = 0;
+        playerData.dateTime = DateTime.Now;
+
         string path = GetPath(slot);
         string allData = JsonUtility.ToJson(playerData);
         File.WriteAllText(path, allData);
@@ -55,13 +71,13 @@ public class SaveManager : MonoBehaviour
         switch (slot)
         {
             case 1:
-                path += "saveslot1.json";
+                path += "/saveslot1.json";
                 break;
             case 2:
-                path += "saveslot2.json";
+                path += "/saveslot2.json";
                 break;
             case 3:
-                path += "saveslot3.json";
+                path += "/saveslot3.json";
                 break;
             default:
                 break;
@@ -70,13 +86,30 @@ public class SaveManager : MonoBehaviour
     }
     public bool GetPlayerData(int slot, out PlayerData playerData)
     {
-        string path = GetPath(slot);
         playerData = null;
+        if(GetFile(slot,out string save))
+        {
+            try
+            {
+                playerData = JsonUtility.FromJson<PlayerData>(save);
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            playerData = JsonUtility.FromJson<PlayerData>(save);
+            return true;
+        }
+        return false;
+    }
+
+    private bool GetFile(int slot, out string save)
+    {
+        save = "";
+        string path = GetPath(slot);
         if (File.Exists(path))
         {
-            string save = File.ReadAllText(path);
-
-            playerData = JsonUtility.FromJson<PlayerData>(save);
+            save = File.ReadAllText(path);
             return true;
         }
         return false;
@@ -86,6 +119,7 @@ public class SaveManager : MonoBehaviour
     {
         if (GetPlayerData(chosenSlotIndex,out PlayerData loadedData))
         {
+            Debug.Log("Player Data loaded index= " + chosenSlotIndex);
             BuffManager.instance.PlayerBasicStatistics = loadedData.playerBasicStatistics;
             EquipmentManager.instance.Equipment = loadedData.equipment;
             InventoryManager.instance.Inventory = loadedData.inventory;
@@ -94,7 +128,19 @@ public class SaveManager : MonoBehaviour
             BuffManager.instance.PlayerHP = loadedData.playerHP;
 
             GameEvents.instance.PlayerDataLoaded();
+        }
+        else
+        {
+            sceneLoader.LoadMenuScene();
         } 
+    }
+
+    public void DeleteSave(int slotIndex)
+    {
+        if (GetFile(slotIndex, out string save))
+        {
+            File.Delete(save);
+        }
     }
 
     private void OnDisable()

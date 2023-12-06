@@ -10352,11 +10352,8 @@ GameObject:
   - component: {fileID: 1285007682}
   - component: {fileID: 1285007683}
   - component: {fileID: 1285007684}
-  - component: {fileID: 1285007685}
   - component: {fileID: 1285007686}
-  - component: {fileID: 1285007688}
-  - component: {fileID: 1285007689}
-  - component: {fileID: 1285007690}
+  - component: {fileID: 1285007687}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -10493,18 +10490,6 @@ MonoBehaviour:
   - level: 4
     roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
     roomsAmount: 3
---- !u!114 &1285007685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285007676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5441235b01105c4fa87e5e276cd6a9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1285007686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10518,21 +10503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootPrefab: {fileID: 3192698796234218776, guid: b063372de9a6dd34aa0b134fab4fda6d, type: 3}
---- !u!114 &1285007688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285007676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95d3049d815077449923e6ad68634d21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  savesPath: C:/saves
-  playerBaseStats: {fileID: 11400000, guid: f4bdefb2784a1234eb163f1fc8403dad, type: 2}
---- !u!114 &1285007689
+--- !u!114 &1285007687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10542,18 +10513,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f2ae580716bcbd41b89af5b382a5629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1285007690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285007676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f137480dd8583ef4c8b040457ab1690f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1297416190

@@ -78,4 +78,49 @@ public class PlayerBasicStatistics
         this.healthPercentageRegeneration = healthPercentageRegeneration;
         this.movementSpeed = movementSpeed;
     }
+
+    public PlayerBasicStatistics(List<StatisticCreator> statCreatorsList)
+    {
+        foreach (var item in statCreatorsList)
+        {
+            switch (item.StatisticType)
+            {
+                case StatisticType.MaxHealth:
+                    maxHealth = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.MovementSpeed:
+                    movementSpeed = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.HealthPointsRegeneration:
+                    healthPointsRegeneration = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.HealthPercentageRegeneration:
+                    healthPercentageRegeneration = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.Armor:
+                    armor = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.MagicResistance:
+                    magicResistance = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.PhysicalDamage:
+                    physicalDamage = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.MagicDamage:
+                    magicDamage = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.TrueDamage:
+                    trueDamage = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.AttackSpeed:
+                    attackSpeed = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                case StatisticType.AttackRange:
+                    attackRange = item.BaseStatisticValue + item.AddedValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

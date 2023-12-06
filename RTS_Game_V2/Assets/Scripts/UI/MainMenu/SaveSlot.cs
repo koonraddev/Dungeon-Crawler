@@ -2,13 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SaveSlot : MonoBehaviour
 {
     [SerializeField] private bool loadingSlot;
-    [SerializeField] private GameObject deleteButtonObj, selectButtonObj;
     [SerializeField] private int slotNumber;
+
+    [SerializeField] private NewCharacterPanel newCharacterPanel;
+    [SerializeField] private SaveManager saveManager;
+    [SerializeField] private SceneLoader sceneLoader;
+
     [SerializeField] private Color emptySlotColor, occupiedSlotColor;
+    [SerializeField] private Image foreground;
+    [Header("Buttons Section")]
+    [SerializeField] private GameObject deleteButtonObj, selectButtonObj;
+
+    [Header("Info Objects Section")]
+    [SerializeField] private TMP_Text playerNameObj, floorObj, dateObj, timeObj;
+
     private Image selectButtonImage;
     private Button deleteButton, selectButton;
 
@@ -20,38 +32,47 @@ public class SaveSlot : MonoBehaviour
 
         deleteButton.onClick.AddListener(DeleteSave);
     }
-    void Start()
+
+    private void OnEnable()
     {
-        
+        TryGetSave();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void Reset()
-    {
-        
-    }
-
-    public void SetEmptySlot()
+    private void SetEmptySlot()
     {
         deleteButtonObj.SetActive(false);
-        selectButtonImage.color = emptySlotColor;
+        //selectButtonImage.color = emptySlotColor;
 
+        playerNameObj.text = "-";
+        floorObj.text = "-";
+        dateObj.text = "///";
+        timeObj.text = "-:-";
+        foreground.color = emptySlotColor;
+        //
+        TMP_Text tmpText = selectButton.GetComponentInChildren<TMP_Text>();
+        tmpText.text = "empty slot nr " + slotNumber;
+        //
         if (!loadingSlot)
         {
             selectButton.onClick.AddListener(CreateSave);
         }
     }
 
-    public void SetOccupiedSlot()
+    private void SetOccupiedSlot(PlayerData playerData)
     {
         deleteButtonObj.SetActive(true);
         selectButtonImage.color = occupiedSlotColor;
 
+        playerNameObj.text = playerData.characterName;
+        floorObj.text = playerData.levelCompleted.ToString();
+        dateObj.text = playerData.dateTime.Date.ToString("dd/MM/yyyy");
+        timeObj.text = playerData.dateTime.Date.ToString("HH:mm");
+        foreground.color = occupiedSlotColor;
+
+        //
+        TMP_Text tmpText = selectButton.GetComponentInChildren<TMP_Text>();
+        tmpText.text = "occupied slot nr " + slotNumber;
+        //
         if (loadingSlot)
         {
             selectButton.onClick.AddListener(LoadSave);
@@ -61,16 +82,31 @@ public class SaveSlot : MonoBehaviour
 
     private void CreateSave()
     {
-
+        newCharacterPanel.gameObject.SetActive(true);
+        newCharacterPanel.SelectedSlot = slotNumber;
     }
 
     private void DeleteSave()
     {
-        Reset();
+        saveManager.DeleteSave(slotNumber);
+        TryGetSave();
     }
 
     private void LoadSave()
     {
+        saveManager.ChosenSlotIndex = slotNumber;
+        sceneLoader.LoadDungeonScene();
+    }
 
+    private void TryGetSave()
+    {
+        if(saveManager.GetPlayerData(slotNumber,out PlayerData playerData))
+        {
+            SetOccupiedSlot(playerData);
+        }
+        else
+        {
+            SetEmptySlot();
+        }
     }
 }

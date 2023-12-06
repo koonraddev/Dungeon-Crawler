@@ -37,11 +37,14 @@ public class StatisticCreator
 
 public class NewCharacterPanel : MonoBehaviour
 {
+    [SerializeField] private SaveManager saveManager;
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private Color inactiveButtonColor, activeButtonColor;
     [SerializeField] private TMP_Text pointsText;
     [SerializeField] private List<StatisticCreator> statsList;
     [SerializeField] private int startPoints;
     private int points;
+    private int selectedSlot;
 
     [SerializeField] private InputField nameInputField;
     [SerializeField] private ButtonManager nextButton;
@@ -51,12 +54,24 @@ public class NewCharacterPanel : MonoBehaviour
     public int PointsLeft { get => points; }
     public List<StatisticCreator> StatsList { get => statsList; }
     public string CharacterName { get => nameInputField.text; }
+    public int SelectedSlot { get => selectedSlot; set =>selectedSlot = value; }
 
+    private void Awake()
+    {
+        selectedSlot = 0;
+        points = startPoints;
+
+        foreach (var item in statsList)
+        {
+            item.Reset();
+            GameEvents.instance.StatisticUpdate(item.StatisticType, item.BaseStatisticValue + item.AddedValue);
+        }
+    }
     void Update()
     {
         pointsText.text = points.ToString();
 
-        if(nameInputField.text.Length > 0)
+        if (nameInputField.text.Length > 0)
         {
             nextButton.ActivateButton();
         }
@@ -64,15 +79,7 @@ public class NewCharacterPanel : MonoBehaviour
         {
             nextButton.DeactivateButton();
         }
-    }
-    private void OnEnable()
-    {
-        points = startPoints;
-        foreach (var item in statsList)
-        {
-            item.Reset();
-            GameEvents.instance.StatisticUpdate(item.StatisticType, item.BaseStatisticValue + item.AddedValue);
-        }
+
     }
 
     public void AddPointToStatistic(StatisticType statisticType)
@@ -91,11 +98,31 @@ public class NewCharacterPanel : MonoBehaviour
     {
         StatisticCreator statCreator = statsList.Where(x => x.StatisticType == statisticType).ToList()[0];
 
-        if ((statCreator.AddedValue + statCreator.BaseStatisticValue) - statCreator.ValueIncrease >= statCreator.BaseStatisticValue)
+        if (statCreator.AddedValue + statCreator.BaseStatisticValue - statCreator.ValueIncrease >= statCreator.BaseStatisticValue)
         {
             points += statCreator.RequirePoints;
             statCreator.DecreaseValue();
             GameEvents.instance.StatisticUpdate(statCreator.StatisticType, statCreator.BaseStatisticValue + statCreator.AddedValue);
         }
+    }
+
+    private void OnDisable()
+    {
+        selectedSlot = 0;
+        points = startPoints;
+
+        foreach (var item in statsList)
+        {
+            item.Reset();
+            GameEvents.instance.StatisticUpdate(item.StatisticType, item.BaseStatisticValue + item.AddedValue);
+        }
+    }
+
+    public void Create()
+    {
+        PlayerBasicStatistics playerStats = new(StatsList);
+        saveManager.ChosenSlotIndex = selectedSlot;
+        saveManager.CreateSave(selectedSlot, CharacterName, playerStats);
+        sceneLoader.LoadDungeonScene();
     }
 }

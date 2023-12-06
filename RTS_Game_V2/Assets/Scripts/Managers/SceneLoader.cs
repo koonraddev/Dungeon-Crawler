@@ -32,13 +32,13 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMenuScene()
     {
-        StartCoroutine(LoadYourAsyncScene(1));
+        StartCoroutine(LoadYourAsyncScene(0));
     }
 
     public void LoadDungeonScene()
     {
         //StartCoroutine(LoadYourAsyncScene(2));
-        StartCoroutine(LoadYourAsyncScene(0));
+        StartCoroutine(LoadYourAsyncScene(1));
     }
 
     private void SwitchScene()

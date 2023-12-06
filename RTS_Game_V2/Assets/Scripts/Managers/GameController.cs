@@ -39,6 +39,13 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnLastRoomReady += CheckRoomsAmount;
     }
 
+    private void Start()
+    {
+        Debug.Log("Start");
+        GameEvents.instance.ChangeGameStatus(GameStatus.START);
+        GameEvents.instance.LoadLevel();
+    }
+
     private void CheckRoomsAmount()
     {
         if(spawnedRooms.Count == RoomsGenerator.instance.RoomsToGenerate)
@@ -74,11 +81,6 @@ public class GameController : MonoBehaviour
         StartCoroutine(CreatStartSpawnPoint());
     }
 
-    private void Start()
-    {
-        GameEvents.instance.ChangeGameStatus(GameStatus.START);
-        GameEvents.instance.LoadLevel();
-    }
 
     public IEnumerator CreatStartSpawnPoint()
     {
