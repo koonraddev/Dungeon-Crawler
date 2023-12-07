@@ -3,79 +3,94 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SaveSlot : MonoBehaviour
 {
     [SerializeField] private bool loadingSlot;
     [SerializeField] private int slotNumber;
 
-    [SerializeField] private NewCharacterPanel newCharacterPanel;
+
     [SerializeField] private SaveManager saveManager;
     [SerializeField] private SceneLoader sceneLoader;
 
-    [SerializeField] private Color emptySlotColor, occupiedSlotColor;
-    [SerializeField] private Image foreground;
+    [SerializeField] private GameObject foregroundMask;
+    [SerializeField] private TMP_Text slotNumberObj;
     [Header("Buttons Section")]
-    [SerializeField] private GameObject deleteButtonObj, selectButtonObj;
+    [SerializeField] private Button deleteButton, selectButton;
 
     [Header("Info Objects Section")]
-    [SerializeField] private TMP_Text playerNameObj, floorObj, dateObj, timeObj;
+    [SerializeField] private TMP_Text playerNameObj;
+    [SerializeField] private TMP_Text floorObj;
+    [SerializeField] private TMP_Text dateObj;
+    [SerializeField] private TMP_Text timeObj;
 
-    private Image selectButtonImage;
-    private Button deleteButton, selectButton;
+    [Header("new section")]
+    [SerializeField] private NewCharacterPanel newCharacterPanel;
 
+    [Header("load section")]
+    [SerializeField] Button loadButton;
+    private ButtonManager loadButtonManager;
     private void Awake()
     {
-        selectButton = selectButtonObj.GetComponent<Button>();
-        selectButtonImage = selectButtonObj.GetComponent<Image>();
-        deleteButton = deleteButtonObj.GetComponent<Button>();
-
-        deleteButton.onClick.AddListener(DeleteSave);
+        if(loadButton != null)
+        {
+            loadButtonManager = loadButton.gameObject.GetComponent<ButtonManager>();
+        }
+        slotNumberObj.text = slotNumber.ToString();
     }
 
     private void OnEnable()
     {
+        if (loadButtonManager != null)
+        {
+            loadButtonManager.DeactivateButton();
+        }
         TryGetSave();
     }
 
     private void SetEmptySlot()
     {
-        deleteButtonObj.SetActive(false);
-        //selectButtonImage.color = emptySlotColor;
+        deleteButton.gameObject.SetActive(false);
 
         playerNameObj.text = "-";
         floorObj.text = "-";
         dateObj.text = "///";
         timeObj.text = "-:-";
-        foreground.color = emptySlotColor;
-        //
-        TMP_Text tmpText = selectButton.GetComponentInChildren<TMP_Text>();
-        tmpText.text = "empty slot nr " + slotNumber;
-        //
-        if (!loadingSlot)
+
+
+        if (loadingSlot)
         {
+            foregroundMask.SetActive(true);
+        }
+        else
+        {
+            foregroundMask.SetActive(false);
+            deleteButton.onClick.RemoveAllListeners();
             selectButton.onClick.AddListener(CreateSave);
         }
     }
 
     private void SetOccupiedSlot(PlayerData playerData)
     {
-        deleteButtonObj.SetActive(true);
-        selectButtonImage.color = occupiedSlotColor;
+        deleteButton.gameObject.SetActive(true);
+        deleteButton.onClick.RemoveAllListeners();
+        deleteButton.onClick.AddListener(DeleteSave);
 
         playerNameObj.text = playerData.characterName;
         floorObj.text = playerData.levelCompleted.ToString();
-        dateObj.text = playerData.dateTime.Date.ToString("dd/MM/yyyy");
-        timeObj.text = playerData.dateTime.Date.ToString("HH:mm");
-        foreground.color = occupiedSlotColor;
+        dateObj.text = DateTime.Parse(playerData.dateTime).ToString("dd/MM/yyyy");
+        timeObj.text = DateTime.Parse(playerData.dateTime).ToString("HH/mm");
 
-        //
-        TMP_Text tmpText = selectButton.GetComponentInChildren<TMP_Text>();
-        tmpText.text = "occupied slot nr " + slotNumber;
-        //
+
         if (loadingSlot)
         {
             selectButton.onClick.AddListener(LoadSave);
+            foregroundMask.SetActive(false);
+        }
+        else
+        {
+            foregroundMask.SetActive(true);
         }
     }
 
@@ -95,7 +110,9 @@ public class SaveSlot : MonoBehaviour
     private void LoadSave()
     {
         saveManager.ChosenSlotIndex = slotNumber;
-        sceneLoader.LoadDungeonScene();
+        loadButton.onClick.RemoveAllListeners();
+        loadButtonManager.ActivateButton();
+        loadButton.onClick.AddListener(sceneLoader.LoadDungeonScene);
     }
 
     private void TryGetSave()
@@ -107,6 +124,14 @@ public class SaveSlot : MonoBehaviour
         else
         {
             SetEmptySlot();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (loadButtonManager != null)
+        {
+            loadButtonManager.DeactivateButton();
         }
     }
 }

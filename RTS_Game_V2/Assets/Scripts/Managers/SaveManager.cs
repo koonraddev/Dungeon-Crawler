@@ -14,7 +14,7 @@ public class PlayerData
     public float playerHP;
     public string characterName;
     public int levelCompleted;
-    public DateTime dateTime;
+    public string dateTime;
 }
 
 public class SaveManager : MonoBehaviour
@@ -39,7 +39,7 @@ public class SaveManager : MonoBehaviour
         playerData.playerBasicStatistics = BuffManager.instance.PlayerBasicStatistics;
         playerData.playerHP = BuffManager.instance.PlayerHP;
         playerData.levelCompleted = LevelManager.instance.Level;
-        playerData.dateTime = DateTime.Now;
+        playerData.dateTime = DateTime.Now.ToString();
 
         string allData = JsonUtility.ToJson(playerData);
         string path = GetPath(chosenSlotIndex);
@@ -58,11 +58,31 @@ public class SaveManager : MonoBehaviour
         playerData.playerHP = playerBasicStatisitcs.MaxHealth;
         playerData.characterName = characterName;
         playerData.levelCompleted = 0;
-        playerData.dateTime = DateTime.Now;
+        playerData.dateTime = DateTime.Now.ToString();
 
         string path = GetPath(slot);
         string allData = JsonUtility.ToJson(playerData);
         File.WriteAllText(path, allData);
+
+    }
+    public void LoadSave()
+    {
+        if (GetPlayerData(chosenSlotIndex, out PlayerData loadedData))
+        {
+            Debug.Log("Player Data loaded index= " + chosenSlotIndex);
+            BuffManager.instance.PlayerBasicStatistics = loadedData.playerBasicStatistics;
+            EquipmentManager.instance.Equipment = loadedData.equipment;
+            InventoryManager.instance.Inventory = loadedData.inventory;
+            BuffManager.instance.Buffs = loadedData.activeBuffsList;
+            LevelManager.instance.Level = loadedData.levelCompleted;
+            BuffManager.instance.PlayerHP = loadedData.playerHP;
+
+            GameEvents.instance.PlayerDataLoaded();
+        }
+        else
+        {
+            sceneLoader.LoadMenuScene();
+        }
     }
 
     private string GetPath(int slot)
@@ -115,31 +135,12 @@ public class SaveManager : MonoBehaviour
         return false;
     }
 
-    public void LoadSave()
-    {
-        if (GetPlayerData(chosenSlotIndex,out PlayerData loadedData))
-        {
-            Debug.Log("Player Data loaded index= " + chosenSlotIndex);
-            BuffManager.instance.PlayerBasicStatistics = loadedData.playerBasicStatistics;
-            EquipmentManager.instance.Equipment = loadedData.equipment;
-            InventoryManager.instance.Inventory = loadedData.inventory;
-            BuffManager.instance.Buffs = loadedData.activeBuffsList;
-            LevelManager.instance.Level = loadedData.levelCompleted;
-            BuffManager.instance.PlayerHP = loadedData.playerHP;
-
-            GameEvents.instance.PlayerDataLoaded();
-        }
-        else
-        {
-            sceneLoader.LoadMenuScene();
-        } 
-    }
 
     public void DeleteSave(int slotIndex)
     {
         if (GetFile(slotIndex, out string save))
         {
-            File.Delete(save);
+            File.Delete(GetPath(slotIndex));
         }
     }
 

@@ -6,8 +6,8 @@ public class ButtonManager : MonoBehaviour
 {
     [SerializeField] private NewCharacterPanel newPlayerPanel;
     private Color inactiveButtonColor, activeButtonColor;
-    private Image buttonImage;
-    private Button button;
+    [SerializeField] private Image buttonImage;
+    [SerializeField] private Button button;
     private void Awake()
     {
         buttonImage = GetComponent<Image>();

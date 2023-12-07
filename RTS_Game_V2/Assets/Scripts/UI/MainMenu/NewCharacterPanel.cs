@@ -58,7 +58,6 @@ public class NewCharacterPanel : MonoBehaviour
 
     private void Awake()
     {
-        selectedSlot = 0;
         points = startPoints;
 
         foreach (var item in statsList)
