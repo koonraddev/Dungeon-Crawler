@@ -102,7 +102,7 @@ public class SaveSlot : MonoBehaviour
     }
 
     private void DeleteSave()
-    {
+    { 
         saveManager.DeleteSave(slotNumber);
         TryGetSave();
     }
