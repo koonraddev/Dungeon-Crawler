@@ -22,16 +22,17 @@ public class PortalSpawner : MonoBehaviour
     private Vector3 pointC, pointCx, pointCz;
     private Vector3 pointD, pointDx, pointDz;
 
-
+    bool firstRoom;
     private void Awake()
     {
         doorPrefab = Resources.Load("Teleport") as GameObject;
     }
-    public void SetEssentials(RoomSO roomSO, int[] doorsArray)
+    public void SetEssentials(RoomSO roomSO, int[] doorsArray, bool firstRoom)
     {
         this.doorsArray = doorsArray;
         this.doorsList = roomSO.RoomDoors;
         this.roomSO = roomSO;
+        this.firstRoom = firstRoom;
 
         doorCollider = doorPrefab.GetComponent<BoxCollider>();
         colliderSize = doorCollider.size;
@@ -126,6 +127,7 @@ public class PortalSpawner : MonoBehaviour
                 Door doorScript = door.GetComponentInChildren<Door>();
                 RoomFader roomFade = door.GetComponent<RoomFader>();
                 roomFade.ParentObject = gameObject;
+                roomFade.FirstRoom = firstRoom;
                 doorScript.SetDoor(doorsList[Random.Range(0, doorsList.Count)]);
 
                 GameController.instance.spawnedPortals.Add(doorScript.GameObject);

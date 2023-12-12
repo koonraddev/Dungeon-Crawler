@@ -9,7 +9,6 @@ public class PlayerObjectInteraction : MonoBehaviour
     private GameObject pointedObject;
     private GameObject clickedObject;
     [SerializeField] private Color highLightObjectColor;
-    [SerializeField] private LayerMask interactiveObjectMask;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttack playerAttack;
     private int minimumDistanceFromObject;

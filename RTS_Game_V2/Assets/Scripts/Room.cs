@@ -18,6 +18,7 @@ public class Room : MonoBehaviour
 
     public bool isLastRoom;
     int spawnersToActivate;
+
     private void Awake()
     {
         planeSize = GetComponent<Collider>().bounds.size;
@@ -156,11 +157,15 @@ public class Room : MonoBehaviour
             iterator++;
         }
 
-        //SpawnWalls spawnScript = gameObject.AddComponent(typeof(SpawnWalls)) as SpawnWalls;
-        //spawnScript.SetEssentials(roomSO, doorsArray);
-        PortalSpawner portalSpawner = gameObject.AddComponent(typeof(PortalSpawner)) as PortalSpawner;
-        portalSpawner.SetEssentials(roomSO, doorsArray);
+        bool firstRoom = false;
+        if(gameObject.transform.position.x == 0 && gameObject.transform.position.z == 0)
+        {
+            firstRoom = true;
+        }
+
         roomSO.RoomBehavoiur(gameObject, isLastRoom);
+        PortalSpawner portalSpawner = gameObject.AddComponent(typeof(PortalSpawner)) as PortalSpawner;
+        portalSpawner.SetEssentials(roomSO, doorsArray, firstRoom);
 
         if (isLastRoom)
         {

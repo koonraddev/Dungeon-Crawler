@@ -5,7 +5,7 @@ using TMPro;
 
 public class ResolutionDropdown : MonoBehaviour
 {
-    [SerializeField] private TMP_Dropdown dropdown;
+    private TMP_Dropdown dropdown;
 
     Resolution[] resolutions;
 
@@ -25,6 +25,7 @@ public class ResolutionDropdown : MonoBehaviour
     }
     private void Awake()
     {
+        dropdown = GetComponent<TMP_Dropdown>();
         GetGameResolution();
     }
     private void GetGameResolution()

@@ -6,21 +6,17 @@ using DG.Tweening;
 public class RoomFader : MonoBehaviour
 {
     private GameObject parentObject, destinationObject;
-    private List<Transform> parentObjsTransforms,destObjsTransforms;
-
     Vector3 startPos;
+    private bool generatingDone = false;
+    private bool firstRoom = false;
+
+    public bool FirstRoom { get=> firstRoom; set => firstRoom = value; }
+
     public GameObject ParentObject
     {
         set
         {
             parentObject = value;
-            parentObjsTransforms = new();
-
-            foreach (Transform child in parentObject.transform)
-            {
-                parentObjsTransforms.Add(child);
-            }
-
             startPos = gameObject.transform.position;
             gameObject.transform.SetParent(null);
         }
@@ -30,69 +26,67 @@ public class RoomFader : MonoBehaviour
         set 
         {
             destinationObject = value;
-            destObjsTransforms = new();
-
-            foreach (Transform child in destinationObject.transform)
-            {
-                destObjsTransforms.Add(child);
-            }
             gameObject.transform.SetParent(null);
-            FadeOut(destObjsTransforms, destinationObject);
         } 
     }
 
-    private void Awake()
+    private void OnEnable()
     {
-        //startPos = gameObject.transform.position;
+        GameEvents.instance.OnGeneratingReady += Ready;
     }
 
     private void Update()
     {
-        if(parentObject !=null && destinationObject != null)
+        if (generatingDone)
         {
-            if (parentObject.layer == 12 && destinationObject.layer == 12)
+            if (parentObject != null && destinationObject != null)
             {
-                gameObject.transform.position = (startPos + new Vector3(0, +150f, 0f));
-            }
-            else
-            {
-                gameObject.transform.position = startPos;
+                if (parentObject.transform.position.y == 100f && destinationObject.transform.position.y == 100f)
+                {
+                    gameObject.transform.position = (startPos + new Vector3(0, +150f, 0f));
+                }
+                else
+                {
+                    gameObject.transform.position = startPos;
+                }
             }
         }
 
+
+    }
+
+    private void Ready()
+    {
+        generatingDone = true;
+        if (firstRoom)
+        {
+            parentObject.transform.position = new Vector3(parentObject.transform.position.x, 0f, parentObject.transform.position.z);
+            
+        }
+        else
+        {
+            parentObject.transform.position = new Vector3(parentObject.transform.position.x, 100f, parentObject.transform.position.z);
+        }
+        destinationObject.transform.position = new Vector3(destinationObject.transform.position.x, 100f, destinationObject.transform.position.z);
     }
 
     public void Teleport()
     {
-        if (parentObject.layer == 7)
+
+        if(parentObject.transform.position.y <= 10)
         {
-            FadeOut(parentObjsTransforms, parentObject);
-            FadeIn(destObjsTransforms, destinationObject);
+            parentObject.transform.position = new Vector3(parentObject.transform.position.x, 100f, parentObject.transform.position.z);
+            destinationObject.transform.position = new Vector3(destinationObject.transform.position.x, 0f, destinationObject.transform.position.z);
         }
         else
         {
-            FadeOut(destObjsTransforms, destinationObject);
-            FadeIn(parentObjsTransforms, parentObject);
+            parentObject.transform.position = new Vector3(parentObject.transform.position.x, 0f, parentObject.transform.position.z);
+            destinationObject.transform.position = new Vector3(destinationObject.transform.position.x, 100f, destinationObject.transform.position.z);
         }
     }
 
-
-    public void FadeOut(List<Transform> transformsList, GameObject mainObject)
+    private void OnDisable()
     {
-        mainObject.layer = 12;
-        foreach (Transform child in transformsList)
-        {
-            child.gameObject.layer = 12;
-        }
-    }
-
-
-    public void FadeIn(List<Transform> transformsList, GameObject mainObject)
-    {
-        mainObject.layer = 7;
-        foreach (Transform child in transformsList)
-        {
-            child.gameObject.layer = 7;
-        }
+        GameEvents.instance.OnGeneratingReady -= Ready;
     }
 }

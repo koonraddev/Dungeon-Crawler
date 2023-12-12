@@ -49,8 +49,7 @@ public class RoomsGenerator : MonoBehaviour
     Array levelRangeValues = Enum.GetValues(typeof(LevelRange));
     int arrayLength;
 
-    private int roomsToGenerate;
-    private int roomsLeft;
+
     private bool firstRoom;
     private List<RoomSO> roomsList;
     private RoomSO startRoom;
@@ -60,11 +59,13 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] private int defaultRoomsAmount;
     [SerializeField] private List<LevelsRangeSetiings> levelRangeSetsList;
     [SerializeField] private List<LevelException> levelExcSetsList;
-    public int RoomsLeft { get => roomsLeft; }
-    private int roomsLeftToGenerate;
-    public int RoomsToGenerate { get => roomsToGenerate; }
     private List<SpawnPoint> spawnPoints = new();
+    private int roomsLeft;
+    public int RoomsLeft { get => roomsLeft; }
+    private int roomsToGenerate;
+    public int RoomsToGenerate { get => roomsToGenerate; }
 
+    private int roomsLeftToGenerate;
     private void Awake()
     {
         rand = new System.Random();
