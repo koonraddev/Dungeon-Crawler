@@ -30,6 +30,8 @@ public class Door : MonoBehaviour, IInteractionObject
     public List<Transform> sides;
     private GameObject interactingObject;
 
+    public bool KeyRequired { get => keyRequired; }
+
     [SerializeField] private RoomFader roomFader;
     public void ObjectInteraction(GameObject interactingObject)
     {
@@ -59,6 +61,7 @@ public class Door : MonoBehaviour, IInteractionObject
                 }
                 keyRequired = false;
                 roomTeleport.ActiveTeleport(true);
+                MapManager.instance.ActivatePortal(this.gameObject);
                 Teleport();
             }
             else
@@ -149,6 +152,7 @@ public class Door : MonoBehaviour, IInteractionObject
                 keyRequired = false;
             }
             roomTeleport.ActiveTeleport(!keyRequired);
+            MapManager.instance.AddPortal(this.gameObject);
         }
     }
 

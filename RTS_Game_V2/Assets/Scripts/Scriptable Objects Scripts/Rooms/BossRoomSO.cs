@@ -28,5 +28,6 @@ public class BossRoomSO : RoomSO
             boss.transform.SetParent(roomGameObject.transform);
             boss.GetComponent<Enemy>().SetEnemy(roomGameObject);
         }
+        MapManager.instance.AddRoom(roomGameObject, RoomMarkType.BOSS);
     }
 }

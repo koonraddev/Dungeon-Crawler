@@ -48,6 +48,7 @@ public class RoomFader : MonoBehaviour
                 else
                 {
                     gameObject.transform.position = startPos;
+                    MapManager.instance.ShowPortal(gameObject);
                 }
             }
         }
@@ -77,11 +78,15 @@ public class RoomFader : MonoBehaviour
         {
             parentObject.transform.position = new Vector3(parentObject.transform.position.x, 100f, parentObject.transform.position.z);
             destinationObject.transform.position = new Vector3(destinationObject.transform.position.x, 0f, destinationObject.transform.position.z);
+            MapManager.instance.ActiveRoom(destinationObject);
+            MapManager.instance.DeactiveRoom(parentObject);
         }
         else
         {
             parentObject.transform.position = new Vector3(parentObject.transform.position.x, 0f, parentObject.transform.position.z);
             destinationObject.transform.position = new Vector3(destinationObject.transform.position.x, 100f, destinationObject.transform.position.z);
+            MapManager.instance.ActiveRoom(parentObject);
+            MapManager.instance.DeactiveRoom(destinationObject);
         }
     }
 

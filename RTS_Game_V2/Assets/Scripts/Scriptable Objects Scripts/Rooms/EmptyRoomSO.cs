@@ -21,5 +21,6 @@ public class EmptyRoomSO : RoomSO
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
         //roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
+        MapManager.instance.AddRoom(roomGameObject, RoomMarkType.EMPTY);
     }
 }

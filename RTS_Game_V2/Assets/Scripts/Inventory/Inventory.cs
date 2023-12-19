@@ -99,16 +99,19 @@ public class Inventory
     {
         foreach (InventorySlot invSlot in slotsList)
         {
-            if(invSlot.Item == itemToRemove)
+            if (!invSlot.Empty)
             {
-                invSlot.Amount -= 1;
-                if (invSlot.Amount == 0)
+                if (invSlot.Item.Equals(itemToRemove))
                 {
-                    invSlot.Item = null;
-                    invSlot.Empty = true;
+                    invSlot.Amount -= 1;
+                    if (invSlot.Amount == 0)
+                    {
+                        invSlot.Item = null;
+                        invSlot.Empty = true;
+                    }
+                    GameEvents.instance.InventoryUpdate();
+                    return true;
                 }
-                GameEvents.instance.InventoryUpdate();
-                return true;
             }
         }
         return false;
@@ -134,13 +137,16 @@ public class Inventory
     }
 
 
-    public bool CheckItem(InventoryItem invToCheck, int amount = 1)
+    public bool CheckItem(InventoryItem itemToCheck, int amount = 1)
     {
         foreach (InventorySlot invSlot in slotsList)
         {
-            if(invSlot.Item == invToCheck && invSlot.Amount >= amount)
+            if (!invSlot.Empty)
             {
-                return true;
+                if (invSlot.Item.Equals(itemToCheck) && invSlot.Amount >= amount)
+                {
+                    return true;
+                }
             }
         }
 

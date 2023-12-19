@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreasureRoomSO : MonoBehaviour
+public class TreasureRoomSO : RoomSO
 {
+    public override int MaxDoorsInWall => throw new System.NotImplementedException();
+
+    public override List<DoorSO> RoomDoors => throw new System.NotImplementedException();
+
+    public override GameObject RoomPlane => throw new System.NotImplementedException();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +20,10 @@ public class TreasureRoomSO : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
+    {
+        MapManager.instance.AddRoom(roomGameObject, RoomMarkType.TREASURE);
     }
 }

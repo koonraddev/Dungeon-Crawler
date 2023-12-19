@@ -55,6 +55,7 @@ public class GameController : MonoBehaviour
         else
         {
             RoomsGenerator.instance.ResetRooms();
+            MapManager.instance.ClearMap();
             Respawn();
         }
     }

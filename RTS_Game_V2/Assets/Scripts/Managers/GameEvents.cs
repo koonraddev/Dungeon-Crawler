@@ -29,6 +29,7 @@ public class GameEvents : MonoBehaviour
     public event Action<bool> OnStatisticPanel;
     public event Action<bool> OnConsolePanel;
     public event Action<bool> OnMenuPanel;
+    public event Action<bool> OnMapPanel;
 
     public event Action OnLoadNextLevel;
     public event Action OnLoadLevel;
@@ -98,6 +99,7 @@ public class GameEvents : MonoBehaviour
     public void ConsolePanel(bool activePanel) => OnConsolePanel?.Invoke(activePanel);
 
     public void MenuPanel(bool activePanel) => OnMenuPanel?.Invoke(activePanel);
+    public void MapPanel(bool fullSizeMode) => OnMapPanel?.Invoke(fullSizeMode);
 
     public void Spawn(int id) => OnSpawn?.Invoke(id);
 

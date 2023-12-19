@@ -11,14 +11,16 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject statisticsPanel;
     [SerializeField] private GameObject enemyInformationPanel;
     [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private GameObject mapPanel;
 
-    private Vector3 playerUIPos, infoPanelPos, eqPanelPos, invDropPanelPos, containerPanelPos, statsPanelPos, enemyPanelPos;
+    private Vector3 playerUIPos, infoPanelPos, eqPanelPos, invDropPanelPos, containerPanelPos, statsPanelPos, enemyPanelPos, mapPanelPos;
+    [SerializeField] private Vector3 miniMapPanelPos;
 
     private PlayerControls playerControls;
     private InputAction inventoryAction;
     private InputAction statisticsAction;
     private bool isInventoryActivated;
-    private bool isStatisticsActivated = false;
+    private bool fullSizeMapMode,isStatisticsActivated = false;
 
     private void Awake()
     {
@@ -31,6 +33,7 @@ public class UIController : MonoBehaviour
         containerPanelPos = containerPanel.transform.position;
         statsPanelPos = statisticsPanel.transform.position;
         enemyPanelPos = enemyInformationPanel.transform.position;
+        mapPanelPos = mapPanel.transform.localPosition;
     }
     private void OnEnable()
     {
@@ -43,6 +46,7 @@ public class UIController : MonoBehaviour
         GameEvents.instance.OnStatisticPanel += StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick += EnemyClick;
         GameEvents.instance.OnLoadNextLevel += ActiveLoadingPanel;
+        GameEvents.instance.OnMapPanel += FullSizeMap;
         inventoryAction = playerControls.BasicMovement.Inventory;
         statisticsAction = playerControls.BasicMovement.Statistics;
         InventoryPanelStatus(false);
@@ -62,6 +66,11 @@ public class UIController : MonoBehaviour
         if (statisticsAction.triggered)
         {
             GameEvents.instance.StatisticPanel(!isStatisticsActivated);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            GameEvents.instance.MapPanel(!fullSizeMapMode);
         }
     }
 
@@ -86,6 +95,21 @@ public class UIController : MonoBehaviour
             enemyInformationPanel.transform.position = enemyPanelPos + new Vector3(5000, 0, 0);
         }
 
+    }
+
+    public void FullSizeMap(bool activeFullSizeMap)
+    {
+        fullSizeMapMode = activeFullSizeMap;
+        if (activeFullSizeMap)
+        {
+            mapPanel.transform.localScale = Vector3.one;
+            mapPanel.transform.localPosition = mapPanelPos;
+        }
+        else
+        {
+            mapPanel.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+            mapPanel.transform.localPosition = miniMapPanelPos;
+        }
     }
 
     public void InventoryPanelStatus(bool active)
@@ -154,6 +178,7 @@ public class UIController : MonoBehaviour
         GameEvents.instance.OnStatisticPanel -= StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick -= EnemyClick;
         GameEvents.instance.OnLoadNextLevel -= ActiveLoadingPanel;
+        GameEvents.instance.OnMapPanel -= FullSizeMap;
     }
 
     public GameObject GetInfoPanel()

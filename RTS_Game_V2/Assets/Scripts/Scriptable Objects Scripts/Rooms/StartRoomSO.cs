@@ -24,5 +24,6 @@ public class StartRoomSO : RoomSO
         //roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
         NavMeshSurface surface = roomPlane.GetComponent<NavMeshSurface>();
         NavigationController.instance.AddNavSurface(surface);
+        MapManager.instance.AddRoom(roomGameObject, RoomMarkType.START);
     }
 }

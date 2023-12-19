@@ -32,5 +32,6 @@ public class FightRoomSO : RoomSO
             enemySpawner.SetSpawner(enemySpawnerConfigurationSO, roomGameObject);
             spawner.SetActive(true);
         }
+        MapManager.instance.AddRoom(roomGameObject, RoomMarkType.FIGHT);
     }
 }
