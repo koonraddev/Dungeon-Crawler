@@ -18,6 +18,7 @@ public class UIMapZoom : MonoBehaviour, IScrollHandler
     private void Awake()
     {
         initialScale = transform.localScale;
+        transform.localScale = new(minimapScale, minimapScale, minimapScale);
     }
     private void OnEnable()
     {

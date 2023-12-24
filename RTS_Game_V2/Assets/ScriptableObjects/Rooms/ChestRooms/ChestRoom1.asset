@@ -15,6 +15,7 @@ MonoBehaviour:
   roomPlane: {fileID: 8696219440333952196, guid: 858f6e7235f665940b91078e18f0ab49, type: 3}
   doorsList:
   - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}
+  maxDoorsInWall: 1
   chestList:
   - {fileID: 11400000, guid: 808dc1b6a65bfb34faffa2a3105eec79, type: 2}
   - {fileID: 11400000, guid: 3e8f94ac7b3caa74b892ff74debcf8be, type: 2}

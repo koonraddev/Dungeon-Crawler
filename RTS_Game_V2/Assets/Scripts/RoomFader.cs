@@ -58,10 +58,17 @@ public class RoomFader : MonoBehaviour
 
     private void Ready()
     {
+        if(parentObject == null || destinationObject == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         generatingDone = true;
         if (firstRoom)
         {
             parentObject.transform.position = new Vector3(parentObject.transform.position.x, 0f, parentObject.transform.position.z);
+            MapManager.instance.ActiveRoom(parentObject);
             
         }
         else
@@ -73,7 +80,6 @@ public class RoomFader : MonoBehaviour
 
     public void Teleport()
     {
-
         if(parentObject.transform.position.y <= 10)
         {
             parentObject.transform.position = new Vector3(parentObject.transform.position.x, 100f, parentObject.transform.position.z);

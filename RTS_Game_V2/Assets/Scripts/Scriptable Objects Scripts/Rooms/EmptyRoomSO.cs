@@ -8,9 +8,8 @@ public class EmptyRoomSO : RoomSO
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
     [Header("Door section")]
-    [SerializeField] private GameObject doorPrefab;
     [SerializeField] private List<DoorSO> doorsList;
-    private int maxDoorsInWall = 1;
+    [SerializeField] private int maxDoorsInWall;
 
     public override int MaxDoorsInWall => maxDoorsInWall;
 

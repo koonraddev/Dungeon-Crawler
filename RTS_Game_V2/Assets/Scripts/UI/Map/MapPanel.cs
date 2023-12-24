@@ -25,11 +25,12 @@ public class MapPanel : MonoBehaviour
         float newPosX, newPosY;
         newPosX = roomMarkPrefabSize.x * roomObject.transform.position.x / 40;
         newPosY = roomMarkPrefabSize.y * roomObject.transform.position.z / 40;
-        Vector3 newPos = new(newPosX, newPosY, 0f);
+        Vector3 newPos = new Vector3(newPosX, newPosY, 0f); // mapObject.rectTransform.localScale.x;
 
         GameObject newMarkObject = Instantiate(roomMarkPrefab);
         newMarkObject.transform.SetParent(mapObject.transform);
         newMarkObject.transform.localPosition = newPos;
+        newMarkObject.transform.localScale = roomMarkPrefab.transform.localScale;
 
         RoomMark newRoomMark = newMarkObject.GetComponent<RoomMark>();
         newRoomMark.SetRoom(markType);
@@ -45,13 +46,14 @@ public class MapPanel : MonoBehaviour
         newPosY = portalMarkPrefabSize.x * portalObject.transform.position.z /6;
 
         //Debug.Log("Portal canvas pos: " + newPosY + " X " + newPosY);
-        Vector3 newPos = new(newPosX, newPosY, 0f);
+        Vector3 newPos = new Vector3(newPosX, newPosY, 0f);// mapObject.rectTransform.localScale.x;
         Vector3 newRot = new(0f, 0f, portalObject.transform.eulerAngles.y);
 
         GameObject newPortalObject = Instantiate(portalMarkPrefab);
         newPortalObject.transform.SetParent(mapObject.transform);
         newPortalObject.transform.localPosition = newPos;
         newPortalObject.transform.localEulerAngles = newRot;
+        newPortalObject.transform.localScale = portalMarkPrefab.transform.localScale;
 
         PortalMark newRoomMark = newPortalObject.GetComponent<PortalMark>();
         newRoomMark.SetPortal(locked);

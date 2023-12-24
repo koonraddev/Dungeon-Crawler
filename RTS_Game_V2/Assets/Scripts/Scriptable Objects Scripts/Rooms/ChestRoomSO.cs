@@ -10,11 +10,11 @@ public class ChestRoomSO : RoomSO
     [SerializeField] private GameObject roomPlane;
     [Header("Door section")]
     [SerializeField] private List<DoorSO> doorsList;
+    [SerializeField] private int maxDoorsInWall;
     [Header("Chest section")]
     [SerializeField] private List<ChestSO> chestList;
     [SerializeField] private GameObject chestPrefab;
 
-    private int maxDoorsInWall = 0;
 
     private MeshCollider mColl;
     private float spawnPlaneSizeX;

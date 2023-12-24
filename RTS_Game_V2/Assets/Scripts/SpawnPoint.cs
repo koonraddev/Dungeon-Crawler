@@ -31,7 +31,6 @@ public class SpawnPoint : MonoBehaviour
     
     public SpawnType SpawnerType { get; set; }
     public SpawnerStatus SpawnStatus { get => spawnStatus; }
-
     private void Awake()
     {
         rb.mass = 0;
@@ -51,6 +50,11 @@ public class SpawnPoint : MonoBehaviour
 
     public bool ActiveSpawner()
     {
+        if(spawnStatus == SpawnerStatus.BLOCKED)
+        {
+            return false;
+        }
+
         if (RoomsGenerator.instance.RoomsLeft > 0)
         {
             spawnStatus = SpawnerStatus.ENABLED;
@@ -92,34 +96,26 @@ public class SpawnPoint : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        ////delete in final
-        //switch (spawnStatus)
-        //{
-        //    case SpawnerStatus.UNCHECKED:
-        //        render.material.color = Color.white;
-        //        break;
-        //    case SpawnerStatus.BLOCKED:
-        //        render.material.color = Color.red;
-        //        break;
-        //    case SpawnerStatus.EMPTY:
-        //        render.material.color = Color.blue;
-        //        break;
-        //    case SpawnerStatus.ENABLED:
-        //        render.material.color = Color.green;
-        //        break;
-        //    default:
-        //        break;
-        //}
-    }
-
-
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("RoomPlane"))
         {
             spawnStatus = SpawnerStatus.BLOCKED;
         }
+        else
+        {
+            if (other.CompareTag("Spawner"))
+            {
+                SpawnPoint sp = other.gameObject.GetComponent<SpawnPoint>();
+
+                if(sp.SpawnStatus == SpawnerStatus.ENABLED)
+                {
+                    spawnStatus = SpawnerStatus.BLOCKED;
+                }
+            }
+        }
+
+
     }
+
 }

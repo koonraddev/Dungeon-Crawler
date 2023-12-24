@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 19, y: 19}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1262124166157697269
 CanvasRenderer:
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c876f81ac4ed5438a9a8621cb84628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeRoomColor: {r: 1, g: 0.89839315, b: 0.08018869, a: 1}
+  activeRoomColor: {r: 1, g: 0.8893617, b: 0, a: 1}
   unactiveRoomColor: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
   foregroundMarkImage: {fileID: 5449336259476049745}
   backgroundMarkImage: {fileID: 8549859887197302955}
@@ -253,10 +253,10 @@ MonoBehaviour:
   - roomMarkType: 1
     markColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   - roomMarkType: 2
-    markColor: {r: 0.49056602, g: 0.33234024, b: 0.17817727, a: 1}
+    markColor: {r: 0.6320754, g: 0.47256583, b: 0.31305623, a: 1}
   - roomMarkType: 3
-    markColor: {r: 0.3607843, g: 0.6396233, b: 0.94509804, a: 1}
+    markColor: {r: 0.54668033, g: 0.7581963, b: 0.990566, a: 1}
   - roomMarkType: 4
-    markColor: {r: 1, g: 0.6940149, b: 0.24056602, a: 1}
+    markColor: {r: 1, g: 0.7591422, b: 0.4009434, a: 1}
   - roomMarkType: 5
-    markColor: {r: 0.7058824, g: 0.3254902, b: 0.3254902, a: 1}
+    markColor: {r: 0.7924528, g: 0.5121039, b: 0.5121039, a: 1}

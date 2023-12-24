@@ -24,9 +24,9 @@ public class PlayerHealth : MonoBehaviour
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
     }
 
-    IEnumerator Start()
+    void Start()
     {
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
         health = BuffManager.instance.PlayerHP;
         GameEvents.instance.UpdateCurrentHP(health);
     }
@@ -98,6 +98,11 @@ public class PlayerHealth : MonoBehaviour
     {
         health -= healthPoints;
         GameEvents.instance.UpdateCurrentHP(health);
+    }
+
+    private void Die()
+    {
+
     }
 
     public void Heal(float healthPoints, bool consoleLog = false)

@@ -38,21 +38,22 @@ public class UIController : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
-    }
-    private void Start()
-    {
         GameEvents.instance.OnInventoryPanelOpen += InventoryPanelStatus;
         GameEvents.instance.OnInformationPanel += InformationPanelStatus;
         GameEvents.instance.OnStatisticPanel += StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick += EnemyClick;
         GameEvents.instance.OnLoadNextLevel += ActiveLoadingPanel;
         GameEvents.instance.OnMapPanel += FullSizeMap;
+    }
+    private void Start()
+    {
         inventoryAction = playerControls.BasicMovement.Inventory;
         statisticsAction = playerControls.BasicMovement.Statistics;
         InventoryPanelStatus(false);
         InformationPanelStatus(false);
         StatisticsPanelStatus(false);
         EnemyClick(null);
+        GameEvents.instance.MapPanel(false);
     }
 
     private void Update()

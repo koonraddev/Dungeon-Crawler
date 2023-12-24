@@ -10,8 +10,7 @@ public class StartRoomSO : RoomSO
     [SerializeField] private GameObject roomPlane;
     [Header("Door section")]
     [SerializeField] private List<DoorSO> doorsList;
-
-    private int maxDoorsInWall = 1;
+    [SerializeField] private int maxDoorsInWall;
 
     public override int MaxDoorsInWall => maxDoorsInWall;
 

@@ -16,7 +16,7 @@ public class Room : MonoBehaviour
     private HashSet<int> exclude = new HashSet<int>() { };
     private GameObject spawner;
 
-    public bool isLastRoom;
+    private bool isLastRoom;
     int spawnersToActivate;
 
     private void Awake()
@@ -28,12 +28,9 @@ public class Room : MonoBehaviour
     {
         var rand = new System.Random();
         spawnersToActivate = rand.Next(1, 5);
-        if (exclude.Count() > 0)
+        if (exclude.Count() > 0 && spawnersToActivate > 1)
         {
-            if (spawnersToActivate > 1)
-            {
-                spawnersToActivate--;
-            }
+            spawnersToActivate--;
         }
         SpawnPoints();
     }
@@ -107,13 +104,14 @@ public class Room : MonoBehaviour
 
     IEnumerator SO()
     {
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForEndOfFrame();
         var rand = new System.Random();
-        var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));
+        
 
         for (int i = 0; i < spawnsArray.Length; i++)
         {
-            if(spawnersToActivate == 0)
+            var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));
+            if (spawnersToActivate == 0)
             {
                 break;
             }
@@ -125,13 +123,14 @@ public class Room : MonoBehaviour
                     int newValue = range.ElementAt(index);
                     exclude.Add(newValue);
 
-                    spawnsArray[newValue].ActiveSpawner();
-
-                    spawnersToActivate--;
+                    if (spawnsArray[newValue].ActiveSpawner())
+                    {
+                        spawnersToActivate--;
+                    }
                 }
             }
         }
-
+        yield return new WaitForEndOfFrame();
         Check();
     }
 
@@ -141,16 +140,22 @@ public class Room : MonoBehaviour
         int iterator = 0;
         foreach (SpawnPoint spawnPoint in spawnsArray)
         {
+
             switch (spawnPoint.SpawnStatus)
             {
-                case SpawnPoint.SpawnerStatus.BLOCKED:
-                case SpawnPoint.SpawnerStatus.EMPTY:
-                    doorsArray[iterator] = 0;
-                    break;
+
                 case SpawnPoint.SpawnerStatus.ENABLED:
-                    doorsArray[iterator] = rand.Next(1, roomSO.MaxDoorsInWall + 1);
+                    if (roomSO.MaxDoorsInWall <= 1)
+                    {
+                        doorsArray[iterator] = roomSO.MaxDoorsInWall;
+                    }
+                    else
+                    {
+                        doorsArray[iterator] = rand.Next(1, roomSO.MaxDoorsInWall+1);
+                    }
                     break;
                 default:
+                    doorsArray[iterator] = 0;
                     break;
             }
 
@@ -158,7 +163,7 @@ public class Room : MonoBehaviour
         }
 
         bool firstRoom = false;
-        if(gameObject.transform.position.x == 0 && gameObject.transform.position.z == 0)
+        if(roomSO is StartRoomSO)
         {
             firstRoom = true;
         }
