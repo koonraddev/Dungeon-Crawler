@@ -9,7 +9,9 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     [SerializeField] private EquipmentSlotType slotType;
     [SerializeField] private Image textureHolder;
-    public EquipmentSlot eqSlot { get; private set; }
+
+    private EquipmentSlot eqSlot;
+    public EquipmentSlot EqSlot { get => eqSlot; private set => eqSlot = value; }
 
     private GameObject canvas;
     private UIController uiCtrl;
@@ -24,7 +26,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private void Awake()
     {
-        eqSlot = new(slotType);
+        EqSlot = new(slotType);
     }
     void Start()
     {
@@ -39,18 +41,18 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
     }
 
-    public void SetEquipmentSlotUI(EquipmentItem item,Color slotColor)
+    private void SetEquipmentSlotUI(EquipmentItem item,Color slotColor)
     {
-        eqSlot.Item = item;
-        eqSlot.Empty = false;
+        EqSlot.Item = item;
+        EqSlot.Empty = false;
         textureHolder.color = slotColor;
-        //textureHolder.sprite = item.Sprite;
+        textureHolder.sprite = item.Sprite;
     }
 
-    public void SetEmptySlot()
+    private void SetEmptySlot()
     {
-        eqSlot.Item = null;
-        eqSlot.Empty = true;
+        EqSlot.Item = null;
+        EqSlot.Empty = true;
         textureHolder.sprite = emptySlotSprite;
         textureHolder.color = emptySlotColor;
     }
@@ -71,15 +73,15 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!eqSlot.Empty && infoPanel != null)
+        if (!EqSlot.Empty && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
-            infoPanel.SetInfoPanel(eqSlot.Item.Name, eqSlot.Item.Description, eqSlot.Item.Sprite, eqSlot.Item.Statistics);
+            infoPanel.SetInfoPanel(EqSlot.Item.Name, EqSlot.Item.Description, EqSlot.Item.Sprite, EqSlot.Item.Statistics);
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!eqSlot.Empty && infoPanel != null)
+        if (!EqSlot.Empty && infoPanel != null)
         {
             infoPanel.SetEmpty();
             GameEvents.instance.InformationPanel(false);
@@ -87,14 +89,14 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!eqSlot.Empty)
+        if (!EqSlot.Empty)
         {
             newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
             rect = newObj.GetComponent<RectTransform>();
             Image dragImage = newObj.GetComponent<Image>();
             CanvasGroup canvGroup = newObj.GetComponent<CanvasGroup>();
 
-            dragImage.sprite = eqSlot.Item.Sprite;
+            dragImage.sprite = EqSlot.Item.Sprite;
             canvGroup.alpha = 0.6f;
             canvGroup.blocksRaycasts = false;
 

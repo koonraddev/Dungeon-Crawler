@@ -304,7 +304,6 @@ GameObject:
   - component: {fileID: 8696219440333952202}
   - component: {fileID: 8696219440333952197}
   - component: {fileID: 6358374397533717430}
-  - component: {fileID: 221078328458783309}
   m_Layer: 7
   m_Name: PlaneChest
   m_TagString: RoomPlane
@@ -423,37 +422,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: fd2c247ab952bfe46a891c78f7ffd7e7, type: 2}
-  m_BuildHeightMesh: 0
---- !u!114 &221078328458783309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8696219440333952196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 1479372276
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.2
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 46c2d9cfce3da1d4fb1740271de0492d, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: c3a500df7705535449e2012e252d2d5e, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &8718123576521623615
 GameObject:

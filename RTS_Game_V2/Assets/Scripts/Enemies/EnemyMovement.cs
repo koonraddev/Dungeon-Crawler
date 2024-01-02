@@ -15,9 +15,8 @@ public class EnemyMovement : MonoBehaviour
 
     private float randInterval;
 
-    private float spawnPlaneSizeX;
-    private float spawnPlaneSizeZ;
-    private Vector3 planePos;
+    public float spawnPlaneSizeX, spawnPlaneSizeZ, spawnMeshSizeX, spawnMeshSizeZ;
+    private Vector3 planePos, lastDestination;
     System.Random rand;
     private void Awake()
     {
@@ -26,8 +25,12 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        gameObject.transform.position = GetRandomPosition();
-        randInterval = rand.Next(minMoveInterval, maxMoveInterval);
+        //if (!gameObject.activeSelf)
+        //{
+        //    gameObject.transform.position = GetRandomPosition();
+        //    randInterval = rand.Next(minMoveInterval, maxMoveInterval);
+        //}
+        MoveTo(lastDestination);
     }
     void Update()
     {
@@ -50,14 +53,19 @@ public class EnemyMovement : MonoBehaviour
         this.maxMoveInterval = maxMoveInterval;
 
         MeshCollider mColl = parentRoom.GetComponent<MeshCollider>();
+        NavMeshSurface navMesh = parentRoom.GetComponent<NavMeshSurface>();
+
         spawnPlaneSizeX = mColl.bounds.size.x;
-        spawnPlaneSizeZ = mColl.bounds.size.z;
+        spawnPlaneSizeZ = mColl.bounds.size.z;        
+        spawnMeshSizeX = navMesh.size.x;
+        spawnMeshSizeZ = navMesh.size.z;
         planePos = parentRoom.transform.position;
     }
 
     public void MoveTo(Vector3 destination)
     {
         navAgent.SetDestination(destination);
+        lastDestination = destination;
     }
     public void StopMovement()
     {

@@ -83,7 +83,6 @@ public class MapPanel : MonoBehaviour
             if(item.Key == portalObject)
             {
                 item.Value.ShowPortal();
-                Debug.Log("POKAZ PORTAL");
                 break;
             }
         }

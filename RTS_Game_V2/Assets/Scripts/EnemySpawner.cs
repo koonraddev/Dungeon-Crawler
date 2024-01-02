@@ -6,11 +6,11 @@ public class EnemySpawner : MonoBehaviour
 {
     private bool manySpawns;
     private bool waitForAll;
-    private float spawnerInterval;
+
     private List<GameObject> enemyList;
     private GameObject parentRoom;
 
-    private float timeLeft;
+    private float spawnerInterval, timeLeft, frozenTime;
     private List<GameObject> enemyPool;
 
     private void Awake()
@@ -23,6 +23,17 @@ public class EnemySpawner : MonoBehaviour
         timeLeft = spawnerInterval;
     }
 
+    private void OnEnable()
+    {
+        float timePassedWhileInactiveState = Time.time - frozenTime;
+        timeLeft -= timePassedWhileInactiveState;
+        if (timeLeft <= 0)
+        {
+            Debug.Log("enabled and ready");
+            TimePassed();
+        }
+    }
+
     void Update()
     {
         if (manySpawns)
@@ -30,20 +41,25 @@ public class EnemySpawner : MonoBehaviour
             timeLeft -= Time.deltaTime;
             if (timeLeft <= 0)
             {
-                if (waitForAll)
-                {
-                    if (AllObjectsAreUnactive())
-                    {
-                        ActivateObjects();
-                        timeLeft = spawnerInterval;
-                    }
-                }
-                else
-                {
-                    ActivateObjects();
-                    timeLeft = spawnerInterval;
-                }
+                TimePassed();
             }
+        }
+    }
+
+    private void TimePassed()
+    {
+        if (waitForAll)
+        {
+            if (AllObjectsAreUnactive())
+            {
+                ActivateObjects();
+                timeLeft = spawnerInterval;
+            }
+        }
+        else
+        {
+            ActivateObjects();
+            timeLeft = spawnerInterval;
         }
     }
 
@@ -101,5 +117,10 @@ public class EnemySpawner : MonoBehaviour
             tmp.SetActive(true);
             enemyPool.Add(tmp);
         }
+    }
+
+    private void OnDisable()
+    {
+        frozenTime = Time.time;
     }
 }

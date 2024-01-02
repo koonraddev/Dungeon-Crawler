@@ -180,7 +180,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             EquipmentSlotPanel eqSlotPanel = eventData.pointerDrag.GetComponent<EquipmentSlotPanel>();
             if(eqSlotPanel != null)
             {
-                EquipmentItem eqItem = eqSlotPanel.eqSlot.Item;
+                EquipmentItem eqItem = eqSlotPanel.EqSlot.Item;
                 if (container.AddTreasure(SlotIndex, eqItem))
                 {
                     EquipmentManager.instance.RemoveItem(eqItem);
