@@ -14,7 +14,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     public EquipmentSlot EqSlot { get => eqSlot; private set => eqSlot = value; }
 
     private GameObject canvas;
-    private UIController uiCtrl;
+    private UICanvasController uiCtrl;
     private GameObject infoObject;
     private InformationPanel infoPanel;
 
@@ -31,7 +31,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     void Start()
     {
         canvas = transform.root.gameObject;
-        uiCtrl = canvas.GetComponent<UIController>();
+        uiCtrl = canvas.GetComponent<UICanvasController>();
         infoObject = uiCtrl.GetInfoPanel();
         infoPanel = infoObject.GetComponent<InformationPanel>();
     }

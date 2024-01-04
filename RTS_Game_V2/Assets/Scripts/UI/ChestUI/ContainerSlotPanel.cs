@@ -9,7 +9,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private TMP_Text amountHolder;
 
     private GameObject canvas;
-    private UIController uiCtrl;
+    private UICanvasController uiCtrl;
     private GameObject infoObject;
     private InformationPanel infoPanel;
 
@@ -28,7 +28,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     private void Awake()
     {
         canvas = transform.root.gameObject;
-        uiCtrl = canvas.GetComponent<UIController>();
+        uiCtrl = canvas.GetComponent<UICanvasController>();
         infoObject = uiCtrl.GetInfoPanel();
         infoPanel = infoObject.GetComponent<InformationPanel>();
         textureHolder = GetComponent<Image>();

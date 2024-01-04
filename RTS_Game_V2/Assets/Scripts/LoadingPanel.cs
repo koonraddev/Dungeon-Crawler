@@ -25,7 +25,6 @@ public class LoadingPanel : MonoBehaviour
         tmpText.text = text;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(loadingComplete & Input.GetKeyDown(KeyCode.Space))

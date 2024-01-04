@@ -23,13 +23,18 @@ public class GameEvents : MonoBehaviour
     public event Action OnCancelGameObjectAction;
     public event Action<int> OnSpawn;
 
-    //Panels
+    //UI Panels
     public event Action<bool> OnInventoryPanelOpen;
     public event Action<bool> OnInformationPanel;
     public event Action<bool> OnStatisticPanel;
     public event Action<bool> OnConsolePanel;
-    public event Action<bool> OnMenuPanel;
     public event Action<bool> OnMapPanel;
+
+    //Menu Panels
+    public event Action<bool> OnMenuPanel;
+    public event Action<bool> OnMainPanel;
+    public event Action<bool> OnOptionsPanel;
+    public event Action<bool> OnAskPanel;
 
     public event Action OnLoadNextLevel;
     public event Action OnLoadLevel;
@@ -64,9 +69,11 @@ public class GameEvents : MonoBehaviour
     public event Action OnStartLevel;
     public event Action OnPlayerSpawn;
     public event Action OnPauseGame;
+    public event Action OnResumeGame;
 
     public void GeneratingReady() => OnGeneratingReady?.Invoke();
     public void PasueGame() => OnPauseGame?.Invoke();
+    public void ResumeGame() => OnResumeGame?.Invoke();
 
     public void LevelSettingsSet() => OnLevelSettingsSet?.Invoke();
     public void PlayerSpawn() => OnPlayerSpawn?.Invoke();

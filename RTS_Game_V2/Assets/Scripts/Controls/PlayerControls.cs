@@ -80,6 +80,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7b42e06-eab9-4d3b-8fa0-cceb8951656e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -159,6 +168,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""FollowEnemy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46190811-8922-4267-8e66-9c0464d82408"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -201,6 +221,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_BasicMovement_Statistics = m_BasicMovement.FindAction("Statistics", throwIfNotFound: true);
         m_BasicMovement_ConsoleLogs = m_BasicMovement.FindAction("ConsoleLogs", throwIfNotFound: true);
         m_BasicMovement_FollowEnemy = m_BasicMovement.FindAction("FollowEnemy", throwIfNotFound: true);
+        m_BasicMovement_Menu = m_BasicMovement.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -266,6 +287,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_BasicMovement_Statistics;
     private readonly InputAction m_BasicMovement_ConsoleLogs;
     private readonly InputAction m_BasicMovement_FollowEnemy;
+    private readonly InputAction m_BasicMovement_Menu;
     public struct BasicMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -276,6 +298,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Statistics => m_Wrapper.m_BasicMovement_Statistics;
         public InputAction @ConsoleLogs => m_Wrapper.m_BasicMovement_ConsoleLogs;
         public InputAction @FollowEnemy => m_Wrapper.m_BasicMovement_FollowEnemy;
+        public InputAction @Menu => m_Wrapper.m_BasicMovement_Menu;
         public InputActionMap Get() { return m_Wrapper.m_BasicMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -303,6 +326,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @FollowEnemy.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnFollowEnemy;
                 @FollowEnemy.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnFollowEnemy;
                 @FollowEnemy.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnFollowEnemy;
+                @Menu.started -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnMenu;
+                @Menu.performed -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnMenu;
+                @Menu.canceled -= m_Wrapper.m_BasicMovementActionsCallbackInterface.OnMenu;
             }
             m_Wrapper.m_BasicMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -325,6 +351,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @FollowEnemy.started += instance.OnFollowEnemy;
                 @FollowEnemy.performed += instance.OnFollowEnemy;
                 @FollowEnemy.canceled += instance.OnFollowEnemy;
+                @Menu.started += instance.OnMenu;
+                @Menu.performed += instance.OnMenu;
+                @Menu.canceled += instance.OnMenu;
             }
         }
     }
@@ -355,5 +384,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnStatistics(InputAction.CallbackContext context);
         void OnConsoleLogs(InputAction.CallbackContext context);
         void OnFollowEnemy(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

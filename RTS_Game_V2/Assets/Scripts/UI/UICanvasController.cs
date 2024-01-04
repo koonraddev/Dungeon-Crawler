@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class UIController : MonoBehaviour
+public class UICanvasController : MonoBehaviour
 {
     [SerializeField] private GameObject playerInventoryUI;
     [SerializeField] private GameObject informationPanel;
