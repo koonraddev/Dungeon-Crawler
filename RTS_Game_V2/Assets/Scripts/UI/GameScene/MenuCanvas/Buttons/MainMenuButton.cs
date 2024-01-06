@@ -20,6 +20,6 @@ public class MainMenuButton : MonoBehaviour
 
     private void LoadMainMenu()
     {
-        //GameEvents.instance.LoadMainMenu();
+        GameEvents.instance.ExitToMenu();
     }
 }

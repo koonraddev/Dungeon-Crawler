@@ -10,15 +10,6 @@ public class MapManager : MonoBehaviour
     {
         instance = this;
     }
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void ClearMap()
     {

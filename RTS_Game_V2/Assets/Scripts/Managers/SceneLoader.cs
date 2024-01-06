@@ -27,6 +27,7 @@ public class SceneLoader : MonoBehaviour
     {
         //GameEvents.instance.OnSavedPlayerData += LoadDungeonScene;
         GameEvents.instance.OnSwitchScene += SwitchScene;
+        GameEvents.instance.OnExitToMenu += LoadMenuScene;
     }
 
 
@@ -71,8 +72,9 @@ public class SceneLoader : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnSavedPlayerData -= LoadDungeonScene;
+        //GameEvents.instance.OnSavedPlayerData -= LoadDungeonScene;
         GameEvents.instance.OnSwitchScene -= SwitchScene;
+        GameEvents.instance.OnExitToMenu -= LoadMenuScene;
     }
 
 }

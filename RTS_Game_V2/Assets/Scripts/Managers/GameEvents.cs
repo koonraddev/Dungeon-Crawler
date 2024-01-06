@@ -70,13 +70,20 @@ public class GameEvents : MonoBehaviour
     public event Action OnPlayerSpawn;
     public event Action OnPauseGame;
     public event Action OnResumeGame;
+    public event Action OnRestartFloor;
 
     public void GeneratingReady() => OnGeneratingReady?.Invoke();
+
     public void PasueGame() => OnPauseGame?.Invoke();
+
     public void ResumeGame() => OnResumeGame?.Invoke();
 
+    public void RestartGame() => OnRestartFloor?.Invoke();
+
     public void LevelSettingsSet() => OnLevelSettingsSet?.Invoke();
+
     public void PlayerSpawn() => OnPlayerSpawn?.Invoke();
+
     public void StartLevel() => OnStartLevel?.Invoke();
 
     public void SwitchScene() => OnSwitchScene?.Invoke();
@@ -106,6 +113,13 @@ public class GameEvents : MonoBehaviour
     public void ConsolePanel(bool activePanel) => OnConsolePanel?.Invoke(activePanel);
 
     public void MenuPanel(bool activePanel) => OnMenuPanel?.Invoke(activePanel);
+
+    public void MainPanel(bool activePanel) => OnMainPanel?.Invoke(activePanel);
+
+    public void OptionsPanel(bool activePanel) => OnOptionsPanel?.Invoke(activePanel);
+
+    public void AskPanel(bool activePanel) => OnAskPanel?.Invoke(activePanel);
+
     public void MapPanel(bool fullSizeMode) => OnMapPanel?.Invoke(fullSizeMode);
 
     public void Spawn(int id) => OnSpawn?.Invoke(id);
@@ -121,6 +135,7 @@ public class GameEvents : MonoBehaviour
     public void SwitchInput(InputManager.InputType inputType) => OnInputChange?.Invoke(inputType);
 
     public void ChangeGameStatus(GameStatus gameStatus) => OnGameStatusChange?.Invoke(gameStatus);
+
     public void InventoryPanel(bool activePanel) => OnInventoryPanelOpen?.Invoke(activePanel);
 
     public void CancelGameObjectAction() => OnCancelGameObjectAction?.Invoke();

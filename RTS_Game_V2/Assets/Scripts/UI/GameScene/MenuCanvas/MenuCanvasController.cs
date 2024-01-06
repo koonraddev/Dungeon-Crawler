@@ -17,6 +17,15 @@ public class MenuCanvasController : MonoBehaviour
         GameEvents.instance.OnMainPanel += MainPanelStatus;
         GameEvents.instance.OnOptionsPanel += OptionsPanelStatus;
         GameEvents.instance.OnAskPanel += AskPanelStatus;
+        GameEvents.instance.OnLoadLevel += CloseAllMenus;
+    }
+
+    private void CloseAllMenus()
+    {
+        GameEvents.instance.MenuPanel(false);
+        GameEvents.instance.MainPanel(false);
+        GameEvents.instance.AskPanel(false);
+        GameEvents.instance.OptionsPanel(false);
     }
 
     private void Awake()
@@ -84,5 +93,6 @@ public class MenuCanvasController : MonoBehaviour
         GameEvents.instance.OnMainPanel -= MainPanelStatus;
         GameEvents.instance.OnOptionsPanel -= OptionsPanelStatus;
         GameEvents.instance.OnAskPanel -= AskPanelStatus;
+        GameEvents.instance.OnLoadLevel -= CloseAllMenus;
     }
 }

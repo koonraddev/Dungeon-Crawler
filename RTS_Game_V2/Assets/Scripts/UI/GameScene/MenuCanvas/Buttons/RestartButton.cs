@@ -20,7 +20,6 @@ public class RestartButton : MonoBehaviour
 
     private void RestartGame()
     {
-        //GameEvents.instance.RestartGame();
-        GameEvents.instance.LoadLevel();
+        GameEvents.instance.RestartGame();
     }
 }

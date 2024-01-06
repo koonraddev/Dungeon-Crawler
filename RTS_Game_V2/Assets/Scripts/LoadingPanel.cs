@@ -11,18 +11,26 @@ public class LoadingPanel : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnGeneratingReady += GameIsReady;
+        GameEvents.instance.OnRestartFloor += SetRestartingInfo;
+        GameEvents.instance.OnLoadLevel += SetLoadingInfo;
+    }
+
+    private void SetRestartingInfo()
+    {
+        tmpText.text = "Restarting Floor";
         loadingComplete = false;
-        SetText("Loading level...");
+    }
+
+
+    private void SetLoadingInfo()
+    {
+        tmpText.text = "Loading level";
+        loadingComplete = false;
     }
     private void GameIsReady()
     {
-        SetText("Loading Complete.\n Press Space to continue.");
+        tmpText.text = "Loading Complete.\n Press Space to continue.";
         loadingComplete = true;
-    }
-
-    public void SetText(string text)
-    {
-        tmpText.text = text;
     }
 
     void Update()
@@ -30,12 +38,13 @@ public class LoadingPanel : MonoBehaviour
         if(loadingComplete & Input.GetKeyDown(KeyCode.Space))
         {
             GameEvents.instance.StartLevel();
-            gameObject.SetActive(false);
         }
     }
     private void OnDisable()
     {
         GameEvents.instance.OnGeneratingReady -= GameIsReady;
+        GameEvents.instance.OnRestartFloor -= SetRestartingInfo;
+        GameEvents.instance.OnLoadLevel -= SetLoadingInfo;
     }
 
 }

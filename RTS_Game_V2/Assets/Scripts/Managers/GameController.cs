@@ -35,13 +35,13 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnLevelSettingsSet += Respawn;
         GameEvents.instance.OnStartLevel += SetGameStatusON;
         GameEvents.instance.OnLoadNextLevel += SetGameStatusPreparing;
+        GameEvents.instance.OnRestartFloor += SetGameStatusPreparing;
         GameEvents.instance.OnPauseGame += SetGameStatusPaused;
         GameEvents.instance.OnLastRoomReady += CheckRoomsAmount;
     }
 
     private void Start()
     {
-        Debug.Log("Start");
         GameEvents.instance.ChangeGameStatus(GameStatus.START);
         GameEvents.instance.LoadLevel();
     }
@@ -54,8 +54,6 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            RoomsGenerator.instance.ResetRooms();
-            MapManager.instance.ClearMap();
             Respawn();
         }
     }
@@ -77,6 +75,8 @@ public class GameController : MonoBehaviour
 
     public void Respawn()
     {
+        RoomsGenerator.instance.ResetRooms();
+        MapManager.instance.ClearMap();
         DestroyOldPortals();
         DestoryOldRooms();
         StartCoroutine(CreatStartSpawnPoint());
@@ -113,6 +113,7 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnLevelSettingsSet -= Respawn;
         GameEvents.instance.OnStartLevel -= SetGameStatusON;
         GameEvents.instance.OnLoadNextLevel -= SetGameStatusPreparing;
+        GameEvents.instance.OnRestartFloor -= SetGameStatusPreparing;
         GameEvents.instance.OnPauseGame -= SetGameStatusPaused;
         GameEvents.instance.OnLastRoomReady -= CheckRoomsAmount;
     }
