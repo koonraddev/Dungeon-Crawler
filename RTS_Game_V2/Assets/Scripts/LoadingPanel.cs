@@ -13,6 +13,7 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnGeneratingReady += GameIsReady;
         GameEvents.instance.OnRestartFloor += SetRestartingInfo;
         GameEvents.instance.OnLoadLevel += SetLoadingInfo;
+        GameEvents.instance.OnLoadGameScene += SetLoadingInfo;
     }
 
     private void SetRestartingInfo()
@@ -45,6 +46,7 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnGeneratingReady -= GameIsReady;
         GameEvents.instance.OnRestartFloor -= SetRestartingInfo;
         GameEvents.instance.OnLoadLevel -= SetLoadingInfo;
+        GameEvents.instance.OnLoadGameScene -= SetLoadingInfo;
     }
 
 }

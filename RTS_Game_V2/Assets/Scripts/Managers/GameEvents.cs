@@ -12,7 +12,16 @@ public class GameEvents : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(this);
     }
 
 
@@ -38,6 +47,7 @@ public class GameEvents : MonoBehaviour
 
     public event Action OnLoadNextLevel;
     public event Action OnLoadLevel;
+    public event Action OnLoadGameScene;
     public event Action OnExitToMenu;
     public event Action OnEndGeneratingLevel;
 
@@ -79,6 +89,8 @@ public class GameEvents : MonoBehaviour
     public void ResumeGame() => OnResumeGame?.Invoke();
 
     public void RestartGame() => OnRestartFloor?.Invoke();
+
+    public void LoadGameScene() => OnLoadGameScene?.Invoke();
 
     public void LevelSettingsSet() => OnLevelSettingsSet?.Invoke();
 

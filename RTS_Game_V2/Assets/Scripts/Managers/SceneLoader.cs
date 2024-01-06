@@ -6,26 +6,27 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     private bool canSwitchScene = false;
-    float time;
+    public static SceneLoader instance;
     private void Awake()
     {
+        instance = this;
+
         DontDestroyOnLoad(this);
     }
 
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            canSwitchScene = true;
+        }
     }
 
     private void OnEnable()
     {
-        //GameEvents.instance.OnSavedPlayerData += LoadDungeonScene;
+        GameEvents.instance.OnLoadGameScene += LoadDungeonScene;
         GameEvents.instance.OnSwitchScene += SwitchScene;
         GameEvents.instance.OnExitToMenu += LoadMenuScene;
     }
@@ -38,7 +39,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadDungeonScene()
     {
-        //StartCoroutine(LoadYourAsyncScene(2));
         StartCoroutine(LoadYourAsyncScene(1));
     }
 
@@ -51,28 +51,24 @@ public class SceneLoader : MonoBehaviour
     IEnumerator LoadYourAsyncScene(int sceneIndex)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
-        //asyncLoad.allowSceneActivation = false;
-        asyncLoad.allowSceneActivation = true;
-        time = 0;
-        while (!asyncLoad.isDone)
+        asyncLoad.allowSceneActivation = false;
+        canSwitchScene = false;
+        while (!canSwitchScene && !asyncLoad.isDone)
         {
-            if(asyncLoad.progress <= 0.9f)
-            {
-                Debug.Log("PROGRESS: " + asyncLoad.progress + " |_______| " + time);
-            }
-
-            //if (canSwitchScene)
-            //{
-            //    asyncLoad.allowSceneActivation = true;
-            //    canSwitchScene = false;
-            //}
             yield return null;
+        }
+
+        asyncLoad.allowSceneActivation = true;
+
+        if (sceneIndex == 0)
+        {
+            GameEvents.instance.StartLevel();
         }
     }
 
     private void OnDisable()
     {
-        //GameEvents.instance.OnSavedPlayerData -= LoadDungeonScene;
+        GameEvents.instance.OnLoadGameScene -= LoadDungeonScene;
         GameEvents.instance.OnSwitchScene -= SwitchScene;
         GameEvents.instance.OnExitToMenu -= LoadMenuScene;
     }

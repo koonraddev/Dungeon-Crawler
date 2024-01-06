@@ -10,10 +10,6 @@ public class SaveSlot : MonoBehaviour
     [SerializeField] private bool loadingSlot;
     [SerializeField] private int slotNumber;
 
-
-    [SerializeField] private SaveManager saveManager;
-    [SerializeField] private SceneLoader sceneLoader;
-
     [SerializeField] private GameObject foregroundMask;
     [SerializeField] private TMP_Text slotNumberObj;
     [Header("Buttons Section")]
@@ -103,21 +99,27 @@ public class SaveSlot : MonoBehaviour
 
     private void DeleteSave()
     { 
-        saveManager.DeleteSave(slotNumber);
+        SaveManager.instance.DeleteSave(slotNumber);
         TryGetSave();
     }
 
     private void LoadSave()
     {
-        saveManager.ChosenSlotIndex = slotNumber;
+        SaveManager.instance.ChosenSlotIndex = slotNumber;
         loadButton.onClick.RemoveAllListeners();
         loadButtonManager.ActivateButton();
-        loadButton.onClick.AddListener(sceneLoader.LoadDungeonScene);
+        loadButton.onClick.AddListener(LoadingButton);
+    }
+
+    private void LoadingButton()
+    {
+        Debug.Log("Loading button");
+        GameEvents.instance.LoadGameScene();
     }
 
     private void TryGetSave()
     {
-        if(saveManager.GetPlayerData(slotNumber,out PlayerData playerData))
+        if(SaveManager.instance.GetPlayerData(slotNumber,out PlayerData playerData))
         {
             SetOccupiedSlot(playerData);
         }

@@ -37,8 +37,6 @@ public class StatisticCreator
 
 public class NewCharacterPanel : MonoBehaviour
 {
-    [SerializeField] private SaveManager saveManager;
-    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private Color inactiveButtonColor, activeButtonColor;
     [SerializeField] private TMP_Text pointsText;
     [SerializeField] private List<StatisticCreator> statsList;
@@ -120,8 +118,8 @@ public class NewCharacterPanel : MonoBehaviour
     public void Create()
     {
         PlayerBasicStatistics playerStats = new(StatsList);
-        saveManager.ChosenSlotIndex = selectedSlot;
-        saveManager.CreateSave(selectedSlot, CharacterName, playerStats);
-        sceneLoader.LoadDungeonScene();
+        SaveManager.instance.ChosenSlotIndex = selectedSlot;
+        SaveManager.instance.CreateSave(selectedSlot, CharacterName, playerStats);
+        SceneLoader.instance.LoadDungeonScene();
     }
 }

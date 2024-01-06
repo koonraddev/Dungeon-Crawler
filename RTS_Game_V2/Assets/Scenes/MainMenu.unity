@@ -3492,19 +3492,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 494594125}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1825921113}
-        m_TargetAssemblyTypeName: NewCharacterPanel, Assembly-CSharp
-        m_MethodName: set_SelectedSlot
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &494594125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3738,11 +3726,11 @@ PrefabInstance:
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: saveManager
       value: 
-      objectReference: {fileID: 831015733}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: sceneLoader
       value: 
-      objectReference: {fileID: 831015734}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
@@ -5903,41 +5891,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 831015735}
-  - component: {fileID: 831015734}
-  - component: {fileID: 831015733}
   - component: {fileID: 831015736}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: GameEvents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &831015733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831015732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95d3049d815077449923e6ad68634d21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneLoader: {fileID: 831015734}
---- !u!114 &831015734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831015732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f137480dd8583ef4c8b040457ab1690f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &831015735
 Transform:
   m_ObjectHideFlags: 0
@@ -9919,11 +9880,11 @@ PrefabInstance:
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: saveManager
       value: 
-      objectReference: {fileID: 831015733}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: sceneLoader
       value: 
-      objectReference: {fileID: 831015734}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
@@ -10083,6 +10044,53 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 762975309255695595, guid: 7350115200129f046a2b3c81a94773ec, type: 3}
   m_PrefabInstance: {fileID: 1375231650}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1378899045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378899047}
+  - component: {fileID: 1378899046}
+  m_Layer: 0
+  m_Name: ManagersSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1378899046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378899045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a1e0d7c98066f4ab336e557af8fa0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasManagerPrefab: {fileID: 4141072645744414426, guid: 46cd34a1b39b0ce4cb6819240bb83f91, type: 3}
+  sceneLoaderPrefab: {fileID: 3500930276592856035, guid: a0b72e56ce3e5c74a93834b343bce584, type: 3}
+  saveManagerPrefab: {fileID: 9123409157009812175, guid: b87ec5976f7695a4d9ee04c22668ac5f, type: 3}
+--- !u!4 &1378899047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378899045}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1384714514
 GameObject:
   m_ObjectHideFlags: 0
@@ -10800,11 +10808,11 @@ PrefabInstance:
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: saveManager
       value: 
-      objectReference: {fileID: 831015733}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: sceneLoader
       value: 
-      objectReference: {fileID: 831015734}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
@@ -11064,11 +11072,11 @@ PrefabInstance:
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: saveManager
       value: 
-      objectReference: {fileID: 831015733}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: sceneLoader
       value: 
-      objectReference: {fileID: 831015734}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
@@ -11731,11 +11739,11 @@ PrefabInstance:
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: saveManager
       value: 
-      objectReference: {fileID: 831015733}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: sceneLoader
       value: 
-      objectReference: {fileID: 831015734}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
@@ -12527,8 +12535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8604b8178518fc4fa6f8f86601f42d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveManager: {fileID: 831015733}
-  sceneLoader: {fileID: 831015734}
+  saveManager: {fileID: 0}
+  sceneLoader: {fileID: 0}
   inactiveButtonColor: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
   activeButtonColor: {r: 1, g: 1, b: 1, a: 1}
   pointsText: {fileID: 1359562968}
@@ -15096,11 +15104,11 @@ PrefabInstance:
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: saveManager
       value: 
-      objectReference: {fileID: 831015733}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: sceneLoader
       value: 
-      objectReference: {fileID: 831015734}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 

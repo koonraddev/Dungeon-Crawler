@@ -19,9 +19,15 @@ public class PlayerData
 
 public class SaveManager : MonoBehaviour
 {
-    [SerializeField] private SceneLoader sceneLoader;
     private int chosenSlotIndex;
     public int ChosenSlotIndex { get => chosenSlotIndex; set => chosenSlotIndex = value; }
+
+    public static SaveManager instance;
+    private void Awake()
+    {
+        instance = this;
+        DontDestroyOnLoad(this);
+    }
 
     private void OnEnable()
     {
@@ -81,7 +87,7 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            sceneLoader.LoadMenuScene();
+            GameEvents.instance.ExitToMenu();
         }
     }
 
