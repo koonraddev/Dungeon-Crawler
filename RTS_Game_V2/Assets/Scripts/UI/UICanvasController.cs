@@ -10,7 +10,6 @@ public class UICanvasController : MonoBehaviour
     [SerializeField] private GameObject containerPanel;
     [SerializeField] private GameObject statisticsPanel;
     [SerializeField] private GameObject enemyInformationPanel;
-    [SerializeField] private GameObject loadingPanel;
     [SerializeField] private GameObject mapPanel;
 
     private Vector3 playerUIPos, infoPanelPos, eqPanelPos, invDropPanelPos, containerPanelPos, statsPanelPos, enemyPanelPos, mapPanelPos;
@@ -42,7 +41,6 @@ public class UICanvasController : MonoBehaviour
         GameEvents.instance.OnInformationPanel += InformationPanelStatus;
         GameEvents.instance.OnStatisticPanel += StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick += EnemyClick;
-        GameEvents.instance.OnLoadNextLevel += ActiveLoadingPanel;
         GameEvents.instance.OnMapPanel += FullSizeMap;
     }
     private void Start()
@@ -73,11 +71,6 @@ public class UICanvasController : MonoBehaviour
         {
             GameEvents.instance.MapPanel(!fullSizeMapMode);
         }
-    }
-
-    public void ActiveLoadingPanel()
-    {
-        loadingPanel.SetActive(true);
     }
 
 
@@ -178,7 +171,6 @@ public class UICanvasController : MonoBehaviour
         GameEvents.instance.OnInformationPanel -= InformationPanelStatus;
         GameEvents.instance.OnStatisticPanel -= StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick -= EnemyClick;
-        GameEvents.instance.OnLoadNextLevel -= ActiveLoadingPanel;
         GameEvents.instance.OnMapPanel -= FullSizeMap;
     }
 

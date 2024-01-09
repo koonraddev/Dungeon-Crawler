@@ -109,7 +109,7 @@ public class MessageMenuController : MonoBehaviour
         }
 
         objectReq = intObject.GameObject;
-        objectReqPosition = objectReq.transform.position + new Vector3(0,20f,0f);
+        objectReqPosition = objectReq.transform.position + new Vector3(0,3f,0f);
         SetTextHolders(intObject);
         CheckTextHolders();
         CheckButtons();

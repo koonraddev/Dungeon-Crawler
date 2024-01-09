@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConsolePanelButton : MonoBehaviour
 {
+    [SerializeField] private Color panelOnColor, panelOFFColor;
+    [SerializeField] private Image statusIcon;
     private bool consolePanelStatus;
 
     private void OnEnable()
@@ -19,6 +22,7 @@ public class ConsolePanelButton : MonoBehaviour
     private void PanelStatus(bool status)
     {
         consolePanelStatus = status;
+        statusIcon.color = consolePanelStatus ? panelOnColor : panelOFFColor;
     }
 
     private void OnDisable()

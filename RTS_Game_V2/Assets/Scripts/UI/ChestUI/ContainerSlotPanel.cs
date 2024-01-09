@@ -7,7 +7,8 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     [SerializeField] private Image textureHolder;
     [SerializeField] private TMP_Text amountHolder;
-
+    private Sprite emptySlotSprite;
+    private Color emptySlotColor;
     private GameObject canvas;
     private UICanvasController uiCtrl;
     private GameObject infoObject;
@@ -18,10 +19,10 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 
     private ContainerSlot contSlot;
+    public ContainerSlot ContainerSlot { get => contSlot; }
     private Container container;
 
-    private Sprite panelSlotSprite;
-    private Color panelSlotColor;
+
 
     private int slotIndex;
     public int SlotIndex { get { return slotIndex; } private set { slotIndex = value; } }
@@ -32,6 +33,9 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         infoObject = uiCtrl.GetInfoPanel();
         infoPanel = infoObject.GetComponent<InformationPanel>();
         textureHolder = GetComponent<Image>();
+
+        emptySlotSprite = textureHolder.sprite;
+        emptySlotColor = textureHolder.color;
     }
     public void SetContainerSlotUI(Container container,ContainerSlot containerSlot, Color slotColor)
     {
@@ -39,8 +43,8 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         contSlot = containerSlot;
         if (containerSlot.Empty)
         {
-            textureHolder.color = panelSlotColor;
-            textureHolder.sprite = panelSlotSprite;
+            textureHolder.color = emptySlotColor;
+            textureHolder.sprite = emptySlotSprite;
             amountHolder.text = "";
         }
         else
@@ -57,6 +61,14 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
                 amountHolder.text = "";
             }
         }
+    }
+
+    public void SetEssentials(int slotIndex)
+    {
+        this.SlotIndex = slotIndex;
+        textureHolder.sprite = emptySlotSprite;
+        textureHolder.color = emptySlotColor;
+        contSlot = new(slotIndex);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -132,22 +144,6 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     public void OnEndDrag(PointerEventData eventData)
     {
         Destroy(newObj);
-    }
-
-    public ContainerSlot GetContainerSlot()
-    {
-        return contSlot;
-    }
-
-    public void SetEssentials(Sprite panelSlotSprite, Color panelSlotColor, int slotIndex)
-    {
-        this.SlotIndex = slotIndex;
-        this.panelSlotSprite = panelSlotSprite;
-        this.panelSlotColor = panelSlotColor;
-
-        textureHolder.sprite = panelSlotSprite;
-        textureHolder.color = panelSlotColor;
-        contSlot = new(slotIndex);
     }
 
     public void SetEmptySlot()

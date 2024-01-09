@@ -12,8 +12,14 @@ public class SaveSlot : MonoBehaviour
 
     [SerializeField] private GameObject foregroundMask;
     [SerializeField] private TMP_Text slotNumberObj;
+
     [Header("Buttons Section")]
     [SerializeField] private Button deleteButton, selectButton;
+
+    [Header("Ask Panel Section")]
+    [SerializeField] private GameObject askPanel;
+    [SerializeField] private Button askPanelYesButton;
+    [SerializeField] private TMP_Text askPanelInfo;
 
     [Header("Info Objects Section")]
     [SerializeField] private TMP_Text playerNameObj;
@@ -98,8 +104,19 @@ public class SaveSlot : MonoBehaviour
     }
 
     private void DeleteSave()
-    { 
+    {
+        askPanel.SetActive(true);
+
+        askPanelYesButton.onClick.RemoveAllListeners();
+        askPanelYesButton.onClick.AddListener(DeleteSaveButton);
+        askPanelInfo.text = "Do You want to delete save from slot no. " + slotNumber.ToString() + " ?";
+
+    }
+
+    private void DeleteSaveButton()
+    {
         SaveManager.instance.DeleteSave(slotNumber);
+        askPanel.SetActive(false);
         TryGetSave();
     }
 

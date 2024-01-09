@@ -126,7 +126,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             ContainerSlotPanel containerSlotPanel = eventData.pointerDrag.GetComponent<ContainerSlotPanel>();
             if (containerSlotPanel != null)
             {
-                ContainerSlot containerSlot = containerSlotPanel.GetContainerSlot();
+                ContainerSlot containerSlot = containerSlotPanel.ContainerSlot;
 
                 if (containerSlot.Item is EquipmentItem eqItem && eqItem.ItemSlot == slotType)
                 {

@@ -9,11 +9,11 @@ public class OptionsPanel : MonoBehaviour
     [SerializeField] private Toggle fullscreenToggle;
     [SerializeField] private TMPro.TMP_Dropdown graphicsQualityDropdown;
     [SerializeField] private FrameLimiter frameLimiter;
-    [SerializeField] private ButtonManager applyButton;
+    [SerializeField] private ButtonManager applyButtonManager;
 
     private void OnEnable()
     {
-        applyButton.DeactivateButton();
+        applyButtonManager.DeactivateButton();
     }
 
     private void Awake()
@@ -24,19 +24,9 @@ public class OptionsPanel : MonoBehaviour
         if (!PlayerPrefs.HasKey("fullscreen")) { PlayerPrefs.SetInt("fullscreen", 1); }
         if (!PlayerPrefs.HasKey("resolutionWidth")) { PlayerPrefs.SetInt("resolutionWidth", 1920); }
         if (!PlayerPrefs.HasKey("resolutionHeight")) { PlayerPrefs.SetInt("resolutionHeight", 1080); }
-        ApplySettings();
-    }
-    void Start()
-    {
-        
-    }
+        //ApplySettings();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
-
     public void ApplySettings()
     {
         ApplyQuality();

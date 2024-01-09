@@ -9,19 +9,12 @@ public class ContainerInfoPanel : MonoBehaviour
 
     [SerializeField] private TMP_Text headerText;
     [SerializeField] private GameObject[] panelSlots;
-    [SerializeField] private Sprite panelSlotSprite;
-    [SerializeField] private Color panelSlotColor;
-    private Image slotPanel;
-
     private Container container;
     private Vector3 startPos;
 
     private void Awake()
     {
         instance = this;
-        slotPanel = panelSlots[0].GetComponent<Image>();
-        panelSlotSprite = slotPanel.sprite;
-        panelSlotColor = slotPanel.color;
 
         startPos = gameObject.transform.position;
     }
@@ -36,14 +29,13 @@ public class ContainerInfoPanel : MonoBehaviour
         for (int i = 0; i < panelSlots.Length; i++)
         {
             ContainerSlotPanel containerSlotPanel = panelSlots[i].GetComponentInChildren<ContainerSlotPanel>();
-            containerSlotPanel.SetEssentials(panelSlotSprite, panelSlotColor, i);
+            containerSlotPanel.SetEssentials(i);
             containerSlotPanel.gameObject.SetActive(false);
         }
     }
 
     public void SetAndActiveContainerPanel(Container container)
     {
-        //gameObject.SetActive(true);
         this.transform.position = startPos;
         ResetPanelSlots();
 

@@ -173,7 +173,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             ContainerSlotPanel containerSlotPanel = eventData.pointerDrag.GetComponent<ContainerSlotPanel>();
             if(containerSlotPanel != null)
             {
-                ContainerSlot chestCont = containerSlotPanel.GetContainerSlot();
+                ContainerSlot chestCont = containerSlotPanel.ContainerSlot;
 
                 if (chestCont.Item is InventoryItem)
                 {

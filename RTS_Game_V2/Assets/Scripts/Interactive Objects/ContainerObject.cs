@@ -131,7 +131,7 @@ public class ContainerObject : MonoBehaviour, IInteractionObject
         }
 
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
-        displayPopup = false;
+        displayPopup = true;
     }
 
 

@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     private static GameStatus gameStatus;
     public static GameStatus GameStatus { get => gameStatus; }
 
-    public static GameController instance;
+    private static GameController instance;
     
 
     private void Awake()
@@ -72,8 +72,7 @@ public class GameController : MonoBehaviour
     {
         gameStatus = GameStatus.PAUSED;
     }
-
-    public void Respawn()
+    private void Respawn()
     {
         RoomsGenerator.instance.ResetRooms();
         MapManager.instance.ClearMap();
