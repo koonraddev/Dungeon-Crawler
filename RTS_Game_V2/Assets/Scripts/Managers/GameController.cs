@@ -12,19 +12,18 @@ public enum GameStatus
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject startSpawnPoint;
-    public List<GameObject> spawnedRooms;
-    public List<GameObject> spawnedPortals;
+    private static List<GameObject> spawnedRooms;
+    private static List<GameObject> spawnedPortals;
     private GameObject startSP;
 
     private static GameStatus gameStatus;
     public static GameStatus GameStatus { get => gameStatus; }
 
-    private static GameController instance;
-    
+    public static List<GameObject> SpawnedRooms { get => spawnedRooms; }
+    public static List<GameObject> SpawnedPortals { get => spawnedPortals; }
 
     private void Awake()
     {
-        instance = this;
         spawnedRooms = new();
         spawnedPortals = new();
         gameStatus = GameStatus.PREPARING;
@@ -38,6 +37,17 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnRestartFloor += SetGameStatusPreparing;
         GameEvents.instance.OnPauseGame += SetGameStatusPaused;
         GameEvents.instance.OnLastRoomReady += CheckRoomsAmount;
+        GameEvents.instance.OnResumeGame += SetGameStatusON;
+    }
+
+    public static void AddRoom(GameObject room)
+    {
+        spawnedRooms.Add(room);
+    }
+
+    public static void AddPortal(GameObject portal)
+    {
+        spawnedPortals.Add(portal);
     }
 
     private void Start()
@@ -61,16 +71,19 @@ public class GameController : MonoBehaviour
     private void SetGameStatusON()
     {
         gameStatus = GameStatus.ON;
+        Time.timeScale = 1f;
     }
 
     private void SetGameStatusPreparing()
     {
         gameStatus = GameStatus.PREPARING;
+        Time.timeScale = 1f;
     }
 
     private void SetGameStatusPaused()
     {
         gameStatus = GameStatus.PAUSED;
+        Time.timeScale = 0f;
     }
     private void Respawn()
     {
@@ -115,5 +128,6 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnRestartFloor -= SetGameStatusPreparing;
         GameEvents.instance.OnPauseGame -= SetGameStatusPaused;
         GameEvents.instance.OnLastRoomReady -= CheckRoomsAmount;
+        GameEvents.instance.OnResumeGame -= SetGameStatusON;
     }
 }

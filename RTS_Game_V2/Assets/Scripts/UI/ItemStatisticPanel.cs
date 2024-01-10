@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class StatisticSlotPanel : MonoBehaviour
+public class ItemStatisticPanel : MonoBehaviour
 {
-    [SerializeField] private StatisticType statisticType;
     [SerializeField] private TMP_Text statisticLabel, statisticValue;
 
-    private void Awake()
+    public void SetStatisticPanel(StatisticType statisticType, float statisticValue)
     {
         switch (statisticType)
         {
@@ -48,23 +47,13 @@ public class StatisticSlotPanel : MonoBehaviour
             default:
                 break;
         }
+
+        this.statisticValue.text = statisticValue.ToString();
     }
 
-    private void OnEnable()
+    public void SetEmpty()
     {
-        GameEvents.instance.OnStatisticUpdate += UpdateStatistic;
-    }
-
-    public void UpdateStatistic(StatisticType statisticType, float value)
-    {
-        if(this.statisticType == statisticType)
-        {
-            statisticValue.text = value.ToString();
-        }
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.instance.OnStatisticUpdate -= UpdateStatistic;
-    }
+        statisticLabel.text = "";
+        statisticValue.text = "";
+    }  
 }

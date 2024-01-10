@@ -21,12 +21,15 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     private GameObject newObj;
     private RectTransform rect;
 
-    [SerializeField] private Sprite emptySlotSprite;
-    [SerializeField] private Color emptySlotColor;
+    private Sprite emptySlotSprite;
+    private Color emptySlotColor;
 
     private void Awake()
     {
         EqSlot = new(slotType);
+
+        emptySlotSprite = textureHolder.sprite;
+        emptySlotColor = textureHolder.color;
     }
     void Start()
     {

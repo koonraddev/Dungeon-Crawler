@@ -32,7 +32,6 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         uiCtrl = canvas.GetComponent<UICanvasController>();
         infoObject = uiCtrl.GetInfoPanel();
         infoPanel = infoObject.GetComponent<InformationPanel>();
-        textureHolder = GetComponent<Image>();
 
         emptySlotSprite = textureHolder.sprite;
         emptySlotColor = textureHolder.color;
@@ -86,6 +85,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             }
         }
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         if (contSlot.Item != null && infoPanel != null)
@@ -94,7 +94,6 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             GameEvents.instance.InformationPanel(false);
         }
     }
-
 
     public void OnPointerClick(PointerEventData eventData)
     {

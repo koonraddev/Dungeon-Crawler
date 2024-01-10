@@ -130,7 +130,7 @@ public class PortalSpawner : MonoBehaviour
                 roomFade.FirstRoom = firstRoom;
                 doorScript.SetDoor(doorsList[Random.Range(0, doorsList.Count)]);
 
-                GameController.instance.spawnedPortals.Add(doorScript.GameObject);
+                GameController.AddPortal(doorScript.GameObject);
                 DoorClass doorClass = new DoorClass(i, positionInWall, door);
                 doorClassList.Add(doorClass);
 

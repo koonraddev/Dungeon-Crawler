@@ -27,9 +27,8 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     private void Awake()
     {
         InvSlot = new(slotNumber);
-        Image img = gameObject.GetComponent<Image>();
-        emptySlotSprite = img.sprite;
-        emptySlotColor = img.color;
+        emptySlotSprite = textureHolder.sprite;
+        emptySlotColor = textureHolder.color;
     }
 
     void Start()
