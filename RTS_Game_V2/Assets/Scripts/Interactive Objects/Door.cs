@@ -79,7 +79,7 @@ public class Door : MonoBehaviour, IInteractionObject
 
     private void Teleport()
     {
-        Debug.LogWarning("TELEPORT");
+        //Debug.LogWarning("TELEPORT");
         if(interactingObject != null)
         {
             if(interactingObject.TryGetComponent(out PlayerMovement playerMovement))

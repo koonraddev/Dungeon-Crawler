@@ -60,7 +60,7 @@ public class SceneCanvasManager : MonoBehaviour
 
     IEnumerator WaitForFadeInAndSwitchScene()
     {
-        Debug.LogWarning("FADING");
+        //Debug.LogWarning("FADING");
         fadeGroup.blocksRaycasts = true;
         yield return FadeInInfoPanel().WaitForCompletion();
         GameEvents.instance.SwitchScene();

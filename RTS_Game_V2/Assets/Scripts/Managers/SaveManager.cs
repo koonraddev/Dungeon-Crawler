@@ -75,7 +75,7 @@ public class SaveManager : MonoBehaviour
     {
         if (GetPlayerData(chosenSlotIndex, out PlayerData loadedData))
         {
-            Debug.Log("Player Data loaded index= " + chosenSlotIndex);
+            //Debug.Log("Player Data loaded index= " + chosenSlotIndex);
             BuffManager.instance.PlayerBasicStatistics = loadedData.playerBasicStatistics;
             EquipmentManager.instance.Equipment = loadedData.equipment;
             InventoryManager.instance.Inventory = loadedData.inventory;

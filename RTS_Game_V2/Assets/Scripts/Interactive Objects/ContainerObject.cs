@@ -89,6 +89,7 @@ public class ContainerObject : MonoBehaviour, IInteractionObject
 
     public void OnCancelGameObject()
     {
+        GameEvents.instance.InventoryPanel(false);
         ChangeContainerStatus(false);
     }
 

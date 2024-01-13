@@ -130,7 +130,7 @@ public class SaveSlot : MonoBehaviour
 
     private void LoadingButton()
     {
-        Debug.Log("Loading button");
+        //Debug.Log("Loading button");
         GameEvents.instance.LoadGameScene();
     }
 

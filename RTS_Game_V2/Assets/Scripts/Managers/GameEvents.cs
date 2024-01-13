@@ -45,19 +45,18 @@ public class GameEvents : MonoBehaviour
     public event Action<bool> OnOptionsPanel;
     public event Action<bool> OnAskPanel;
 
+    //
     public event Action OnLoadNextLevel;
     public event Action OnLoadLevel;
     public event Action OnLoadGameScene;
     public event Action OnExitToMenu;
     public event Action OnEndGeneratingLevel;
 
+    //Player actions;
     public event Action OnInventoryUpdate;
     public event Action OnEquipmentUpdate;
     public event Action<StatisticType,float> OnStatisticUpdate;
-
-
     public event Action<float> OnUpdateCurrentHP;
-
     public event Action<StatisticType, float, float> OnBuffActivate;
     public event Action<StatisticType, float> OnBuffDeactivate;
 
@@ -75,12 +74,14 @@ public class GameEvents : MonoBehaviour
     public event Action OnLastRoomReady;
 
     public event Action OnSwitchScene;
-
-    public event Action OnStartLevel;
     public event Action OnPlayerSpawn;
+    public event Action OnRestartFloor;
+
+    //Game Status
     public event Action OnPauseGame;
     public event Action OnResumeGame;
-    public event Action OnRestartFloor;
+    public event Action OnStartLevel;
+
 
     public void GeneratingReady() => OnGeneratingReady?.Invoke();
 

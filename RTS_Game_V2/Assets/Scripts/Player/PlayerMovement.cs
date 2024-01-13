@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
         //SoundManager.PlaySound(pointDestinationSound, 1f);
 
         //Debug.Log(destination);
+
         playerAgent.SetDestination(destination);
     }
 
