@@ -16,10 +16,10 @@ MonoBehaviour:
   trueDamage: 0
   magicDamage: 0
   attackSpeed: 0
-  attackRange: 0
+  attackRange: 20
   armor: 0
   magicResistance: 0
   maxHealth: 0
-  healthPointsRegeneration: 80
+  healthPointsRegeneration: 0
   healthPercentageRegeneration: 0
   movementSpeed: 0

@@ -16,7 +16,7 @@ public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private float statValue;
 
     [SerializeField] private GameObject infoObject;
-    private GameObject tmpObj;
+    private BuffPopup buffPopup;
     private void Awake()
     {
         rectTrans = gameObject.GetComponent<RectTransform>();
@@ -32,6 +32,11 @@ public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if((this.statType == statType) && (this.statValue == statValue))
         {
+            if(buffPopup != null)
+            {
+                buffPopup.gameObject.SetActive(false);
+                Destroy(buffPopup.gameObject);
+            }
             gameObject.SetActive(false);
         }
     }
@@ -45,22 +50,26 @@ public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if(infoObject != null)
         {
-            tmpObj = Instantiate(infoObject);
-            RectTransform rect = tmpObj.GetComponent<RectTransform>();
-            //CanvasGroup canvGroup = tmpObj.GetComponent<CanvasGroup>();
-            //canvGroup.alpha = 0.8f;
-            //canvGroup.blocksRaycasts = false;
-
-            tmpObj.transform.SetParent(GameObject.Find("BuffPanelMain").transform);
-            rect.transform.localPosition = rectTrans.localPosition - new Vector3(0,rectTrans.rect.height,0);
-            BuffPopup popup = tmpObj.GetComponent<BuffPopup>();
-            popup.SetPopup(statType,statValue, timeLeft);
+            if(buffPopup == null)
+            {
+                GameObject popup = Instantiate(infoObject);
+                buffPopup = popup.GetComponent<BuffPopup>();
+            }
+            else
+            {
+                buffPopup.gameObject.SetActive(true);
+            }
+            buffPopup.SetPopup(statType, statValue, timeLeft, gameObject, transform.parent.gameObject);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Destroy(tmpObj);
+        if(buffPopup != null)
+        {
+            buffPopup.gameObject.SetActive(false);
+        }
+
     }
 
     public void SetBuffPanel(StatisticType statType, float statValue, float duration, Sprite buffSprite)
@@ -80,7 +89,6 @@ public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         {
             buffImage.color = Color.red;
         }
-
     }
 
     private void OnDisable()

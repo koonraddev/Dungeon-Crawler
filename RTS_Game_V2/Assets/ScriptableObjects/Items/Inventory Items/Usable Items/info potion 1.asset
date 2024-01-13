@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1c71656442eb242a8ac87b8dd8e82b, type: 3}
   m_Name: info potion 1
   m_EditorClassIdentifier: 
-  itemName: Health potionek
-  itemDescription: Porion ktory leczy dusze i cialo
+  itemName: Range  potionek
+  itemDescription: Porion ktory zwieksza range
   itemSprite: {fileID: 21300000, guid: 77a39e873655d3c4b93d0b7696397b83, type: 3}

@@ -18,7 +18,7 @@ public class BuffPanelMain : MonoBehaviour
 
     [SerializeField] BuffsSettings[] buffsSettings;
     private Dictionary<StatisticType, Sprite> spriteDict;
-
+    RectTransform mainPanelRect;
     private void OnEnable()
     {
         GameEvents.instance.OnBuffActivate += Buff;
@@ -31,7 +31,9 @@ public class BuffPanelMain : MonoBehaviour
         //{
         //    spriteDict.Add(item.statisticType, item.sprite);
         //}
+        mainPanelRect = GetComponent<RectTransform>();
     }
+    
 
     private void Start()
     {
@@ -45,19 +47,18 @@ public class BuffPanelMain : MonoBehaviour
     public void Buff(StatisticType statType, float statValue, float duration)
     {
         GameObject panel;
-        if(GetPooledObject() == null)
-        {
-            panel = Instantiate(panelPrefab);
-
-            leftPanels.Add(panel);
+        if(CheckForPooledObject(out panel))
+        { 
             BuffPanel buffPanel = panel.GetComponent<BuffPanel>();
-            panel.transform.SetParent(this.transform);
             buffPanel.SetBuffPanel(statType, statValue, duration, spriteDict[statType]);
             panel.SetActive(true);
         }
         else
         {
-            panel = GetPooledObject();
+            panel = Instantiate(panelPrefab);
+            leftPanels.Add(panel);
+            panel.transform.SetParent(this.transform);
+
             BuffPanel buffPanel = panel.GetComponent<BuffPanel>();
             buffPanel.SetBuffPanel(statType, statValue, duration, spriteDict[statType]);
             panel.SetActive(true);
@@ -71,25 +72,27 @@ public class BuffPanelMain : MonoBehaviour
         int i = 0;
         foreach (var panel in leftPanels)
         {
-            if (panel.activeInHierarchy)
+            if (panel.activeSelf)
             {
                 RectTransform rect = panel.GetComponent<RectTransform>();
-                rect.transform.localPosition = new Vector3((rect.rect.width + 10) * -i , 0, 0);
+                rect.anchoredPosition = new Vector3( mainPanelRect.sizeDelta.x /2 + (rect.sizeDelta.x + 10) * -i - rect.sizeDelta.x / 2, 0, 0);
                 i++;
             }
         }
     }
 
-    private GameObject GetPooledObject()
+    private bool CheckForPooledObject(out GameObject panel)
     {
         foreach (var item in leftPanels)
         {
             if (!item.activeInHierarchy)
             {
-                return item;
+                panel = item;
+                return true;
             }
         }
-        return null;
+        panel = null;
+        return false;
     }
 
     private void OnDisable()

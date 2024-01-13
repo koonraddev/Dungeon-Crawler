@@ -16,5 +16,5 @@ MonoBehaviour:
   itemInfos: {fileID: 11400000, guid: 9860e35450297f041b0ef3cd8d387fc6, type: 2}
   itemStatistics: {fileID: 11400000, guid: 63d92db2aec462c438d376be681a9631, type: 2}
   cooldown: 40
-  durationMode: 0
-  duration: 0
+  durationMode: 1
+  duration: 32

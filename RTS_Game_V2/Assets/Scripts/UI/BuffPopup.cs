@@ -9,6 +9,13 @@ public class BuffPopup : MonoBehaviour
     float timeLeft;
     string popupInfo;
 
+    RectTransform popupRect, parentRect, buffRect;
+    Vector2 parentPos, newPos;
+    float minX, maxX;
+    float newX, newY;
+    float sizeX;
+
+    bool setted = false;
     void Update()
     {
         timeLeft -= Time.deltaTime;
@@ -17,9 +24,18 @@ public class BuffPopup : MonoBehaviour
             Destroy(gameObject);
         }
         textObject.text = popupInfo + Mathf.Floor(timeLeft).ToString();
+
+        if (setted)
+        {
+            parentPos = buffRect.anchoredPosition;
+            newX = Mathf.Clamp(parentPos.x, minX, maxX);
+            newY = -parentRect.sizeDelta.y * 2;
+            newPos = new(newX, newY);
+            popupRect.anchoredPosition = newPos;
+        }
     }
 
-    public void SetPopup(StatisticType statType, float statValue ,float timeLeft)
+    public void SetPopup(StatisticType statType, float statValue ,float timeLeft, GameObject buffPanel, GameObject parentObject)
     {
         popupInfo = "";
         this.timeLeft = timeLeft;
@@ -72,9 +88,25 @@ public class BuffPopup : MonoBehaviour
             popupInfo += " decreased: ";
         }
 
-
         popupInfo += statValue.ToString();
         popupInfo += "\nTime left: ";
 
+        gameObject.transform.SetParent(parentObject.transform);
+        parentRect = parentObject.GetComponent<RectTransform>();
+        popupRect = GetComponent<RectTransform>();
+        buffRect = buffPanel.GetComponent<RectTransform>();
+
+        sizeX = parentRect.sizeDelta.x;
+
+        minX = -sizeX / 2 + popupRect.sizeDelta.x/2;
+        maxX = sizeX/2 - popupRect.sizeDelta.x/2;
+
+        parentPos = buffRect.anchoredPosition;
+        newX = Mathf.Clamp(parentPos.x, minX, maxX);
+        newY = -parentRect.sizeDelta.y * 2;
+        newPos = new(newX, newY);
+        popupRect.anchoredPosition = newPos;
+
+        setted = true;
     }
 }

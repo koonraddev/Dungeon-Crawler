@@ -128,7 +128,7 @@ public class BuffManager : MonoBehaviour
 
         foreach (var item in notZero)
         {
-            if(item.Key > 0)
+            if(item.Value > 0)
             {
                 if (!buffs[item.Key])
                 {
@@ -141,7 +141,7 @@ public class BuffManager : MonoBehaviour
             }
             else
             {
-                if (!buffs[item.Key])
+                if (!debuffs[item.Key])
                 {
                     continue;
                 }
