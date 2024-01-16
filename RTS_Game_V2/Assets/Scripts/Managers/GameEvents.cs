@@ -1,11 +1,6 @@
 using System;
 using UnityEngine;
 
-public enum LoadType
-{
-    SAVE_AND_LOAD,
-    LOAD
-}
 public class GameEvents : MonoBehaviour
 {
     public static GameEvents instance;
@@ -81,6 +76,7 @@ public class GameEvents : MonoBehaviour
     public event Action OnPauseGame;
     public event Action OnResumeGame;
     public event Action OnStartLevel;
+    public event Action OnGameOver;
 
 
     public void GeneratingReady() => OnGeneratingReady?.Invoke();
@@ -90,6 +86,8 @@ public class GameEvents : MonoBehaviour
     public void ResumeGame() => OnResumeGame?.Invoke();
 
     public void RestartGame() => OnRestartFloor?.Invoke();
+
+    public void GameOver() => OnGameOver?.Invoke();
 
     public void LoadGameScene() => OnLoadGameScene?.Invoke();
 

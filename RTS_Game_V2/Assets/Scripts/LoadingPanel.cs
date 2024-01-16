@@ -14,6 +14,13 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnRestartFloor += SetRestartingInfo;
         GameEvents.instance.OnLoadLevel += SetLoadingInfo;
         GameEvents.instance.OnLoadGameScene += SetLoadingInfo;
+        GameEvents.instance.OnGameOver += SetGameOverInfo;
+    }
+
+    private void SetGameOverInfo()
+    {
+        tmpText.text = "";
+        loadingComplete = false;
     }
 
     private void SetRestartingInfo()

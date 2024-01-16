@@ -41,6 +41,16 @@ public class PlayerHealth : MonoBehaviour
                 Heal(healthRegeneration / 12);
                 timeLeft = interval;
             }
+
+            if(health <= 0)
+            {
+                Die();
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                Die();
+            }
         }
     }
     public void Damage(string enemyName,float physicalDamage, float magicDamage, float trueDamage)
@@ -102,7 +112,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-
+        GameEvents.instance.GameOver();
     }
 
     public void Heal(float healthPoints, bool consoleLog = false)

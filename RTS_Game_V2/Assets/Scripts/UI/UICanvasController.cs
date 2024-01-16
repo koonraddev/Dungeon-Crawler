@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UICanvasController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class UICanvasController : MonoBehaviour
     [SerializeField] private GameObject statisticsPanel;
     [SerializeField] private GameObject enemyInformationPanel;
     [SerializeField] private GameObject mapPanel;
+    [SerializeField] private RectMask2D rectMask2D;
 
     private Vector3 playerUIPos, infoPanelPos, eqPanelPos, invDropPanelPos, containerPanelPos, statsPanelPos, enemyPanelPos, mapPanelPos;
     [SerializeField] private Vector3 miniMapPanelPos;
@@ -42,7 +44,20 @@ public class UICanvasController : MonoBehaviour
         GameEvents.instance.OnStatisticPanel += StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick += EnemyClick;
         GameEvents.instance.OnMapPanel += FullSizeMap;
+        GameEvents.instance.OnGameOver += ActivateHidingMask;
+        GameEvents.instance.OnStartLevel += DeactivateHidingMask;
     }
+
+    private void ActivateHidingMask()
+    {
+        rectMask2D.enabled = true;
+    }
+
+    private void DeactivateHidingMask()
+    {
+        rectMask2D.enabled = false;
+    }
+
     private void Start()
     {
         inventoryAction = playerControls.BasicMovement.Inventory;
@@ -172,6 +187,8 @@ public class UICanvasController : MonoBehaviour
         GameEvents.instance.OnStatisticPanel -= StatisticsPanelStatus;
         GameEvents.instance.OnEnemyClick -= EnemyClick;
         GameEvents.instance.OnMapPanel -= FullSizeMap;
+        GameEvents.instance.OnGameOver -= ActivateHidingMask;
+        GameEvents.instance.OnStartLevel -= DeactivateHidingMask;
     }
 
     public GameObject GetInfoPanel()

@@ -7,7 +7,7 @@ public enum GameStatus
     ON,
     PREPARING,
     PAUSED,
-    END
+    GAMEOVER
 }
 public class GameController : MonoBehaviour
 {
@@ -33,11 +33,17 @@ public class GameController : MonoBehaviour
     {
         GameEvents.instance.OnLevelSettingsSet += Respawn;
         GameEvents.instance.OnStartLevel += SetGameStatusON;
-        GameEvents.instance.OnLoadNextLevel += SetGameStatusPreparing;
-        GameEvents.instance.OnRestartFloor += SetGameStatusPreparing;
-        GameEvents.instance.OnPauseGame += SetGameStatusPaused;
+        GameEvents.instance.OnLoadNextLevel += SetGameStatusPREPARING;
+        GameEvents.instance.OnRestartFloor += SetGameStatusPREPARING;
+        GameEvents.instance.OnPauseGame += SetGameStatusPAUSED;
         GameEvents.instance.OnLastRoomReady += CheckRoomsAmount;
         GameEvents.instance.OnResumeGame += SetGameStatusON;
+        GameEvents.instance.OnGameOver += SetGameStatusGAMEOVER;
+    }
+
+    private void SetGameStatusGAMEOVER()
+    {
+        gameStatus = GameStatus.GAMEOVER;
     }
 
     public static void AddRoom(GameObject room)
@@ -74,13 +80,13 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    private void SetGameStatusPreparing()
+    private void SetGameStatusPREPARING()
     {
         gameStatus = GameStatus.PREPARING;
         Time.timeScale = 1f;
     }
 
-    private void SetGameStatusPaused()
+    private void SetGameStatusPAUSED()
     {
         gameStatus = GameStatus.PAUSED;
         Time.timeScale = 0f;
@@ -124,10 +130,11 @@ public class GameController : MonoBehaviour
     {
         GameEvents.instance.OnLevelSettingsSet -= Respawn;
         GameEvents.instance.OnStartLevel -= SetGameStatusON;
-        GameEvents.instance.OnLoadNextLevel -= SetGameStatusPreparing;
-        GameEvents.instance.OnRestartFloor -= SetGameStatusPreparing;
-        GameEvents.instance.OnPauseGame -= SetGameStatusPaused;
+        GameEvents.instance.OnLoadNextLevel -= SetGameStatusPREPARING;
+        GameEvents.instance.OnRestartFloor -= SetGameStatusPREPARING;
+        GameEvents.instance.OnPauseGame -= SetGameStatusPAUSED;
         GameEvents.instance.OnLastRoomReady -= CheckRoomsAmount;
         GameEvents.instance.OnResumeGame -= SetGameStatusON;
+        GameEvents.instance.OnGameOver -= SetGameStatusGAMEOVER;
     }
 }

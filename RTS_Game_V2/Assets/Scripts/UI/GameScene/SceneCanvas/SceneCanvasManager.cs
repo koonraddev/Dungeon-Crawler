@@ -36,6 +36,13 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnStartLevel += StartingLevel;
         GameEvents.instance.OnExitToMenu += QuitingToMenu;
         GameEvents.instance.OnLoadGameScene += LoadingDungeonScene;
+        GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
+    }
+
+    private void WaitAndFadeInFadeOut()
+    {
+        Invoke(nameof(FadeInInfoPanel), 2f);
+        Invoke(nameof(FadeOutInfoPanel), 4f);
     }
 
     private void LoadingDungeonScene()
@@ -97,6 +104,7 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnStartLevel -= StartingLevel;
         GameEvents.instance.OnExitToMenu -= QuitingToMenu;
         GameEvents.instance.OnLoadGameScene -= LoadingDungeonScene;
+        GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
     }
 
 }

@@ -70,7 +70,7 @@ public class PlayerObjectInteraction : MonoBehaviour
             distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
             Vector3 dir = clickedObject.transform.position - transform.position;
             Ray playerRay = new(this.transform.position, dir);
-            Debug.DrawRay(transform.position, dir, Color.yellow);
+            //Debug.DrawRay(transform.position, dir, Color.yellow);
             if (Physics.Raycast(playerRay, out RaycastHit hitObject))
             {
                 Vector3 dir2 = hitObject.point - transform.position;
@@ -146,8 +146,6 @@ public class PlayerObjectInteraction : MonoBehaviour
             float distToMove = Mathf.Ceil(distToTarget - minimumDistanceFromObject);
             Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
             playerMovement.MoveTo(pointToMove);
-            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            obj.transform.position = pointToMove;
             //Debug.Log("NEED MOVe");
         }
         yield return new WaitUntil(() => (distanceFromObject <= minimumDistanceFromObject));// && (canInteract));

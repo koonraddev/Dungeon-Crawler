@@ -26,7 +26,7 @@ public class UIEffects : MonoBehaviour
             case GameStatus.PAUSED:
                 textGameStatusObj.text = "GAME PAUSE";
                 break;
-            case GameStatus.END:
+            case GameStatus.GAMEOVER:
                 textGameStatusObj.text = "GAME END";
                 break;
             default:
