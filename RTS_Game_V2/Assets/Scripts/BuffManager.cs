@@ -30,6 +30,7 @@ public class BuffManager : MonoBehaviour
     private List<Buff> itemsToRemove;
 
     private bool playerSpawned;
+    private bool blockBuffing;
 
     public List<Buff> Buffs 
     { 
@@ -64,6 +65,22 @@ public class BuffManager : MonoBehaviour
     {
         GameEvents.instance.OnPlayerSpawn += OnPlayerSpawned;
         GameEvents.instance.OnUpdateCurrentHP += OnUpdateHP;
+        GameEvents.instance.OnPlayerStateEvent += BlockBuffing;
+    }
+
+    private void BlockBuffing(PlayerStateEvent playerState)
+    {
+        switch (playerState)
+        {
+            case PlayerStateEvent.NONE:
+                blockBuffing = false;
+                break;
+            case PlayerStateEvent.STUN:
+                blockBuffing = true;
+                break;
+            default:
+                break;
+        }
     }
 
     private void OnUpdateHP(float hpValue)
@@ -122,9 +139,12 @@ public class BuffManager : MonoBehaviour
 
     public bool Buff(Dictionary<StatisticType, float> buffsDict, float duration)
     {
-        var notZero = buffsDict.Where(a => a.Value != 0);
+        if (blockBuffing)
+        {
+            return false;
+        }
 
-        Debug.Log(notZero);
+        var notZero = buffsDict.Where(a => a.Value != 0);
 
         foreach (var item in notZero)
         {
@@ -188,5 +208,6 @@ public class BuffManager : MonoBehaviour
     {
         GameEvents.instance.OnPlayerSpawn -= OnPlayerSpawned;
         GameEvents.instance.OnUpdateCurrentHP -= OnUpdateHP;
+        GameEvents.instance.OnPlayerStateEvent -= BlockBuffing;
     }
 }

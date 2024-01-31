@@ -112,7 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae547a3c9243d44d824fe563838eb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: 3b2bae364a174494eaba3669895156a4, type: 2}
 --- !u!114 &-7736476395989375232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMov: {fileID: 3940110844068087954}
+  playerAnim: {fileID: 8730133915372459743}
   followTarget: 1
 --- !u!114 &3797590189318510952
 MonoBehaviour:
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 709ae98beae536746b40b6ca99857709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnim: {fileID: 8730133915372459743}
 --- !u!114 &3871232193948609917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,11 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highLightObjectColor: {r: 0.051397298, g: 0.990566, b: 0.93000233, a: 0}
-  interactiveObjectMask:
-    serializedVersion: 2
-    m_Bits: 256
   playerMovement: {fileID: 3940110844068087954}
   playerAttack: {fileID: -7736476395989375232}
+  hitted: {fileID: 0}
 --- !u!114 &3940110844068087954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,3 +203,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa30ce2e89577564f9be833d5f83de5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAgent: {fileID: 8596881243989432613}
+  movementSpeed: 0
+  attackType: 0
+  attackSpeed: 0
+  animationSpeed: 0
+  timeToWait: 0
+  animator: {fileID: 2222184502115446787}
+--- !u!95 &2222184502115446787 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4957605393579145647, guid: 4f46098734d87e24490aef9267915ad2, type: 3}
+  m_PrefabInstance: {fileID: 6492566483021875628}
+  m_PrefabAsset: {fileID: 0}

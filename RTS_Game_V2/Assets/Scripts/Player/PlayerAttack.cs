@@ -17,15 +17,34 @@ public class PlayerAttack : MonoBehaviour
     private GameObject objectToAttack;
     private Enemy enemy;
     [SerializeField] PlayerMovement playerMov;
+    [SerializeField] PlayerAnimation playerAnim;
     [SerializeField] private bool followTarget;
     private bool follow;
+    private bool blockAttack;
 
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
         GameEvents.instance.OnEnemyClick += SetTarget;
         GameEvents.instance.OnCancelActions += DontFollow;
+        GameEvents.instance.OnPlayerStateEvent += BlockAttack;
     }
+
+    private void BlockAttack(PlayerStateEvent playerState)
+    {
+        switch (playerState)
+        {
+            case PlayerStateEvent.NONE:
+                blockAttack = false;
+                break;
+            case PlayerStateEvent.STUN:
+                blockAttack = true;
+                break;
+            default:
+                break;
+        }
+    }
+
     void Start()
     {
 
@@ -56,18 +75,31 @@ public class PlayerAttack : MonoBehaviour
                     playerMov.MoveTo(pointToMove);
                 }
             }
-            Attack();
+            CheckForAttack();
         }
     }
 
-    public void Attack()
+    private void CheckForAttack()
     {
-        if (attackCooldown <= 0 && distanceToEnemy <= attackRange)
+        if (attackCooldown <= 0 
+            && distanceToEnemy <= attackRange 
+            && enemy != null 
+            && !blockAttack)
         {
-            enemy.Damage(physicalDamage, magicDamage, trueDamage);
+            playerAnim.AttackAnimation();
             attackCooldown = timeToWait;
         }
     }
+
+    private void Attack()
+    {
+        if (enemy != null)
+        {
+            enemy.Damage(physicalDamage, magicDamage, trueDamage);
+        }
+    }
+
+
 
     public void SetTarget(Enemy target)
     { 
@@ -120,5 +152,6 @@ public class PlayerAttack : MonoBehaviour
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
         GameEvents.instance.OnEnemyClick -= SetTarget;
         GameEvents.instance.OnCancelActions -= DontFollow;
+        GameEvents.instance.OnPlayerStateEvent -= BlockAttack;
     }
 }

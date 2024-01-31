@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 581cf0a99293fb544adee6ffab90122d, type: 3}
-  m_Name: Armor
+  m_Name: Sword1
   m_EditorClassIdentifier: 
-  itemID: 21
-  itemInfos: {fileID: 11400000, guid: d4da9f1cf4f247047a1da77b42cb4120, type: 2}
-  itemStatistics: {fileID: 11400000, guid: e58112f8b92e25f498101a4dfb2959a1, type: 2}
-  itemSlot: 1
-  attackType: 0
+  itemID: 9909
+  itemInfos: {fileID: 11400000, guid: 2118be1b8e2496a498d290c3a4b16c27, type: 2}
+  itemStatistics: {fileID: 11400000, guid: 64df7b26289908e41a2535f8f4ae1911, type: 2}
+  itemSlot: 5
+  attackType: 1

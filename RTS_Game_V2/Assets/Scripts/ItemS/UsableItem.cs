@@ -43,14 +43,14 @@ public class UsableItem : InventoryItem, IUsable, IStatisticItem, ISerialization
         statistics = usableItemSO.ItemStatistics.Statistics;
         this.usableItemSO = usableItemSO;
 
-        if (usableItemSO.DurationMode)
-        {
-            itemDescription += "\n Duration: " + usableItemSO.Duration;
-        }
-        else
-        {
+        //if (usableItemSO.DurationMode)
+        //{
+        //    itemDescription += "\n Duration: " + usableItemSO.Duration;
+        //}
+        //else
+        //{
             itemDescription += "\n Cooldown: " + usableItemSO.Cooldown;
-        }
+        //}
 
 
     }

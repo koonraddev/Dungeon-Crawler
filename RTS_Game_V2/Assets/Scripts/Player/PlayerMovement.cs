@@ -13,7 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveInspectAction;
 
     private float movementSpeed;
-
+    private bool blockMovement = false;
+    public bool blcked;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -23,7 +24,28 @@ public class PlayerMovement : MonoBehaviour
     {
         playerControls.Enable();
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
+        GameEvents.instance.OnPlayerStateEvent += StopAndBlockMovement;
     }
+
+    private void StopAndBlockMovement(PlayerStateEvent playerState)
+    {
+        switch (playerState)
+        {
+            case PlayerStateEvent.NONE:
+                blockMovement = false;
+                UnlockMovement();
+                break;
+            case PlayerStateEvent.BUFF:
+            case PlayerStateEvent.STUN:
+            case PlayerStateEvent.DEATH:
+                blockMovement = true;
+                StopMovement();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void OnDisable()
     {
         playerControls.Disable();
@@ -34,11 +56,13 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInspectAction = playerControls.BasicMovement.Move;
         groundMask = LayerMask.NameToLayer("Ground");
+        UnlockMovement();
     }
 
 
     void Update()
     {
+        blcked = playerAgent.isStopped;
         if (moveInspectAction.IsInProgress() && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -58,10 +82,10 @@ public class PlayerMovement : MonoBehaviour
             GameEvents.instance.CancelGameObjectAction();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StopMovement();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    StopMovement();
+        //}
     }
 
     public void UpdateStats(StatisticType statisticType, float value)
@@ -75,11 +99,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveTo(Vector3 destination)
     {
-        playerAgent.isStopped = false;
+        if (blockMovement)
+        {
+            return;
+        }
         //SoundManager.PlaySound(pointDestinationSound, 1f);
 
         //Debug.Log(destination);
 
+        playerAgent.isStopped = false;
         playerAgent.SetDestination(destination);
     }
 
@@ -91,5 +119,11 @@ public class PlayerMovement : MonoBehaviour
     public void StopMovement()
     {
         playerAgent.isStopped = true;
+    }
+
+    private void UnlockMovement()
+    {
+        blockMovement = false;
+        playerAgent.isStopped = false;
     }
 }

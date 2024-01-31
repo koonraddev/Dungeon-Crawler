@@ -6,6 +6,7 @@ using UnityEngine;
 public class EquipmentItem : Item , IStatisticItem, ISerializationCallbackReceiver
 {
     [SerializeField] private EquipmentSlotType itemSlot;
+    private AttackType attackType;
     private Dictionary<StatisticType, float> statistics;
     [SerializeField] private List<StatisticType> statTypes;
     [SerializeField] private List<float> statValues;
@@ -32,12 +33,15 @@ public class EquipmentItem : Item , IStatisticItem, ISerializationCallbackReceiv
         get { return itemSprite; }
         set { itemSprite = value; }
     }
+
+    public AttackType AttackType { get => attackType; }
     public EquipmentSlotType ItemSlot { get => itemSlot; }
 
     public Dictionary<StatisticType, float> Statistics => statistics;
 
     public EquipmentItem(EquipmentItemSO equipmentItemSO): base(equipmentItemSO.ItemInformations, equipmentItemSO.ItemID)
     {
+        attackType = equipmentItemSO.AttackType;
         itemID = equipmentItemSO.ItemID;
         itemName = equipmentItemSO.ItemInformations.ItemName;
         itemDescription = equipmentItemSO.ItemInformations.ItemDescription;

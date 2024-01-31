@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerStateEvent
+{
+    NONE,
+    BUFF,
+    STUN,
+    DEATH,
+}
+
+
 public class PlayerHealth : MonoBehaviour
 {
     private float maxHealth;
@@ -18,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
     private const float interval = 5f;
     private float timeLeft;
 
+    [SerializeField] PlayerAnimation playerAnim;
 
     private void OnEnable()
     {
@@ -26,7 +36,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        //yield return new WaitForEndOfFrame();
         health = BuffManager.instance.PlayerHP;
         GameEvents.instance.UpdateCurrentHP(health);
     }
@@ -59,11 +68,24 @@ public class PlayerHealth : MonoBehaviour
         //Console Log
         ConsolePanel.instance.PlayerTakeDamage(enemyName, totalDamage);
         health -= totalDamage;
+        playerAnim.HitAnimation();
         GameEvents.instance.UpdateCurrentHP(health);
     }
 
+    public void StunEffect(float stunDuration)
+    {
+        StopCoroutine(StunCooldown(stunDuration));
+        StartCoroutine(StunCooldown(stunDuration));
+        GameEvents.instance.PlayerStateEvent(PlayerStateEvent.STUN);
+    }
 
-    public void UpdateStats(StatisticType statisticType, float value)
+    IEnumerator StunCooldown(float stunDuration)
+    {
+        yield return new WaitForSeconds(stunDuration);
+        GameEvents.instance.PlayerStateEvent(PlayerStateEvent.NONE);
+    }
+
+    private void UpdateStats(StatisticType statisticType, float value)
     {
         switch (statisticType)
         {
@@ -76,9 +98,7 @@ public class PlayerHealth : MonoBehaviour
                 {
                     if(GameController.GameStatus == GameStatus.ON)
                     {
-                        Debug.LogWarning("DEATH");
-                        //Death
-                        
+                        Die();  
                     }
                 }
                 GameEvents.instance.UpdateCurrentHP(health);
@@ -112,6 +132,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
+        GameEvents.instance.PlayerStateEvent(PlayerStateEvent.DEATH);
         GameEvents.instance.GameOver();
     }
 
