@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class DropBag : MonoBehaviour, IInteractionObject
+public class DropBag : MonoBehaviour, IInteractiveObject
 {
     public ContainerSlot bagSlot;
     private bool displayInfo = true;

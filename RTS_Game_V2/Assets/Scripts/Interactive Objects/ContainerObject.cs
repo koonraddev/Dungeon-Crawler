@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class ContainerObject : MonoBehaviour, IInteractionObject
+public class ContainerObject : MonoBehaviour, IInteractiveObject
 {
     [SerializeField] private Color highLightObjectColor;
     [SerializeField] private GameObject parentObject;

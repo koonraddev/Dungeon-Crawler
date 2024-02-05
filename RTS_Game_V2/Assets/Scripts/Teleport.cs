@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleport : MonoBehaviour, IInteractionObject
+public class Teleport : MonoBehaviour, IInteractiveObject
 {
     [SerializeField] Color highLightColor;
     private Dictionary<string, string> contentToDisplay;

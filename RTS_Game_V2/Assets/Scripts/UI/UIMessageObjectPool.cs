@@ -48,7 +48,7 @@ public class UIMessageObjectPool : MonoBehaviour
         return false;
     }
 
-    public void DisplayMessage(IInteractionObject gameObjectReq, MessageType messageType )
+    public void DisplayMessage(IInteractiveObject gameObjectReq, MessageType messageType )
     {
         if (!CheckForExistingMessage(gameObjectReq,messageType))
         {
@@ -71,7 +71,7 @@ public class UIMessageObjectPool : MonoBehaviour
         }
     }
 
-    private bool CheckForExistingMessage(IInteractionObject gameObjectReq, MessageType messageType)
+    private bool CheckForExistingMessage(IInteractiveObject gameObjectReq, MessageType messageType)
     {
         foreach (var item in pooledObjects)
         {

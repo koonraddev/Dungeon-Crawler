@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Enemy : MonoBehaviour, IInteractionObject
+public class Enemy : MonoBehaviour, IInteractiveObject
 {
     [SerializeField] private EnemyConfigurationSO enemyConfig;
     protected LootSO lootSO;

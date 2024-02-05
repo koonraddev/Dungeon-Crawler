@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
-public class Door : MonoBehaviour, IInteractionObject
+public class Door : MonoBehaviour, IInteractiveObject
 {
     DoorSO doorSO;
     private PassiveItem keyItem;

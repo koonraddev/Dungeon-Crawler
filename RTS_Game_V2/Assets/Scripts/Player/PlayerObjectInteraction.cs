@@ -53,7 +53,7 @@ public class PlayerObjectInteraction : MonoBehaviour
 
                 if (moveInspectAction.IsPressed())
                 {
-                    if (pointedObject.TryGetComponent(out IInteractionObject pointedScript))
+                    if (pointedObject.TryGetComponent(out IInteractiveObject pointedScript))
                     {
                         GameEvents.instance.CancelGameObjectAction();
                         StopAllCoroutines();
@@ -102,7 +102,7 @@ public class PlayerObjectInteraction : MonoBehaviour
         }
     }
 
-    public IEnumerator InspectObject(IInteractionObject objectToInspect)
+    public IEnumerator InspectObject(IInteractiveObject objectToInspect)
     {
         minimumDistanceFromObject = objectToInspect.InteractionDistance;
         //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IInteractionObject : IContentDisplayObject
+public interface IInteractiveObject : IContentDisplayObject
 {
     public void ObjectInteraction(GameObject interactingObject = null);
     public void DoInteraction();

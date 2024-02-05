@@ -73,7 +73,7 @@ public class MessageMenuController : MonoBehaviour
         Positioning();
     }
 
-    public void PrepareMessageMenu(IInteractionObject intObject, UIMessageObjectPool.MessageType messageType)
+    public void PrepareMessageMenu(IInteractiveObject intObject, UIMessageObjectPool.MessageType messageType)
     {
         this.messageType = messageType;
         if (firstRun)
