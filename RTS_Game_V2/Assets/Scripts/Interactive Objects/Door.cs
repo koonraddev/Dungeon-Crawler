@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
@@ -10,18 +9,12 @@ public class Door : MonoBehaviour, IInteractionObject
     private PassiveItem keyItem;
     private bool destroyItemOnUse;
     private bool keyRequired;
-    private bool displayInfo;
+    private bool displayInfo = true;
     //[SerializeField] GameObject actualDoor;
     private Dictionary<string, string> contentToDisplay;
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
     [SerializeField] private RoomTeleport roomTeleport;
-
-
-    public void Start()
-    {
-        displayInfo = true;
-    }
 
     private int interactionDistance = 3;
     public GameObject GameObject => gameObject;
@@ -102,12 +95,9 @@ public class Door : MonoBehaviour, IInteractionObject
         }
     }
 
-    public void OnMouseEnterObject(Color highLightColor)
+    private void OnMouseEnter()
     {
-        if (!keyRequired)
-        {
-            roomTeleport.ActiveParticles(!keyRequired);
-        }
+        roomTeleport.ActiveParticles(!keyRequired);
 
         if (displayInfo)
         {
@@ -117,10 +107,9 @@ public class Door : MonoBehaviour, IInteractionObject
         }
     }
 
-    public void OnMouseExitObject()
-    {
+    private void OnMouseExit()
+    { 
         displayInfo = true;
-
         roomTeleport.ActiveParticles(false);
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
@@ -156,8 +145,4 @@ public class Door : MonoBehaviour, IInteractionObject
         }
     }
 
-    private void OnDestroy()
-    {
-        transform.DOKill();
-    }
 }

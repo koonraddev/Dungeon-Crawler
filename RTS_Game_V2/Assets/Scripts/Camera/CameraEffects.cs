@@ -15,9 +15,9 @@ public class CameraEffects : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameEvents.instance.OnGeneratingReady += FindTeleportObject;
-        GameEvents.instance.OnSavedPlayerData += SavedData;
-        GameEvents.instance.OnStartLevel += StartLevel;
+        //GameEvents.instance.OnGeneratingReady += FindTeleportObject;
+        //GameEvents.instance.OnSavedPlayerData += SavedData;
+        //GameEvents.instance.OnStartLevel += StartLevel;
     }
 
     private void Update()
@@ -35,12 +35,13 @@ public class CameraEffects : MonoBehaviour
 
     private IEnumerator MoveToTeleport()
     {
-        cameraFollow.enabled = false;
-        Sequence seqShow = DOTween.Sequence()
-            .Append(transform.DOMove(endTeleport.transform.position, 1f))
-            .Join(camera.DOFieldOfView(120f, 1f));
-        yield return seqShow.WaitForCompletion();
-        GameEvents.instance.SwitchScene();
+        yield return null;
+        //cameraFollow.enabled = false;
+        //Sequence seqShow = DOTween.Sequence()
+        //    .Append(transform.DOMove(endTeleport.transform.position, 1f))
+        //    .Join(camera.DOFieldOfView(120f, 1f));
+        //yield return seqShow.WaitForCompletion();
+        //GameEvents.instance.SwitchScene();
     }
 
     private void SavedData()
@@ -54,13 +55,14 @@ public class CameraEffects : MonoBehaviour
     }
     private IEnumerator MooveOut()
     {
-        Sequence seqShow = DOTween.Sequence()
-            .Append(camera.DOFieldOfView(cameraFollow.BaseFov, 3f))
-            .Join(transform.DOLocalMove(cameraFollow.BaseLocalOffset, 2f)); 
+        yield return null;
+        //Sequence seqShow = DOTween.Sequence()
+        //    .Append(camera.DOFieldOfView(cameraFollow.BaseFov, 3f))
+        //    .Join(transform.DOLocalMove(cameraFollow.BaseLocalOffset, 2f)); 
 
 
-        yield return seqShow.WaitForCompletion();
-        cameraFollow.enabled = true;
+        //yield return seqShow.WaitForCompletion();
+        //cameraFollow.enabled = true;
     }
 
 
@@ -79,8 +81,8 @@ public class CameraEffects : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.instance.OnGeneratingReady -= FindTeleportObject;
-        GameEvents.instance.OnSavedPlayerData -= SavedData;
-        GameEvents.instance.OnStartLevel -= StartLevel;
+        //GameEvents.instance.OnGeneratingReady -= FindTeleportObject;
+        //GameEvents.instance.OnSavedPlayerData -= SavedData;
+        //GameEvents.instance.OnStartLevel -= StartLevel;
     }
 }

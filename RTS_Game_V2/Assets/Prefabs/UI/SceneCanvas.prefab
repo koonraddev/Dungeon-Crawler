@@ -114,8 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d8ad64689c0364888a66474fd9ef93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanel: {fileID: 4141072646957192530}
   fadingTime: 0.3
+  fadeGroup: {fileID: 4141072646957192533}
 --- !u!1 &4141072646135954505
 GameObject:
   m_ObjectHideFlags: 0

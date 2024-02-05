@@ -18,6 +18,8 @@ public class DropBag : MonoBehaviour, IInteractionObject
     public int InteractionDistance { get => interactionDistance; }
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
+    Tween enterTweener, exitTweener;
+
     public void DoInteraction()
     {
         if (InventoryManager.instance.AddItem(bagSlot.Item as InventoryItem, amount: bagSlot.Amount))
@@ -66,7 +68,16 @@ public class DropBag : MonoBehaviour, IInteractionObject
             {
                 if (objMaterial.color != highLightColor)
                 {
-                    objMaterial.DOColor(highLightColor, "_Color", 0.5f);
+                    if(enterTweener == null)
+                    {
+                        enterTweener = DOTween.Sequence().Append(objMaterial.DOColor(highLightColor, "_Color", 0.5f));
+                    }
+                    if(exitTweener != null)
+                    {
+                        exitTweener.Rewind();
+                    }
+
+                    enterTweener.Play();
                 }
             }
         }
@@ -89,7 +100,17 @@ public class DropBag : MonoBehaviour, IInteractionObject
             {
                 if (objMaterial.color != Color.white)
                 {
-                    objMaterial.DOColor(Color.white, "_Color", 0.5f);
+                    if (exitTweener == null)
+                    {
+                        exitTweener = DOTween.Sequence().Append(objMaterial.DOColor(Color.white, "_Color", 0.5f));
+                    }
+
+                    if(enterTweener != null)
+                    {
+                        enterTweener.Rewind();
+                    }
+
+                    exitTweener.Play();
                 }
             }
         }

@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour, IInteractionObject
     private Sprite enemySprite;
     private Dictionary<string, string> contentToDisplay;
     private bool displayPopup = true;
-
+    Tween enterTweener, exitTweener;
     public float MaxHealth { get => maxHealth; }
     public float Health { get => health; }
     public string Name { get => enemyName; }
@@ -122,7 +122,16 @@ public class Enemy : MonoBehaviour, IInteractionObject
             {
                 if (objMaterial.color != highLightColor)
                 {
-                    objMaterial.DOColor(highLightColor, "_Color", 0.5f);
+                    if (enterTweener == null)
+                    {
+                        enterTweener = objMaterial.DOColor(highLightColor, "_Color", 0.5f);
+                    }
+                    if (exitTweener != null)
+                    {
+                        exitTweener.Rewind();
+                    }
+
+                    enterTweener.Play();
                 }
             }
         }
@@ -144,12 +153,22 @@ public class Enemy : MonoBehaviour, IInteractionObject
             {
                 if (objMaterial.color != Color.white)
                 {
-                    objMaterial.DOColor(Color.white, "_Color", 0.5f);
+                    if (exitTweener == null)
+                    {
+                        exitTweener = objMaterial.DOColor(Color.white, "_Color", 0.5f);
+                    }
+
+                    if (enterTweener != null)
+                    {
+                        enterTweener.Rewind();
+                    }
+
+                    exitTweener.Play();
                 }
             }
         }
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
-        displayPopup = false;
+        displayPopup = true;
     }
 
     private void OnCancelGameObject()

@@ -7,6 +7,8 @@ public class EquipmentItem : Item , IStatisticItem, ISerializationCallbackReceiv
 {
     [SerializeField] private EquipmentSlotType itemSlot;
     private AttackType attackType;
+    private bool isWeapon;
+    private GameObject weaponPrefab;
     private Dictionary<StatisticType, float> statistics;
     [SerializeField] private List<StatisticType> statTypes;
     [SerializeField] private List<float> statValues;
@@ -36,12 +38,15 @@ public class EquipmentItem : Item , IStatisticItem, ISerializationCallbackReceiv
 
     public AttackType AttackType { get => attackType; }
     public EquipmentSlotType ItemSlot { get => itemSlot; }
-
+    public bool IsWeapon { get => isWeapon; }
+    public GameObject WeaponPrefab { get => weaponPrefab; }
     public Dictionary<StatisticType, float> Statistics => statistics;
 
     public EquipmentItem(EquipmentItemSO equipmentItemSO): base(equipmentItemSO.ItemInformations, equipmentItemSO.ItemID)
     {
         attackType = equipmentItemSO.AttackType;
+        isWeapon = equipmentItemSO.IsWeapon;
+        weaponPrefab = equipmentItemSO.WeaponPrefab;
         itemID = equipmentItemSO.ItemID;
         itemName = equipmentItemSO.ItemInformations.ItemName;
         itemDescription = equipmentItemSO.ItemInformations.ItemDescription;

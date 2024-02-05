@@ -50,6 +50,9 @@ public class MessageMenuController : MonoBehaviour
 
     private Vector3 lastMousePositionOnObject;
 
+    public UIMessageObjectPool.MessageType MessageType { get => messageType; }
+    public int GetId { get => objectReq.GetInstanceID(); }
+
     private void Start()
     {
         SetAllElements();

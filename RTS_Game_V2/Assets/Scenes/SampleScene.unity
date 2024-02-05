@@ -7878,6 +7878,7 @@ MonoBehaviour:
   transparentColor: {r: 0, g: 0, b: 0, a: 0}
   consoleText: {fileID: 1582274695}
   scrollbar: {fileID: 1472598165}
+  fadingDelay: 5
 --- !u!114 &788024045
 MonoBehaviour:
   m_ObjectHideFlags: 0

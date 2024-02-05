@@ -165,4 +165,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effb594c51857d0479ad4faff1805234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highLightObjectColor: {r: 0.0047169924, g: 0.7706096, b: 1, a: 1}
   parentObject: {fileID: 1850066015614315132}
+  renderers:
+  - {fileID: 6131211282008508777}
+  - {fileID: 6433900912100506627}
+--- !u!23 &6131211282008508777 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4441869256221719087, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
+  m_PrefabInstance: {fileID: 1679067913984740536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6433900912100506627 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5621883860189900987, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
+  m_PrefabInstance: {fileID: 1679067913984740536}
+  m_PrefabAsset: {fileID: 0}

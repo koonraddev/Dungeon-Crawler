@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
         timeLeft -= timePassedWhileInactiveState;
         if (timeLeft <= 0)
         {
-            Debug.Log("enabled and ready");
+            //Debug.Log("enabled and ready");
             TimePassed();
         }
     }

@@ -14,6 +14,7 @@ public class ConsolePanel : MonoBehaviour
     [SerializeField] private Color transparentColor;
     [SerializeField] private TMP_Text consoleText;
     [SerializeField] private Scrollbar scrollbar;
+    [SerializeField] private float fadingDelay;
     private Color originalPanelColor;
     private Color originalTextColor;
     private Image mainPanel;
@@ -22,8 +23,7 @@ public class ConsolePanel : MonoBehaviour
     private PlayerControls playerControls;
     private InputAction switchConsoleStatus;
 
-    private Tween t1;
-    private Tween t2;
+    private Tween t1, t2;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -33,10 +33,9 @@ public class ConsolePanel : MonoBehaviour
         originalPanelColor = mainPanel.color;
         originalTextColor = consoleText.color;
 
-        t1 = mainPanel.DOColor(transparentColor, 2f);
-        t2 = consoleText.DOColor(transparentColor, 2f);
-        t1.Play();
-        t2.Play();
+        t1 = mainPanel.DOColor(transparentColor, 2f).SetDelay(fadingDelay);
+        t2 = consoleText.DOColor(transparentColor, 2f).SetDelay(fadingDelay);
+        CheckConsole();
     }
 
     private void OnEnable()
@@ -55,84 +54,58 @@ public class ConsolePanel : MonoBehaviour
         if (switchConsoleStatus.triggered)
         {
             GameEvents.instance.ConsolePanel(!consoleIsOn);
-            StartCoroutine(FadeOut());
+            CheckConsole();
         }
 
         scrollbar.value = 0;
     }
 
-    private bool CheckConsole()
+    private void CheckConsole()
     {
         if (consoleIsOn)
         {
-            t1.Kill();
-            t2.Kill();
+            if (t1.IsPlaying())
+            {
+                t1.Rewind();
+                t2.Rewind();
+            }
 
             consoleText.color = originalTextColor;
             mainPanel.color = originalPanelColor;
-            return true;
+            t1.Play();
+            t2.Play();
         }
-        return false;
-    }
-
-    private IEnumerator FadeOut()
-    {
-        yield return new WaitForSeconds(5f);
-        t1 = mainPanel.DOColor(transparentColor, 2f);
-        t2 = consoleText.DOColor(transparentColor, 2f);
-        t1.Play();
-        t2.Play();
     }
 
     public void EnemyTakeDamage(string enemyName, float damage)
     {
         consoleText.text += "An " + enemyName + " <color=#5ef0f7>loses</color> " + damage + " hitpoints due to your attack\n";
-        if (CheckConsole())
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut());
-        }   
+        CheckConsole();  
     }
 
     public void PlayerTakeDamage(string enemyName, float damage)
     {
         consoleText.text += "You <color=#f55649>lose</color> " + damage + " hitpoints due to an attack by " + enemyName + "\n";
-        if (CheckConsole())
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut());
-        }
+        CheckConsole();
     }
 
 
     public void HealLog(float healValue)
     {
         consoleText.text += "You <color=#96f75e>healed</color> " + healValue + " health points\n";
-        if (CheckConsole())
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut());
-        }
+        CheckConsole();
     }
 
     public void UseLog(string objectName)
     {
         consoleText.text += "Using " + objectName + "\n";
-        if (CheckConsole())
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut());
-        }
+        CheckConsole();
     }
 
     public void InfoLog(string info)
     {
         consoleText.text += info + "\n";
-        if (CheckConsole())
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut());
-        }
+        CheckConsole();
     }
     private void OnDisable()
     {

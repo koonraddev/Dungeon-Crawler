@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour, IInteractionObject
 {
+    [SerializeField] Color highLightColor;
     private Dictionary<string, string> contentToDisplay;
     private int interactionDistance = 3;
     private bool displayPopup = true;
     private bool activated = false;
+    Tween enterTweener, exitTweener;
     public GameObject GameObject => gameObject;
     public int InteractionDistance => interactionDistance;
 
@@ -48,7 +50,7 @@ public class Teleport : MonoBehaviour, IInteractionObject
         UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
     }
 
-    public void OnMouseEnterObject(Color highLightColor)
+    private void OnMouseEnter()
     {
         Material[] objectMaterials = gameObject.GetComponent<Renderer>().materials;
 
@@ -58,7 +60,16 @@ public class Teleport : MonoBehaviour, IInteractionObject
             {
                 if (objMaterial.color != highLightColor)
                 {
-                    objMaterial.DOColor(highLightColor, "_Color", 0.5f);
+                    if (enterTweener == null)
+                    {
+                        enterTweener = objMaterial.DOColor(highLightColor, "_Color", 0.5f);
+                    }
+                    if (exitTweener != null)
+                    {
+                        exitTweener.Rewind();
+                    }
+
+                    enterTweener.Play();
                 }
             }
         }
@@ -71,7 +82,7 @@ public class Teleport : MonoBehaviour, IInteractionObject
         }
     }
 
-    public void OnMouseExitObject()
+    private void OnMouseExit()
     {
         Material[] objectMaterials = gameObject.GetComponent<Renderer>().materials;
 
@@ -81,7 +92,17 @@ public class Teleport : MonoBehaviour, IInteractionObject
             {
                 if (objMaterial.color != Color.white)
                 {
-                    objMaterial.DOColor(Color.white, "_Color", 0.5f);
+                    if (exitTweener == null)
+                    {
+                        exitTweener = objMaterial.DOColor(Color.white, "_Color", 0.5f);
+                    }
+
+                    if (enterTweener != null)
+                    {
+                        enterTweener.Rewind();
+                    }
+
+                    exitTweener.Play();
                 }
             }
         }

@@ -5,10 +5,9 @@ using DG.Tweening;
 
 public class SceneCanvasManager : MonoBehaviour
 {
-
-    [SerializeField] private GameObject fadePanel;
     [SerializeField] private float fadingTime;
-    private CanvasGroup fadeGroup;
+    [SerializeField] private CanvasGroup fadeGroup;
+    Tween fadeOutTweener, fadeInTweener;
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -22,7 +21,10 @@ public class SceneCanvasManager : MonoBehaviour
         //{
         //    Destroy(gameObject);
         //}
-        fadeGroup = fadePanel.GetComponent<CanvasGroup>();
+        //fadeGroup = fadePanel.GetComponent<CanvasGroup>();
+
+        fadeOutTweener = fadeGroup.DOFade(0, fadingTime);
+        fadeInTweener = fadeGroup.DOFade(1, fadingTime);    
     }
 
     private void Start()
@@ -39,6 +41,14 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
     }
 
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            FadeOutInfoPanel();
+        }
+    }
     private void WaitAndFadeInFadeOut()
     {
         Invoke(nameof(FadeInInfoPanel), 2f);
@@ -70,6 +80,7 @@ public class SceneCanvasManager : MonoBehaviour
         //Debug.LogWarning("FADING");
         fadeGroup.blocksRaycasts = true;
         yield return FadeInInfoPanel().WaitForCompletion();
+        //fadeInTweener.Rewind();
         GameEvents.instance.SwitchScene();
     }
 
@@ -89,12 +100,14 @@ public class SceneCanvasManager : MonoBehaviour
 
     private Tween FadeOutInfoPanel()
     {
-        return fadeGroup.DOFade(0, fadingTime);
+        fadeOutTweener.Rewind();
+        return fadeOutTweener.Play();
     }
 
     private Tween FadeInInfoPanel()
     {
-        return fadeGroup.DOFade(1, fadingTime);
+        fadeInTweener.Rewind();
+        return fadeInTweener.Play();
     }
 
     private void OnDisable()

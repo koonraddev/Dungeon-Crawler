@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+
+
 public class UIMessageObjectPool : MonoBehaviour
 {
     public static UIMessageObjectPool instance;
@@ -12,6 +14,7 @@ public class UIMessageObjectPool : MonoBehaviour
     [SerializeField] private bool canAddObjects;
     [Tooltip("Specify whether the Message Menu should follow mouse when on top of a object")]
     [SerializeField] private bool followMouse;
+
     public enum MessageType
     {
         POPUP,
@@ -21,7 +24,6 @@ public class UIMessageObjectPool : MonoBehaviour
         DELETE,
         DROP
     }
-
     void Awake()
     {
         instance = this;
@@ -32,62 +34,89 @@ public class UIMessageObjectPool : MonoBehaviour
     {
         CreateObjects(amountToPool);   
     }
-    public GameObject GetPooledObject()
+    private bool CheckForEmptyObject(out GameObject pooledObject)
     {
-        int objectsInList = pooledObjects.Count;
-        for (int i = 0; i < objectsInList; i++)
+        pooledObject = null;
+        foreach (var item in pooledObjects)
         {
-            if (!pooledObjects[i].activeInHierarchy)
+            if (!item.activeInHierarchy)
             {
-                return pooledObjects[i];
+                pooledObject = item;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void DisplayMessage(IInteractionObject gameObjectReq, MessageType messageType )
     {
-        if (GetPooledObject() == null)
+        if (!CheckForExistingMessage(gameObjectReq,messageType))
         {
-            if (canAddObjects)
+            GameObject gm;
+            if (CheckForEmptyObject(out GameObject messageObject))
             {
-                CreateObjects(1);
-                GameObject gm = GetPooledObject();
+                gm = messageObject;
                 MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
                 cc.PrepareMessageMenu(gameObjectReq, messageType);
                 gm.SetActive(true);
             }
+            else
+            {
+                if (canAddObjects)
+                {
+                    CreateObjects(1);
+                    DisplayMessage(gameObjectReq, messageType);
+                }
+            }
         }
-        else
+    }
+
+    private bool CheckForExistingMessage(IInteractionObject gameObjectReq, MessageType messageType)
+    {
+        foreach (var item in pooledObjects)
         {
-            GameObject gm = GetPooledObject();
-            MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
-            cc.PrepareMessageMenu(gameObjectReq, messageType);
-            gm.SetActive(true);
+            if (item.activeInHierarchy)
+            {
+                MessageMenuController messageMenu = item.GetComponentInChildren<MessageMenuController>();
+
+                switch (messageType)
+                {
+                    case MessageType.POPUP:
+                        if (gameObjectReq.GameObject.GetInstanceID() == messageMenu.GetId)
+                        {
+                            return true;
+                        }
+                        break;
+                    default:
+                        if (gameObjectReq.GameObject.GetInstanceID() == messageMenu.GetId && messageType == messageMenu.MessageType)
+                        {
+                            return true;
+                        }
+                        break;
+                }
+            }
         }
+        return false;
     }
 
     public void DisplayMessage(ISpecialInventoryPanel specialInventoryPanel, MessageType messageType)
     {
-        if (GetPooledObject() == null)
+        GameObject gm;
+        if (CheckForEmptyObject(out GameObject messageObject))
         {
-            if (canAddObjects)
-            {
-                CreateObjects(1);
-                GameObject gm = GetPooledObject();
-                MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
-                cc.PrepareMessageMenu(specialInventoryPanel, messageType);
-                gm.SetActive(true);
-            }
-        }
-        else
-        {
-            GameObject gm = GetPooledObject();
+            gm = messageObject;
             MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
             cc.PrepareMessageMenu(specialInventoryPanel, messageType);
             gm.SetActive(true);
         }
-
+        else
+        {
+            if (canAddObjects)
+            {
+                CreateObjects(1);
+                DisplayMessage(specialInventoryPanel, messageType);
+            }
+        }
     }
 
     private void CreateObjects(int amountToCreate)

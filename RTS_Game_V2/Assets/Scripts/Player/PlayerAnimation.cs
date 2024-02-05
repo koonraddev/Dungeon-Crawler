@@ -6,6 +6,7 @@ public enum AttackType
 {
     FISTS,
     SWORD,
+    WAND,
     BOW,
     SPELL
 }
@@ -13,8 +14,6 @@ public enum AttackType
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent playerAgent;
-
-
     [SerializeField] private float movementSpeed;
     [SerializeField] private AttackType attackType;
     [SerializeField] private float attackSpeed;
@@ -37,10 +36,6 @@ public class PlayerAnimation : MonoBehaviour
         performBuffAnimation = Animator.StringToHash("Buff");
         performStunAnimation = Animator.StringToHash("Stun");
     }
-    void Start()
-    {
-
-    }
 
     private void OnEnable()
     {
@@ -55,13 +50,9 @@ public class PlayerAnimation : MonoBehaviour
         switch (playerStateEvent)
         {
             case PlayerStateEvent.NONE:
-                switch (lastPlayerState)
+                if(lastPlayerState == PlayerStateEvent.STUN)
                 {
-                    case PlayerStateEvent.STUN:
-                        animator.SetBool(performStunAnimation, false);
-                        break;
-                    default:
-                        break;
+                    animator.SetBool(performStunAnimation, false);
                 }
                 break;
             case PlayerStateEvent.BUFF:
@@ -72,6 +63,7 @@ public class PlayerAnimation : MonoBehaviour
                 break;
             case PlayerStateEvent.DEATH:
                 DeathAnimation();
+                animator.SetBool(performStunAnimation, false);
                 break;
             default:
                 break;
@@ -83,14 +75,22 @@ public class PlayerAnimation : MonoBehaviour
 
     private void UpdateAttackType()
     {
-        EquipmentSlot eqSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.RIGHT_ARM);
-        if (eqSlot.Empty)
+        EquipmentSlot eqLeftHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.LEFT_ARM);
+        EquipmentSlot eqRightHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.RIGHT_ARM);
+
+        attackType = AttackType.FISTS;
+
+        if (!eqLeftHandSlot.Empty && eqLeftHandSlot.Item.IsWeapon)
         {
-            attackType = AttackType.FISTS;
+            attackType = eqLeftHandSlot.Item.AttackType;
+            animator.SetFloat(attackTypeIndex, (int)attackType);
+            return;
         }
-        else
+
+        if (!eqRightHandSlot.Empty && eqRightHandSlot.Item.IsWeapon)
         {
-            attackType = eqSlot.Item.AttackType;
+            attackType = eqRightHandSlot.Item.AttackType;
+            animator.SetFloat(attackTypeIndex, (int)attackType);
         }
     }
 
@@ -134,8 +134,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             animator.SetFloat(movementSpeedParameter, movementSpeed);
         }
-
-        animator.SetFloat(attackTypeIndex, (int)attackType);
     }
 
     public void HitAnimation()
@@ -147,7 +145,7 @@ public class PlayerAnimation : MonoBehaviour
     public void AttackAnimation()
     {
         animator.SetBool(performAttackAnimation, true);
-        StartCoroutine(WaitAndSetFalse(animationSpeed, performAttackAnimation));
+        StartCoroutine(WaitAndSetFalse(animationSpeed - 0.5f, performAttackAnimation));
     }
 
     public void DeathAnimation()

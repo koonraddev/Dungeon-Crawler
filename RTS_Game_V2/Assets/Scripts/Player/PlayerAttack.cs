@@ -86,6 +86,7 @@ public class PlayerAttack : MonoBehaviour
             && enemy != null 
             && !blockAttack)
         {
+            playerMov.RotateTo(enemy.transform.position);
             playerAnim.AttackAnimation();
             attackCooldown = timeToWait;
         }

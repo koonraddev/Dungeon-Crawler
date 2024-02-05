@@ -121,6 +121,13 @@ public class PlayerMovement : MonoBehaviour
         playerAgent.isStopped = true;
     }
 
+    public void RotateTo(Vector3 destination)
+    {
+        Vector3 target = destination - transform.position;
+        target.y = 0;
+        Quaternion rot = Quaternion.LookRotation(target);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, 1000f);
+    }
     private void UnlockMovement()
     {
         blockMovement = false;

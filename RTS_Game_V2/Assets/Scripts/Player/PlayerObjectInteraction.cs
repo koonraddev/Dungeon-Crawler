@@ -49,21 +49,22 @@ public class PlayerObjectInteraction : MonoBehaviour
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                if (pointedObject != hitPoint.transform.gameObject)
-                {
-                    UncheckObject(pointedObject);
-                }
                 pointedObject = hitPoint.transform.gameObject;
-                if (pointedObject != null)
+
+                if (moveInspectAction.IsPressed())
                 {
-                    CheckObject(pointedObject);
+                    if (pointedObject.TryGetComponent(out IInteractionObject pointedScript))
+                    {
+                        GameEvents.instance.CancelGameObjectAction();
+                        StopAllCoroutines();
+                        clickedObject = pointedObject;
+                        inspectCor = InspectObject(pointedScript);
+                        StartCoroutine(inspectCor);
+                    }
                 }
             }
         }
-        else
-        {
-            UncheckObject(pointedObject);
-        }
+
 
         if (clickedObject != null)
         {
@@ -101,43 +102,12 @@ public class PlayerObjectInteraction : MonoBehaviour
         }
     }
 
-    public void CheckObject(GameObject pointedObject)
-    {
-        //Debug.Log("Check");
-        if (pointedObject != null)
-        {
-            if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
-            {
-                pointedScript.OnMouseEnterObject(highLightObjectColor);
-                if (moveInspectAction.IsPressed())
-                {
-                    GameEvents.instance.CancelGameObjectAction();
-                    StopAllCoroutines();
-                    clickedObject = pointedObject;
-                    inspectCor = InspectObject(pointedScript);
-                    StartCoroutine(inspectCor);
-                }
-            }
-        }
-    }
-
-    public void UncheckObject(GameObject pointedObject)
-    {
-        //Debug.Log("Uncheck");
-        if (pointedObject != null)
-        {
-            if(pointedObject.TryGetComponent(out IInteractionObject pointedScript))
-            {
-                pointedScript.OnMouseExitObject();
-            }
-        }
-    }
-
     public IEnumerator InspectObject(IInteractionObject objectToInspect)
     {
         minimumDistanceFromObject = objectToInspect.InteractionDistance;
         //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
         //Debug.Log("INSPECt");
+        distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
         if (distanceFromObject > minimumDistanceFromObject && playerMovement != null)
         {
             Vector3 dirToTarget = clickedObject.transform.position - this.transform.position;

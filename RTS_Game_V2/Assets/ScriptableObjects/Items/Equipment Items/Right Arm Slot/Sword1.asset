@@ -16,4 +16,6 @@ MonoBehaviour:
   itemInfos: {fileID: 11400000, guid: 2118be1b8e2496a498d290c3a4b16c27, type: 2}
   itemStatistics: {fileID: 11400000, guid: 64df7b26289908e41a2535f8f4ae1911, type: 2}
   itemSlot: 5
+  isWeapon: 1
   attackType: 1
+  weaponPrefab: {fileID: 100006, guid: b9432b6a4a78c64449366f08c7196deb, type: 3}
