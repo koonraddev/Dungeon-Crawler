@@ -20,23 +20,20 @@ public class GameOverCanvasController : MonoBehaviour
     private void Awake()
     {
         seq = DOTween.Sequence()
-            .Append(labelText.DOFade(1, 1f)).SetDelay(1f)
+            .AppendCallback(() =>
+            {
+                restartButton.SetActive(true);
+                mainMenuButton.SetActive(true);
+                background.SetActive(true);
+                buttonPanelCanvasGroup.gameObject.SetActive(true);
+                labelText.gameObject.SetActive(true);
+            }).SetDelay(4f)
+            .Append(labelText.DOFade(1, 1f))
             .Append(buttonPanelCanvasGroup.DOFade(1, 1f).SetDelay(1f));
     }
     private void WaitAndFadeInFadeOut()
     {
-        StartCoroutine(Anim());
-    }
-
-    private IEnumerator Anim()
-    {
-        seq.Rewind();
-        yield return new WaitForSeconds(4f);
-        restartButton.SetActive(true);
-        mainMenuButton.SetActive(true);
-        background.SetActive(true);
-        buttonPanelCanvasGroup.gameObject.SetActive(true);
-        labelText.gameObject.SetActive(true);
+        seq.Restart();
         seq.Play();
     }
 

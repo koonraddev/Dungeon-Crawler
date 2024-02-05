@@ -89,7 +89,6 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
     protected virtual void Die()
     {
-        Debug.LogWarning("DEAD");
         GameEvents.instance.EnemyClick(null);
 
         LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetContainer(enemyName),lootSO.LootTimeExisting);

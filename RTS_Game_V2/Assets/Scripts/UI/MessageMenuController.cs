@@ -149,8 +149,6 @@ public class MessageMenuController : MonoBehaviour
             default:
                 break;
         }
-        //objectReq = intObject.GetGameObject();
-        //objectReqPosition = objectReq.transform.position;
         SetTextHolders(specialSlot);
         CheckTextHolders();
         CheckButtons();

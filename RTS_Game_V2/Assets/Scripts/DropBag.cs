@@ -6,19 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class DropBag : MonoBehaviour, IInteractiveObject
 {
-    public ContainerSlot bagSlot;
-    private bool displayInfo = true;
-    private bool displayMessage = true;
-
-
+    [SerializeField] private Color highLightObjectColor;
+    [SerializeField] private Renderer[] renderers;
+    private ContainerSlot bagSlot;
+    private int interactionDistance = 3;
     private Dictionary<string, string> contentToDisplay;
 
-    private int interactionDistance = 3;
     public GameObject GameObject => gameObject;
     public int InteractionDistance { get => interactionDistance; }
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
-    Tween enterTweener, exitTweener;
+    public void SetDropBag(InventoryItem inventoryItem, int itemAmount)
+    {
+        bagSlot.Item = inventoryItem;
+        bagSlot.Amount = itemAmount;
+    }
 
     public void DoInteraction()
     {
@@ -29,15 +31,8 @@ public class DropBag : MonoBehaviour, IInteractiveObject
         }
         else
         {
-        
             ConsolePanel.instance.InfoLog("No empty slot in inventory");
         }
-    }
-
-
-    public GameObject GetGameObject()
-    {
-        return gameObject;
     }
 
     private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
@@ -51,70 +46,28 @@ public class DropBag : MonoBehaviour, IInteractiveObject
 
     public void ObjectInteraction(GameObject interactingObject = null)
     {
-        if (displayMessage)
-        {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", bagSlot.Amount.ToString() + "x " + bagSlot.Item.Name } });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.TAKE);
-        }
+        SetContentToDisplay(new Dictionary<string, string> { { "Name", bagSlot.Amount.ToString() + "x " + bagSlot.Item.Name } });
+        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.TAKE);
     }
 
-    public void OnMouseEnterObject(Color highLightColor)
+    private void OnMouseEnter()
     {
-        Material[] objectMaterials;
-        objectMaterials = gameObject.GetComponent<Renderer>().materials;
-        if (objectMaterials != null)
+        foreach (var item in renderers)
         {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != highLightColor)
-                {
-                    if(enterTweener == null)
-                    {
-                        enterTweener = DOTween.Sequence().Append(objMaterial.DOColor(highLightColor, "_Color", 0.5f));
-                    }
-                    if(exitTweener != null)
-                    {
-                        exitTweener.Rewind();
-                    }
-
-                    enterTweener.Play();
-                }
-            }
+            item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
 
-        if (displayInfo)
-        {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", "Bag"} });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
-            displayInfo = false;
-        }
+        SetContentToDisplay(new Dictionary<string, string> { { "Name", "Bag" } });
+        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
     }
 
-    public void OnMouseExitObject()
+    private void OnMouseExit()
     {
-        Material[] objectMaterials;
-        objectMaterials = gameObject.GetComponent<Renderer>().materials;
-        if (objectMaterials != null)
+        foreach (var item in renderers)
         {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != Color.white)
-                {
-                    if (exitTweener == null)
-                    {
-                        exitTweener = DOTween.Sequence().Append(objMaterial.DOColor(Color.white, "_Color", 0.5f));
-                    }
-
-                    if(enterTweener != null)
-                    {
-                        enterTweener.Rewind();
-                    }
-
-                    exitTweener.Play();
-                }
-            }
+            item.material.DOColor(Color.white, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
-        displayInfo = true;
+
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 }

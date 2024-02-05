@@ -14,6 +14,21 @@ public class Container
     public string Description { get => contDesc; }
     public List<ContainerSlot> Slots { get => contSlots;}
 
+    public bool Empty
+    {
+        get
+        {
+            foreach (var item in Slots)
+            {
+                if (!item.Empty)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
+
     public Container(List<ContainerSlot> containerSlots, string containerName, string containerDescription, bool canAddTreasures = true)
     {
         contSlots = containerSlots;
@@ -45,21 +60,7 @@ public class Container
 
     public void SwapItems(int slotIndexA, int slotIndexB)
     {    
-        Debug.Log("Swap1");
         ContainerSlot tmp = new(contSlots[slotIndexA]);
-
-        //Debug.Log(tmp.Empty);
-        //Debug.Log(tmp.Item);
-        //Debug.Log(tmp.Amount);
-
-        //Debug.Log("-----From-------");
-        //Debug.Log(contSlots[slotIndexA].Empty);
-        //Debug.Log(contSlots[slotIndexA].Item);
-        //Debug.Log(contSlots[slotIndexA].Amount);
-        //Debug.Log("-----TO-------");
-        //Debug.Log(contSlots[slotIndexB].Empty);
-        //Debug.Log(contSlots[slotIndexB].Item);
-        //Debug.Log(contSlots[slotIndexB].Amount);
 
         contSlots[slotIndexA].Empty = contSlots[slotIndexB].Empty;
         contSlots[slotIndexA].Item = contSlots[slotIndexB].Item;
@@ -69,17 +70,6 @@ public class Container
         contSlots[slotIndexB].Empty = tmp.Empty;
         contSlots[slotIndexB].Item = tmp.Item;
         contSlots[slotIndexB].Amount = tmp.Amount;
-
-
-        //Debug.Log("---------@@@@@@@@@@@@@@@@@-------AFTER");
-
-        //Debug.Log(contSlots[slotIndexA].Empty);
-        //Debug.Log(contSlots[slotIndexA].Item);
-        //Debug.Log(contSlots[slotIndexA].Amount);
-        //Debug.Log("-----TO-------");
-        //Debug.Log(contSlots[slotIndexB].Empty);
-        //Debug.Log(contSlots[slotIndexB].Item);
-        //Debug.Log(contSlots[slotIndexB].Amount);
         GameEvents.instance.ContainerUpdate();
     }
 }

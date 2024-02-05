@@ -11,20 +11,9 @@ public class SceneCanvasManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        //if (instance == null)
-        //{
-        //    instance = this;
-        //    DontDestroyOnLoad(this);
-        //    fadeGroup = fadePanel.GetComponent<CanvasGroup>();
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
-        //fadeGroup = fadePanel.GetComponent<CanvasGroup>();
 
-        fadeOutTweener = fadeGroup.DOFade(0, fadingTime);
-        fadeInTweener = fadeGroup.DOFade(1, fadingTime);    
+        //fadeOutTweener = fadeGroup.DOFade(0, fadingTime);
+        //fadeInTweener = fadeGroup.DOFade(1, fadingTime);    
     }
 
     private void Start()
@@ -100,14 +89,14 @@ public class SceneCanvasManager : MonoBehaviour
 
     private Tween FadeOutInfoPanel()
     {
-        fadeOutTweener.Rewind();
-        return fadeOutTweener.Play();
+        //fadeOutTweener.Rewind();
+        return fadeGroup.DOFade(0, fadingTime).Play();
     }
 
     private Tween FadeInInfoPanel()
     {
-        fadeInTweener.Rewind();
-        return fadeInTweener.Play();
+        //fadeInTweener.Rewind();
+        return fadeGroup.DOFade(1, fadingTime).Play();
     }
 
     private void OnDisable()

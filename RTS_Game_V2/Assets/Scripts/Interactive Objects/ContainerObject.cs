@@ -9,7 +9,6 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
     [SerializeField] private GameObject parentObject;
     [SerializeField] private Renderer[] renderers;
     private Dictionary<string, string> contentToDisplay;
-    private bool displayPopup = true;
     private Container container;
     private int interactionDistance = 3;
     private float existingTime;
@@ -18,7 +17,6 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
     private bool stopExistingTime;
     public GameObject GameObject => gameObject;
     public int InteractionDistance => interactionDistance;
-
     public Dictionary<string, string> ContentToDisplay => contentToDisplay;
 
     public void Start()
@@ -40,11 +38,6 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
                 parentObject.SetActive(false);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            //enterTweener.size
-        }
     }
 
     public void SetContainer(Container newContainer, float lootExistingTime = 0)
@@ -56,10 +49,6 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
             disappearON = true;
             existingTimeLeft = lootExistingTime;
             existingTime = lootExistingTime;
-        }
-        else
-        {
-            disappearON = false;
         }
     }
 
@@ -101,50 +90,23 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
 
     private void OnMouseEnter()
     {
-        if (displayPopup)
+        foreach (var item in renderers)
         {
-            //Material[] objectMaterials = gameObject.GetComponent<Renderer>().materials;
-            //if (objectMaterials != null)
-            //{
-            //    foreach (Material objMaterial in objectMaterials)
-            //    {
-            //        Debug.Log(objMaterial.name);
-            //        Debug.Log("KOLOR - " + objMaterial.color);
-            //        objMaterial.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
-            //    }
-            //}
-
-            foreach (var item in renderers)
-            {
-                item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
-            }
-
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", container.Name } });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
-            displayPopup = false;
+            item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
+
+        SetContentToDisplay(new Dictionary<string, string> { { "Name", container.Name } });
+        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
     }
 
     private void OnMouseExit()
     {
-        //Material[] objectMaterials = gameObject.GetComponent<Renderer>().materials;
-
-        //if (objectMaterials != null)
-        //{
-        //    foreach (Material objMaterial in objectMaterials)
-        //    {
-        //        objMaterial.DOColor(Color.white, "_BaseColor", 0.5f).SetAutoKill(true).Play();
-        //    }
-
-        //}
-
         foreach (var item in renderers)
         {
             item.material.DOColor(Color.white, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
 
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
-        displayPopup = true;
     }
 
     private void SetContentToDisplay(Dictionary<string, string> contentDictionary)

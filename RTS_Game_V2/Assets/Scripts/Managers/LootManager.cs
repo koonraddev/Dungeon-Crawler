@@ -24,6 +24,11 @@ public class LootManager : MonoBehaviour
     
     public void CreateLoot(Vector3 position, Container container,float lootExistingTime = 0)
     {
+        if (container.Empty)
+        {
+            return;
+        }
+
         if (canCreateLoot)
         {
             GameObject containerObject = null;
