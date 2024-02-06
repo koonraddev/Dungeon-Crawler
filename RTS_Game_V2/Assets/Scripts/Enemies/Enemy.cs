@@ -6,6 +6,8 @@ using DG.Tweening;
 public class Enemy : MonoBehaviour, IInteractiveObject
 {
     [SerializeField] private EnemyConfigurationSO enemyConfig;
+    [SerializeField] private Color highLightObjectColor;
+    [SerializeField] private Renderer[] renderers;
     protected LootSO lootSO;
 
     private GameObject parentRoom;
@@ -24,8 +26,6 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     [SerializeField] EnemyAttack enemyAttack;
     private Sprite enemySprite;
     private Dictionary<string, string> contentToDisplay;
-    private bool displayPopup = true;
-    Tween enterTweener, exitTweener;
     public float MaxHealth { get => maxHealth; }
     public float Health { get => health; }
     public string Name { get => enemyName; }
@@ -111,64 +111,27 @@ public class Enemy : MonoBehaviour, IInteractiveObject
         GameEvents.instance.OnCancelGameObjectAction += OnCancelGameObject;
     }
 
-    public void OnMouseEnterObject(Color highLightColor)
+    private void OnMouseEnter()
     {
-        Material[] objectMaterials;
-        objectMaterials = gameObject.GetComponent<Renderer>().materials;
-        if (objectMaterials != null)
+        foreach (var item in renderers)
         {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != highLightColor)
-                {
-                    if (enterTweener == null)
-                    {
-                        enterTweener = objMaterial.DOColor(highLightColor, "_Color", 0.5f);
-                    }
-                    if (exitTweener != null)
-                    {
-                        exitTweener.Rewind();
-                    }
+            item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
+        }
 
-                    enterTweener.Play();
-                }
-            }
-        }
-        if (displayPopup)
-        {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", enemyName } });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
-            displayPopup = false;
-        }
+        SetContentToDisplay(new Dictionary<string, string> { { "Name", enemyName } });
+        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
     }
 
-    public void OnMouseExitObject()
+    private void OnMouseExit()
     {
-        Material[] objectMaterials;
-        objectMaterials = gameObject.GetComponent<Renderer>().materials;
-        if (objectMaterials != null)
+        foreach (var item in renderers)
         {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != Color.white)
-                {
-                    if (exitTweener == null)
-                    {
-                        exitTweener = objMaterial.DOColor(Color.white, "_Color", 0.5f);
-                    }
-
-                    if (enterTweener != null)
-                    {
-                        enterTweener.Rewind();
-                    }
-
-                    exitTweener.Play();
-                }
-            }
+            item.material.DOColor(Color.white, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
+
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
-        displayPopup = true;
     }
+
 
     private void OnCancelGameObject()
     {

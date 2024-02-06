@@ -12,8 +12,8 @@ public class SceneCanvasManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
 
-        //fadeOutTweener = fadeGroup.DOFade(0, fadingTime);
-        //fadeInTweener = fadeGroup.DOFade(1, fadingTime);    
+        fadeOutTweener = fadeGroup.DOFade(0, fadingTime);
+        fadeInTweener = fadeGroup.DOFade(1, fadingTime);    
     }
 
     private void Start()
@@ -30,14 +30,6 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
     }
 
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            FadeOutInfoPanel();
-        }
-    }
     private void WaitAndFadeInFadeOut()
     {
         Invoke(nameof(FadeInInfoPanel), 2f);
@@ -66,10 +58,8 @@ public class SceneCanvasManager : MonoBehaviour
 
     IEnumerator WaitForFadeInAndSwitchScene()
     {
-        //Debug.LogWarning("FADING");
         fadeGroup.blocksRaycasts = true;
         yield return FadeInInfoPanel().WaitForCompletion();
-        //fadeInTweener.Rewind();
         GameEvents.instance.SwitchScene();
     }
 
@@ -77,7 +67,6 @@ public class SceneCanvasManager : MonoBehaviour
     {
         yield return FadeOutInfoPanel().WaitForCompletion();
         fadeGroup.blocksRaycasts = false;
-        //GameEvents.instance.StartLevel();
     }
 
     IEnumerator WaitForFadeInAndLoadLevel()
@@ -89,19 +78,18 @@ public class SceneCanvasManager : MonoBehaviour
 
     private Tween FadeOutInfoPanel()
     {
-        //fadeOutTweener.Rewind();
+        fadeOutTweener.Restart();
         return fadeGroup.DOFade(0, fadingTime).Play();
     }
 
     private Tween FadeInInfoPanel()
     {
-        //fadeInTweener.Rewind();
+        fadeInTweener.Restart();
         return fadeGroup.DOFade(1, fadingTime).Play();
     }
 
     private void OnDisable()
     {
-        Debug.LogWarning("DISABLED");
         GameEvents.instance.OnRestartFloor -= RestartingLevel;
         GameEvents.instance.OnStartLevel -= StartingLevel;
         GameEvents.instance.OnExitToMenu -= QuitingToMenu;

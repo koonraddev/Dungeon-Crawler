@@ -48,6 +48,10 @@ public class EquipmentItemSO : ScriptableObject
                     eqItemSO.weaponPrefab = (GameObject)EditorGUILayout.ObjectField("Weapon Prefab", eqItemSO.weaponPrefab, typeof(GameObject), true);
                 }
             }
+            else
+            {
+                eqItemSO.isWeapon = false;
+            }
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
         }    

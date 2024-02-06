@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System.Linq;
+[System.Serializable]
+public class DistanceAttackConfig
+{
+    [SerializeField] private AttackType attackType;
+    [SerializeField] private GameObject projectilePrefab;
+
+    public AttackType AttackType { get => attackType; }
+    public GameObject ProjectilePrefab { get => projectilePrefab; }
+}
+
 
 public class PlayerAttack : MonoBehaviour
 {
-    private float attackSpeed;
-    private float attackRange;
-    private float physicalDamage;
-    private float magicDamage;
-    private float trueDamage;
+    //Statistics
+    private float attackSpeed, attackRange, physicalDamage, magicDamage,trueDamage;
 
     private float timeToWait;
     private float attackCooldown;
@@ -19,18 +28,50 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] PlayerMovement playerMov;
     [SerializeField] PlayerAnimation playerAnim;
     [SerializeField] private bool followTarget;
+    [SerializeField] private List<DistanceAttackConfig> distAttackConfigs;
     private bool follow;
     private bool blockAttack;
+    private AttackType attackType;
+    private GameObject projectilePrefab;
 
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
         GameEvents.instance.OnEnemyClick += SetTarget;
         GameEvents.instance.OnCancelActions += DontFollow;
-        GameEvents.instance.OnPlayerStateEvent += BlockAttack;
+        GameEvents.instance.OnPlayerStateEvent += SuspendAttack;
+        GameEvents.instance.OnEquipmentUpdate += UpdateAttackType;
     }
 
-    private void BlockAttack(PlayerStateEvent playerState)
+    private void UpdateAttackType()
+    {
+        EquipmentSlot eqLeftHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.LEFT_ARM);
+        EquipmentSlot eqRightHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.RIGHT_ARM);
+
+        attackType = AttackType.FISTS;
+
+        if (!eqLeftHandSlot.Empty && eqLeftHandSlot.Item.IsWeapon)
+        {
+            attackType = eqLeftHandSlot.Item.AttackType;
+        }
+
+        if (!eqRightHandSlot.Empty && eqRightHandSlot.Item.IsWeapon)
+        {
+            attackType = eqRightHandSlot.Item.AttackType;
+        }
+
+        //bulletPrefab = distAttackConfigs.First(s => s.AttackType == attackType).BulletPrefab;
+
+        foreach (var item in distAttackConfigs)
+        {
+            if(item.AttackType == attackType)
+            {
+                projectilePrefab = item.ProjectilePrefab;
+            }
+        }
+    }
+
+    private void SuspendAttack(PlayerStateEvent playerState)
     {
         switch (playerState)
         {
@@ -43,11 +84,6 @@ public class PlayerAttack : MonoBehaviour
             default:
                 break;
         }
-    }
-
-    void Start()
-    {
-
     }
 
     void Update()
@@ -96,8 +132,40 @@ public class PlayerAttack : MonoBehaviour
     {
         if (enemy != null)
         {
-            enemy.Damage(physicalDamage, magicDamage, trueDamage);
+            switch (attackType)
+            {
+                case AttackType.FISTS:
+                case AttackType.SWORD:
+                    enemy.Damage(physicalDamage, magicDamage, trueDamage);
+                    break;
+                case AttackType.WAND:
+                case AttackType.BOW:
+                case AttackType.SPELL:
+                    FireProjectilePrefab();
+                    break;
+                default:
+                    break;
+            }
+            
         }
+    }
+
+    private void FireProjectilePrefab()
+    {
+        GameObject newBullet = Instantiate(projectilePrefab, transform.position,Quaternion.identity);
+        float duration = distanceToEnemy / 20;
+        newBullet.transform
+            .DOMove(objectToAttack.transform.position, duration)
+            .SetAutoKill(true)
+            .SetEase(Ease.Linear)
+            .OnComplete(() => BulletDamage(newBullet))
+            .Play();
+    }
+
+    private void BulletDamage(GameObject bullet)
+    {
+        enemy.Damage(physicalDamage, magicDamage, trueDamage);
+        Destroy(bullet);
     }
 
 
@@ -153,6 +221,7 @@ public class PlayerAttack : MonoBehaviour
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
         GameEvents.instance.OnEnemyClick -= SetTarget;
         GameEvents.instance.OnCancelActions -= DontFollow;
-        GameEvents.instance.OnPlayerStateEvent -= BlockAttack;
+        GameEvents.instance.OnPlayerStateEvent -= SuspendAttack;
+        GameEvents.instance.OnEquipmentUpdate -= UpdateAttackType;
     }
 }

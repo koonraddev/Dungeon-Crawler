@@ -46,13 +46,14 @@ public class PlayerEquipment : MonoBehaviour
             return;
         }
 
-        Renderer rend = weaponObject.GetComponent<Renderer>();
+        Renderer rend = weaponObject.GetComponentInChildren<Renderer>();
 
         if (seq1 != null)
         {
             seq1.Kill();
         }
 
+        if (rend == null) return;
         seq1 = DOTween.Sequence()
                 .AppendInterval(waitSeconds)
                 .Append(rend.material.DOFade(0f, 0.2f))
@@ -69,34 +70,32 @@ public class PlayerEquipment : MonoBehaviour
         EquipmentSlot eqLeftHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.LEFT_ARM);
         EquipmentSlot eqRightHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.RIGHT_ARM);
         Transform spawnPlace = null;
+        GameObject weaponPrefab = null;
 
         if (!eqLeftHandSlot.Empty && eqLeftHandSlot.Item.IsWeapon)
         {
             spawnPlace = leftHandWeaponPlace;
             weaponSlotType = eqLeftHandSlot.SlotType;
+            weaponPrefab = eqLeftHandSlot.Item.WeaponPrefab;
         }
 
         if (!eqRightHandSlot.Empty && eqRightHandSlot.Item.IsWeapon)
         {
             spawnPlace = rightHandWeaponPlace;
             weaponSlotType = eqRightHandSlot.SlotType;
+            weaponPrefab = eqRightHandSlot.Item.WeaponPrefab;
         }
 
-        if(spawnPlace != null)
-        {
-            if (instantiatedWeapon != null)
-            {
-                Destroy(instantiatedWeapon);
-            }
-
-            instantiatedWeapon = Instantiate(eqRightHandSlot.Item.WeaponPrefab, spawnPlace);
-            ActiveWeapon(enemyInCombat);
-            return;
-        }
-
-        if (instantiatedWeapon != null)
+        if (instantiatedWeapon != null && !instantiatedWeapon.Equals(weaponPrefab))
         {
             Destroy(instantiatedWeapon);
+        }
+
+        if (spawnPlace != null)
+        {
+            instantiatedWeapon = Instantiate(weaponPrefab, spawnPlace);
+            ActiveWeapon(enemyInCombat);
+            return;
         }
     }
 

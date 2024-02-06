@@ -8,9 +8,7 @@ public class Teleport : MonoBehaviour, IInteractiveObject
     [SerializeField] Color highLightColor;
     private Dictionary<string, string> contentToDisplay;
     private int interactionDistance = 3;
-    private bool displayPopup = true;
     private bool activated = false;
-    Tween enterTweener, exitTweener;
     public GameObject GameObject => gameObject;
     public int InteractionDistance => interactionDistance;
 
@@ -52,63 +50,13 @@ public class Teleport : MonoBehaviour, IInteractiveObject
 
     private void OnMouseEnter()
     {
-        Material[] objectMaterials = gameObject.GetComponent<Renderer>().materials;
-
-        if (objectMaterials != null)
-        {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != highLightColor)
-                {
-                    if (enterTweener == null)
-                    {
-                        enterTweener = objMaterial.DOColor(highLightColor, "_Color", 0.5f);
-                    }
-                    if (exitTweener != null)
-                    {
-                        exitTweener.Rewind();
-                    }
-
-                    enterTweener.Play();
-                }
-            }
-        }
-
-        if (displayPopup)
-        {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", "Teleport" } });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
-            displayPopup = false;
-        }
+        SetContentToDisplay(new Dictionary<string, string> { { "Name", "Teleport" } });
+        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
     }
 
     private void OnMouseExit()
     {
-        Material[] objectMaterials = gameObject.GetComponent<Renderer>().materials;
-
-        if (objectMaterials != null)
-        {
-            foreach (Material objMaterial in objectMaterials)
-            {
-                if (objMaterial.color != Color.white)
-                {
-                    if (exitTweener == null)
-                    {
-                        exitTweener = objMaterial.DOColor(Color.white, "_Color", 0.5f);
-                    }
-
-                    if (enterTweener != null)
-                    {
-                        enterTweener.Rewind();
-                    }
-
-                    exitTweener.Play();
-                }
-            }
-        }
-
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
-        displayPopup = true;
     }
 
     private void SetContentToDisplay(Dictionary<string, string> contentDictionary)

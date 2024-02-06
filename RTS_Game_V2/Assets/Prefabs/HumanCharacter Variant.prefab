@@ -23,8 +23,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2414936873782891793}
-  m_LocalRotation: {x: -0.18164764, y: -0.053755283, z: 0.050677773, w: -0.9805847}
-  m_LocalPosition: {x: -0.033783272, y: 0.1452021, z: -0.57021254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,6 +239,13 @@ MonoBehaviour:
   playerMov: {fileID: 3940110844068087954}
   playerAnim: {fileID: 8730133915372459743}
   followTarget: 1
+  distAttackConfigs:
+  - attackType: 2
+    bulletPrefab: {fileID: 0}
+  - attackType: 3
+    bulletPrefab: {fileID: 110294, guid: 3015291fd64c2e3458a42390d720166e, type: 3}
+  - attackType: 4
+    bulletPrefab: {fileID: 0}
 --- !u!114 &704214558758837833
 MonoBehaviour:
   m_ObjectHideFlags: 0

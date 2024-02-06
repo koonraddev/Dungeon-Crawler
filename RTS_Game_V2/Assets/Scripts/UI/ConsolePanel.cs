@@ -70,8 +70,8 @@ public class ConsolePanel : MonoBehaviour
                 t2.Rewind();
             }
 
-            consoleText.color = originalTextColor;
-            mainPanel.color = originalPanelColor;
+            //consoleText.color = originalTextColor;
+            //mainPanel.color = originalPanelColor;
             t1.Play();
             t2.Play();
         }

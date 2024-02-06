@@ -19,18 +19,33 @@ public class Equipment
 
     public bool AddItem(EquipmentItem itemToAdd)
     {
-        foreach (EquipmentSlot eqSlot in slotsList)
+        EquipmentSlot eqSlotToCheck = GetEquipmentSlot(itemToAdd.ItemSlot);
+        if (eqSlotToCheck.Empty)
         {
-            if(eqSlot.SlotType == itemToAdd.ItemSlot)
+            switch (eqSlotToCheck.SlotType)
             {
-                if(eqSlot.Empty)
-                {
-                    eqSlot.Item = itemToAdd;
-                    eqSlot.Empty = false;
-                    GameEvents.instance.EquipmentUpdate();
-                    return true;
-                }
+                case EquipmentSlotType.LEFT_ARM:
+                    EquipmentSlot rightArmSLot = GetEquipmentSlot(EquipmentSlotType.RIGHT_ARM);
+                    if (!rightArmSLot.Empty && rightArmSLot.Item.IsWeapon)
+                    {
+                        return false;
+                    }
+                    break;
+                case EquipmentSlotType.RIGHT_ARM:
+                    EquipmentSlot leftArmSLot = GetEquipmentSlot(EquipmentSlotType.LEFT_ARM);
+                    if (!leftArmSLot.Empty && leftArmSLot.Item.IsWeapon)
+                    {
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
             }
+
+            eqSlotToCheck.Item = itemToAdd;
+            eqSlotToCheck.Empty = false;
+            GameEvents.instance.EquipmentUpdate();
+            return true;
         }
         return false;
     }
