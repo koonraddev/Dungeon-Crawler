@@ -75,14 +75,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (contSlot.Item != null && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
-            if(contSlot.Item is IStatisticItem statsItem)
-            {
-                infoPanel.SetInfoPanel(statsItem.Name, statsItem.Description, statsItem.Sprite, statsItem.Statistics);
-            }
-            else
-            {
-                infoPanel.SetInfoPanel(contSlot.Item.Name, contSlot.Item.Description, contSlot.Item.Sprite);
-            }
+            infoPanel.SetInfoPanel(contSlot.Item);
         }
     }
 
@@ -90,7 +83,6 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (contSlot.Item != null && infoPanel != null)
         {
-            infoPanel.SetEmpty();
             GameEvents.instance.InformationPanel(false);
         }
     }

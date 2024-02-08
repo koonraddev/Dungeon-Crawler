@@ -85,16 +85,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (!InvSlot.Empty && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
-
-            if (InvSlot.Item is IStatisticItem statsItem)
-            {
-                infoPanel.SetInfoPanel(statsItem.Name, statsItem.Description, statsItem.Sprite, statsItem.Statistics);
-            }
-            else
-            {
-                infoPanel.SetInfoPanel(InvSlot.Item.Name, InvSlot.Item.Description, InvSlot.Item.Sprite);
-            }
-
+            infoPanel.SetInfoPanel(InvSlot.Item);
         }
     }
     public void OnPointerExit(PointerEventData eventData)

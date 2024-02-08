@@ -60,8 +60,6 @@ public class PlayerAttack : MonoBehaviour
             attackType = eqRightHandSlot.Item.AttackType;
         }
 
-        //bulletPrefab = distAttackConfigs.First(s => s.AttackType == attackType).BulletPrefab;
-
         foreach (var item in distAttackConfigs)
         {
             if(item.AttackType == attackType)

@@ -16,25 +16,25 @@ MonoBehaviour:
   description: zwykla skrzynia
   chestId: 0
   treasureList:
-  - treasure: {fileID: 11400000, guid: 1d2ddd4a5f9d5604d9f1975f7da9b9bb, type: 2}
-    amount: 3
-  - treasure: {fileID: 0}
+  - treasure: {fileID: 11400000, guid: 2e366f6a935b6e740bb48bd717fad091, type: 2}
+    amount: 1
+  - treasure: {fileID: 11400000, guid: b49e6d1db9a6fe740979b7af24b54ac9, type: 2}
+    amount: 0
+  - treasure: {fileID: 11400000, guid: b4ea7f83e460b554e8f51d2a1cf93ed7, type: 2}
+    amount: 0
+  - treasure: {fileID: 11400000, guid: 9945c81553289824995b111d6d0a09ea, type: 2}
+    amount: 0
+  - treasure: {fileID: 11400000, guid: 406b1e3152e08dd4c91e5d6c2387de6c, type: 2}
+    amount: 0
+  - treasure: {fileID: 11400000, guid: 9a797ddb8ade9834cb2ae3b6b23b30aa, type: 2}
     amount: 0
   - treasure: {fileID: 0}
     amount: 0
   - treasure: {fileID: 0}
     amount: 0
-  - treasure: {fileID: 0}
+  - treasure: {fileID: 11400000, guid: 4d20d0abf0396064280151d937f990c8, type: 2}
     amount: 0
-  - treasure: {fileID: 0}
-    amount: 0
-  - treasure: {fileID: 0}
-    amount: 0
-  - treasure: {fileID: 0}
-    amount: 0
-  - treasure: {fileID: 0}
-    amount: 0
-  - treasure: {fileID: 0}
+  - treasure: {fileID: 11400000, guid: 759d8b635494ab4439d93e5da7e9259c, type: 2}
     amount: 0
   - treasure: {fileID: 0}
     amount: 0

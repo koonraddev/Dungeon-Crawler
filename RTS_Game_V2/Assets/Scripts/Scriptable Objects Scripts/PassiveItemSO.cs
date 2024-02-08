@@ -7,9 +7,9 @@ public class PassiveItemSO : ScriptableObject
 {
     [SerializeField] private int itemID;
     [SerializeField] private ItemInformationsSO itemInfos;
-    [SerializeField] private bool isReusable;
+    [SerializeField] private bool multipleUse;
 
     public ItemInformationsSO ItemInformations { get => itemInfos; }
-    public bool IsReusable { get => itemInfos; }
+    public bool MultipleUse { get => multipleUse; }
     public int ItemID { get => itemID; }
 }

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5dc001ad0ac29c4fa59b2da3e5b27f0, type: 3}
-  m_Name: Sword1_stats
+  m_Name: RA_0_Stats
   m_EditorClassIdentifier: 
-  physicalDamage: 100
-  trueDamage: 0
+  physicalDamage: 30
+  trueDamage: 3
   magicDamage: 0
   attackSpeed: 0
-  attackRange: 0
+  attackRange: 5
   armor: 0
   magicResistance: 0
   maxHealth: 0
   healthPointsRegeneration: 0
   healthPercentageRegeneration: 0
-  movementSpeed: 0
+  movementSpeed: 2

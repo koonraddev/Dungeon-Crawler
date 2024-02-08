@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PassiveItem : InventoryItem
 {
-    private bool isReusable;
+    private bool multipleUse;
     public override int ID
     {
         get { return itemID; }
@@ -29,10 +29,10 @@ public class PassiveItem : InventoryItem
         set { itemSprite = value; }
     }
 
-    public bool IsReusable
+    public bool MultipleUse
     {
-        get { return isReusable; }
-        set { isReusable = value; }
+        get { return multipleUse; }
+        set { multipleUse = value; }
     }
 
     public PassiveItem(PassiveItemSO passiveItemSO) : base(passiveItemSO.ItemInformations, passiveItemSO.ItemID)
@@ -41,6 +41,6 @@ public class PassiveItem : InventoryItem
         itemName = passiveItemSO.ItemInformations.ItemName;
         itemDescription = passiveItemSO.ItemInformations.ItemDescription;
         itemSprite = passiveItemSO.ItemInformations.ItemSprite;
-        isReusable = passiveItemSO.IsReusable;
+        multipleUse = passiveItemSO.MultipleUse;
     }
 }

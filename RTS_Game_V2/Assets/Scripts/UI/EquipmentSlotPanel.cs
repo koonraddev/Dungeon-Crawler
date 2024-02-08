@@ -79,7 +79,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (!EqSlot.Empty && infoPanel != null)
         {
             GameEvents.instance.InformationPanel(true);
-            infoPanel.SetInfoPanel(EqSlot.Item.Name, EqSlot.Item.Description, EqSlot.Item.Sprite, EqSlot.Item.Statistics);
+            infoPanel.SetInfoPanel(EqSlot.Item);
         }
     }
     public void OnPointerExit(PointerEventData eventData)

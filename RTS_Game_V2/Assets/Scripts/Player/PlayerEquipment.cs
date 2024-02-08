@@ -53,7 +53,7 @@ public class PlayerEquipment : MonoBehaviour
             seq1.Kill();
         }
 
-        if (rend == null) return;
+        //if (rend == null) return;
         seq1 = DOTween.Sequence()
                 .AppendInterval(waitSeconds)
                 .Append(rend.material.DOFade(0f, 0.2f))
@@ -61,6 +61,7 @@ public class PlayerEquipment : MonoBehaviour
                 .Append(weaponObject.transform.DOLocalMove(Vector3.zero, 0f))
                 .Join(weaponObject.transform.DOLocalRotate(Vector3.zero, 0f))
                 .Append(rend.material.DOFade(1f, 0.2f));
+
 
         seq1.Play();
     }

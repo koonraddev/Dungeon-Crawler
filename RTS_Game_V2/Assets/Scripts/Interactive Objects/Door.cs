@@ -122,7 +122,7 @@ public class Door : MonoBehaviour, IInteractiveObject
             if (doorSO.keyRequired != null)
             {
                 keyItem = new(doorSO.keyRequired);
-                destroyItemOnUse = !keyItem.IsReusable;
+                destroyItemOnUse = !keyItem.MultipleUse;
                 keyRequired = true;
             }
             else

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d1c71656442eb242a8ac87b8dd8e82b, type: 3}
-  m_Name: bow1info
+  m_Name: RA_0_Info
   m_EditorClassIdentifier: 
-  itemName: Big bow
-  itemDescription: big enough to kill boss
-  itemSprite: {fileID: 21300000, guid: 4cc460150b1ee25449a0a98160d443a3, type: 3}
+  itemName: Sabre
+  itemDescription: With a curved blade
+  itemSprite: {fileID: 21300000, guid: 874d8401331ede14087e8d8d486ddda6, type: 3}

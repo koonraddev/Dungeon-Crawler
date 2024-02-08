@@ -1,7 +1,7 @@
 public enum EquipmentSlotType
 {
     HEAD,
-    BODY,
+    CHEST,
     LEGS,
     FEETS,
     LEFT_ARM,

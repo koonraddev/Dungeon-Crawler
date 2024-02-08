@@ -4,35 +4,27 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using System;
+using System.Reflection;
 
 public class InformationPanel : MonoBehaviour
 {
-    [SerializeField] private GameObject nameObject;
-    [SerializeField] private GameObject infoObject;
+    [SerializeField] private TMP_Text nameText, infoText, extraInfoText;
     [SerializeField] private Image textureHolder;
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] List<ItemStatisticPanel> statsPanelsList;
-    [SerializeField] float scrollSpeed;
-    [SerializeField] float coolDown;
-    private TMP_Text nameText;
-    private TMP_Text infoText;
+    [SerializeField] float scrollSpeed, scrollCoolDown;
 
     private Sprite emptyPanelSprite;
-    bool enableScroll = true;
-    private float am;
+    bool enableScroll, scrollDown;
+    private float panelsAmount, maxScrollValue, coolDownLeft;
 
-    float maxScrollValue;
-    int enabledAmount;
-    private float coolDownLeft;
-    private bool scrollDown = true;
     private void Awake()
     {
-        nameText = nameObject.GetComponent<TMP_Text>();
-        infoText = infoObject.GetComponent<TMP_Text>();
         emptyPanelSprite = textureHolder.sprite;
         nameText.text = "";
         infoText.text = "";
-        coolDownLeft = coolDown;
+        coolDownLeft = scrollCoolDown;
 
         foreach (var item in statsPanelsList)
         {
@@ -41,7 +33,7 @@ public class InformationPanel : MonoBehaviour
 
         }
 
-        am = statsPanelsList.Count - 6;
+        panelsAmount = statsPanelsList.Count - 6;
     }
 
     private void Update()
@@ -58,7 +50,7 @@ public class InformationPanel : MonoBehaviour
                     if (scrollRect.verticalNormalizedPosition <= maxScrollValue)
                     {
                         scrollDown = false;
-                        coolDownLeft = coolDown;
+                        coolDownLeft = scrollCoolDown;
                     }
                 }
                 else
@@ -67,7 +59,7 @@ public class InformationPanel : MonoBehaviour
                     if (scrollRect.verticalNormalizedPosition >= 1)
                     {
                         scrollDown = true;
-                        coolDownLeft = coolDown;
+                        coolDownLeft = scrollCoolDown;
                     }
                 }
             }
@@ -76,49 +68,127 @@ public class InformationPanel : MonoBehaviour
         }
     }
 
-    public void SetInfoPanel(string nameContent, string infoContent,Sprite spriteContent, Dictionary<StatisticType, float> stats = null)
+
+   
+
+
+    public void SetInfoPanel(Item item)
     {
-        textureHolder.sprite = spriteContent;
-        nameText.text = nameContent;
-        infoText.text = infoContent;
-
-        if (stats != null)
+        DisplayBasics(item.Name, item.Description, item.Sprite);
+        extraInfoText.text = "";
+        switch (item)
         {
-            var notZero = stats.Where(a => a.Value != 0);
-            int iterator = 0;
-            foreach (KeyValuePair<StatisticType, float> pair in notZero)
-            {
+            case EquipmentItem eqItem:
+                DisplayStatistics(eqItem.Statistics);
+                EquipmentSlotType eqSlotType = eqItem.ItemSlot;
 
-                ItemStatisticPanel panel = statsPanelsList[iterator];
-                panel.gameObject.SetActive(true);
-                panel.SetStatisticPanel(pair.Key, pair.Value);
-                iterator++;
-                
-            }
-            enabledAmount = iterator;
 
-            if (enabledAmount > 6)
-            {
-                enableScroll = true;
-                int tmp = enabledAmount - 6;
-                maxScrollValue = 1 - tmp / am;
-            }
-            else
-            {
-                enableScroll = false;
-            }
-            scrollRect.verticalNormalizedPosition = 1;
-            coolDownLeft = coolDown;
-            scrollDown = true;
+                switch (eqSlotType)
+                {
+                    case EquipmentSlotType.HEAD:
+                        extraInfoText.text = "HEAD";
+                        break;
+                    case EquipmentSlotType.CHEST:
+                        extraInfoText.text = "CHEST";
+                        break;
+                    case EquipmentSlotType.LEGS:
+                        extraInfoText.text = "LEGS";
+                        break;
+                    case EquipmentSlotType.FEETS:
+                        extraInfoText.text = "FEETS";
+                        break;
+                    case EquipmentSlotType.LEFT_ARM:
+                        extraInfoText.text = "LEFT ARM";
+                        break;
+                    case EquipmentSlotType.RIGHT_ARM:
+                        extraInfoText.text = "RIGHT ARM";
+                        break;
+                    default:
+                        break;
+                }
+
+                if (eqItem.IsWeapon)
+                {
+                    extraInfoText.text += ", WEAPON";
+                }
+                break;
+            case UsableItem usItem:
+                DisplayStatistics(usItem.Statistics);
+                extraInfoText.text = "CONSUMABLE";
+                break;
+            case PassiveItem paItem:
+                if (paItem.MultipleUse)
+                {
+                    extraInfoText.text = "PERMAMENT";
+                }               
+                break;
+            default:
+                break;
         }
+
     }
+
+
+
+    public void DisplayBasics(string itemName, string itemDescription, Sprite itemSprite)
+    {
+        nameText.text = itemName;
+        textureHolder.sprite = itemSprite;
+        infoText.text = itemDescription;
+    }
+
+    //public void Exampe<T>(T comp) where T : Item
+    //{
+    //    PropertyInfo[] properties = typeof(T).GetProperties();
+    //    foreach (PropertyInfo property in properties)
+    //    {
+    //        try
+    //        {
+    //            Debug.Log(property.GetValue(comp));
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            continue
+    //        }
+    //    }
+    //}
+
+
+    public void DisplayStatistics(Dictionary<StatisticType, float> statistics)
+    {
+        var notZero = statistics.Where(a => a.Value != 0);
+        int iterator = 0;
+        foreach (KeyValuePair<StatisticType, float> pair in notZero)
+        {
+            ItemStatisticPanel panel = statsPanelsList[iterator];
+            panel.gameObject.SetActive(true);
+            panel.SetStatisticPanel(pair.Key, pair.Value);
+            iterator++;
+        }
+        int enabledAmount = iterator;
+        if (enabledAmount > 6)
+        {
+            enableScroll = true;
+            int tmp = enabledAmount - 6;
+            maxScrollValue = 1 - tmp / panelsAmount;
+        }
+        else
+        {
+            enableScroll = false;
+        }
+        scrollRect.verticalNormalizedPosition = 1;
+        coolDownLeft = scrollCoolDown;
+        scrollDown = true;
+    }
+
+
 
     public void SetEmpty()
     {
         nameText.text = "";
         infoText.text = "";
         textureHolder.sprite = emptyPanelSprite;
-
+        extraInfoText.text = "";
         foreach (var item in statsPanelsList)
         {
             item.SetEmpty();
@@ -128,6 +198,6 @@ public class InformationPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        StopAllCoroutines();
+        SetEmpty();
     }
 }
