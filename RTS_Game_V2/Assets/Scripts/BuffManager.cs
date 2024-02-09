@@ -7,12 +7,21 @@ using System;
 public class BuffManager : MonoBehaviour
 {
     private PlayerBasicStatistics playerBaseStats;
-    private float playerHP;
+    private float playerHP, loadedPlayerHP;
+
+    public float LoadedPlayerHP
+    {
+        get => loadedPlayerHP;
+        set
+        {
+            loadedPlayerHP = value;
+            playerHP = value;
+        }
+    }
 
     public float PlayerHP
     {
         get => playerHP;
-        set => playerHP = value;
     }
 
     public PlayerBasicStatistics PlayerBasicStatistics

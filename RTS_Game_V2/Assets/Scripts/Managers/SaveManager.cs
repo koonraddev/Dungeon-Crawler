@@ -81,7 +81,7 @@ public class SaveManager : MonoBehaviour
             InventoryManager.instance.Inventory = loadedData.inventory;
             BuffManager.instance.Buffs = loadedData.activeBuffsList;
             LevelManager.instance.Level = loadedData.levelCompleted;
-            BuffManager.instance.PlayerHP = loadedData.playerHP;
+            BuffManager.instance.LoadedPlayerHP = loadedData.playerHP;
 
             GameEvents.instance.PlayerDataLoaded();
         }

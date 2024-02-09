@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class Container
@@ -18,14 +16,7 @@ public class Container
     {
         get
         {
-            foreach (var item in Slots)
-            {
-                if (!item.Empty)
-                {
-                    return false;
-                }
-            }
-            return false;
+            return contSlots.Count > 0;
         }
     }
 

@@ -32,13 +32,18 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
+        GameEvents.instance.OnStartLevel += OnStartLevel;
     }
 
-    void Start()
+    private void OnStartLevel()
     {
-        health = BuffManager.instance.PlayerHP;
+        health = BuffManager.instance.LoadedPlayerHP;
+        physicalDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(armor);
+        magicDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(magicResistance);
         GameEvents.instance.UpdateCurrentHP(health);
+        GameEvents.instance.PlayerStateEvent(PlayerStateEvent.NONE);
     }
+
 
     void Update()
     {
@@ -105,19 +110,19 @@ public class PlayerHealth : MonoBehaviour
                 break;
             case StatisticType.Armor:
                 armor = value;
-                physicalDamageMultiplier = 100 / (100 + armor);
+                physicalDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(armor);
                 break;
             case StatisticType.MagicResistance:
                 magicResistance = value;
-                magicDamageMultiplier = 100 / (100 + magicResistance);
+                magicDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(magicResistance);
                 break;
             case StatisticType.HealthPercentageRegeneration:
                 healthPercentsRegen = value;
-                healthRegeneration = healthPointsRegen + (maxHealth * (healthPercentsRegen / 100));
+                healthRegeneration = StatisticalUtility.CalculateHealthRegeneration(maxHealth, healthPointsRegen, healthPercentsRegen);
                 break;
             case StatisticType.HealthPointsRegeneration:
                 healthPointsRegen = value;
-                healthRegeneration = healthPointsRegen + (maxHealth * (healthPercentsRegen / 100));
+                healthRegeneration = StatisticalUtility.CalculateHealthRegeneration(maxHealth, healthPointsRegen, healthPercentsRegen);
                 break;
             default:
                 break;
@@ -153,5 +158,6 @@ public class PlayerHealth : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
+        GameEvents.instance.OnStartLevel -= OnStartLevel;
     }
 }

@@ -13,10 +13,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     private GameObject parentRoom;
 
     private string enemyName;
-    private float maxHealth;
-    private float health;
-    private float armor;
-    private float magicResistance;
+    private float maxHealth, health, armor, magicResistance;
 
     private float physicalDamageMultiplier;
     private float magicDamageMultiplier;
@@ -45,8 +42,8 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
         lootSO = enemyConfig.Loot;
 
-        physicalDamageMultiplier = 100 / (100 - armor);
-        magicDamageMultiplier = 100 / (100 - magicResistance);
+        physicalDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(armor);
+        magicDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(magicResistance);
 
         gameObject.SetActive(false);
     }
