@@ -17,7 +17,7 @@ public class CameraMovingObject : MonoBehaviour
             transform.position = playerCharacter.transform.position;
         }
     }
-    private bool followPlayerCharacter;
+    private bool followPlayerCharacter = true;
     private bool gameON = true;
 
     private CameraControls cameraControls;

@@ -9,28 +9,21 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private TMP_Text amountHolder;
     private Sprite emptySlotSprite;
     private Color emptySlotColor;
-    private GameObject canvas;
-    private UICanvasController uiCtrl;
-    private GameObject infoObject;
     private InformationPanel infoPanel;
-
     private GameObject newObj;
-    private RectTransform rect;
-
-
+    private RectTransform newObjRect;
+    private Container container;
     private ContainerSlot contSlot;
     public ContainerSlot ContainerSlot { get => contSlot; }
-    private Container container;
-
 
 
     private int slotIndex;
     public int SlotIndex { get { return slotIndex; } private set { slotIndex = value; } }
     private void Awake()
     {
-        canvas = transform.root.gameObject;
-        uiCtrl = canvas.GetComponent<UICanvasController>();
-        infoObject = uiCtrl.GetInfoPanel();
+        GameObject canvas = transform.root.gameObject;
+        UICanvasController uiCtrl = canvas.GetComponent<UICanvasController>();
+        GameObject infoObject = uiCtrl.InfoPanel;
         infoPanel = infoObject.GetComponent<InformationPanel>();
 
         emptySlotSprite = textureHolder.sprite;
@@ -111,7 +104,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (!contSlot.Empty)
         {
             newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
-            rect = newObj.GetComponent<RectTransform>();
+            newObjRect = newObj.GetComponent<RectTransform>();
             Image dragImage = newObj.GetComponent<Image>();
             CanvasGroup canvGroup = newObj.GetComponent<CanvasGroup>();
 
@@ -120,7 +113,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             canvGroup.blocksRaycasts = false;
 
             newObj.transform.SetParent(GameObject.Find("UICanvas").transform);
-            rect.transform.position = gameObject.transform.position;
+            newObjRect.transform.position = gameObject.transform.position;
         }
     }
 
@@ -128,7 +121,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (newObj != null)
         {
-            rect.anchoredPosition += eventData.delta;
+            newObjRect.anchoredPosition += eventData.delta;
         }
     }
 

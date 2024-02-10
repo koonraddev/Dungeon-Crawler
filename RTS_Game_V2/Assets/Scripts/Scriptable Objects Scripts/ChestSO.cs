@@ -98,7 +98,7 @@ public class ChestSO : ScriptableObject
                     }
                 }
             }
-            Container container = new(contSlots, nameText, description);
+            Container container = new( nameText, description, contSlots);
             return container;
         }
     }

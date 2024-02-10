@@ -18,6 +18,7 @@ public class DropBag : MonoBehaviour, IInteractiveObject
 
     public void SetDropBag(InventoryItem inventoryItem, int itemAmount)
     {
+        bagSlot = new(0, inventoryItem, itemAmount);
         bagSlot.Item = inventoryItem;
         bagSlot.Amount = itemAmount;
     }

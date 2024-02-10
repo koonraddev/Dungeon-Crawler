@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
         switch (playerState)
         {
             case PlayerStateEvent.NONE:
-                blockMovement = false;
                 UnlockMovement();
                 break;
             case PlayerStateEvent.BUFF:
@@ -50,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerControls.Disable();
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
+        GameEvents.instance.OnPlayerStateEvent -= StopAndBlockMovement;
     }
 
     void Start()

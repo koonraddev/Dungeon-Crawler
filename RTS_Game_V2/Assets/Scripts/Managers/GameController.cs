@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnLastRoomReady += CheckRoomsAmount;
         GameEvents.instance.OnResumeGame += SetGameStatusON;
         GameEvents.instance.OnGameOver += SetGameStatusGAMEOVER;
+        GameEvents.instance.OnExitToMenu += SetGameStatusON;
     }
 
     private void SetGameStatusGAMEOVER()
@@ -136,5 +137,6 @@ public class GameController : MonoBehaviour
         GameEvents.instance.OnLastRoomReady -= CheckRoomsAmount;
         GameEvents.instance.OnResumeGame -= SetGameStatusON;
         GameEvents.instance.OnGameOver -= SetGameStatusGAMEOVER;
+        GameEvents.instance.OnExitToMenu -= SetGameStatusON;
     }
 }

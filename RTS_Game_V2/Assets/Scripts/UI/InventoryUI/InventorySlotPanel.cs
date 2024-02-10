@@ -12,16 +12,11 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public int SlotNumber { get => slotNumber;}
 
-    private GameObject canvas;
-    private UICanvasController uiCtrl;
-    private GameObject infoObject;
-    private InformationPanel infoPanel;
-
     private GameObject newObj;
-    private RectTransform rect;
+    private InformationPanel infoPanel;
+    private RectTransform newObjRect;
 
-    private bool getOne;
-    private bool merge;
+    private bool getOne, merge;
     private Sprite emptySlotSprite;
     private Color emptySlotColor;
     private void Awake()
@@ -33,10 +28,10 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     void Start()
     {
-        canvas = transform.root.gameObject;
-        uiCtrl = canvas.GetComponent<UICanvasController>();
-        infoObject = uiCtrl.GetInfoPanel();
-        infoPanel = infoObject.GetComponent<InformationPanel>();
+        GameObject canvas = transform.root.gameObject;
+        UICanvasController uiCtrl = canvas.GetComponent<UICanvasController>();
+        GameObject infoPanelObject = uiCtrl.InfoPanel;
+        infoPanel = infoPanelObject.GetComponent<InformationPanel>();
     }
 
     public void SetInventorySlotUI(InventoryItem item, int amount, Color slotColor)
@@ -113,7 +108,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if(!InvSlot.Empty)
         {
             newObj = new GameObject("dragItem", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
-            rect = newObj.GetComponent<RectTransform>();
+            newObjRect = newObj.GetComponent<RectTransform>();
             Image dragImage = newObj.GetComponent<Image>();
             CanvasGroup canvGroup = newObj.GetComponent<CanvasGroup>();
             
@@ -122,7 +117,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
             canvGroup.blocksRaycasts = false;
             
             newObj.transform.SetParent(GameObject.Find("UICanvas").transform);
-            rect.transform.position = gameObject.transform.position;
+            newObjRect.transform.position = gameObject.transform.position;
         }
     }
 
@@ -131,7 +126,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if(newObj != null)
         {
-            rect.anchoredPosition += eventData.delta;
+            newObjRect.anchoredPosition += eventData.delta;
         }
     }
 

@@ -53,7 +53,7 @@ public class LootSO : ScriptableObject
             }
         }
         string contName = containerName + "'s loot";
-        Container container = new(containerSlots, contName, "", false);
+        Container container = new(contName, "", containerSlots, false);
         return container;
     }
 

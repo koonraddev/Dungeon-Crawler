@@ -23,6 +23,7 @@ public class UICanvasController : MonoBehaviour
     private bool isInventoryActivated;
     private bool fullSizeMapMode,isStatisticsActivated = false;
 
+    public GameObject InfoPanel { get => informationPanel; }
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -189,10 +190,5 @@ public class UICanvasController : MonoBehaviour
         GameEvents.instance.OnMapPanel -= FullSizeMap;
         GameEvents.instance.OnGameOver -= ActivateHidingMask;
         GameEvents.instance.OnStartLevel -= DeactivateHidingMask;
-    }
-
-    public GameObject GetInfoPanel()
-    {
-        return informationPanel;
     }
 }

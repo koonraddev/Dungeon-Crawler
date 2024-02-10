@@ -20,7 +20,22 @@ public class Container
         }
     }
 
-    public Container(List<ContainerSlot> containerSlots, string containerName, string containerDescription, bool canAddTreasures = true)
+    public Container(string containerName, string containerDescription, bool canAddTreasures = true, params ContainerSlot[] containerSlots)
+    {
+        List<ContainerSlot> newSlotsList = new();
+
+        foreach (var item in containerSlots)
+        {
+            newSlotsList.Add(item);
+        }
+
+        contSlots = newSlotsList;
+        contName = containerName;
+        contDesc = containerDescription;
+        this.canAddTreasures = canAddTreasures;
+    }
+
+    public Container(string containerName, string containerDescription, List<ContainerSlot> containerSlots , bool canAddTreasures = true)
     {
         contSlots = containerSlots;
         contName = containerName;

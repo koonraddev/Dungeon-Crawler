@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5565576aaa86bd49bd864d8ab70ae8f, type: 3}
   m_Name: klucz 1
   m_EditorClassIdentifier: 
+  itemID: 355
   itemInfos: {fileID: 11400000, guid: c55b2348a35c7344f8b72ee457f65508, type: 2}
-  isReusable: 1
+  multipleUse: 0
