@@ -14,7 +14,7 @@ public class MessageMenuController : MonoBehaviour
 
     [Header("Main Panel")]
     [SerializeField] private GameObject panel;
-    [SerializeField] private RectTransform panelRect;
+    private RectTransform panelRect;
     private Vector2 panelSize;
 
     [Header("Button Panel")]
@@ -71,6 +71,10 @@ public class MessageMenuController : MonoBehaviour
     void Update()
     {
         Positioning();
+        if(objectReq == null || !objectReq.activeInHierarchy)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void PrepareMessageMenu(IInteractiveObject intObject, UIMessageObjectPool.MessageType messageType)
@@ -274,9 +278,9 @@ public class MessageMenuController : MonoBehaviour
 
     private void Positioning()
     {
-        if (relativePosition) //menu ma sledzic obiekt
+        if (relativePosition) //menu follows the object
         {
-            if (FollowMouse) //...oraz myszke na obiektcie
+            if (FollowMouse) //...and mouse on the object
             {
                 lastMousePositionOnObject = Input.mousePosition;
                 Vector3 pos = lastMousePositionOnObject + relativeOffset;

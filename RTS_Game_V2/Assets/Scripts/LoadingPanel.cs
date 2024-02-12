@@ -46,6 +46,7 @@ public class LoadingPanel : MonoBehaviour
         if(loadingComplete & Input.GetKeyDown(KeyCode.Space))
         {
             GameEvents.instance.StartLevel();
+            loadingComplete = false;
         }
     }
     private void OnDisable()

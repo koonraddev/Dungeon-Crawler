@@ -1,13 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 
 public class RoomTeleport : MonoBehaviour
 {
     [SerializeField] private List<Renderer> portals;
     [SerializeField] private List<GameObject> particles;
-    [SerializeField] private float activePortalValue, unactivePortalValue;
+    [SerializeField] private List<Light> lights;
+    [SerializeField] private float activePortalValue, unactivePortalValue, activePortalLightIntensity, unactivePortalLightIntensity;
     [SerializeField] private Color activePortalColor, unactivePortalColor;
 
 
@@ -19,11 +20,23 @@ public class RoomTeleport : MonoBehaviour
     public void ActiveTeleport(bool active)
     {
         float newValue = active ? activePortalValue : unactivePortalValue;
+        float newIntensity = active ? activePortalLightIntensity : unactivePortalLightIntensity;
         Color newColor = active ? activePortalColor : unactivePortalColor;
         foreach (var item in portals)
         {
-            item.material.SetFloat("_Power", newValue);
-            item.material.SetColor("_Color", newColor);
+            Sequence seq = DOTween.Sequence()
+                .Append(item.material.DOFloat(newValue, "_Power", 2f))
+                .Join(item.material.DOColor(newColor, "_Color", 2f));
+            seq.Play();
+        }
+
+        foreach (var item in lights)
+        {
+            Sequence seq = DOTween.Sequence()
+                .Append(item.DOColor(newColor, 2f))
+                .Join(item.DOIntensity(newIntensity, 2f));
+
+            seq.Play();
         }
     }
 

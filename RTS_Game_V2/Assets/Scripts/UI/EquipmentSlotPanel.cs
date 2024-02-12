@@ -35,7 +35,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         canvas = transform.root.gameObject;
         uiCtrl = canvas.GetComponent<UICanvasController>();
-        infoObject = uiCtrl.GetInfoPanel();
+        infoObject = uiCtrl.InfoPanel;
         infoPanel = infoObject.GetComponent<InformationPanel>();
     }
 
