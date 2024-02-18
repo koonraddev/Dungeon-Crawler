@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     [SerializeField] private Color highLightObjectColor;
     [SerializeField] private Renderer[] renderers;
     protected LootSO lootSO;
+    
 
     private GameObject parentRoom;
 
@@ -18,9 +19,10 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     private float physicalDamageMultiplier;
     private float magicDamageMultiplier;
 
-    private int interactionDistance = 9999;
+    private int interactionDistance = 9999, timeAfterDeath = 10;
     [SerializeField] EnemyMovement enemyMovement;
     [SerializeField] EnemyAttack enemyAttack;
+    [SerializeField] EnemyAnimation enemyAnimation;
     private Sprite enemySprite;
     private Dictionary<string, string> contentToDisplay;
     public float MaxHealth { get => maxHealth; }
@@ -31,7 +33,11 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     public int InteractionDistance { get => interactionDistance; }
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
+    private bool dead;
+    private bool doDeathStuff;
+    public bool Dead { get => dead; }
 
+ 
     private void Awake()
     {
         enemySprite = enemyConfig.Sprite;
@@ -42,15 +48,21 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
         lootSO = enemyConfig.Loot;
 
-        physicalDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(armor);
-        magicDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(magicResistance);
+        physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
+        magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
 
         gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
-        health = maxHealth;
+        if (dead)
+        {
+            health = maxHealth;
+            doDeathStuff = true;
+            dead = false;
+        }
+
     }
 
     public void SetEnemy(GameObject parentRoom)
@@ -62,15 +74,23 @@ public class Enemy : MonoBehaviour, IInteractiveObject
         {
             enemyMovement.SetEnemyMovement(enemyConfig.MovementSpeed, enemyConfig.MinMoveInterval, enemyConfig.MaxMoveInterval, parentRoom);
         }
+        
         if(enemyAttack != null)
         {
             enemyAttack.SetEnemyAttack(enemyConfig.EnemyName,enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage);
+        }
+
+        if(enemyAnimation != null)
+        {
+            enemyAnimation.SetEnemyAnimator(enemyConfig.AttackSpeed, enemyConfig.MovementSpeed);
         }
     }
 
     void Update()
     {
-        if(health <= 0)
+        dead = health <= 0;
+
+        if(health <= 0 && doDeathStuff)
         {
             Die();
         }
@@ -81,19 +101,29 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     {
         float totalDamage = Mathf.RoundToInt(physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage);
         health -= totalDamage;
+        enemyAnimation.GetHitAnimation();
         ConsolePanel.instance.EnemyTakeDamage(Name, totalDamage);
     }
 
     protected virtual void Die()
     {
+        doDeathStuff = false;
         GameEvents.instance.EnemyClick(null);
-
         LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetContainer(enemyName),lootSO.LootTimeExisting);
+        enemyMovement.Dead = true;
+        enemyAttack.Dead = true;
 
+        enemyAnimation.DeathAnimation();
         if (enemyConfig.Boss)
         {
             GameEvents.instance.ActivateTeleport();
         }
+
+        Invoke(nameof(WaitAndDeactivate), timeAfterDeath);
+    }
+
+    private void WaitAndDeactivate()
+    {
         gameObject.SetActive(false);
     }
 

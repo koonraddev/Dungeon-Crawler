@@ -115,8 +115,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyConfig: {fileID: 11400000, guid: 20fc64ead95c6094abeaa727817ca52e, type: 2}
+  highLightObjectColor: {r: 0, g: 0, b: 0, a: 0}
+  renderers: []
   enemyMovement: {fileID: 571031540674148295}
   enemyAttack: {fileID: -8541966483283716408}
+  enemyAnimation: {fileID: 0}
 --- !u!114 &571031540674148295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +134,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navAgent: {fileID: 571031540674148301}
   randomMovement: 1
+  blockMovement: 0
+  spawnPlaneSizeX: 0
+  spawnPlaneSizeZ: 0
+  spawnMeshSizeX: 0
+  spawnMeshSizeZ: 0
 --- !u!195 &571031540674148301
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -166,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMovement: {fileID: 571031540674148295}
+  enemyAnimation: {fileID: 0}
 --- !u!1 &2495610947284483876
 GameObject:
   m_ObjectHideFlags: 0

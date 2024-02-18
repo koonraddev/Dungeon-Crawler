@@ -16,4 +16,4 @@ MonoBehaviour:
   waitForAll: 0
   spawnerInterval: 10
   enemyList:
-  - {fileID: 571031540674148292, guid: f22588e16d32299408a16f65ae3f21b7, type: 3}
+  - {fileID: 4336283486668330263, guid: 99727579c35f9b64cbf1549485441b48, type: 3}

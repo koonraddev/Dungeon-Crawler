@@ -44,13 +44,26 @@ public class PlayerAnimation : MonoBehaviour
         GameEvents.instance.OnPlayerStateEvent += PlayerStateAnimation;
     }
 
+
+    void Update()
+    {
+        if (playerAgent.velocity == Vector3.zero)
+        {
+            animator.SetFloat(movementSpeedParameter, 0);
+        }
+        else
+        {
+            animator.SetFloat(movementSpeedParameter, movementSpeed);
+        }
+    }
+
     private void PlayerStateAnimation(PlayerStateEvent playerStateEvent)
     {
 
         switch (playerStateEvent)
         {
             case PlayerStateEvent.NONE:
-                if(lastPlayerState == PlayerStateEvent.STUN)
+                if (lastPlayerState == PlayerStateEvent.STUN)
                 {
                     animator.SetBool(performStunAnimation, false);
                 }
@@ -122,19 +135,6 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
-    
-
-    void Update()
-    {
-        if (playerAgent.velocity == Vector3.zero)
-        {
-            animator.SetFloat(movementSpeedParameter, 0);
-        }
-        else
-        {
-            animator.SetFloat(movementSpeedParameter, movementSpeed);
-        }
-    }
 
     public void HitAnimation()
     {

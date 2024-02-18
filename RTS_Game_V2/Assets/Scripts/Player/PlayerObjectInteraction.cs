@@ -6,8 +6,7 @@ using System;
 
 public class PlayerObjectInteraction : MonoBehaviour
 {
-    private GameObject pointedObject;
-    private GameObject clickedObject;
+    private GameObject pointedObject, clickedObject;
     [SerializeField] private Color highLightObjectColor;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttack playerAttack;
@@ -19,7 +18,8 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     private IEnumerator inspectCor;
     private bool canInteract;
-    public GameObject hitted;
+
+    private RaycastHit[] hits = new RaycastHit[5];
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -29,11 +29,6 @@ public class PlayerObjectInteraction : MonoBehaviour
     {
         playerControls.Enable();
         GameEvents.instance.OnCancelActions += CancelAction;
-    }
-    private void OnDisable()
-    {
-        playerControls.Disable();
-        GameEvents.instance.OnCancelActions -= CancelAction;
     }
 
     void Start()
@@ -51,7 +46,7 @@ public class PlayerObjectInteraction : MonoBehaviour
             {
                 pointedObject = hitPoint.transform.gameObject;
 
-                if (moveInspectAction.IsPressed())
+                if (moveInspectAction.triggered)
                 {
                     if (pointedObject.TryGetComponent(out IInteractiveObject pointedScript))
                     {
@@ -65,73 +60,44 @@ public class PlayerObjectInteraction : MonoBehaviour
             }
         }
 
-
         if (clickedObject != null)
         {
             distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
             Vector3 dir = clickedObject.transform.position - transform.position;
             Ray playerRay = new(this.transform.position, dir);
-            //Debug.DrawRay(transform.position, dir, Color.yellow);
-            if (Physics.Raycast(playerRay, out RaycastHit hitObject))
+            int numHits = Physics.RaycastNonAlloc(playerRay, hits, distanceFromObject);
+            if (numHits > 0)
             {
-                Vector3 dir2 = hitObject.point - transform.position;
-                hitted = hitObject.transform.gameObject;
-
-                //
-                //if (hitObject.transform.gameObject.CompareTag("Wall"))
-                //{
-                //    canInteract = false;
-                //}
-                //else
-                //{
-                //    canInteract = true;
-                //}
-
-                //if (hitObject.transform.gameObject == clickedObject)
-                //{
-                //    distanceFromObject = Vector3.Distance(gameObject.transform.position, hitObject.point);
-                //    canInteract = true;
-                //    Debug.DrawRay(transform.position, dir2, Color.green);
-                //}
-                //else
-                //{
-                //    canInteract = false;
-                //    Debug.DrawRay(transform.position, dir2, Color.red);
-                //}
+                for (int i = 0; i < numHits; i++)
+                {
+                    canInteract = hits[i].collider.gameObject.CompareTag("Wall");
+                }
             }
         }
     }
 
     public IEnumerator InspectObject(IInteractiveObject objectToInspect)
     {
-        minimumDistanceFromObject = objectToInspect.InteractionDistance;
-        //minimumDistanceFromObject = Mathf.Clamp(minimumDistanceFromObject, 0, 10);
-        //Debug.Log("INSPECt");
         distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
-        if (distanceFromObject > minimumDistanceFromObject && playerMovement != null)
+        minimumDistanceFromObject = objectToInspect.InteractionDistance;
+
+        if (!StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, objectToInspect.InteractionDistance, out Vector3 pointToMove, true) && playerMovement != null)
         {
-            Vector3 dirToTarget = clickedObject.transform.position - this.transform.position;
-            Vector3 dirToTargetNorm = dirToTarget.normalized;
-            float distToTarget = distanceFromObject;// dirToTarget.magnitude;
-            float distToMove = Mathf.Ceil(distToTarget - minimumDistanceFromObject);
-            Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
             playerMovement.MoveTo(pointToMove);
-            //Debug.Log("NEED MOVe");
+            yield return new WaitUntil(() => distanceFromObject <= minimumDistanceFromObject);
+            playerMovement.StopMovement();
         }
-        yield return new WaitUntil(() => (distanceFromObject <= minimumDistanceFromObject));// && (canInteract));
-        //Debug.Log("CAN INSPECt");
-        playerMovement.StopMovement();
+
+        yield return new WaitUntil(() => canInteract);
         objectToInspect.ObjectInteraction(this.gameObject);
         StartCoroutine(InspectingObject());
     }
 
+
     public IEnumerator InspectingObject()
     {
-        //Debug.Log("inspecting");
-        yield return new WaitUntil(() => (distanceFromObject > minimumDistanceFromObject));// || (!canInteract));
-        //Debug.Log("distance > min distance");
+        yield return new WaitUntil(() => distanceFromObject > minimumDistanceFromObject);// || (!canInteract));
         GameEvents.instance.CancelGameObjectAction();
-        
         clickedObject = null;
     }
 
@@ -147,6 +113,12 @@ public class PlayerObjectInteraction : MonoBehaviour
 
         }
         //GameEvents.instance.CancelGameObjectAction();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
+        GameEvents.instance.OnCancelActions -= CancelAction;
     }
 
 }

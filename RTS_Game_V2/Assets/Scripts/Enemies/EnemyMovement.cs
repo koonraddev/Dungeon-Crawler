@@ -9,11 +9,15 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private NavMeshAgent navAgent;
     [Tooltip("Object make some moves when is not triggered by target")]
     [SerializeField] private bool randomMovement;
+    private bool dead;
+    public bool Dead { get => dead; set => dead = value; }
 
     private int minMoveInterval;
     private int maxMoveInterval;
 
     private float randInterval;
+    public bool blockMovement;
+
 
     public float spawnPlaneSizeX, spawnPlaneSizeZ, spawnMeshSizeX, spawnMeshSizeZ;
     private Vector3 planePos, lastDestination;
@@ -25,19 +29,23 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        //if (!gameObject.activeSelf)
-        //{
-        //    gameObject.transform.position = GetRandomPosition();
-        //    randInterval = rand.Next(minMoveInterval, maxMoveInterval);
-        //}
-        MoveTo(lastDestination);
+        if (dead)
+        {
+            lastDestination = GetRandomPosition();
+            navAgent.nextPosition = lastDestination;
+            dead = false;
+        }
+        else
+        {
+            MoveTo(lastDestination);
+        }
     }
     void Update()
     {
         if (randomMovement && navAgent.velocity == Vector3.zero)
         {
             randInterval -= Time.deltaTime;
-            if(randInterval <= 0)
+            if(randInterval <= 0 && !dead)
             {
                 MoveTo(GetRandomPosition());
                 randInterval = rand.Next(minMoveInterval, maxMoveInterval);
@@ -64,12 +72,18 @@ public class EnemyMovement : MonoBehaviour
 
     public void MoveTo(Vector3 destination)
     {
+        if (blockMovement)
+        {
+            return;
+        }
+
         navAgent.SetDestination(destination);
         lastDestination = destination;
     }
     public void StopMovement()
     {
-        navAgent.isStopped = true;
+        MoveTo(gameObject.transform.position);
+        //navAgent.isStopped = true;
     }
 
     private Vector3 GetRandomPosition()

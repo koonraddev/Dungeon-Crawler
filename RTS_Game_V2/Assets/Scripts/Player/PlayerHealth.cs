@@ -38,8 +38,8 @@ public class PlayerHealth : MonoBehaviour
     private void OnStartLevel()
     {
         health = BuffManager.instance.LoadedPlayerHP;
-        physicalDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(armor);
-        magicDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(magicResistance);
+        physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
+        magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
         GameEvents.instance.UpdateCurrentHP(health);
         GameEvents.instance.PlayerStateEvent(PlayerStateEvent.NONE);
     }
@@ -110,19 +110,19 @@ public class PlayerHealth : MonoBehaviour
                 break;
             case StatisticType.Armor:
                 armor = value;
-                physicalDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(armor);
+                physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
                 break;
             case StatisticType.MagicResistance:
                 magicResistance = value;
-                magicDamageMultiplier = StatisticalUtility.CalculateDamageMultiplier(magicResistance);
+                magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
                 break;
             case StatisticType.HealthPercentageRegeneration:
                 healthPercentsRegen = value;
-                healthRegeneration = StatisticalUtility.CalculateHealthRegeneration(maxHealth, healthPointsRegen, healthPercentsRegen);
+                healthRegeneration = StatisticalUtility.HealthRegeneration(maxHealth, healthPointsRegen, healthPercentsRegen);
                 break;
             case StatisticType.HealthPointsRegeneration:
                 healthPointsRegen = value;
-                healthRegeneration = StatisticalUtility.CalculateHealthRegeneration(maxHealth, healthPointsRegen, healthPercentsRegen);
+                healthRegeneration = StatisticalUtility.HealthRegeneration(maxHealth, healthPointsRegen, healthPercentsRegen);
                 break;
             default:
                 break;

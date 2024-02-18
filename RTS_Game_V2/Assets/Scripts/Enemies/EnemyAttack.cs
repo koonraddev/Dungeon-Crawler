@@ -6,22 +6,20 @@ public class EnemyAttack : MonoBehaviour
 {
     [Tooltip("Set Enemy Movement script if you want object to follow target if triggered")]
     [SerializeField] EnemyMovement enemyMovement;
+    [SerializeField] EnemyAnimation enemyAnimation;
     private string enemyName;
-    private float attackSpeed;
-    private float attackRange;
-    private float triggerRange;
-    private float physicalDamage;
-    private float magicDamage;
-    private float trueDamage;
+    private float attackSpeed ,attackRange ,triggerRange ,physicalDamage ,magicDamage ,trueDamage;
 
-    private float timeToWait;
-    private float attackCooldown;
+    private float timeToWait, attackCooldown;
 
     private GameObject playerObject;
     private PlayerHealth playerHealthMan;
-    private Vector3 pointToMove;
 
+    private float distance;
+    private bool dead;
+    public bool Dead { get => dead; set => dead = value; }
 
+    private RaycastHit[] hits = new RaycastHit[5];
     //[SerializeField] EnemyAttackConfigurationSO enemyAttackConfigurationSO;
     //private AttackType attackType;
     //private float effectSpeed;
@@ -43,11 +41,24 @@ public class EnemyAttack : MonoBehaviour
         //CreateObject();
     }
 
+    private void OnEnable()
+    {
+        if (dead)
+        {
+            dead = false;
+        }
+    }
+
     void Update()
     {
         if (attackCooldown > 0)
         {
             attackCooldown -= Time.deltaTime;
+        }
+
+        if (dead)
+        {
+            return;
         }
 
         if (playerObject != null)
@@ -59,64 +70,89 @@ public class EnemyAttack : MonoBehaviour
                 );
             transform.LookAt(lookAt);
 
-            float distance = Vector3.Distance(transform.position, playerObject.transform.position);
-            if (distance > triggerRange)
+            distance = Vector3.Distance(transform.position, playerObject.transform.position);
+
+            if (CheckPlayerInterest())
             {
-                playerObject = null;
-            }
-            else
-            {
-                if (Physics.Linecast(this.transform.position,playerObject.transform.position,out RaycastHit hit))
+                if (!StatisticalUtility.CheckIfTargetInRange(gameObject, playerObject, attackRange, out Vector3 pointMove))
                 {
-                    if (hit.collider.CompareTag("Wall"))
+                    Vector3 newPointToMove = pointMove;
+                    if (enemyMovement != null)
                     {
-                        playerObject = null;
-                        return;
+                        //distToMove = Mathf.Ceil(distToTarget - attackRange);
+                        enemyMovement.MoveTo(newPointToMove);
                     }
                 }
-
-                if (enemyMovement != null)
+                else
                 {
-                    if (distance > attackRange)
-                    {
-                        Vector3 dirToTarget = playerObject.transform.position - this.transform.position;
-                        Vector3 dirToTargetNorm = dirToTarget.normalized;
-                        float distToTarget = dirToTarget.magnitude;
-                        float distToMove = Mathf.Ceil(distToTarget - attackRange);
-                        pointToMove = this.transform.position + dirToTargetNorm * distToMove;
-                        enemyMovement.MoveTo(pointToMove);
-                    }
-                }
-
-                if (distance <= attackRange)
-                {
-                    Attack();
+                    PerformAttack();
                 }
             }
+
         }
+        else
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, triggerRange);
 
             foreach (Collider collider in colliders)
             {
                 if (collider.CompareTag("Player"))
                 {
                     playerObject = collider.gameObject;
-                    enemyMovement.StopMovement();
+                    //enemyMovement.StopMovement();
                     playerHealthMan = playerObject.GetComponent<PlayerHealth>();
                 }
             }
         }
     }
 
-    private void Attack()
+    private bool CheckPlayerInterest()
     {
-        if (attackCooldown <= 0 && playerHealthMan != null)
+        if (!StatisticalUtility.CheckIfTargetInRange(gameObject, playerObject, triggerRange))
         {
-            //AttackEffect();
-            playerHealthMan.Damage(enemyName, physicalDamage, magicDamage, trueDamage);
+            playerObject = null;
+            playerHealthMan = null;
+            return false;
+        }
+
+        Vector3 dir = playerObject.transform.position - transform.position;
+        Ray enemyRay = new(this.transform.position, dir);
+        int numHits = Physics.RaycastNonAlloc(enemyRay, hits, distance);
+        if (numHits > 0)
+        {
+            for (int i = 0; i < numHits; i++)
+            {
+                if (hits[i].collider.gameObject.CompareTag("Wall"))
+                {
+                    playerObject = null;
+                    playerHealthMan = null;
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void PerformAttack()
+    {
+        if (attackCooldown <= 0)
+        {
+            enemyMovement.StopMovement();
+            enemyAnimation.AttackAnimation();
             attackCooldown = timeToWait;
         }
+
+    }
+
+    private void Attack()
+    {
+        if (playerHealthMan == null || distance > attackRange)
+        {
+            return;
+        }
+        //AttackEffect();
+        playerHealthMan.Damage(enemyName, physicalDamage, magicDamage, trueDamage);
     }
 
     public void SetEnemyAttack(string enemyName, float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage)
@@ -128,7 +164,7 @@ public class EnemyAttack : MonoBehaviour
         this.physicalDamage = physicalDamage;
         this.magicDamage = magicDamage;
         this.trueDamage = trueDamage;
-        timeToWait = 60 / attackSpeed;
+        timeToWait = StatisticalUtility.AttackCooldown(attackSpeed);
     }
 
     private void OnDrawGizmos()
@@ -173,4 +209,10 @@ public class EnemyAttack : MonoBehaviour
     //    }
     //    return null;
     //}
+
+    private void OnDisable()
+    {
+        playerObject = null;
+        playerHealthMan = null;
+    }
 }
