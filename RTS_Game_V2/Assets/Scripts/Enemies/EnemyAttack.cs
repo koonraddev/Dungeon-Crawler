@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] EnemyAnimation enemyAnimation;
     private string enemyName;
     private float attackSpeed ,attackRange ,triggerRange ,physicalDamage ,magicDamage ,trueDamage;
+    private bool projectileAttack;
+    private GameObject projectilePrefab;
 
     private float timeToWait, attackCooldown;
 
@@ -147,15 +150,45 @@ public class EnemyAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (playerHealthMan == null || distance > attackRange)
+        if (distance > attackRange) return;
+        
+        if (projectileAttack)
         {
-            return;
+            FireProjectilePrefab();
         }
-        //AttackEffect();
+        else
+        {
+            DealDamage();
+        }
+    }
+
+    private void FireProjectilePrefab()
+    {
+        if(projectilePrefab == null) return;
+
+        GameObject newProjectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        float duration = distance / 20;
+        newProjectile.transform
+            .DOMove(playerObject.transform.position, duration)
+            .SetAutoKill(true)
+            .SetEase(Ease.Linear)
+            .OnComplete(() => DealDamage(newProjectile))
+            .Play();
+    }
+
+    private void DealDamage(GameObject projectile = null)
+    {
+        if(projectile != null)
+        {
+            Destroy(projectile);
+        }
+
+        if (playerHealthMan == null) return;
+
         playerHealthMan.Damage(enemyName, physicalDamage, magicDamage, trueDamage);
     }
 
-    public void SetEnemyAttack(string enemyName, float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage)
+    public void SetEnemyAttack(string enemyName, float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage, bool projectileAttack, GameObject projectilePrefab)
     {
         this.enemyName = enemyName;
         this.attackSpeed = attackSpeed;
@@ -164,51 +197,11 @@ public class EnemyAttack : MonoBehaviour
         this.physicalDamage = physicalDamage;
         this.magicDamage = magicDamage;
         this.trueDamage = trueDamage;
+        this.projectileAttack = projectileAttack;
+        this.projectilePrefab = projectilePrefab;
         timeToWait = StatisticalUtility.AttackCooldown(attackSpeed);
     }
 
-    private void OnDrawGizmos()
-    {
-        //Gizmos.DrawWireSphere(transform.position, triggerRange);
-        //Gizmos.DrawSphere(pointToMove, 1);
-    }
-
-    //private void AttackEffect()
-    //{
-    //    if(effeectPrefab != null)
-    //    {
-    //        if (GetPooledObject() == null)
-    //        {
-    //            CreateObject();
-    //            effect = GetPooledObject();
-    //        }
-    //        else
-    //        {
-    //            effect = GetPooledObject();
-    //        }
-    //        effect.SetActive(true);
-    //    }
-    //}
-
-    //private void CreateObject()
-    //{
-    //    GameObject tmp = Instantiate(effeectPrefab);
-    //    tmp.SetActive(false);
-    //    pooledObjects.Add(tmp);
-    //}
-
-    //private GameObject GetPooledObject()
-    //{
-    //    int objectsInList = pooledObjects.Count;
-    //    for (int i = 0; i < objectsInList; i++)
-    //    {
-    //        if (!pooledObjects[i].activeInHierarchy)
-    //        {
-    //            return pooledObjects[i];
-    //        }
-    //    }
-    //    return null;
-    //}
 
     private void OnDisable()
     {

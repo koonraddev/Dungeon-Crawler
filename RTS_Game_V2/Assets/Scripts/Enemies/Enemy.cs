@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
         
         if(enemyAttack != null)
         {
-            enemyAttack.SetEnemyAttack(enemyConfig.EnemyName,enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage);
+            enemyAttack.SetEnemyAttack(enemyConfig.EnemyName,enemyConfig.AttackSpeed, enemyConfig.AttackRange, enemyConfig.TriggerRange, enemyConfig.PhysicalDamage, enemyConfig.MagicDamage, enemyConfig.TrueDamage, enemyConfig.ProjectileAttack, enemyConfig.ProjectilePrefab);
         }
 
         if(enemyAnimation != null)

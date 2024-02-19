@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newEnemyConfiguration", menuName = "Scriptable Objects/Enemy/Enemy Configuration", order = 2)]
@@ -20,9 +21,9 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private int maxMoveInterval;
 
     [Header("Deff section")]
-    [Tooltip("Armor reduce physical damages acording: Damage Multiplier = 100/(100 - Armor)")]
+    [Tooltip("Armor reduce physical damages acording: Damage Multiplier = 100/(100 + Armor)")]
     [SerializeField] private float armor;
-    [Tooltip("Magic Resistance reduce magic damages acording: Damage Multiplier = 100/(100 - Magic Resistance)")]
+    [Tooltip("Magic Resistance reduce magic damages acording: Damage Multiplier = 100/(100 + Magic Resistance)")]
     [SerializeField] private float magicResistance;
 
     [Header("Attack section")]
@@ -35,6 +36,8 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private float physicalDamage;
     [SerializeField] private float magicDamage;
     [SerializeField] private float trueDamage;
+    [SerializeField] private bool projectileAttack;
+    [SerializeField] [HideInInspector] private GameObject projectilePrefab;
 
     public string EnemyName { get => enemyName; }
     public float Health { get => health; }
@@ -52,4 +55,38 @@ public class EnemyConfigurationSO : ScriptableObject
     public float PhysicalDamage { get => physicalDamage; }
     public float MagicDamage { get => magicDamage; }
     public float TrueDamage { get => trueDamage; }
+    public bool ProjectileAttack { get => projectileAttack; }
+    public GameObject ProjectilePrefab 
+    { 
+        get
+        {
+            if (projectileAttack)
+            {
+                return projectilePrefab;
+            }
+            return null;
+        }
+    }
+
+    [CustomEditor(typeof(EnemyConfigurationSO))]
+    public class EnemyConfigurationSOEditor : Editor
+    {
+        private EnemyConfigurationSO enemyConfigSO;
+
+        private void OnEnable()
+        {
+            enemyConfigSO = (EnemyConfigurationSO)target;
+        }
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            if (enemyConfigSO.projectileAttack)
+            {
+                enemyConfigSO.projectilePrefab = (GameObject)EditorGUILayout.ObjectField("Projectile Prefab", enemyConfigSO.projectilePrefab, typeof(GameObject), true);
+            }
+
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+    }
 }

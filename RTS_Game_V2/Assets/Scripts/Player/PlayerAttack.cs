@@ -134,7 +134,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 case AttackType.FISTS:
                 case AttackType.SWORD:
-                    enemy.Damage(physicalDamage, magicDamage, trueDamage);
+                    DealDamage();
                     break;
                 case AttackType.WAND:
                 case AttackType.BOW:
@@ -150,20 +150,28 @@ public class PlayerAttack : MonoBehaviour
 
     private void FireProjectilePrefab()
     {
-        GameObject newBullet = Instantiate(projectilePrefab, transform.position,Quaternion.identity);
+        if (projectilePrefab == null) return;
+
+        GameObject newProjectile = Instantiate(projectilePrefab, transform.position,Quaternion.identity);
         float duration = distanceToEnemy / 20;
-        newBullet.transform
+        newProjectile.transform
             .DOMove(objectToAttack.transform.position, duration)
             .SetAutoKill(true)
             .SetEase(Ease.Linear)
-            .OnComplete(() => BulletDamage(newBullet))
+            .OnComplete(() => DealDamage(newProjectile))
             .Play();
     }
 
-    private void BulletDamage(GameObject bullet)
+    private void DealDamage(GameObject projectile = null)
     {
+        if (projectile != null)
+        {
+            Destroy(projectile);
+        }
+
+        if (enemy == null) return;
+
         enemy.Damage(physicalDamage, magicDamage, trueDamage);
-        Destroy(bullet);
     }
 
 

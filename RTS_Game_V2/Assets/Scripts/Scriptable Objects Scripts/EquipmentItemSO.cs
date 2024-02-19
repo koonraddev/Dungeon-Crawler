@@ -10,28 +10,37 @@ public class EquipmentItemSO : ScriptableObject
     [SerializeField] private ItemInformationsSO itemInfos;
     [SerializeField] private StatisticsSO itemStatistics;
     [SerializeField] private EquipmentSlotType itemSlot;
-    [SerializeField] [HideInInspector] private bool isWeapon;
+    [SerializeField] [HideInInspector] private bool isWeapon, projectileAttack;
     [SerializeField] [HideInInspector] private AttackType attackType;
-    [SerializeField] [HideInInspector] private GameObject weaponPrefab;
+    [SerializeField] [HideInInspector] private GameObject weaponPrefab, projectilePrefab;
 
     public int ItemID { get => itemID; }
     public ItemInformationsSO ItemInformations { get => itemInfos; }
     public StatisticsSO ItemStatistics { get => itemStatistics; }
     public EquipmentSlotType ItemSlot { get => itemSlot; }
     public bool IsWeapon { get => isWeapon; }
+    public bool ProjectileAttack { get => projectileAttack; }
     public AttackType AttackType { get => attackType; }
     public GameObject WeaponPrefab { get => weaponPrefab; }
+    public GameObject ProjectilePrefab
+    {
+        get
+        {
+            if (projectileAttack)
+            {
+                return projectilePrefab;
+            }
+            return null;
+        }
+    }
 
     [CustomEditor(typeof(EquipmentItemSO))]
-    public class EquipmentItemSOEditor : Editor
+    private class EquipmentItemSOEditor : Editor
     {
         private EquipmentItemSO eqItemSO;
-        private SerializedProperty isWeaponSer, itemSlotSer;
 
         private void OnEnable()
         {
-            isWeaponSer = serializedObject.FindProperty("isWeapon");
-            itemSlotSer = serializedObject.FindProperty("itemSlot");
             eqItemSO = (EquipmentItemSO)target;
         }
 
@@ -39,18 +48,25 @@ public class EquipmentItemSO : ScriptableObject
         {
             base.OnInspectorGUI();
 
-            if(itemSlotSer.enumValueIndex == (int)EquipmentSlotType.RIGHT_ARM || itemSlotSer.enumValueIndex == (int)EquipmentSlotType.LEFT_ARM)
+
+            if (eqItemSO.itemSlot == EquipmentSlotType.RIGHT_ARM || eqItemSO.itemSlot == EquipmentSlotType.LEFT_ARM)
             {
-                eqItemSO.isWeapon = EditorGUILayout.Toggle("Is Weapon", isWeaponSer.boolValue); //PropertyField(isWeaponSer);
-                if (isWeaponSer.boolValue)
+                eqItemSO.isWeapon = EditorGUILayout.Toggle("Is Weapon", eqItemSO.isWeapon);
+                if (eqItemSO.isWeapon)
                 {
                     eqItemSO.attackType = (AttackType)EditorGUILayout.EnumPopup("Attack type", eqItemSO.attackType);
                     eqItemSO.weaponPrefab = (GameObject)EditorGUILayout.ObjectField("Weapon Prefab", eqItemSO.weaponPrefab, typeof(GameObject), true);
+
+                    if (eqItemSO.attackType == AttackType.WAND || eqItemSO.attackType == AttackType.BOW || eqItemSO.attackType == AttackType.SPELL)
+                    {
+                        eqItemSO.projectilePrefab = (GameObject)EditorGUILayout.ObjectField("Projectile Prefab", eqItemSO.projectilePrefab, typeof(GameObject), true);
+                    }
                 }
             }
             else
             {
                 eqItemSO.isWeapon = false;
+                eqItemSO.weaponPrefab = null;
             }
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();

@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6352b10cc9e22c64683ae40e8feb78c8, type: 3}
   m_Name: enemy2
   m_EditorClassIdentifier: 
+  enemyName: 
   health: 200
+  enemyLoot: {fileID: 0}
+  enemySprite: {fileID: 0}
+  boss: 0
   movementSpeed: 10
   minMoveInterval: 5
   maxMoveInterval: 20
@@ -20,5 +24,9 @@ MonoBehaviour:
   magicResistance: 5
   attackSpeed: 5
   attackRange: 3
+  triggerRange: 0
   physicalDamage: 20
   magicDamage: 0
+  trueDamage: 0
+  projectileAttack: 0
+  projectilePrefab: {fileID: 0}
