@@ -758,7 +758,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 1479372276
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -799,10 +799,10 @@ MonoBehaviour:
   navAgent: {fileID: 1397880106}
   randomMovement: 0
   blockMovement: 0
-  spawnPlaneSizeX: 0
-  spawnPlaneSizeZ: 0
-  spawnMeshSizeX: 0
-  spawnMeshSizeZ: 0
+  spawnPlaneSizeX: 50
+  spawnPlaneSizeZ: 50
+  spawnMeshSizeX: 10
+  spawnMeshSizeZ: 10
 --- !u!114 &1397880109
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,6 +12,8 @@ public class EnemyConfigurationSO : ScriptableObject
     [SerializeField] private LootSO enemyLoot;
     [SerializeField] private Sprite enemySprite;
     [SerializeField] private bool boss;
+    [SerializeField] private GameObject enemyPrefab;
+
 
     [Header("Movement section")]
     [SerializeField] private float movementSpeed;
@@ -67,6 +69,7 @@ public class EnemyConfigurationSO : ScriptableObject
             return null;
         }
     }
+    public GameObject EnemyPrefab { get => enemyPrefab; }
 
     [CustomEditor(typeof(EnemyConfigurationSO))]
     public class EnemyConfigurationSOEditor : Editor

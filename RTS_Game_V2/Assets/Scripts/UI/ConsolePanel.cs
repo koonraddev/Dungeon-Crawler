@@ -23,7 +23,7 @@ public class ConsolePanel : MonoBehaviour
     private PlayerControls playerControls;
     private InputAction switchConsoleStatus;
 
-    private Tween t1, t2;
+    private Sequence seq;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -33,8 +33,10 @@ public class ConsolePanel : MonoBehaviour
         originalPanelColor = mainPanel.color;
         originalTextColor = consoleText.color;
 
-        t1 = mainPanel.DOColor(transparentColor, 2f).SetDelay(fadingDelay);
-        t2 = consoleText.DOColor(transparentColor, 2f).SetDelay(fadingDelay);
+        seq = DOTween.Sequence()
+            .Append(mainPanel.DOColor(transparentColor, 2f).SetDelay(fadingDelay))
+            .Join(consoleText.DOColor(transparentColor, 2f).SetDelay(fadingDelay));
+
         CheckConsole();
     }
 
@@ -64,16 +66,15 @@ public class ConsolePanel : MonoBehaviour
     {
         if (consoleIsOn)
         {
-            if (t1.IsPlaying())
+            if (seq.IsPlaying())
             {
-                t1.Rewind();
-                t2.Rewind();
+                Debug.Log("trwa");
+                //seq.Restart();
             }
-
-            //consoleText.color = originalTextColor;
-            //mainPanel.color = originalPanelColor;
-            t1.Play();
-            t2.Play();
+            consoleText.color = originalTextColor;
+            mainPanel.color = originalPanelColor;
+            seq.Restart();
+            //seq.Play();
         }
     }
 

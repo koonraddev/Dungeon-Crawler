@@ -66,17 +66,18 @@ public class EnemyAttack : MonoBehaviour
 
         if (playerObject != null)
         {
-            Vector3 lookAt = new Vector3
-                (playerObject.transform.position.x,
-                this.gameObject.transform.position.y,
-                playerObject.transform.position.z
-                );
-            transform.LookAt(lookAt);
+
 
             distance = Vector3.Distance(transform.position, playerObject.transform.position);
 
             if (CheckPlayerInterest())
             {
+                Vector3 lookAt = new Vector3
+                    (playerObject.transform.position.x,
+                    this.gameObject.transform.position.y,
+                    playerObject.transform.position.z
+                    );
+                transform.LookAt(lookAt);
                 if (!StatisticalUtility.CheckIfTargetInRange(gameObject, playerObject, attackRange, out Vector3 pointMove))
                 {
                     Vector3 newPointToMove = pointMove;

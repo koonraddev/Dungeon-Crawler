@@ -38,7 +38,7 @@ public static class StatisticalUtility
 
         float distToTarget = Vector3.Distance(requestingObject.transform.position, target);
         Vector3 dirToTarget = (targetObject.transform.position - requestingObject.transform.position).normalized;
-        float distToMove = Mathf.Ceil(distToTarget - rangeToCheck);
+        float distToMove = distToTarget - rangeToCheck + 0.01f;
         closestPoint = requestingObject.transform.position + dirToTarget * distToMove;
 
         return distToTarget <= rangeToCheck;

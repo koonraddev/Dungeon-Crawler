@@ -22,8 +22,9 @@ public class LootManager : MonoBehaviour
         }
     }
     
-    public void CreateLoot(Vector3 position, Container container,float lootExistingTime = 0)
+    public void CreateLoot(Vector3 position, Container container, GameObject parentRoom,float lootExistingTime = 0)
     {
+        
         if (container.Empty)
         {
             return;
@@ -54,6 +55,7 @@ public class LootManager : MonoBehaviour
             ltContainer = containerObject.GetComponentInChildren<ContainerObject>();
             ltContainer.SetContainer(container, lootExistingTime);
             containerObject.SetActive(true);
+            containerObject.transform.SetParent(parentRoom.transform);
         }
     }
 }

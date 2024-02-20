@@ -7,7 +7,7 @@ public class BossRoomSO : RoomSO
 {
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
-    [SerializeField] private GameObject bossObject;
+    [SerializeField] private EnemyConfigurationSO bossObject;
     [Header("Door section")]
     [SerializeField] private List<DoorSO> doorsList;
 
@@ -21,12 +21,11 @@ public class BossRoomSO : RoomSO
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        //roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
         if (bossObject != null)
         {
-            GameObject boss = Instantiate(bossObject, roomGameObject.transform.position,Quaternion.identity);
+            GameObject boss = Instantiate(bossObject.EnemyPrefab, roomGameObject.transform.position,Quaternion.identity);
             boss.transform.SetParent(roomGameObject.transform);
-            boss.GetComponent<Enemy>().SetEnemy(roomGameObject);
+            boss.GetComponent<Enemy>().SetEnemy(bossObject,roomGameObject);
         }
         MapManager.instance.AddRoom(roomGameObject, RoomMarkType.BOSS);
     }

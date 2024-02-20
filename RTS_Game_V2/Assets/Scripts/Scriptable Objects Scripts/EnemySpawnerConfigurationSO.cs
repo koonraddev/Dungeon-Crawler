@@ -1,18 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 
 [CreateAssetMenu(fileName = "newEnemySpanwerConfiguration", menuName = "Scriptable Objects/Enemy/Spawner Configuration",order = 1)]
 public class EnemySpawnerConfigurationSO : ScriptableObject
 {
+    [SerializeField] private List<EnemyConfigurationSO> enemyList;
     [SerializeField] private bool manySpawns;
-    [SerializeField] private bool waitForAll;
-    [SerializeField] private float spawnerInterval;
-    [SerializeField] private List<GameObject> enemyList;
+    [SerializeField] [HideInInspector] private float spawnerInterval;
+    [SerializeField] [HideInInspector] private bool waitForAll;
 
-    public float SpawnerInterval { get => spawnerInterval; }
+    public List<EnemyConfigurationSO> EnemyList { get => enemyList; }
     public bool ManySpawns { get => manySpawns; }
-    public List<GameObject> EnemyList { get => enemyList; }
-    public bool WaitForAll { get => waitForAll; }
+    public float SpawnerInterval 
+    { 
+        get
+        {
+            if (manySpawns) return spawnerInterval;
+            return 0;
+        }
+    }
+    public bool WaitForAll 
+    { 
+        get
+        {
+            if (manySpawns) return waitForAll;
+            return false;
+        }
+    }
+
+
+    [CustomEditor(typeof(EnemySpawnerConfigurationSO))]
+    private class EnemySpawnerConigurationSOEditor : Editor
+    {
+        private EnemySpawnerConfigurationSO enemySpawnerSO;
+
+        private void OnEnable()
+        {
+            enemySpawnerSO = (EnemySpawnerConfigurationSO)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            if (enemySpawnerSO.manySpawns)
+            {
+                enemySpawnerSO.waitForAll = EditorGUILayout.Toggle("Wait for all", enemySpawnerSO.waitForAll);
+                enemySpawnerSO.spawnerInterval = EditorGUILayout.FloatField("Spawner interval", enemySpawnerSO.spawnerInterval);
+            }
+
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+        }
+    }
 }

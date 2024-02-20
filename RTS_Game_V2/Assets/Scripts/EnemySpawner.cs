@@ -16,10 +16,11 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         enemyPool = new();
+        enemyList = new();
     }
     void Start()
     {
-        CreateObjects();
+        //CreateObjects();
         timeLeft = spawnerInterval;
     }
 
@@ -69,7 +70,19 @@ public class EnemySpawner : MonoBehaviour
         manySpawns = spawnerConfigs.ManySpawns;
         waitForAll = spawnerConfigs.WaitForAll;
         spawnerInterval = spawnerConfigs.SpawnerInterval;
-        enemyList = spawnerConfigs.EnemyList;
+
+        foreach (var item in spawnerConfigs.EnemyList)
+        {
+            if(item.EnemyPrefab.TryGetComponent(out Enemy enemy))
+            {
+                GameObject newEnemy = Instantiate(item.EnemyPrefab,parentRoom.transform.position,Quaternion.identity);
+                newEnemy.transform.SetParent(parentRoom.transform);
+                newEnemy.SetActive(false);
+                enemy = newEnemy.GetComponent<Enemy>();
+                enemy.SetEnemy(item, parentRoom);
+                enemyPool.Add(newEnemy);
+            }
+        }
     }
 
     private void ActivateObjects()
@@ -113,7 +126,7 @@ public class EnemySpawner : MonoBehaviour
         {
 
             tmp = Instantiate(enemy,transform.position,transform.rotation);
-            tmp.GetComponent<Enemy>().SetEnemy(parentRoom);
+            tmp.transform.SetParent(parentRoom.transform);
             tmp.SetActive(true);
             enemyPool.Add(tmp);
         }

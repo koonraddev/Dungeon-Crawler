@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     [SerializeField] private Renderer[] renderers;
     protected LootSO lootSO;
     
-
     private GameObject parentRoom;
 
     private string enemyName;
@@ -40,18 +39,8 @@ public class Enemy : MonoBehaviour, IInteractiveObject
  
     private void Awake()
     {
-        enemySprite = enemyConfig.Sprite;
-        maxHealth = enemyConfig.Health;
-        armor = enemyConfig.Armor;
-        magicResistance = enemyConfig.MagicResistance;
-        enemyName = enemyConfig.EnemyName;
-
-        lootSO = enemyConfig.Loot;
-
-        physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
-        magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
-
         gameObject.SetActive(false);
+        doDeathStuff = true;
     }
 
     private void OnEnable()
@@ -65,10 +54,22 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
     }
 
-    public void SetEnemy(GameObject parentRoom)
+    public void SetEnemy(EnemyConfigurationSO enemyConfig ,GameObject parentRoom)
     {
         this.parentRoom = parentRoom;
-        gameObject.transform.SetParent(parentRoom.transform);
+        this.enemyConfig = enemyConfig;
+        enemySprite = enemyConfig.Sprite;
+        maxHealth = enemyConfig.Health;
+        health = maxHealth;
+        armor = enemyConfig.Armor;
+        magicResistance = enemyConfig.MagicResistance;
+        enemyName = enemyConfig.EnemyName;
+
+        lootSO = enemyConfig.Loot;
+
+        physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
+        magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
+
 
         if (enemyMovement != null)
         {
@@ -109,7 +110,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     {
         doDeathStuff = false;
         GameEvents.instance.EnemyClick(null);
-        LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetContainer(enemyName),lootSO.LootTimeExisting);
+        LootManager.instance.CreateLoot(gameObject.transform.position, lootSO.GetContainer(enemyName),parentRoom,lootSO.LootTimeExisting);
         enemyMovement.Dead = true;
         enemyAttack.Dead = true;
 

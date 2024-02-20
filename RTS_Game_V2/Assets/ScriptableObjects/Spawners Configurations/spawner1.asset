@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54351514572506948952b095811b3d94, type: 3}
   m_Name: spawner1
   m_EditorClassIdentifier: 
-  manySpawns: 1
-  waitForAll: 0
-  spawnerInterval: 10
   enemyList:
-  - {fileID: 4336283486668330263, guid: 99727579c35f9b64cbf1549485441b48, type: 3}
+  - {fileID: 11400000, guid: d8cb453ef8d41b04a9d5e018ca1a1e7d, type: 2}
+  manySpawns: 1
+  spawnerInterval: 0
+  waitForAll: 0

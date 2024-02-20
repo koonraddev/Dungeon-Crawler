@@ -109,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerAgent.isStopped = false;
         playerAgent.SetDestination(destination);
+
     }
 
     public void TeleportTo(Vector3 destination)
