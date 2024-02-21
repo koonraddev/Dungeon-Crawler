@@ -12,8 +12,10 @@ public class EnemyAttack : MonoBehaviour
     private float attackSpeed ,attackRange ,triggerRange ,physicalDamage ,magicDamage ,trueDamage;
     private bool projectileAttack;
     private GameObject projectilePrefab;
+    private float projectileSpeed;
 
     private float timeToWait, attackCooldown;
+
 
     private GameObject playerObject;
     private PlayerHealth playerHealthMan;
@@ -22,7 +24,6 @@ public class EnemyAttack : MonoBehaviour
     private bool dead;
     public bool Dead { get => dead; set => dead = value; }
 
-    private RaycastHit[] hits = new RaycastHit[5];
     //[SerializeField] EnemyAttackConfigurationSO enemyAttackConfigurationSO;
     //private AttackType attackType;
     //private float effectSpeed;
@@ -119,20 +120,9 @@ public class EnemyAttack : MonoBehaviour
             return false;
         }
 
-        Vector3 dir = playerObject.transform.position - transform.position;
-        Ray enemyRay = new(this.transform.position, dir);
-        int numHits = Physics.RaycastNonAlloc(enemyRay, hits, distance);
-        if (numHits > 0)
+        if(StatisticalUtility.CheckIfTargetIsBlocked(gameObject, playerObject))
         {
-            for (int i = 0; i < numHits; i++)
-            {
-                if (hits[i].collider.gameObject.CompareTag("Wall"))
-                {
-                    playerObject = null;
-                    playerHealthMan = null;
-                    return false;
-                }
-            }
+            return false;
         }
 
         return true;
@@ -165,28 +155,18 @@ public class EnemyAttack : MonoBehaviour
 
     private void FireProjectilePrefab()
     {
-        if(projectilePrefab == null) return;
+        if( projectilePrefab == null) return;
 
-        GameObject newProjectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        float duration = distance / 20;
-        newProjectile.transform
-            .DOMove(playerObject.transform.position, duration)
-            .SetAutoKill(true)
-            .SetEase(Ease.Linear)
-            .OnComplete(() => DealDamage(newProjectile))
-            .Play();
+        GameObject newProjectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile newProjectile = newProjectileObject.AddComponent<Projectile>();
+        newProjectile.SetProjectile(playerObject, projectileSpeed, DealDamage);
     }
 
-    private void DealDamage(GameObject projectile = null)
+    private void DealDamage()
     {
-        if(projectile != null)
-        {
-            Destroy(projectile);
-        }
-
         if (playerHealthMan == null) return;
 
-        playerHealthMan.Damage(enemyName, physicalDamage, magicDamage, trueDamage);
+        playerHealthMan.Damage(enemyName,physicalDamage, magicDamage, trueDamage);
     }
 
     public void SetEnemyAttack(string enemyName, float attackSpeed, float attackRange, float triggerRange, float physicalDamage, float magicDamage, float trueDamage, bool projectileAttack, GameObject projectilePrefab)
@@ -200,6 +180,7 @@ public class EnemyAttack : MonoBehaviour
         this.trueDamage = trueDamage;
         this.projectileAttack = projectileAttack;
         this.projectilePrefab = projectilePrefab;
+        projectileSpeed = StatisticalUtility.ProjectileSpeed(physicalDamage, magicDamage, attackSpeed, attackRange);
         timeToWait = StatisticalUtility.AttackCooldown(attackSpeed);
     }
 

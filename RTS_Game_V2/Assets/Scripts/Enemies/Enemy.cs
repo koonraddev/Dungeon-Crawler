@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
     }
 
-    public void SetEnemy(EnemyConfigurationSO enemyConfig ,GameObject parentRoom)
+    public void SetEnemy(EnemyConfigurationSO enemyConfig, GameObject parentRoom)
     {
         this.parentRoom = parentRoom;
         this.enemyConfig = enemyConfig;
@@ -69,7 +69,6 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
         physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
         magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
-
 
         if (enemyMovement != null)
         {
@@ -98,12 +97,13 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     }
 
 
-    public void Damage(float physicalDamage, float magicDamage, float trueDamage)
+    public float Damage(float physicalDamage, float magicDamage, float trueDamage)
     {
         float totalDamage = Mathf.RoundToInt(physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage);
         health -= totalDamage;
         enemyAnimation.GetHitAnimation();
         ConsolePanel.instance.EnemyTakeDamage(Name, totalDamage);
+        return totalDamage;
     }
 
     protected virtual void Die()

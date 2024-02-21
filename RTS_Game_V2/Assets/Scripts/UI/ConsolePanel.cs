@@ -66,15 +66,9 @@ public class ConsolePanel : MonoBehaviour
     {
         if (consoleIsOn)
         {
-            if (seq.IsPlaying())
-            {
-                Debug.Log("trwa");
-                //seq.Restart();
-            }
             consoleText.color = originalTextColor;
             mainPanel.color = originalPanelColor;
             seq.Restart();
-            //seq.Play();
         }
     }
 

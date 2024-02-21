@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Book of Spells
   itemDescription: Straight from the academy
-  itemSprite: {fileID: 21300000, guid: 3086d66a563317b40a20a20da2c64ac0, type: 3}
+  itemSprite: {fileID: 21300000, guid: 371f4c736a898394180f6a156cbb63ef, type: 3}

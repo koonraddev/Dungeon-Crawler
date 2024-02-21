@@ -19,7 +19,6 @@ public class PlayerObjectInteraction : MonoBehaviour
     private IEnumerator inspectCor;
     private bool canInteract;
 
-    private RaycastHit[] hits = new RaycastHit[5];
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -62,41 +61,35 @@ public class PlayerObjectInteraction : MonoBehaviour
 
         if (clickedObject != null)
         {
-            Vector3 dir = clickedObject.transform.position - transform.position;
-            Ray playerRay = new(this.transform.position, dir);
-            int numHits = Physics.RaycastNonAlloc(playerRay, hits, distanceFromObject);
-
             StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, minimumDistanceFromObject, out Vector3 closest, true);
             distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
             distanceFromClosestPoint = Vector3.Distance(closest, clickedObject.transform.position);
 
-            if (numHits > 0)
-            {
-                for (int i = 0; i < numHits; i++)
-                {
-                    canInteract = !hits[i].collider.gameObject.CompareTag("Wall");
-                }
-            }
+            canInteract = !StatisticalUtility.CheckIfTargetIsBlocked(gameObject, clickedObject);
         }
     }
 
     public IEnumerator InspectObject(IInteractiveObject objectToInspect)
     {
         minimumDistanceFromObject = objectToInspect.InteractionDistance;
-        if (!StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, minimumDistanceFromObject, out Vector3 closest, true))
-        {
-            distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
-            distanceFromClosestPoint = Vector3.Distance(closest, clickedObject.transform.position);
-            if (playerMovement != null)
-            {
-                playerMovement.MoveTo(clickedObject.transform.position);
-            }
 
-            yield return new WaitUntil(() => distanceFromObject <= distanceFromClosestPoint);
-            playerMovement.StopMovement();
+        if (minimumDistanceFromObject < 100)
+        {
+            if (!StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, minimumDistanceFromObject, out Vector3 closest, true))
+            {
+                distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
+                distanceFromClosestPoint = Vector3.Distance(closest, clickedObject.transform.position);
+                if (playerMovement != null)
+                {
+                    playerMovement.MoveTo(clickedObject.transform.position);
+                }
+
+                yield return new WaitUntil(() => distanceFromObject <= distanceFromClosestPoint);
+                playerMovement.StopMovement();
+            }
+            yield return new WaitUntil(() => canInteract);
         }
 
-        yield return new WaitUntil(() => canInteract);
         objectToInspect.ObjectInteraction(this.gameObject);
         StartCoroutine(InspectingObject());
     }

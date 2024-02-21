@@ -10,7 +10,7 @@ public class EquipmentItemSO : ScriptableObject
     [SerializeField] private ItemInformationsSO itemInfos;
     [SerializeField] private StatisticsSO itemStatistics;
     [SerializeField] private EquipmentSlotType itemSlot;
-    [SerializeField] [HideInInspector] private bool isWeapon, projectileAttack;
+    [SerializeField] [HideInInspector] private bool isWeapon;
     [SerializeField] [HideInInspector] private AttackType attackType;
     [SerializeField] [HideInInspector] private GameObject weaponPrefab, projectilePrefab;
 
@@ -19,20 +19,21 @@ public class EquipmentItemSO : ScriptableObject
     public StatisticsSO ItemStatistics { get => itemStatistics; }
     public EquipmentSlotType ItemSlot { get => itemSlot; }
     public bool IsWeapon { get => isWeapon; }
-    public bool ProjectileAttack { get => projectileAttack; }
-    public AttackType AttackType { get => attackType; }
-    public GameObject WeaponPrefab { get => weaponPrefab; }
-    public GameObject ProjectilePrefab
+    public bool ProjectileAttack
     {
         get
         {
-            if (projectileAttack)
+            return attackType switch
             {
-                return projectilePrefab;
-            }
-            return null;
+                AttackType.FISTS or AttackType.SWORD => false,
+                AttackType.WAND or AttackType.BOW or AttackType.SPELL => true,
+                _ => false,
+            };
         }
     }
+    public AttackType AttackType { get => attackType; }
+    public GameObject WeaponPrefab { get => weaponPrefab; }
+    public GameObject ProjectilePrefab { get => projectilePrefab; }
 
     [CustomEditor(typeof(EquipmentItemSO))]
     private class EquipmentItemSOEditor : Editor

@@ -2,22 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using System.Linq;
-[System.Serializable]
-public class DistanceAttackConfig
-{
-    [SerializeField] private AttackType attackType;
-    [SerializeField] private GameObject projectilePrefab;
-
-    public AttackType AttackType { get => attackType; }
-    public GameObject ProjectilePrefab { get => projectilePrefab; }
-}
-
 
 public class PlayerAttack : MonoBehaviour
 {
     //Statistics
-    private float attackSpeed, attackRange, physicalDamage, magicDamage,trueDamage;
+    private float attackSpeed, attackRange, physicalDamage, magicDamage, trueDamage;
 
     private float timeToWait;
     private float attackCooldown;
@@ -28,11 +17,12 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] PlayerMovement playerMov;
     [SerializeField] PlayerAnimation playerAnim;
     [SerializeField] private bool followTarget;
-    [SerializeField] private List<DistanceAttackConfig> distAttackConfigs;
     private bool follow;
     private bool blockAttack;
-    private AttackType attackType;
+    private bool projectileAttack;
+    private float projectileSpeed;
     private GameObject projectilePrefab;
+    Vector3 countTo;
 
     private void OnEnable()
     {
@@ -48,24 +38,18 @@ public class PlayerAttack : MonoBehaviour
         EquipmentSlot eqLeftHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.LEFT_ARM);
         EquipmentSlot eqRightHandSlot = EquipmentManager.instance.GetEquipmentSlot(EquipmentSlotType.RIGHT_ARM);
 
-        attackType = AttackType.FISTS;
 
         if (!eqLeftHandSlot.Empty && eqLeftHandSlot.Item.IsWeapon)
         {
-            attackType = eqLeftHandSlot.Item.AttackType;
+            projectilePrefab = eqLeftHandSlot.Item.ProjectilePrefab;
+            projectileAttack = eqLeftHandSlot.Item.ProjectileAttack;
+
         }
 
         if (!eqRightHandSlot.Empty && eqRightHandSlot.Item.IsWeapon)
         {
-            attackType = eqRightHandSlot.Item.AttackType;
-        }
-
-        foreach (var item in distAttackConfigs)
-        {
-            if(item.AttackType == attackType)
-            {
-                projectilePrefab = item.ProjectilePrefab;
-            }
+            projectileAttack = eqRightHandSlot.Item.ProjectileAttack;
+            projectilePrefab = eqRightHandSlot.Item.ProjectilePrefab;
         }
     }
 
@@ -88,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
     {
         attackCooldown -= Time.deltaTime;
 
-        if(objectToAttack!= null)
+        if (objectToAttack != null)
         {
             if (!objectToAttack.activeSelf)
             {
@@ -96,29 +80,30 @@ public class PlayerAttack : MonoBehaviour
                 enemy = null;
                 return;
             }
-            distanceToEnemy = Vector3.Distance(transform.position, objectToAttack.transform.position);
+
             if (followTarget && follow)
             {
-                if (playerMov != null && distanceToEnemy > attackRange)
+                if (playerMov != null && !StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, true))//&& distanceToEnemy > attackRange)
                 {
-                    Vector3 dirToTarget = objectToAttack.transform.position - this.transform.position;
-                    Vector3 dirToTargetNorm = dirToTarget.normalized;
-                    float distToTarget = dirToTarget.magnitude;
-                    float distToMove = Mathf.Ceil(distToTarget - attackRange);
-                    Vector3 pointToMove = this.transform.position + dirToTargetNorm * distToMove;
-                    playerMov.MoveTo(pointToMove);
+                    StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, out Vector3 closest, true);
+                    playerMov.MoveTo(closest);
+                    countTo = closest;
                 }
             }
-            CheckForAttack();
+
+            distanceToEnemy = Vector3.Distance(transform.position, countTo);
+
+            CheckIfCanAttack();
         }
     }
 
-    private void CheckForAttack()
+    private void CheckIfCanAttack()
     {
-        if (attackCooldown <= 0 
-            && distanceToEnemy <= attackRange 
-            && enemy != null 
-            && !blockAttack)
+        if (attackCooldown <= 0
+            && distanceToEnemy <= attackRange
+            && enemy != null
+            && !blockAttack
+            && !StatisticalUtility.CheckIfTargetIsBlocked(gameObject, objectToAttack))
         {
             playerMov.RotateTo(enemy.transform.position);
             playerAnim.AttackAnimation();
@@ -130,21 +115,15 @@ public class PlayerAttack : MonoBehaviour
     {
         if (enemy != null)
         {
-            switch (attackType)
+            if (projectileAttack)
             {
-                case AttackType.FISTS:
-                case AttackType.SWORD:
-                    DealDamage();
-                    break;
-                case AttackType.WAND:
-                case AttackType.BOW:
-                case AttackType.SPELL:
-                    FireProjectilePrefab();
-                    break;
-                default:
-                    break;
+                FireProjectilePrefab();
             }
-            
+            else
+            {
+                DealDamage();
+            }
+
         }
     }
 
@@ -152,23 +131,14 @@ public class PlayerAttack : MonoBehaviour
     {
         if (projectilePrefab == null) return;
 
-        GameObject newProjectile = Instantiate(projectilePrefab, transform.position,Quaternion.identity);
-        float duration = distanceToEnemy / 20;
-        newProjectile.transform
-            .DOMove(objectToAttack.transform.position, duration)
-            .SetAutoKill(true)
-            .SetEase(Ease.Linear)
-            .OnComplete(() => DealDamage(newProjectile))
-            .Play();
+        GameObject newProjectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile newProjectile = newProjectileObject.AddComponent<Projectile>();
+        newProjectile.SetProjectile(objectToAttack, projectileSpeed, DealDamage);
+
     }
 
-    private void DealDamage(GameObject projectile = null)
+    private void DealDamage()
     {
-        if (projectile != null)
-        {
-            Destroy(projectile);
-        }
-
         if (enemy == null) return;
 
         enemy.Damage(physicalDamage, magicDamage, trueDamage);
@@ -189,6 +159,7 @@ public class PlayerAttack : MonoBehaviour
             objectToAttack = target.transform.gameObject;
             enemy = target;
             follow = true;
+            countTo = objectToAttack.transform.position;
         }
     }
 
@@ -219,7 +190,7 @@ public class PlayerAttack : MonoBehaviour
             default:
                 break;
         }
-
+        projectileSpeed = StatisticalUtility.ProjectileSpeed(physicalDamage, magicDamage, attackSpeed, attackRange);
     }
 
     private void OnDisable()

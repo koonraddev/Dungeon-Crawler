@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float movementSpeed;
     private bool blockMovement = false;
-    public bool blcked;
+    public bool blocked;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        blcked = playerAgent.isStopped;
+        blocked = playerAgent.isStopped;
         if (moveInspectAction.IsInProgress() && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -81,11 +81,6 @@ public class PlayerMovement : MonoBehaviour
             GameEvents.instance.CancelActions();
             GameEvents.instance.CancelGameObjectAction();
         }
-
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    StopMovement();
-        //}
     }
 
     public void UpdateStats(StatisticType statisticType, float value)

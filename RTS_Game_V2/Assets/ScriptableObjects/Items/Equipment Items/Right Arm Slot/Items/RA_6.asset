@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581cf0a99293fb544adee6ffab90122d, type: 3}
+  m_Name: RA_6
+  m_EditorClassIdentifier: 
+  itemID: 6
+  itemInfos: {fileID: 11400000, guid: 4fb2f748fa7f0cc4e8f9298d9bfffb97, type: 2}
+  itemStatistics: {fileID: 11400000, guid: b34fb8e03aa521a4890684bc202140fa, type: 2}
+  itemSlot: 5
+  isWeapon: 0
+  projectileAttack: 0
+  attackType: 1
+  weaponPrefab: {fileID: 100006, guid: b9432b6a4a78c64449366f08c7196deb, type: 3}
+  projectilePrefab: {fileID: 0}

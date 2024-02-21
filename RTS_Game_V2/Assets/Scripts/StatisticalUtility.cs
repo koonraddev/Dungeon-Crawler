@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class StatisticalUtility
 {
+    public static Dictionary<int, RaycastHit[]> raycastDict = new();
     public static float DamageMultiplier(float defenceValue)
     {
         if (defenceValue >= 0)
@@ -21,6 +22,11 @@ public static class StatisticalUtility
     public static float HealthRegeneration(float maxHP, float points, float percentage)
     {
         return points + (maxHP * (percentage / 100));
+    }
+
+    public static float ProjectileSpeed(float physicalDamage, float magicDamage, float attackSpeed, float attackRange)
+    {
+        return 10 + physicalDamage * 0.02f + magicDamage * 0.02f + attackSpeed * 0.1f + attackRange * 0.2f;
     }
 
     public static bool CheckIfTargetInRange(GameObject requestingObject, GameObject targetObject, float rangeToCheck, out Vector3 closestPoint, bool colliderIsTarget = false)
@@ -59,4 +65,30 @@ public static class StatisticalUtility
         float distToTarget = Vector3.Distance(requestingObject.transform.position, target);
         return distToTarget <= rangeToCheck;
     }
+
+    public static bool CheckIfTargetIsBlocked(GameObject requestingObject, GameObject targetObject)
+    {
+        float distance = Vector3.Distance(requestingObject.transform.position, targetObject.transform.position);
+        Vector3 dir = targetObject.transform.position - requestingObject.transform.position;
+        Ray enemyRay = new(requestingObject.transform.position, dir);
+
+        if (!raycastDict.ContainsKey(requestingObject.GetInstanceID()))
+        {
+            raycastDict.Add(requestingObject.GetInstanceID(), new RaycastHit[5]);
+        }
+
+        int numHits = Physics.RaycastNonAlloc(enemyRay, raycastDict[requestingObject.GetInstanceID()], distance);
+        if (numHits > 0)
+        {
+            for (int i = 0; i < numHits; i++)
+            {
+                if (raycastDict[requestingObject.GetInstanceID()][i].collider.gameObject.CompareTag("Wall"))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
