@@ -76,6 +76,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (contSlot.Item != null && infoPanel != null)
         {
+            infoPanel.SetEmpty();
             GameEvents.instance.InformationPanel(false);
         }
     }

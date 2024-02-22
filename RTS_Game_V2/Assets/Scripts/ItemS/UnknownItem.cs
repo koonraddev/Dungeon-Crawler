@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnknownItem : Item, IUsable
 {
     [SerializeField] private UnknownItemSO unknownItemSO;
-    private ItemInformationsSO itemInfos;
+    [SerializeField] private ItemInformationsSO itemInfos;
     public override int ID
     {
         get { return itemID; }

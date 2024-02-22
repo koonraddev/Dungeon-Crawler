@@ -109,17 +109,17 @@ public class InformationPanel : MonoBehaviour
 
                 if (eqItem.IsWeapon)
                 {
-                    extraInfoText.text += ", WEAPON";
+                    extraInfoText.text += ", <color=#e69c57>WEAPON</color>";
                 }
                 break;
             case UsableItem usItem:
                 DisplayStatistics(usItem.Statistics);
-                extraInfoText.text = "CONSUMABLE";
+                extraInfoText.text = "<color=#95e657>CONSUMABLE</color>";
                 break;
             case PassiveItem paItem:
                 if (paItem.MultipleUse)
                 {
-                    extraInfoText.text = "PERMAMENT";
+                    extraInfoText.text = "<color=#9f57e6>PERMAMENT</color>";
                 }               
                 break;
             default:

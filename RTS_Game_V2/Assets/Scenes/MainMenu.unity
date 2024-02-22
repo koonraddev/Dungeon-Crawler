@@ -219,7 +219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &87720339
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3295,6 +3295,7 @@ GameObject:
   - component: {fileID: 648577525}
   - component: {fileID: 648577524}
   - component: {fileID: 648577523}
+  - component: {fileID: 648577526}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -3320,7 +3321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchoredPosition: {x: 0, y: -90}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &648577523
@@ -3366,7 +3367,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 648577524}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 648577526}
+        m_TargetAssemblyTypeName: ExitGameButton, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &648577524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3405,6 +3418,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648577521}
   m_CullTransparentMesh: 1
+--- !u!114 &648577526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648577521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f700649bde75d0940a613d96c4d05551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &660348620 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1529059331186314279, guid: 5af750f5057734447aa7985b57701550, type: 3}
@@ -4340,10 +4365,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9a675b20780bf4bb61c3787d80bc5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inactiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  activeButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  buttonImage: {fileID: 0}
-  button: {fileID: 0}
+  inactiveButtonColor: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 1}
+  activeButtonColor: {r: 1, g: 1, b: 1, a: 1}
+  buttonImage: {fileID: 880979511}
+  button: {fileID: 880979510}
 --- !u!114 &880979510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6189,6 +6214,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanel
+      value: 
+      objectReference: {fileID: 660348620}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: slotNumber
       value: 2
       objectReference: {fileID: 0}
@@ -6201,6 +6230,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelInfo
+      value: 
+      objectReference: {fileID: 1022731878}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
       objectReference: {fileID: 1374816610}
@@ -6208,6 +6241,10 @@ PrefabInstance:
       propertyPath: selectButton
       value: 
       objectReference: {fileID: 1374816609}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelYesButton
+      value: 
+      objectReference: {fileID: 94174773}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: newCharacterPanel
       value: 
@@ -6974,6 +7011,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanel
+      value: 
+      objectReference: {fileID: 660348620}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: loadButton
       value: 
       objectReference: {fileID: 494594124}
@@ -6994,6 +7035,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelInfo
+      value: 
+      objectReference: {fileID: 1022731878}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
       objectReference: {fileID: 1471594865}
@@ -7005,6 +7050,10 @@ PrefabInstance:
       propertyPath: loadingButton
       value: 
       objectReference: {fileID: 494594124}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelYesButton
+      value: 
+      objectReference: {fileID: 94174773}
     - target: {fileID: 3110422475386757846, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: m_Name
       value: SaveSlot2
@@ -7209,6 +7258,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanel
+      value: 
+      objectReference: {fileID: 660348620}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: slotNumber
       value: 3
       objectReference: {fileID: 0}
@@ -7221,6 +7274,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelInfo
+      value: 
+      objectReference: {fileID: 1022731878}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
       objectReference: {fileID: 1537233741}
@@ -7228,6 +7285,10 @@ PrefabInstance:
       propertyPath: selectButton
       value: 
       objectReference: {fileID: 1537233740}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelYesButton
+      value: 
+      objectReference: {fileID: 94174773}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: newCharacterPanel
       value: 
@@ -7657,6 +7718,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanel
+      value: 
+      objectReference: {fileID: 660348620}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: loadButton
       value: 
       objectReference: {fileID: 494594124}
@@ -7677,6 +7742,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelInfo
+      value: 
+      objectReference: {fileID: 1022731878}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
       objectReference: {fileID: 1624688287}
@@ -7688,6 +7757,10 @@ PrefabInstance:
       propertyPath: loadingButton
       value: 
       objectReference: {fileID: 494594124}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelYesButton
+      value: 
+      objectReference: {fileID: 94174773}
     - target: {fileID: 3110422475386757846, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: m_Name
       value: SaveSlot3
@@ -10260,6 +10333,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanel
+      value: 
+      objectReference: {fileID: 660348620}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: saveManager
       value: 
       objectReference: {fileID: 0}
@@ -10268,6 +10345,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelInfo
+      value: 
+      objectReference: {fileID: 1022731878}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: deleteButton
       value: 
       objectReference: {fileID: 1983432941}
@@ -10275,6 +10356,10 @@ PrefabInstance:
       propertyPath: selectButton
       value: 
       objectReference: {fileID: 2042911707}
+    - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
+      propertyPath: askPanelYesButton
+      value: 
+      objectReference: {fileID: 94174773}
     - target: {fileID: 3110422475386757842, guid: 81596091f5ec2c34fadac5a4ea319c89, type: 3}
       propertyPath: newCharacterPanel
       value: 

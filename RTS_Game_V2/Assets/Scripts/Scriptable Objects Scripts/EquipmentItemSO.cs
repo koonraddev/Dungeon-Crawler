@@ -35,6 +35,7 @@ public class EquipmentItemSO : ScriptableObject
     public GameObject WeaponPrefab { get => weaponPrefab; }
     public GameObject ProjectilePrefab { get => projectilePrefab; }
 
+#if UNITY_EDITOR
     [CustomEditor(typeof(EquipmentItemSO))]
     private class EquipmentItemSOEditor : Editor
     {
@@ -73,6 +74,7 @@ public class EquipmentItemSO : ScriptableObject
             serializedObject.Update();
         }    
     }
+#endif
 }
 
 

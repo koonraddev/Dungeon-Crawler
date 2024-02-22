@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "newStatistics", menuName = "Scriptable Objects/Statistics")]
-public class StatisticsSO : ScriptableObject
+public class StatisticsSO : ScriptableObject, ISerializationCallbackReceiver
 {
     [Header("Attack Section")]
     [SerializeField] private float physicalDamage;
@@ -24,7 +24,10 @@ public class StatisticsSO : ScriptableObject
 
     [Header("Movement Section")]
     [SerializeField] private float movementSpeed;
-    
+
+    [SerializeField] [HideInInspector] private List<StatisticType> statTypes;
+    [SerializeField] [HideInInspector] private List<float> statValues;
+
     private Dictionary<StatisticType, float> statistics;
     public Dictionary<StatisticType, float> Statistics { get => statistics; }
 
@@ -79,5 +82,42 @@ public class StatisticsSO : ScriptableObject
 
         if (!statistics.ContainsKey(StatisticType.MovementSpeed)) statistics.Add(StatisticType.MovementSpeed, movementSpeed);
         else statistics[StatisticType.MovementSpeed] = movementSpeed;
+    }
+
+    public void OnBeforeSerialize()
+    {
+        if (statTypes == null)
+        {
+            statTypes = new();
+        }
+
+        if (statValues == null)
+        {
+            statValues = new();
+        }
+
+        if (statistics == null)
+        {
+            statistics = new();
+        }
+
+        statTypes.Clear();
+        statValues.Clear();
+
+        foreach (var item in statistics)
+        {
+            statTypes.Add(item.Key);
+            statValues.Add(item.Value);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        statistics = new Dictionary<StatisticType, float>();
+
+        for (int i = 0; i < Mathf.Min(statTypes.Count, statValues.Count); i++)
+        {
+            statistics.Add(statTypes[i], statValues[i]);
+        }
     }
 }

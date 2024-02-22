@@ -71,6 +71,7 @@ public class EnemyConfigurationSO : ScriptableObject
     }
     public GameObject EnemyPrefab { get => enemyPrefab; }
 
+#if UNITY_EDITOR
     [CustomEditor(typeof(EnemyConfigurationSO))]
     public class EnemyConfigurationSOEditor : Editor
     {
@@ -92,4 +93,5 @@ public class EnemyConfigurationSO : ScriptableObject
             serializedObject.Update();
         }
     }
+#endif
 }

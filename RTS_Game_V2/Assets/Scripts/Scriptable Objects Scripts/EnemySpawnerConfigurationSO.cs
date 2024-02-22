@@ -31,7 +31,7 @@ public class EnemySpawnerConfigurationSO : ScriptableObject
         }
     }
 
-
+    #if UNITY_EDITOR
     [CustomEditor(typeof(EnemySpawnerConfigurationSO))]
     private class EnemySpawnerConigurationSOEditor : Editor
     {
@@ -56,4 +56,5 @@ public class EnemySpawnerConfigurationSO : ScriptableObject
             serializedObject.Update();
         }
     }
+#endif
 }

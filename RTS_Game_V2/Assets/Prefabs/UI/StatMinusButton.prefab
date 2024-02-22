@@ -164,7 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9a675b20780bf4bb61c3787d80bc5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newPlayerPanel: {fileID: 0}
+  inactiveButtonColor: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 1}
+  activeButtonColor: {r: 1, g: 1, b: 1, a: 1}
+  buttonImage: {fileID: 762975309255695605}
+  button: {fileID: 762975309255695594}
 --- !u!1 &762975309748533483
 GameObject:
   m_ObjectHideFlags: 0

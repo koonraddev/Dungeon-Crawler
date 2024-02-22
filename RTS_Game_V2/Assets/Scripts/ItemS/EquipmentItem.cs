@@ -6,9 +6,9 @@ using UnityEngine;
 public class EquipmentItem : Item , IStatisticItem, ISerializationCallbackReceiver
 {
     [SerializeField] private EquipmentSlotType itemSlot;
-    private AttackType attackType;
-    private bool isWeapon, projectileAttack;
-    private GameObject weaponPrefab, projectilePrefab;
+    [SerializeField] private AttackType attackType;
+    [SerializeField] private bool isWeapon, projectileAttack;
+    [SerializeField] private GameObject weaponPrefab, projectilePrefab;
     private Dictionary<StatisticType, float> statistics;
     [SerializeField] private List<StatisticType> statTypes;
     [SerializeField] private List<float> statValues;
