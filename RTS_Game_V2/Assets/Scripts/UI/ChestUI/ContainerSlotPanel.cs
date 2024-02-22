@@ -5,6 +5,7 @@ using TMPro;
 
 public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
+    private Canvas canvas;
     [SerializeField] private Image textureHolder;
     [SerializeField] private TMP_Text amountHolder;
     private Sprite emptySlotSprite;
@@ -21,11 +22,11 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     public int SlotIndex { get { return slotIndex; } private set { slotIndex = value; } }
     private void Awake()
     {
-        GameObject canvas = transform.root.gameObject;
-        UICanvasController uiCtrl = canvas.GetComponent<UICanvasController>();
+        GameObject canvasObject = transform.root.gameObject;
+        UICanvasController uiCtrl = canvasObject.GetComponent<UICanvasController>();
         GameObject infoObject = uiCtrl.InfoPanel;
         infoPanel = infoObject.GetComponent<InformationPanel>();
-
+        canvas = canvasObject.GetComponent<Canvas>();
         emptySlotSprite = textureHolder.sprite;
         emptySlotColor = textureHolder.color;
     }
@@ -122,7 +123,7 @@ public class ContainerSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (newObj != null)
         {
-            newObjRect.anchoredPosition += eventData.delta;
+            newObjRect.anchoredPosition += eventData.delta / canvas.scaleFactor;
         }
     }
 

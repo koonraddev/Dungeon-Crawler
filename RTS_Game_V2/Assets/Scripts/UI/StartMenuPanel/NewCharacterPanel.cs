@@ -115,12 +115,11 @@ public class NewCharacterPanel : MonoBehaviour
         }
     }
 
-    public void Create()
+    public void CreateSaveAndStartGame()
     {
         PlayerBasicStatistics playerStats = new(StatsList);
         SaveManager.instance.ChosenSlotIndex = selectedSlot;
         SaveManager.instance.CreateSave(selectedSlot, CharacterName, playerStats);
-        //SceneLoader.instance.LoadDungeonScene();
         GameEvents.instance.LoadGameScene();
         GameEvents.instance.SwitchScene();
     }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
-    [SerializeField] public TMP_Text amountHolder;
+    private Canvas canvas;
+    [SerializeField] private TMP_Text amountHolder;
     [SerializeField] private Image textureHolder;
     [SerializeField] private int slotNumber;
     public InventorySlot InvSlot { get; private set; }
@@ -24,12 +25,9 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         InvSlot = new(slotNumber);
         emptySlotSprite = textureHolder.sprite;
         emptySlotColor = textureHolder.color;
-    }
-
-    void Start()
-    {
-        GameObject canvas = transform.root.gameObject;
-        UICanvasController uiCtrl = canvas.GetComponent<UICanvasController>();
+        GameObject canvasObject = transform.root.gameObject;
+        canvas = canvasObject.GetComponent<Canvas>();
+        UICanvasController uiCtrl = canvasObject.GetComponent<UICanvasController>();
         GameObject infoPanelObject = uiCtrl.InfoPanel;
         infoPanel = infoPanelObject.GetComponent<InformationPanel>();
     }
@@ -126,7 +124,7 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if(newObj != null)
         {
-            newObjRect.anchoredPosition += eventData.delta;
+            newObjRect.anchoredPosition += eventData.delta / canvas.scaleFactor;
         }
     }
 

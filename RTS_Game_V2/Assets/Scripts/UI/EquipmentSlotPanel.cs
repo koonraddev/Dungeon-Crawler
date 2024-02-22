@@ -9,11 +9,12 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     [SerializeField] private EquipmentSlotType slotType;
     [SerializeField] private Image textureHolder;
+    private Canvas canvas;
 
     private EquipmentSlot eqSlot;
     public EquipmentSlot EqSlot { get => eqSlot; private set => eqSlot = value; }
 
-    private GameObject canvas;
+    private GameObject canvasObject;
     private UICanvasController uiCtrl;
     private GameObject infoObject;
     private InformationPanel infoPanel;
@@ -30,13 +31,12 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         emptySlotSprite = textureHolder.sprite;
         emptySlotColor = textureHolder.color;
-    }
-    void Start()
-    {
-        canvas = transform.root.gameObject;
-        uiCtrl = canvas.GetComponent<UICanvasController>();
+
+        canvasObject = transform.root.gameObject;
+        uiCtrl = canvasObject.GetComponent<UICanvasController>();
         infoObject = uiCtrl.InfoPanel;
         infoPanel = infoObject.GetComponent<InformationPanel>();
+        canvas = canvasObject.GetComponent<Canvas>();
     }
 
     private void OnEnable()
@@ -113,7 +113,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (newObj != null)
         {
-            rect.anchoredPosition += eventData.delta;
+            rect.anchoredPosition += eventData.delta / canvas.scaleFactor;
         }
     }
 

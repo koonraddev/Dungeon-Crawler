@@ -4415,7 +4415,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1825921113}
         m_TargetAssemblyTypeName: NewCharacterPanel, Assembly-CSharp
-        m_MethodName: Create
+        m_MethodName: CreateSaveAndStartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
