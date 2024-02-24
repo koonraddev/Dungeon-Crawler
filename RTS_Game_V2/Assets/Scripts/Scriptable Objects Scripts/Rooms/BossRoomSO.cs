@@ -8,14 +8,11 @@ public class BossRoomSO : RoomSO
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
     [SerializeField] private EnemyConfigurationSO bossObject;
-    [Header("Door section")]
-    [SerializeField] private List<DoorSO> doorsList;
-
     private int maxDoorsInWall = 0;
 
     public override int MaxDoorsInWall => maxDoorsInWall;
 
-    public override List<DoorSO> RoomDoors => doorsList;
+    public override List<DoorSO> RoomDoors => new();
 
     public override GameObject RoomPlane => roomPlane;
 
@@ -26,6 +23,7 @@ public class BossRoomSO : RoomSO
             GameObject boss = Instantiate(bossObject.EnemyPrefab, roomGameObject.transform.position,Quaternion.identity);
             boss.transform.SetParent(roomGameObject.transform);
             boss.GetComponent<Enemy>().SetEnemy(bossObject,roomGameObject);
+            boss.SetActive(true);
         }
         MapManager.instance.AddRoom(roomGameObject, RoomMarkType.BOSS);
     }

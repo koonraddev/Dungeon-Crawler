@@ -17,8 +17,9 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
     private float physicalDamageMultiplier;
     private float magicDamageMultiplier;
+    [SerializeField] float timeAfterDeath;
 
-    private int interactionDistance = 9999, timeAfterDeath = 10;
+    private int interactionDistance = 9999;
     [SerializeField] EnemyMovement enemyMovement;
     [SerializeField] EnemyAttack enemyAttack;
     [SerializeField] EnemyAnimation enemyAnimation;

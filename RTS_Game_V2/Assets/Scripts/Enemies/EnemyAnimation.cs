@@ -12,12 +12,6 @@ public class EnemyAnimation : MonoBehaviour
     int movementSpeedParameter, attackTypeIndex, getHitTypeIndex,attackAnimationSpeedParameter;
     System.Random rand;
 
-    public bool at;
-    public bool dth;
-    public bool hit;
-    public float mov;
-    public float atsp;
-
     private float movementSpeed;
 
 
@@ -60,27 +54,6 @@ public class EnemyAnimation : MonoBehaviour
         {
             animator.SetFloat(movementSpeedParameter, movementSpeed);
         }
-
-        if (at)
-        {
-            AttackAnimation();
-            at = false;
-        }
-
-        if (dth)
-        {
-            DeathAnimation();
-            dth = false;
-        }
-
-        if (hit)
-        {
-            GetHitAnimation();
-            hit = false;
-        }
-
-        //animator.SetFloat(attackAnimationSpeedParameter, atsp);
-        //animator.SetFloat(movementSpeedParameter, mov);
 
     }
 

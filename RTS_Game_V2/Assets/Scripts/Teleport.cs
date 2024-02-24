@@ -27,6 +27,7 @@ public class Teleport : MonoBehaviour, IInteractiveObject
     private void ActivateTeleport()
     {
         activated = true;
+        ConsolePanel.instance.InfoLog("Teleport to the next floor has been acitvated!");
     }
     public void DoInteraction()
     {

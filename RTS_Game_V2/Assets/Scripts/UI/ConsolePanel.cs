@@ -38,6 +38,7 @@ public class ConsolePanel : MonoBehaviour
             .Join(consoleText.DOColor(transparentColor, 2f).SetDelay(fadingDelay));
 
         CheckConsole();
+        consoleText.text = "";
     }
 
     private void OnEnable()

@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: spawner1
   m_EditorClassIdentifier: 
   enemyList:
-  - {fileID: 11400000, guid: d8cb453ef8d41b04a9d5e018ca1a1e7d, type: 2}
+  - {fileID: 11400000, guid: dfd824595b452e74caf7837078fd353c, type: 2}
+  - {fileID: 11400000, guid: dfd824595b452e74caf7837078fd353c, type: 2}
+  - {fileID: 11400000, guid: dfd824595b452e74caf7837078fd353c, type: 2}
+  - {fileID: 11400000, guid: dfd824595b452e74caf7837078fd353c, type: 2}
+  - {fileID: 11400000, guid: dfd824595b452e74caf7837078fd353c, type: 2}
+  - {fileID: 11400000, guid: dfd824595b452e74caf7837078fd353c, type: 2}
   manySpawns: 1
-  spawnerInterval: 0
+  spawnerInterval: 15
   waitForAll: 0
