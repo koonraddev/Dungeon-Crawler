@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1c71656442eb242a8ac87b8dd8e82b, type: 3}
   m_Name: helmet1info
   m_EditorClassIdentifier: 
-  itemID: 1234
   itemName: Jakis helmet
   itemDescription: bardzo rzadki helm
-  itemSprite: {fileID: 21300000, guid: a6fbd5a181bc51e42a61a73fe8d727c8, type: 3}
+  itemSprite: {fileID: 21300000, guid: e9a8390f5c126fe4ca429f01fb7306c0, type: 3}

@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1c71656442eb242a8ac87b8dd8e82b, type: 3}
   m_Name: key2 info
   m_EditorClassIdentifier: 
-  itemID: 2
-  itemName: KLuczyk2
-  itemDescription: levelu 2
+  itemName: Master Key
+  itemDescription: Level 2 key
   itemSprite: {fileID: 21300000, guid: e7e0c45b357d33945a5910957f26087a, type: 3}

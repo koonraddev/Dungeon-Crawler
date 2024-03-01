@@ -9,20 +9,18 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     [SerializeField] private EquipmentSlotType slotType;
     [SerializeField] private Image textureHolder;
+    private Sprite emptySlotSprite;
     private Canvas canvas;
 
     private EquipmentSlot eqSlot;
     public EquipmentSlot EqSlot { get => eqSlot; private set => eqSlot = value; }
 
-    private GameObject canvasObject;
+    private GameObject infoObject,canvasObject, newObj;
     private UICanvasController uiCtrl;
-    private GameObject infoObject;
     private InformationPanel infoPanel;
 
-    private GameObject newObj;
     private RectTransform rect;
 
-    private Sprite emptySlotSprite;
     private Color emptySlotColor;
 
     private void Awake()
@@ -31,6 +29,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         emptySlotSprite = textureHolder.sprite;
         emptySlotColor = textureHolder.color;
+
 
         canvasObject = transform.root.gameObject;
         uiCtrl = canvasObject.GetComponent<UICanvasController>();
@@ -44,11 +43,11 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         GameEvents.instance.OnEquipmentUpdate += OnEquipmentUpdate;
     }
 
-    private void SetEquipmentSlotUI(EquipmentItem item,Color slotColor)
+    private void SetEquipmentSlotUI(EquipmentItem item)
     {
         EqSlot.Item = item;
         EqSlot.Empty = false;
-        textureHolder.color = slotColor;
+        textureHolder.color = Color.white;
         textureHolder.sprite = item.Sprite;
     }
 
@@ -69,7 +68,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         }
         else
         {
-            SetEquipmentSlotUI(eqSlot.Item, Color.white);
+            SetEquipmentSlotUI(eqSlot.Item);
         }
     }
 
@@ -126,8 +125,7 @@ public class EquipmentSlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (eventData.pointerDrag != null)
         {
-            ContainerSlotPanel containerSlotPanel = eventData.pointerDrag.GetComponent<ContainerSlotPanel>();
-            if (containerSlotPanel != null)
+            if (eventData.pointerDrag.TryGetComponent(out ContainerSlotPanel containerSlotPanel))
             {
                 ContainerSlot containerSlot = containerSlotPanel.ContainerSlot;
 

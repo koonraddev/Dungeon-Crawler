@@ -15,16 +15,16 @@ MonoBehaviour:
   lootSlots:
   - treasure: {fileID: 11400000, guid: 404469387e55dba4cb0ddf2ec7e99a54, type: 2}
     amount: 1
-    lootChancePercentage: 83.3
-  - treasure: {fileID: 0}
-    amount: 0
+    lootChancePercentage: 10.6
+  - treasure: {fileID: 11400000, guid: 8b47738da7ec3b14abea480fae79b1de, type: 2}
+    amount: 2
     lootChancePercentage: 0
-  - treasure: {fileID: 0}
-    amount: 0
-    lootChancePercentage: 0
-  - treasure: {fileID: 0}
-    amount: 0
-    lootChancePercentage: 0
+  - treasure: {fileID: 11400000, guid: 1d2ddd4a5f9d5604d9f1975f7da9b9bb, type: 2}
+    amount: 1
+    lootChancePercentage: 91.1
+  - treasure: {fileID: 11400000, guid: 1d2ddd4a5f9d5604d9f1975f7da9b9bb, type: 2}
+    amount: 2
+    lootChancePercentage: 33.6
   - treasure: {fileID: 0}
     amount: 0
     lootChancePercentage: 0

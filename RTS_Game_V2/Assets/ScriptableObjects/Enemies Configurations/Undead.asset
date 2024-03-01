@@ -26,7 +26,7 @@ MonoBehaviour:
   attackSpeed: 20
   attackRange: 3
   triggerRange: 10
-  physicalDamage: 1
+  physicalDamage: 10
   magicDamage: 1
   trueDamage: 1
   projectileAttack: 0

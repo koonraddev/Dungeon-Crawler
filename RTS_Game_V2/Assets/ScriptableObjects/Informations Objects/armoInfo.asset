@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1c71656442eb242a8ac87b8dd8e82b, type: 3}
   m_Name: armoInfo
   m_EditorClassIdentifier: 
-  itemID: 120
   itemName: Stalka
   itemDescription: stalka na woja
-  itemSprite: {fileID: 21300000, guid: ae53a7884da90e94eb5dfeab594b746c, type: 3}
+  itemSprite: {fileID: 21300000, guid: 91ea2404db80873449f22570782652c1, type: 3}

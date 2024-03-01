@@ -54,23 +54,9 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            getOne = true;
-        }
-        else
-        {
-            getOne = false;
-        }
+        getOne = Input.GetKey(KeyCode.LeftShift);
+        merge = Input.GetKey(KeyCode.LeftControl);
 
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            merge = true;
-        }
-        else
-        {
-            merge = false;
-        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -137,25 +123,24 @@ public class InventorySlotPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (eventData.pointerDrag != null)
         {
-            InventorySlotPanel invSlot = eventData.pointerDrag.GetComponent<InventorySlotPanel>();
-            if (invSlot != null)
+            if (eventData.pointerDrag.TryGetComponent(out InventorySlotPanel inventorySlotPanel))
             {
 
                 if (getOne)
                 {
-                    InventoryManager.instance.MoveOnePiece(invSlot.SlotNumber, this.SlotNumber);
+                    InventoryManager.instance.MoveOnePiece(inventorySlotPanel.SlotNumber, this.SlotNumber);
                     return;
                 }
                 if (merge)
                 {
-                    InventoryManager.instance.MergeItems(invSlot.SlotNumber, this.SlotNumber);
+                    InventoryManager.instance.MergeItems(inventorySlotPanel.SlotNumber, this.SlotNumber);
                     return;
                 }
-                InventoryManager.instance.SwapItems(invSlot.SlotNumber, this.SlotNumber);
+                InventoryManager.instance.SwapItems(inventorySlotPanel.SlotNumber, this.SlotNumber);
             }
-            ContainerSlotPanel containerSlotPanel = eventData.pointerDrag.GetComponent<ContainerSlotPanel>();
-            if(containerSlotPanel != null)
-            {
+
+            if (eventData.pointerDrag.TryGetComponent(out ContainerSlotPanel containerSlotPanel))
+            { 
                 ContainerSlot chestCont = containerSlotPanel.ContainerSlot;
 
                 if (chestCont.Item is InventoryItem)

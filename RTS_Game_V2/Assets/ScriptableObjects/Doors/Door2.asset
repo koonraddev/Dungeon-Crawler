@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Door2
   m_EditorClassIdentifier: 
   <NameText>k__BackingField: Door Level 2
-  <Id>k__BackingField: 12
+  <Id>k__BackingField: 8001
   <Description>k__BackingField: Requires Level 2 acces key.
-  <keyRequired>k__BackingField: {fileID: 11400000, guid: 78f4ba69b54ee094483883509bf0cb38, type: 2}
+  <keyRequired>k__BackingField: {fileID: 11400000, guid: 1d2ddd4a5f9d5604d9f1975f7da9b9bb, type: 2}
