@@ -90,10 +90,15 @@ public class PlayerEquipment : MonoBehaviour
         if (instantiatedWeapon != null && !instantiatedWeapon.Equals(weaponPrefab))
         {
             Destroy(instantiatedWeapon);
+            return;
         }
 
         if (spawnPlace != null)
         {
+            //if(weaponPrefab != null)
+            //{
+            //    return;
+            //}
             instantiatedWeapon = Instantiate(weaponPrefab, spawnPlace);
             ActiveWeapon(enemyInCombat);
             return;

@@ -119,7 +119,7 @@ public class SaveManager : MonoBehaviour
     public bool GetPlayerData(int slot, out PlayerData playerData)
     {
         playerData = null;
-        if(GetFile(slot,out string save))
+        if(GetFile(slot, out string save))
         {
             try
             {

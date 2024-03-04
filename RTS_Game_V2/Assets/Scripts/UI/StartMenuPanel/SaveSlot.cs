@@ -10,7 +10,6 @@ public class SaveSlot : MonoBehaviour
     [SerializeField] private bool loadingSlot;
     [SerializeField] private int slotNumber;
 
-    [SerializeField] private GameObject foregroundMask;
     [SerializeField] private TMP_Text slotNumberObj;
 
     [Header("Buttons Section")]
@@ -29,6 +28,7 @@ public class SaveSlot : MonoBehaviour
 
     [Header("new section")]
     [SerializeField] private NewCharacterPanel newCharacterPanel;
+    [SerializeField] private GameObject newGamePanel;
 
     [Header("load section")]
     [SerializeField] Button loadButton;
@@ -63,11 +63,11 @@ public class SaveSlot : MonoBehaviour
 
         if (loadingSlot)
         {
-            foregroundMask.SetActive(true);
+            selectButton.interactable = false;
         }
         else
         {
-            foregroundMask.SetActive(false);
+            selectButton.interactable = true;
             deleteButton.onClick.RemoveAllListeners();
             selectButton.onClick.AddListener(CreateSave);
         }
@@ -88,17 +88,19 @@ public class SaveSlot : MonoBehaviour
         if (loadingSlot)
         {
             selectButton.onClick.AddListener(LoadSave);
-            foregroundMask.SetActive(false);
+            selectButton.interactable = true;
+
         }
         else
         {
-            foregroundMask.SetActive(true);
+            selectButton.interactable = false;
         }
     }
 
 
     private void CreateSave()
     {
+        newGamePanel.SetActive(false);
         newCharacterPanel.gameObject.SetActive(true);
         newCharacterPanel.SelectedSlot = slotNumber;
     }
@@ -130,7 +132,6 @@ public class SaveSlot : MonoBehaviour
 
     private void LoadingButton()
     {
-        //Debug.Log("Loading button");
         GameEvents.instance.LoadGameScene();
     }
 

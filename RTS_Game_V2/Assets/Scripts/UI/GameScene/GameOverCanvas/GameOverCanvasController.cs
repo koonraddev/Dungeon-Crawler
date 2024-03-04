@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameOverCanvasController : MonoBehaviour
 {
-    [SerializeField] GameObject background, askPanel, restartButton, mainMenuButton;
+    [SerializeField] GameObject background, dividerLeft, dividerRight, askPanel, restartButton, mainMenuButton;
     [SerializeField] private TMP_Text labelText;
     [SerializeField] private CanvasGroup buttonPanelCanvasGroup;
     Tween seq;
@@ -25,6 +25,8 @@ public class GameOverCanvasController : MonoBehaviour
                 restartButton.SetActive(true);
                 mainMenuButton.SetActive(true);
                 background.SetActive(true);
+                dividerLeft.SetActive(true);
+                dividerRight.SetActive(true);
                 buttonPanelCanvasGroup.gameObject.SetActive(true);
                 labelText.gameObject.SetActive(true);
             }).SetDelay(4f)
@@ -43,6 +45,8 @@ public class GameOverCanvasController : MonoBehaviour
         labelText.alpha = 0f;
         
         background.SetActive(false);
+        dividerLeft.SetActive(false);
+        dividerRight.SetActive(false);
         buttonPanelCanvasGroup.gameObject.SetActive(false);
         labelText.gameObject.SetActive(false);
         askPanel.SetActive(false);

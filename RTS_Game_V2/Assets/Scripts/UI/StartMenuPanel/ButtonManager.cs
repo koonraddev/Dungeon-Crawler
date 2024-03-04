@@ -4,24 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ButtonManager : MonoBehaviour
 {
-    [SerializeField] private Color inactiveButtonColor, activeButtonColor;
-    [SerializeField] private Image buttonImage;
     [SerializeField] private Button button;
-    private void Awake()
-    {
-        buttonImage = GetComponent<Image>();
-        button = GetComponent<Button>();
-    }
 
     public void ActivateButton()
     {
-        buttonImage.color = activeButtonColor;
-        button.enabled = true;
+        button.interactable = true;
     }
 
     public void DeactivateButton()
     {
-        buttonImage.color = inactiveButtonColor;
-        button.enabled = false;
+        button.interactable = false;
     }
 }

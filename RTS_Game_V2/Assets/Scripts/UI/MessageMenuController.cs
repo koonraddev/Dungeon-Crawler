@@ -9,8 +9,10 @@ public class MessageMenuController : MonoBehaviour
     private Camera mainCamera;
 
     private GameObject objectReq;
-    private UIMessageObjectPool.MessageType messageType;
+    [SerializeField] private UIMessageObjectPool.MessageType messageType;
     private Vector3 objectReqPosition;
+
+    public UIMessageObjectPool.MessageType MessageType { get => messageType; set => messageType = value; }
 
     [Header("Main Panel")]
     [SerializeField] private GameObject panel;
@@ -49,8 +51,6 @@ public class MessageMenuController : MonoBehaviour
     private bool firstRun = true;
 
     private Vector3 lastMousePositionOnObject;
-
-    public UIMessageObjectPool.MessageType MessageType { get => messageType; }
     public int GetId { get => objectReq.GetInstanceID(); }
 
     private void Start()
@@ -80,12 +80,7 @@ public class MessageMenuController : MonoBehaviour
     public void PrepareMessageMenu(IInteractiveObject intObject, UIMessageObjectPool.MessageType messageType)
     {
         this.messageType = messageType;
-        if (firstRun)
-        {
-            SetAllElements();
-            ResetAllElements();
-            firstRun = false;
-        }
+        ResetAllElements();
         switch (messageType)
         {
             case UIMessageObjectPool.MessageType.POPUP:
@@ -94,6 +89,7 @@ public class MessageMenuController : MonoBehaviour
             case UIMessageObjectPool.MessageType.OPEN:
                 relativePosition = false;
                 btYes.onClick.AddListener(intObject.DoInteraction);
+                btYes.onClick.AddListener(() => gameObject.SetActive(false));
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Open?";
@@ -101,6 +97,7 @@ public class MessageMenuController : MonoBehaviour
             case UIMessageObjectPool.MessageType.TAKE:
                 relativePosition = false;
                 btYes.onClick.AddListener(intObject.DoInteraction);
+                btYes.onClick.AddListener(() => gameObject.SetActive(false));
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Take it?";
@@ -127,18 +124,15 @@ public class MessageMenuController : MonoBehaviour
         this.messageType = messageType;
         InventorySlotPanel invSlotpanel = specialSlot.RequestingSlot;
 
-        if (firstRun)
-        {
-            SetAllElements();
-            ResetAllElements();
-            firstRun = false;
-        }
+        ResetAllElements();
 
         switch (messageType)
         {
             case UIMessageObjectPool.MessageType.DELETE:
                 relativePosition = false;
+
                 btYes.onClick.AddListener(specialSlot.DoSpecialIntercation);
+                btYes.onClick.AddListener(() => gameObject.SetActive(false));
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Delete items from slot nr ";
@@ -146,6 +140,7 @@ public class MessageMenuController : MonoBehaviour
             case UIMessageObjectPool.MessageType.DROP:
                 relativePosition = false;
                 btYes.onClick.AddListener(specialSlot.DoSpecialIntercation);
+                btYes.onClick.AddListener(() => gameObject.SetActive(false));
                 buttonYES.SetActive(true);
                 buttonNO.SetActive(true);
                 messageHolder.text += "Drop items from slot nr ";
@@ -179,6 +174,7 @@ public class MessageMenuController : MonoBehaviour
             SetAllElements();
             firstRun = false;
         }
+
         nameHolder.text = "";
         descripotionHolder.text = "";
         messageHolder.text = "";
@@ -186,6 +182,7 @@ public class MessageMenuController : MonoBehaviour
         nameHolder.gameObject.SetActive(false);
         descripotionHolder.gameObject.SetActive(false);
         messageHolder.gameObject.SetActive(false);
+        buttonPanel.SetActive(false);
 
         buttonYES.SetActive(false);
         buttonNO.SetActive(false);
@@ -220,7 +217,6 @@ public class MessageMenuController : MonoBehaviour
                         messageHolder.text += li.Value;
                         break;
                     default:
-                        messageHolder.text = "Error";
                         break;
                 }
             }
@@ -232,25 +228,25 @@ public class MessageMenuController : MonoBehaviour
         if(nameHolder.text != "")
         {
             nameHolder.gameObject.SetActive(true);
-            panelRect.sizeDelta += new Vector2(0f, nameHolderSize.y);
+            panelRect.sizeDelta += new Vector2(0f, nameHolderSize.y + 13f);
 
-            nameHolderRect.localPosition -= new Vector3(0f, nameHolderSize.y, 0f);
-            descripotionHoldeRrect.localPosition -= new Vector3(0f, nameHolderSize.y, 0f);
-            messageHolderRect.localPosition -= new Vector3(0f, nameHolderSize.y, 0f);
-            buttonPanelRect.localPosition -= new Vector3(0f, nameHolderSize.y, 0f);
+            nameHolderRect.localPosition -= new Vector3(0f, 13f, 0f);
+            descripotionHoldeRrect.localPosition -= new Vector3(0f, nameHolderSize.y + 30f, 0f);
+            messageHolderRect.localPosition -= new Vector3(0f, nameHolderSize.y + 30f, 0f);
+            buttonPanelRect.localPosition -= new Vector3(0f, nameHolderSize.y + 30f, 0f);
 
             relativeOffset += new Vector3(0f, nameHolderSize.y, 0f);
         }
         if(descripotionHolder.text != "")
         {
             descripotionHolder.gameObject.SetActive(true);
-            panelRect.sizeDelta += new Vector2(0f, descrHolderSize.y);
+            panelRect.sizeDelta += new Vector2(0f, descrHolderSize.y + 30f);
 
-            descripotionHoldeRrect.localPosition -= new Vector3(0f, descrHolderSize.y, 0f);
-            messageHolderRect.localPosition -= new Vector3(0f, descrHolderSize.y, 0f);
-            buttonPanelRect.localPosition -= new Vector3(0f, descrHolderSize.y, 0f);
+            descripotionHoldeRrect.localPosition -= new Vector3(0f, descrHolderSize.y /2, 0f);
+            messageHolderRect.localPosition -= new Vector3(0f, descrHolderSize.y /2, 0f);
+            buttonPanelRect.localPosition -= new Vector3(0f, descrHolderSize.y / 2, 0f);
 
-            relativeOffset += new Vector3(0f, descrHolderSize.y, 0f);
+            relativeOffset += new Vector3(0f, descrHolderSize.y / 2, 0f);
         }
         if(messageHolder.text != "")
         {
@@ -262,6 +258,8 @@ public class MessageMenuController : MonoBehaviour
 
             relativeOffset += new Vector3(0f, messHolderSize.y, 0f);
         }
+
+        panelRect.sizeDelta += new Vector2(0f, 13f);
     }
 
     private void CheckButtons()
@@ -272,6 +270,7 @@ public class MessageMenuController : MonoBehaviour
             buttonPanelRect.localPosition -= new Vector3(0f, buttonPanelSize.y, 0f);
 
             relativeOffset += new Vector3(0f, buttonPanelSize.y, 0f);
+            buttonPanel.SetActive(true);
         }
     }
 

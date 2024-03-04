@@ -44,7 +44,7 @@ public class NewCharacterPanel : MonoBehaviour
     private int points;
     private int selectedSlot;
 
-    [SerializeField] private InputField nameInputField;
+    [SerializeField] private TMP_InputField nameInputField;
     [SerializeField] private ButtonManager nextButton;
 
     public Color InactiveButtonColor { get => inactiveButtonColor; }
