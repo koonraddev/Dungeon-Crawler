@@ -1,140 +1,95 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
+public delegate void YesButtonDelegate();
+public struct ObjectContent
+{
+    public string Nametext { get; set; }
+    public string Description { get; set; }
+    public string Message { get; set; }
+    public GameObject GameObjectReq { get; }
+    public YesButtonDelegate YesButtonDelegate { get; set; }
+
+    public ObjectContent(GameObject gameobjectReq) : this()
+    {
+        GameObjectReq = gameobjectReq;
+    }
+}
+
+public enum PopupType
+{
+    NAME,
+    INFORMATION,
+    TAKE,
+    OPEN,
+    DELETE,
+    DROP
+}
 
 public class UIMessageObjectPool : MonoBehaviour
 {
     public static UIMessageObjectPool instance;
-    private List<GameObject> pooledObjects;
-    [Tooltip("Message Prefab")]
-    [SerializeField] private GameObject objectToPool;
-    [Tooltip("Number of prefab to pool")]
-    [SerializeField] private int amountToPool;
-    [Tooltip("Specify whether the Object Pooler can create extra objects at runtime when there is a need for them")]
-    [SerializeField] private bool canAddObjects;
-    [Tooltip("Specify whether the Message Menu should follow mouse when on top of a object")]
-    [SerializeField] private bool followMouse;
+    private List<PopupPanel> pooledObjects;
+    [SerializeField] GameObject poolPanel;
+    [SerializeField] List<PopupPanel> popupPrefabsList;
 
-    public enum MessageType
-    {
-        POPUP,
-        INFORMATION,
-        TAKE,
-        OPEN,
-        DELETE,
-        DROP
-    }
     void Awake()
     {
         instance = this;
-        pooledObjects = new List<GameObject>();
+        pooledObjects = new List<PopupPanel>();
     }
 
-    void Start()
-    {
-        CreateObjects(amountToPool);   
-    }
-    private bool CheckForEmptyObject(out GameObject pooledObject)
+    private bool CheckForEmptyObject(PopupType popupType ,out PopupPanel pooledObject)
     {
         pooledObject = null;
         foreach (var item in pooledObjects)
         {
-            if (!item.activeInHierarchy)
+            if (!item.gameObject.activeInHierarchy)
             {
-                pooledObject = item;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void DisplayMessage(IInteractiveObject gameObjectReq, MessageType messageType )
-    {
-        if (!CheckForExistingMessage(gameObjectReq,messageType))
-        {
-            GameObject gm;
-            if (CheckForEmptyObject(out GameObject messageObject))
-            {
-                gm = messageObject;
-                MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
-                cc.PrepareMessageMenu(gameObjectReq, messageType);
-                gm.SetActive(true);
-            }
-            else
-            {
-                if (canAddObjects)
+                if(item.MessageType == popupType)
                 {
-                    CreateObjects(1);
-                    DisplayMessage(gameObjectReq, messageType);
-                }
-            }
-        }
-    }
-
-    private bool CheckForExistingMessage(IInteractiveObject gameObjectReq, MessageType messageType)
-    {
-        foreach (var item in pooledObjects)
-        {
-            if (item.activeInHierarchy)
-            {
-                MessageMenuController messageMenu = item.GetComponentInChildren<MessageMenuController>();
-
-                switch (messageType)
-                {
-                    case MessageType.POPUP:
-                        if (gameObjectReq.GameObject.GetInstanceID() == messageMenu.GetId)
-                        {
-                            return true;
-                        }
-                        break;
-                    default:
-                        if (gameObjectReq.GameObject.GetInstanceID() == messageMenu.GetId && messageType == messageMenu.MessageType)
-                        {
-                            return true;
-                        }
-                        break;
+                    pooledObject = item;
+                    return true;
                 }
             }
         }
         return false;
     }
 
-    public void DisplayMessage(ISpecialInventoryPanel specialInventoryPanel, MessageType messageType)
+    public void DisplayMessage(ObjectContent content, PopupType popupType)
     {
-        GameObject gm;
-        if (CheckForEmptyObject(out GameObject messageObject))
+        if (CheckForEmptyObject(popupType, out PopupPanel popupPanel))
         {
-            gm = messageObject;
-            MessageMenuController cc = gm.GetComponentInChildren<MessageMenuController>();
-            cc.PrepareMessageMenu(specialInventoryPanel, messageType);
-            gm.SetActive(true);
+            popupPanel.PrepareMessageMenu(content);
+            popupPanel.gameObject.SetActive(true);
         }
         else
         {
-            if (canAddObjects)
+            if (CreateObject(popupType))
             {
-                CreateObjects(1);
-                DisplayMessage(specialInventoryPanel, messageType);
+                DisplayMessage(content, popupType);
             }
         }
     }
 
-    private void CreateObjects(int amountToCreate)
+    private bool CreateObject(PopupType popupType)
     {
-        if (objectToPool.GetComponent<MessageMenuController>() != null)
+        if(popupPrefabsList.Any((x) => x.MessageType == popupType))
         {
-            GameObject tmp;
-            if (amountToCreate > 0 && objectToPool != null)
+            PopupPanel prefab = popupPrefabsList.First((x) => x.MessageType == popupType);
+
+            if (prefab != null)
             {
-                for (int i = 0; i < amountToCreate; i++)
-                {
-                    tmp = Instantiate(objectToPool);
-                    tmp.GetComponent<MessageMenuController>().FollowMouse = followMouse;
-                    tmp.SetActive(false);
-                    pooledObjects.Add(tmp);
-                }
+                PopupPanel tmp = Instantiate(prefab);
+                tmp.gameObject.SetActive(false);
+                pooledObjects.Add(tmp);
+                tmp.transform.SetParent(poolPanel.transform);
+                return true;
             }
         }
+
+        return false;
     }
 
 }

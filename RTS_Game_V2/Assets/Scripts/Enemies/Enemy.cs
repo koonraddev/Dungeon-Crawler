@@ -24,20 +24,20 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     [SerializeField] EnemyAttack enemyAttack;
     [SerializeField] EnemyAnimation enemyAnimation;
     private Sprite enemySprite;
-    private Dictionary<string, string> contentToDisplay;
     public float MaxHealth { get => maxHealth; }
     public float Health { get => health; }
     public string Name { get => enemyName; }
     public Sprite Sprite { get => enemySprite; }
     public GameObject GameObject => gameObject;
     public int InteractionDistance { get => interactionDistance; }
-    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
     private bool dead;
     private bool doDeathStuff;
     public bool Dead { get => dead; }
 
- 
+    ObjectContent objectContent;
+    public ObjectContent ContentDoDisplay => objectContent;
+
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -70,6 +70,9 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
         physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
         magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
+
+        objectContent = new(gameObject);
+        objectContent.Nametext = enemyConfig.EnemyName;
 
         if (enemyMovement != null)
         {
@@ -146,9 +149,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
         {
             item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
-
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", enemyName } });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+        UIMessageObjectPool.instance.DisplayMessage(objectContent ,PopupType.NAME);
     }
 
     private void OnMouseExit()
@@ -168,13 +169,4 @@ public class Enemy : MonoBehaviour, IInteractiveObject
         GameEvents.instance.OnCancelGameObjectAction -= OnCancelGameObject;
     }
 
-
-    private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
-    {
-        contentToDisplay = new Dictionary<string, string> { };
-        foreach (KeyValuePair<string, string> li in contentDictionary)
-        {
-            contentToDisplay.Add(li.Key, li.Value);
-        }
-    }
 }

@@ -8,7 +8,6 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
     [SerializeField] private Color highLightObjectColor;
     [SerializeField] private GameObject parentObject;
     [SerializeField] private Renderer[] renderers;
-    private Dictionary<string, string> contentToDisplay;
     private Container container;
     private int interactionDistance = 3;
     private float existingTime;
@@ -17,7 +16,9 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
     private bool stopExistingTime;
     public GameObject GameObject => gameObject;
     public int InteractionDistance => interactionDistance;
-    public Dictionary<string, string> ContentToDisplay => contentToDisplay;
+    ObjectContent objectContent;
+    public ObjectContent ContentDoDisplay => objectContent;
+
 
     public void Start()
     {
@@ -50,12 +51,17 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
             existingTimeLeft = lootExistingTime;
             existingTime = lootExistingTime;
         }
+
+        objectContent = new(gameObject);
+        objectContent.Nametext = container.Name;
+        objectContent.Description = container.Description;
+        objectContent.YesButtonDelegate = DoInteraction;
     }
 
     public void ObjectInteraction(GameObject interactingObject = null)
     {
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", container.Name }, { "Description", container.Description } });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
+        //UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.OPEN);
+        DoInteraction();
     }
 
     public void DoInteraction()
@@ -95,8 +101,7 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
             item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
 
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", container.Name } });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+        UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.NAME);
     }
 
     private void OnMouseExit()
@@ -109,13 +114,4 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
-    private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
-    {
-        contentToDisplay = new Dictionary<string, string>();
-
-        foreach (KeyValuePair<string, string> li in contentDictionary)
-        {
-            contentToDisplay.Add(li.Key, li.Value);
-        }
-    }
 }

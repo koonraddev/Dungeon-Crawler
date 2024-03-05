@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
+
 public interface IContentDisplayObject
 {
-    public Dictionary<string, string> ContentToDisplay { get; }
+    public ObjectContent ContentDoDisplay { get; }
 }

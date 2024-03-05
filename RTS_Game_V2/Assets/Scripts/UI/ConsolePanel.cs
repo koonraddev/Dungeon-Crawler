@@ -11,34 +11,39 @@ public class ConsolePanel : MonoBehaviour
 {
     public static ConsolePanel instance;
 
-    [SerializeField] private Color transparentColor;
     [SerializeField] private TMP_Text consoleText;
     [SerializeField] private Scrollbar scrollbar;
-    [SerializeField] private float fadingDelay;
-    private Color originalPanelColor;
-    private Color originalTextColor;
-    private Image mainPanel;
+    [SerializeField] private float fadingDelay, fadingTime;
+    [SerializeField] private List<Graphic> objectsToFade;
     private bool consoleIsOn = true;
 
     private PlayerControls playerControls;
     private InputAction switchConsoleStatus;
 
     private Sequence seq;
+    Vector3 startPostion;
     private void Awake()
     {
         playerControls = new PlayerControls();
         switchConsoleStatus = playerControls.BasicMovement.ConsoleLogs;
         instance = this;
-        mainPanel = GetComponent<Image>();
-        originalPanelColor = mainPanel.color;
-        originalTextColor = consoleText.color;
+        startPostion = gameObject.transform.position;
+        seq = DOTween.Sequence();
 
-        seq = DOTween.Sequence()
-            .Append(mainPanel.DOColor(transparentColor, 2f).SetDelay(fadingDelay))
-            .Join(consoleText.DOColor(transparentColor, 2f).SetDelay(fadingDelay));
+       
+
+        for (int i = 0; i < objectsToFade.Count; i++)
+        { 
+            seq.Join(objectsToFade[i].DOFade(0f, fadingTime));
+
+            if (i == objectsToFade.Count - 1)
+            {
+                seq.Append(objectsToFade[i].DOFade(0f, fadingTime)).SetDelay(fadingDelay);
+            }
+            
+        }
 
         CheckConsole();
-        consoleText.text = "";
     }
 
     private void OnEnable()
@@ -67,8 +72,9 @@ public class ConsolePanel : MonoBehaviour
     {
         if (consoleIsOn)
         {
-            consoleText.color = originalTextColor;
-            mainPanel.color = originalPanelColor;
+            //consoleText.DOFade(1f,0f);
+            //mainPanel.DOFade(1f, 0f);
+            gameObject.transform.position = startPostion;
             seq.Restart();
         }
     }

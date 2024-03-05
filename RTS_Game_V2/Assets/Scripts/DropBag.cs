@@ -10,17 +10,22 @@ public class DropBag : MonoBehaviour, IInteractiveObject
     [SerializeField] private Renderer[] renderers;
     private ContainerSlot bagSlot;
     private int interactionDistance = 3;
-    private Dictionary<string, string> contentToDisplay;
 
     public GameObject GameObject => gameObject;
     public int InteractionDistance { get => interactionDistance; }
-    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
 
+    ObjectContent objectContent;
+    public ObjectContent ContentDoDisplay => objectContent;
     public void SetDropBag(InventoryItem inventoryItem, int itemAmount)
     {
         bagSlot = new(0, inventoryItem, itemAmount);
         bagSlot.Item = inventoryItem;
         bagSlot.Amount = itemAmount;
+
+        objectContent = new(gameObject);
+        objectContent.Nametext = "Drop Bag";
+        objectContent.Description = "Containts " + bagSlot.Amount.ToString() + "x " + bagSlot.Item.Name;
+        objectContent.YesButtonDelegate = DoInteraction;
     }
 
     public void DoInteraction()
@@ -36,19 +41,10 @@ public class DropBag : MonoBehaviour, IInteractiveObject
         }
     }
 
-    private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
-    {
-        contentToDisplay = new Dictionary<string, string> { };
-        foreach (KeyValuePair<string, string> li in contentDictionary)
-        {
-            contentToDisplay.Add(li.Key, li.Value);
-        }
-    }
 
     public void ObjectInteraction(GameObject interactingObject = null)
-    {
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", bagSlot.Amount.ToString() + "x " + bagSlot.Item.Name } });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.TAKE);
+    { 
+        UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.TAKE);
     }
 
     private void OnMouseEnter()
@@ -58,8 +54,7 @@ public class DropBag : MonoBehaviour, IInteractiveObject
             item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
 
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", "Bag" } });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+        UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.NAME);
     }
 
     private void OnMouseExit()

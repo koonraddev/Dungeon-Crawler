@@ -2541,6 +2541,7 @@ RectTransform:
   - {fileID: 1643871868}
   - {fileID: 1983934916}
   - {fileID: 1765518700}
+  - {fileID: 1378976895}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7732,10 +7733,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d777709e973806498f0c75a34db74a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transparentColor: {r: 0, g: 0, b: 0, a: 0}
   consoleText: {fileID: 1582274695}
   scrollbar: {fileID: 1472598165}
   fadingDelay: 5
+  fadingTime: 1
+  objectsToFade:
+  - {fileID: 1582274695}
+  - {fileID: 1540792148}
+  - {fileID: 1061470994}
 --- !u!114 &788024045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10943,10 +10948,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b864e1257fc074ea8968a3729f9872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPool: {fileID: 5347492777929255689, guid: 3e9937514d55c6f44a47e281a67ae14c, type: 3}
-  amountToPool: 5
-  canAddObjects: 1
-  followMouse: 0
+  poolPanel: {fileID: 1378976894}
+  popupPrefabsList:
+  - {fileID: 2011953456567667784, guid: 3a26ccabcc2dcda4783f7a83ebfa0450, type: 3}
+  - {fileID: 2353047721081856444, guid: 14db6c6a7ae55034a88ff4f716188613, type: 3}
+  - {fileID: 3060958180296873372, guid: 12fefe9c8906f634185650f66abc2183, type: 3}
+  - {fileID: 2059323901371122652, guid: f5ed21da9dd9ff74fbcb03ae4c48c407, type: 3}
+  - {fileID: 3929903935146416190, guid: 57c52b03bdd9597488077f27788b13bf, type: 3}
 --- !u!4 &1059573890
 Transform:
   m_ObjectHideFlags: 0
@@ -14944,6 +14952,42 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3246232665796044260, guid: e2daf9b371fd0bb4fa0d4fefad648fb3, type: 3}
   m_PrefabInstance: {fileID: 1377088124}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1378976894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378976895}
+  m_Layer: 5
+  m_Name: PopupPoolPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1378976895
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378976894}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 231731582}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1394589764 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1529059331186314279, guid: 5af750f5057734447aa7985b57701550, type: 3}
@@ -15128,7 +15172,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
+  m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1414959465
 MonoBehaviour:
@@ -19285,7 +19329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9d820313e44ca0f48b4737aa838ff0b5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4600ac657bbd9cc44bc79122b9e7f464, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

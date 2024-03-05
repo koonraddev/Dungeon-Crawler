@@ -6,13 +6,21 @@ using UnityEngine;
 public class Teleport : MonoBehaviour, IInteractiveObject
 {
     [SerializeField] Color highLightColor;
-    private Dictionary<string, string> contentToDisplay;
     private int interactionDistance = 3;
     private bool activated = false;
     public GameObject GameObject => gameObject;
     public int InteractionDistance => interactionDistance;
 
-    public Dictionary<string, string> ContentToDisplay => contentToDisplay;
+    ObjectContent objectContent;
+    public ObjectContent ContentDoDisplay => objectContent;
+
+    private void Awake()
+    {
+        objectContent = new(gameObject);
+        objectContent.Nametext = "Teleport";
+        objectContent.Description = "Teleport to the next floor";
+        objectContent.Message = "Teleport is unactive. Defeat Dungeon Boss.";
+    }
 
     private void OnEnable()
     {
@@ -38,21 +46,18 @@ public class Teleport : MonoBehaviour, IInteractiveObject
         }
         else
         {
-            SetContentToDisplay(new Dictionary<string, string> { { "Message", "Teleport is unactive. Defeat Dungeon Boss."} });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
+            UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.INFORMATION);
         }
     }
 
     public void ObjectInteraction(GameObject interactingObject = null)
     {
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", "Teleport" }, { "Description", "Teleport to another level of dungeon."} });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
+        UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.OPEN);
     }
 
     private void OnMouseEnter()
     {
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", "Teleport" } });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+        UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.NAME);
     }
 
     private void OnMouseExit()
@@ -60,13 +65,4 @@ public class Teleport : MonoBehaviour, IInteractiveObject
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
-    private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
-    {
-        contentToDisplay = new Dictionary<string, string>();
-
-        foreach (KeyValuePair<string, string> li in contentDictionary)
-        {
-            contentToDisplay.Add(li.Key, li.Value);
-        }
-    }
 }

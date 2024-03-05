@@ -7,11 +7,12 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
 {
     private InventorySlotPanel invSlotPanel;
     public InventorySlotPanel RequestingSlot { get => invSlotPanel; }
-    private Dictionary<string, string> contentToDisplay;
     [SerializeField] private GameObject dropObjectPrefab;
     private GameObject playerObject;
+    public GameObject GameObject => playerObject;
 
-    public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
+    ObjectContent objectContent;
+    public ObjectContent ContentDoDisplay => objectContent;
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
@@ -19,18 +20,13 @@ public class InventoryDropSlot : MonoBehaviour, IDropHandler, ISpecialInventoryP
             invSlotPanel = eventData.pointerDrag.GetComponent<InventorySlotPanel>();
             if (invSlotPanel != null)
             {
-                SetContentToDisplay(new Dictionary<string, string> { { "Message", (invSlotPanel.SlotNumber + 1).ToString() } });
-                UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.DROP);
-            }
-        }
-    }
 
-    private void SetContentToDisplay(Dictionary<string, string> contentDictionary)
-    {
-        contentToDisplay = new Dictionary<string, string> { };
-        foreach (KeyValuePair<string, string> li in contentDictionary)
-        {
-            contentToDisplay.Add(li.Key, li.Value);
+                objectContent = new(gameObject);
+                objectContent.Nametext = invSlotPanel.InvSlot.Item.Name;
+                objectContent.Description = invSlotPanel.InvSlot.Amount.ToString();
+                objectContent.YesButtonDelegate = DoSpecialIntercation;
+                UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.DROP);
+            }
         }
     }
 

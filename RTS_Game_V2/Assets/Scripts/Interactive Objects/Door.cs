@@ -21,13 +21,15 @@ public class Door : MonoBehaviour, IInteractiveObject
     public Dictionary<string, string> ContentToDisplay { get => contentToDisplay; }
     public bool KeyRequired { get => keyRequired; }
 
+    ObjectContent objectContent;
+    public ObjectContent ContentDoDisplay => objectContent;
+
     public void ObjectInteraction(GameObject interactingObject)
     {
         this.interactingObject = interactingObject;
         if (keyRequired)
         {
-            SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText }, { "Description", doorSO.Description } });
-            UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.OPEN);
+            UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.OPEN);
         }
         else
         {
@@ -53,8 +55,7 @@ public class Door : MonoBehaviour, IInteractiveObject
             }
             else
             {
-                SetContentToDisplay(new Dictionary<string, string> { { "Message", "You need: " + keyItem.Name } });
-                UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.INFORMATION);
+                UIMessageObjectPool.instance.DisplayMessage(objectContent,PopupType.INFORMATION);
             }
         }
         else
@@ -92,8 +93,7 @@ public class Door : MonoBehaviour, IInteractiveObject
     {
         roomTeleport.ActiveParticles(!keyRequired);
 
-        SetContentToDisplay(new Dictionary<string, string> { { "Name", doorSO.NameText } });
-        UIMessageObjectPool.instance.DisplayMessage(this, UIMessageObjectPool.MessageType.POPUP);
+        UIMessageObjectPool.instance.DisplayMessage(objectContent,PopupType.NAME);
 
     }
 
@@ -103,27 +103,19 @@ public class Door : MonoBehaviour, IInteractiveObject
         GameEvents.instance.CloseMessage(gameObject.GetInstanceID());
     }
 
-    private  void SetContentToDisplay(Dictionary<string, string> contentDictionary)
-    {
-        contentToDisplay = new Dictionary<string, string> { };
-
-        foreach (KeyValuePair<string, string> li in contentDictionary)
-        {
-            contentToDisplay.Add(li.Key, li.Value);
-        }
-    }
-
 
     public void SetDoor(DoorSO newDoor)
     {
         if (newDoor != null)
         {
+            objectContent = new(gameObject);
             doorSO = newDoor;
             if (doorSO.keyRequired != null)
             {
                 keyItem = new(doorSO.keyRequired);
                 destroyItemOnUse = !keyItem.MultipleUse;
                 keyRequired = true;
+                objectContent.Message = "You need: " + keyItem.Name;
             }
             else
             {
@@ -131,6 +123,10 @@ public class Door : MonoBehaviour, IInteractiveObject
             }
             roomTeleport.ActiveTeleport(!keyRequired);
             MapManager.instance.AddPortal(this.gameObject);
+
+            objectContent.Nametext = doorSO.NameText;
+            objectContent.Description = doorSO.Description;
+            objectContent.YesButtonDelegate = DoInteraction;
         }
     }
 }
