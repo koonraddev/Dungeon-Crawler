@@ -63,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.K))
             {
-                Die();
+                Damage("instant kill", 9999, 9999, 9999);
             }
         }
     }

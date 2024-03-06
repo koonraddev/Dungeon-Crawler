@@ -9,7 +9,8 @@ using UnityEngine.UI;
 
 public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image buffImage;
+    [SerializeField] private Image buffImage, backgroundImage;
+    [SerializeField] private Color buffColor, debuffColor;
     private RectTransform rectTrans;
     private float timeLeft;
     private StatisticType statType;
@@ -82,12 +83,12 @@ public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         if (statValue > 0)
         {
-            buffImage.color = Color.green;
+            backgroundImage.color = buffColor;
 
         }
         else
         {
-            buffImage.color = Color.red;
+            backgroundImage.color = debuffColor;
         }
     }
 
