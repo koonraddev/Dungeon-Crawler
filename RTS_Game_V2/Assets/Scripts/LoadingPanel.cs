@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class LoadingPanel : MonoBehaviour
 {
@@ -14,12 +15,12 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnRestartFloor += SetRestartingInfo;
         GameEvents.instance.OnLoadLevel += SetLoadingInfo;
         GameEvents.instance.OnLoadGameScene += SetLoadingInfo;
-        GameEvents.instance.OnGameOver += SetGameOverInfo;
+        GameEvents.instance.OnExitToMenu += SetLoadingMenuInfo;
     }
 
-    private void SetGameOverInfo()
+    private void SetLoadingMenuInfo()
     {
-        tmpText.text = "";
+        tmpText.text = "Loading Menu";
         loadingComplete = false;
     }
 
@@ -55,6 +56,7 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnRestartFloor -= SetRestartingInfo;
         GameEvents.instance.OnLoadLevel -= SetLoadingInfo;
         GameEvents.instance.OnLoadGameScene -= SetLoadingInfo;
+        GameEvents.instance.OnExitToMenu -= SetLoadingMenuInfo;
     }
 
 }

@@ -34,7 +34,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMenuScene()
     {
-        Debug.Log("LOAD MENU");
         StartCoroutine(LoadYourAsyncScene(0));
     }
 

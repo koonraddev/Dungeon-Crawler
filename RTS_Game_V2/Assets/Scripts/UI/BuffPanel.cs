@@ -1,28 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using TMPro;
 using UnityEngine.UI;
-
 
 
 public class BuffPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image buffImage, backgroundImage;
     [SerializeField] private Color buffColor, debuffColor;
-    private RectTransform rectTrans;
     private float timeLeft;
     private StatisticType statType;
     private float statValue;
 
     [SerializeField] private GameObject infoObject;
     private BuffPopup buffPopup;
-    private void Awake()
-    {
-        rectTrans = gameObject.GetComponent<RectTransform>();
-
-    }
 
     private void OnEnable()
     {

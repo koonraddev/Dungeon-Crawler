@@ -37,12 +37,19 @@ public class EnemyAnimation : MonoBehaviour
         {
             animator.SetBool(performDeathAnimation, false);
         }
+
         if (!animator.IsInTransition(2))
         {
-            if (animator.GetCurrentAnimatorStateInfo(2).IsName("New State"))
-            {
-                enemyMovement.blockMovement = false;
-            }
+
+        }
+
+        if (animator.GetCurrentAnimatorStateInfo(1).IsName("New State"))
+        {
+            enemyMovement.blockMovement = false;
+        }
+        else
+        {
+            enemyMovement.blockMovement = true;
         }
 
 

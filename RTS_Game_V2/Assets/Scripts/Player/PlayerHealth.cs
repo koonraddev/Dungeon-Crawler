@@ -32,10 +32,10 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
-        GameEvents.instance.OnStartLevel += OnStartLevel;
+        GameEvents.instance.OnLoadedPlayerData += OnplayerDataLoaded;
     }
 
-    private void OnStartLevel()
+    private void OnplayerDataLoaded()
     {
         health = BuffManager.instance.LoadedPlayerHP;
         physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
@@ -158,6 +158,6 @@ public class PlayerHealth : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.instance.OnStatisticUpdate -= UpdateStats;
-        GameEvents.instance.OnStartLevel -= OnStartLevel;
+        GameEvents.instance.OnLoadedPlayerData -= OnplayerDataLoaded;
     }
 }

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8719e15f1431b1e42986c45e85bae515, type: 3}
+  m_Name: EmptyRoom 2
+  m_EditorClassIdentifier: 
+  roomPlane: {fileID: 9196992797379739296, guid: 5424fb1c741da9d438dc4291dd300c3c, type: 3}
+  doorsList:
+  - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}
+  maxDoorsInWall: 1

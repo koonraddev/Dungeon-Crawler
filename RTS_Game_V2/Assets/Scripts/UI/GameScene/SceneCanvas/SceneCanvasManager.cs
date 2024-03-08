@@ -27,7 +27,7 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnStartLevel += StartingLevel;
         GameEvents.instance.OnExitToMenu += QuitingToMenu;
         GameEvents.instance.OnLoadGameScene += LoadingDungeonScene;
-        GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
+        //GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
     }
 
     private void WaitAndFadeInFadeOut()
