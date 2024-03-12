@@ -31,11 +31,16 @@ public class MapManager : MonoBehaviour
         mapPanel.ActiveRoomMark(roomObject);
     }
 
-    public void AddPortal(GameObject portalObject)
+    public void AddPortal(GameObject portalObject, bool forceShowPortal = false)
     {
-        if (portalObject.TryGetComponent(out Door portal))
+        if (portalObject.TryGetComponent(out Portal portal))
         {
             mapPanel.CreatePortalMark(portalObject, portal.KeyRequired);
+
+            if (forceShowPortal)
+            {
+                ShowPortal(portalObject);
+            }
         }
     }
     

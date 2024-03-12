@@ -8,14 +8,11 @@ public class EmptyRoomSO : RoomSO
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
     [Header("Door section")]
-    [SerializeField] private List<DoorSO> doorsList;
-    [SerializeField] private int maxDoorsInWall;
+    [SerializeField] private PortalSO portalSO;
 
-    public override int MaxDoorsInWall => maxDoorsInWall;
+    public override PortalSO Portal => portalSO;
 
-    public override List<DoorSO> RoomDoors => doorsList;
-
-    public override GameObject RoomPlane => roomPlane;
+    public override GameObject Plane => roomPlane;
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {

@@ -8,13 +8,10 @@ public class BossRoomSO : RoomSO
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
     [SerializeField] private EnemyConfigurationSO bossObject;
-    private int maxDoorsInWall = 0;
 
-    public override int MaxDoorsInWall => maxDoorsInWall;
+    public override PortalSO Portal { get; }
 
-    public override List<DoorSO> RoomDoors => new();
-
-    public override GameObject RoomPlane => roomPlane;
+    public override GameObject Plane => roomPlane;
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {

@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: FightRoom1
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 8458352657817854334, guid: ff1dbf28f0568c04ca5b28c36b8b5458, type: 3}
-  doorsList:
-  - {fileID: 11400000, guid: b43c1e99ff9932249ac4fa0da06fcbd7, type: 2}
-  - {fileID: 11400000, guid: 89b17b2f0b90f8a44ac4c8f12750d47f, type: 2}
-  maxDoorsInWall: 2
+  portalSO: {fileID: 11400000, guid: 409400cedd32a7942819eea0005c769a, type: 2}
   enemySpawnerObject: {fileID: 5816622439559371117, guid: 816921484448a034bb8f9ca906d2b32f, type: 3}
   enemySpawnerConfigurationSO: {fileID: 11400000, guid: 400b3017bd748424e99193a722597feb, type: 2}

@@ -9,8 +9,7 @@ public class ChestRoomSO : RoomSO
     [Header("Room section")]
     [SerializeField] private GameObject roomPlane;
     [Header("Door section")]
-    [SerializeField] private List<DoorSO> doorsList;
-    [SerializeField] private int maxDoorsInWall;
+    [SerializeField] private PortalSO teleportSO;
     [Header("Chest section")]
     [SerializeField] private List<ChestSO> chestList;
     [SerializeField] private GameObject chestPrefab;
@@ -21,11 +20,10 @@ public class ChestRoomSO : RoomSO
     private float spawnPlaneSizeZ;
     private Vector3 planePos;
 
-    public override int MaxDoorsInWall => maxDoorsInWall;
 
-    public override List<DoorSO> RoomDoors => doorsList;
+    public override PortalSO Portal => teleportSO;
 
-    public override GameObject RoomPlane => roomPlane;
+    public override GameObject Plane => roomPlane;
 
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)

@@ -39,11 +39,11 @@ public class FrameLimiter : MonoBehaviour
     {
         if (limiterToggle.isOn)
         {
-            limiterInputField.gameObject.SetActive(true);
+            limiterInputField.enabled = true;
         }
         else
         {
-            limiterInputField.gameObject.SetActive(false);
+            limiterInputField.enabled = false;
         }
     }
 

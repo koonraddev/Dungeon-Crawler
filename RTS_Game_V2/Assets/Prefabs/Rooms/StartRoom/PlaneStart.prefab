@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 8023127602856915536}
   - component: {fileID: 8023127602856915551}
   - component: {fileID: 5748200996399932716}
+  - component: {fileID: -5629870363339822156}
   m_Layer: 7
   m_Name: PlaneStart
   m_TagString: RoomPlane
@@ -517,7 +518,20 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.1
+  m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: c85c8b374fbbec148babc7925099914f, type: 2}
   m_BuildHeightMesh: 0
+--- !u!65 &-5629870363339822156
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8023127602856915550}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.8, y: 0.5, z: 9.8}
+  m_Center: {x: 0, y: 0, z: 0}

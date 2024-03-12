@@ -3,17 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody),typeof(BoxCollider))]
-public class SpawnPoint : MonoBehaviour
+public partial class SpawnPoint : MonoBehaviour
 {
-    //public Renderer render;
-    public enum SpawnType
-    {
-        NORTH,
-        EAST,
-        SOUTH,
-        WEST,
-    }
-
     public enum SpawnerStatus
     {
         UNCHECKED,
@@ -71,22 +62,12 @@ public class SpawnPoint : MonoBehaviour
         if(spawnStatus == SpawnerStatus.ENABLED)
         {
             RoomSO newRoomSO = RoomsGenerator.instance.GetRoom();
-            GameObject newRoom = Instantiate(newRoomSO.RoomPlane, gameObject.transform.position, Quaternion.identity);
+            GameObject newRoom = Instantiate(newRoomSO.Plane, gameObject.transform.position, Quaternion.identity);
             GameController.AddRoom(newRoom);
             newRoom.SetActive(false);
             Room roomScript = newRoom.AddComponent(typeof(Room)) as Room;
-            if (isStartSpawnPoint)
-            {
-                roomScript.SetEssentials(newRoomSO);
-            }
-            else
-            {
-                if (RoomsGenerator.instance.RoomsLeft == 0)
-                {
-                    roomScript.SetEssentials(newRoomSO, SpawnerType, true);
-                }
-                roomScript.SetEssentials(newRoomSO, SpawnerType);
-            }
+            roomScript.SetEssentials(newRoomSO, SpawnerType);
+            
             newRoom.SetActive(true);
             return true;
         }

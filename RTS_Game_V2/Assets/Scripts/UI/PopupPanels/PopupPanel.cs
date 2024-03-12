@@ -28,13 +28,14 @@ public abstract class PopupPanel : MonoBehaviour
     }
     public virtual void PrepareMessageMenu(ObjectContent popup)
     {
-        if(popup.GameObjectReq == null)
+        objectReq = popup.GameObjectReq;
+        if (objectReq == null)
         {
             gameObject.SetActive(false);
         }
 
-        objectReq = popup.GameObjectReq;
-        if(MessageType == PopupType.NAME)
+
+        if (MessageType == PopupType.NAME)
         {
             objectReqPosition = objectReq.transform.position;
             relativeOffset = new(0f, panelRect.sizeDelta.y, 0f);
@@ -58,6 +59,12 @@ public abstract class PopupPanel : MonoBehaviour
 
     private void Update()
     {
+        if (objectReq == null || !objectReq.activeInHierarchy)
+        {
+            gameObject.SetActive(false);
+        }
+
+
         if (relativePosition)
         {
             Vector3 pos = Camera.main.WorldToScreenPoint(objectReqPosition) + diff + relativeOffset;
@@ -71,6 +78,7 @@ public abstract class PopupPanel : MonoBehaviour
         {
             gameObject.transform.localPosition = Vector3.zero;
         }
+
     }
 
     private void DeactivateMessageMenu(int id)

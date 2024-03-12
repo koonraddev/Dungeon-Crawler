@@ -961,6 +961,7 @@ GameObject:
   - component: {fileID: 8458352657817854335}
   - component: {fileID: 6192533873644729868}
   - component: {fileID: 1070830857110413303}
+  - component: {fileID: 7069388555700145034}
   m_Layer: 7
   m_Name: PlaneFight 2
   m_TagString: RoomPlane
@@ -1076,7 +1077,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.1
+  m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: c18e69a4ee5ea0e4493aefcfc250725d, type: 2}
   m_BuildHeightMesh: 0
@@ -1110,6 +1111,19 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 6f106f4b63f3d094fbf42a7b0880da00, type: 2}
   m_BuildHeightMesh: 0
+--- !u!65 &7069388555700145034
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458352657817854334}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.8, y: 0.5, z: 9.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9102155734184704238
 GameObject:
   m_ObjectHideFlags: 0

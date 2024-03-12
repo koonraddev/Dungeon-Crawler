@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: EmptyRoom1
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 877072862004571133, guid: caccf09c7e94d114a8b7c4c004892ee2, type: 3}
-  doorsList:
-  - {fileID: 11400000, guid: 0fe522df525b79a4bab11560505c6544, type: 2}
-  maxDoorsInWall: 1
+  portalSO: {fileID: 11400000, guid: 409400cedd32a7942819eea0005c769a, type: 2}
