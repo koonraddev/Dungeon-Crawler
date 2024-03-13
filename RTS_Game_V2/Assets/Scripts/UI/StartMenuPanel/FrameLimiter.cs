@@ -39,11 +39,11 @@ public class FrameLimiter : MonoBehaviour
     {
         if (limiterToggle.isOn)
         {
-            limiterInputField.enabled = true;
+            limiterInputField.interactable = true;
         }
         else
         {
-            limiterInputField.enabled = false;
+            limiterInputField.interactable = false;
         }
     }
 

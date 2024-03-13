@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if(item.EnemyPrefab.TryGetComponent(out Enemy enemy))
             {
-                GameObject newEnemy = Instantiate(item.EnemyPrefab,parentRoom.transform.position,Quaternion.identity);
+                GameObject newEnemy = Instantiate(item.EnemyPrefab, transform.position,Quaternion.identity);
                 newEnemy.transform.SetParent(parentRoom.transform);
                 newEnemy.SetActive(false);
                 enemy = newEnemy.GetComponent<Enemy>();

@@ -9,7 +9,7 @@ public class RoomTeleport : MonoBehaviour
     [SerializeField] private List<GameObject> particles;
     [SerializeField] private List<Light> lights;
     [SerializeField] private float activePortalValue, unactivePortalValue, activePortalLightIntensity, unactivePortalLightIntensity;
-    [SerializeField] private Color activePortalColor, unactivePortalColor;
+    [SerializeField] [ColorUsage(true,true)] private Color activePortalColor, unactivePortalColor;
 
 
     private void Start()
@@ -19,25 +19,24 @@ public class RoomTeleport : MonoBehaviour
     }
     public void ActiveTeleport(bool active)
     {
-        float newValue = active ? activePortalValue : unactivePortalValue;
+        //float newValue = active ? activePortalValue : unactivePortalValue;
         float newIntensity = active ? activePortalLightIntensity : unactivePortalLightIntensity;
         Color newColor = active ? activePortalColor : unactivePortalColor;
+
+        Sequence seq = DOTween.Sequence();
         foreach (var item in portals)
         {
-            Sequence seq = DOTween.Sequence()
-                .Append(item.material.DOFloat(newValue, "_Power", 2f))
-                .Join(item.material.DOColor(newColor, "_Color", 2f));
-            seq.Play();
-        }
+            seq.Join(item.material.DOColor(newColor, "_Color", 2f));
 
+        }
+        seq.Play();
+
+        Sequence seq2 = DOTween.Sequence();
         foreach (var item in lights)
         {
-            Sequence seq = DOTween.Sequence()
-                .Append(item.DOColor(newColor, 2f))
-                .Join(item.DOIntensity(newIntensity, 2f));
-
-            seq.Play();
+            seq2.Join(item.DOIntensity(newIntensity, 2f));
         }
+        seq2.Play();
     }
 
     public void ActiveParticles(bool active)

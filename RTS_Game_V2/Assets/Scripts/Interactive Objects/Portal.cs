@@ -87,15 +87,15 @@ public class Portal : MonoBehaviour, IInteractiveObject
     }
 
 
-    public void SetDoor(PortalSO newDoor, SpawnType teleportSide, bool forceUnlock = false, bool forceShow = false)
+    public void SetDoor(PortalSO newPortalSO, SpawnType teleportSide, bool forceUnlock = false, bool forceShow = false)
     {
         portalLogic = new(gameObject.transform.parent.gameObject);
         doorTrigger.teleportSide = teleportSide;
         doorTrigger.teleportLogic = portalLogic;
-        if (newDoor != null)
+        if (newPortalSO != null)
         {
             objectContent = new(gameObject);
-            portalSO = newDoor;
+            portalSO = newPortalSO;
             if (portalSO.keyRequired != null)
             {
                 keyItem = new(portalSO.keyRequired);

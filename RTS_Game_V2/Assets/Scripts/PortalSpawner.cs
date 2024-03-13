@@ -99,7 +99,7 @@ public class PortalSpawner : MonoBehaviour
         pointDz = pointD + new Vector3(0f, 0f, colliderSize.x);
 
 
-        if (gameObject.TryGetComponent(out RoomPortalPlaces portalSpots))
+        if (gameObject.TryGetComponent(out RoomPortalSpots portalSpots))
         {
 
             foreach (var item in portalsDict)

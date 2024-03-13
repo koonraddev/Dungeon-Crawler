@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FightRoom2
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 8458352657817854334, guid: 575532d2c63090b49b837f7fa669e97e, type: 3}
-  portalSO: {fileID: 11400000, guid: 409400cedd32a7942819eea0005c769a, type: 2}
-  enemySpawnerObject: {fileID: 5816622439559371117, guid: 816921484448a034bb8f9ca906d2b32f, type: 3}
-  enemySpawnerConfigurationSO: {fileID: 11400000, guid: 400b3017bd748424e99193a722597feb, type: 2}
+  portalSO: {fileID: 11400000, guid: e1c45fd1a28fe8045aa5edd99dbd26df, type: 2}
+  enemySpawnerObject: {fileID: 0}
+  spawnerConfigsList:
+  - {fileID: 11400000, guid: 400b3017bd748424e99193a722597feb, type: 2}

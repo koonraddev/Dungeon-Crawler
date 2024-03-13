@@ -13,7 +13,7 @@ public class PortalSpot
     public Transform SpotTransform { get => spotTransform; }
     public SpawnType SpotCategory { get => spotCategory; }
 }
-public class RoomPortalPlaces : MonoBehaviour
+public class RoomPortalSpots : MonoBehaviour
 {
     [SerializeField] private List<PortalSpot> portalSpots;
 
