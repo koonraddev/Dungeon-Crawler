@@ -44,7 +44,6 @@ public class PlayerObjectInteraction : MonoBehaviour
             if (!EventSystem.current.IsPointerOverGameObject())
             {
                 pointedObject = hitPoint.transform.gameObject;
-
                 if (moveInspectAction.triggered)
                 {
                     if (pointedObject.TryGetComponent(out IInteractiveObject pointedScript))

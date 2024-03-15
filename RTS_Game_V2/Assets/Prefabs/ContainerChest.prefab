@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5648999909880280093}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ContainerChest
   m_TagString: Chest
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5769547033123186937, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -5769547033123186937, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
       propertyPath: m_TagString
@@ -97,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
       propertyPath: m_TagString
@@ -105,7 +105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4516006058645951135, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5812751415925158072, guid: afb0c1499fe9b3543b2ff9a4432caac4, type: 3}
       propertyPath: m_LocalRotation.w

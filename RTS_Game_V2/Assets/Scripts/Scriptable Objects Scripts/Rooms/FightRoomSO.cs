@@ -27,12 +27,11 @@ public class FightRoomSO : RoomSO
             return;
         }
 
-        if (roomGameObject.TryGetComponent(out RoomSpawnerSpots roomSpawnerSpots))
+        if (roomGameObject.TryGetComponent(out RoomSpawnSpots roomSpawnerSpots))
         {
-            Debug.Log("jest room spwner spots");
-            if(roomSpawnerSpots.SpawnerSpots.Count > 0)
+            if(roomSpawnerSpots.SpawnSpots.Count > 0)
             {
-                InstantiateSpawnersInSpots(roomGameObject, roomSpawnerSpots.SpawnerSpots);
+                InstantiateSpawnersInSpots(roomGameObject, roomSpawnerSpots.SpawnSpots);
             }
             else
             {
@@ -47,7 +46,6 @@ public class FightRoomSO : RoomSO
 
     private void InstantiateSpawnersInSpots(GameObject room, List<Transform> spots)
     {
-        Debug.Log("sa spoty");
         int min = (int)MathF.Min(spawnerConfigsList.Count, spots.Count);
 
         for (int i = 0; i < min; i++)
@@ -61,21 +59,16 @@ public class FightRoomSO : RoomSO
 
     private void InstantiateRandomSpawnerInCenter(GameObject room)
     {
-        Debug.Log("brak spotow");
         EnemySpawnerConfigurationSO spawnerConfig = spawnerConfigsList.OrderBy(spot => Guid.NewGuid()).Single();
         InstantiateSpawner(room, room.transform, spawnerConfig);
     }
 
     private void InstantiateSpawner(GameObject room, Transform spot, EnemySpawnerConfigurationSO spawnerConfig)
     {
-        Debug.Log("tworze");
         GameObject spawnerObject = new("Spawner", typeof(EnemySpawner));
         EnemySpawner spawner = spawnerObject.GetComponent<EnemySpawner>();
-        //spawnerObject.SetActive(false);
         spawnerObject.transform.SetPositionAndRotation(spot.position, spot.rotation);
         spawnerObject.transform.SetParent(spot);
-
         spawner.SetSpawner(spawnerConfig, room);
-        //spawnerObject.SetActive(true);
     }
 }

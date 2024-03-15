@@ -12,6 +12,18 @@ public class PlayerMovement : MonoBehaviour
     private PlayerControls playerControls;
     private InputAction moveInspectAction;
 
+    public Vector3 CurrentDestination
+    {
+        get
+        {
+            if(playerAgent != null)
+            {
+                return playerAgent.destination;
+            }
+            return Vector3.zero;
+        }
+    }
+
     private float movementSpeed;
     private bool blockMovement = false;
     public bool blocked;
