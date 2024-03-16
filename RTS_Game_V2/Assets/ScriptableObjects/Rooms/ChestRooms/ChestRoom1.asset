@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad6c2c867ec8b04abef599ee1a1345c, type: 3}
   m_Name: ChestRoom1
   m_EditorClassIdentifier: 
-  roomPlane: {fileID: 8696219440333952196, guid: 858f6e7235f665940b91078e18f0ab49, type: 3}
+  roomPlane: {fileID: 8696219440333952196, guid: b5ba86116b55582468889033d30fa6c7, type: 3}
   teleportSO: {fileID: 11400000, guid: 409400cedd32a7942819eea0005c769a, type: 2}
   chestList:
   - {fileID: 11400000, guid: 808dc1b6a65bfb34faffa2a3105eec79, type: 2}
