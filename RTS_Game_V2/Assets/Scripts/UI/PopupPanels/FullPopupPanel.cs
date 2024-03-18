@@ -14,7 +14,8 @@ public class FullPopupPanel : PopupPanel
     {
         DROP = PopupType.DROP,
         TAKE = PopupType.TAKE,
-        OPEN = PopupType.OPEN
+        OPEN = PopupType.OPEN,
+        USE = PopupType.USE
     }
 
     public override PopupType MessageType { get => (PopupType)popupType; }
@@ -39,6 +40,9 @@ public class FullPopupPanel : PopupPanel
                     break;
             case FullPopupType.DROP:
                 messageHolder.text = "Drop ?";
+                break;
+            case FullPopupType.USE:
+                messageHolder.text = "Use ?";
                 break;
             default:
                 gameObject.SetActive(false);

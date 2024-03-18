@@ -20,6 +20,7 @@ public class Teleport : MonoBehaviour, IInteractiveObject
         objectContent.Nametext = "Teleport";
         objectContent.Description = "Teleport to the next floor";
         objectContent.Message = "Teleport is unactive. Defeat Dungeon Boss.";
+        objectContent.YesButtonDelegate += DoInteraction;
     }
 
     private void OnEnable()
@@ -51,7 +52,7 @@ public class Teleport : MonoBehaviour, IInteractiveObject
 
     public void ObjectInteraction(GameObject interactingObject = null)
     {
-        UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.OPEN);
+        UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.USE);
     }
 
     private void OnMouseEnter()

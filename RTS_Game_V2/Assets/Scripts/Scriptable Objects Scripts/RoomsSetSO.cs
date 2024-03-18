@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newRoomsSet", menuName = "Scriptable Objects/Room/Rooms Set")]
 public class RoomsSetSO : ScriptableObject
 {
-    [SerializeField] private RoomSO startRoom;
-    [SerializeField] private RoomSO bossRoom;
+    [SerializeField] private StartRoomSO startRoom;
+    [SerializeField] private BossRoomSO bossRoom;
     [SerializeField] private List<RoomSO> roomsList;
     public RoomSO StartRoom { get => startRoom; }
     public RoomSO BossRoom { get => bossRoom; }

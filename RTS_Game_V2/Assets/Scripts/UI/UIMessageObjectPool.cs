@@ -24,7 +24,8 @@ public enum PopupType
     TAKE,
     OPEN,
     DELETE,
-    DROP
+    DROP,
+    USE
 }
 
 public class UIMessageObjectPool : MonoBehaviour
