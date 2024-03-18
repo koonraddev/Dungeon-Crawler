@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c84d7c70c54e2547a8309cc73fb7e58, type: 3}
   m_Name: BossRoom 2
   m_EditorClassIdentifier: 
-  roomPlane: {fileID: 6649246559777706992, guid: 7971ced3de1514c41ac7ee4cf5b27bd7, type: 3}
+  roomPlane: {fileID: 6649246559777706992, guid: ff0c22183dc02bb489f7ad8dc32a90d2, type: 3}
   bossObject: {fileID: 11400000, guid: d8cb453ef8d41b04a9d5e018ca1a1e7d, type: 2}
-  doorsList: []
