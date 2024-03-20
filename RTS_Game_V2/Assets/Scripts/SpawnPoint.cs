@@ -5,13 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody),typeof(BoxCollider))]
 public partial class SpawnPoint : MonoBehaviour
 {
-    public enum SpawnerStatus
-    {
-        UNCHECKED,
-        BLOCKED,
-        EMPTY,
-        ENABLED
-    }
 
     [SerializeField] private BoxCollider coll;
     [SerializeField] private Rigidbody rb;

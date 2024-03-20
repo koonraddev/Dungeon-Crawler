@@ -1,14 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum GameStatus
-{
-    START,
-    ON,
-    PREPARING,
-    PAUSED,
-    GAMEOVER
-}
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject startSpawnPoint;

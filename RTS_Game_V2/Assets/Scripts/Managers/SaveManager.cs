@@ -10,18 +10,11 @@ public class PlayerData
     public Equipment equipment;
     public Inventory inventory;
     public List<Buff> activeBuffsList;
-    //public PlayerBasicStatistics playerBasicStatistics;
     public StatisticsSet playerBasicStatistics;
     public float playerHP;
     public string characterName;
     public int levelCompleted;
     public string dateTime;
-}
-
-[System.Serializable]
-public class GameData
-{
-
 }
 
 
