@@ -16,6 +16,11 @@ public class PlayerEquipment : MonoBehaviour
         GameEvents.instance.OnEnemyClick += ActiveWeapon;
     }
 
+    private void Start()
+    {
+        UpdatePlayerWeaponPrefab();
+    }
+
     private void ActiveWeapon(Enemy enemy)
     {
         enemyInCombat = enemy;
@@ -87,26 +92,31 @@ public class PlayerEquipment : MonoBehaviour
             weaponPrefab = eqRightHandSlot.Item.WeaponPrefab;
         }
 
-        if (instantiatedWeapon != null && !instantiatedWeapon.Equals(weaponPrefab))
-        {
-            Destroy(instantiatedWeapon);
-            return;
-        }
-
         if (spawnPlace != null)
         {
-            //if(weaponPrefab != null)
-            //{
-            //    return;
-            //}
-            instantiatedWeapon = Instantiate(weaponPrefab, spawnPlace);
-            ActiveWeapon(enemyInCombat);
-            return;
+            if (instantiatedWeapon != null)
+            {
+                Destroy(instantiatedWeapon);
+            }
+
+            if (weaponPrefab != null)
+            {
+                instantiatedWeapon = Instantiate(weaponPrefab, spawnPlace);
+                ActiveWeapon(enemyInCombat);
+            }     
+        }
+        else
+        {
+            if (instantiatedWeapon != null)
+            {
+                Destroy(instantiatedWeapon);
+            }
         }
     }
 
     private void OnDisable()
     {
         GameEvents.instance.OnEquipmentUpdate -= UpdatePlayerWeaponPrefab;
+        GameEvents.instance.OnEnemyClick -= ActiveWeapon;
     }
 }

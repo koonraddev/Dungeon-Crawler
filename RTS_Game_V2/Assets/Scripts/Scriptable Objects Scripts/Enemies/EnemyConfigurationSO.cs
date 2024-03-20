@@ -89,8 +89,7 @@ public class EnemyConfigurationSO : ScriptableObject
                 enemyConfigSO.projectilePrefab = (GameObject)EditorGUILayout.ObjectField("Projectile Prefab", enemyConfigSO.projectilePrefab, typeof(GameObject), true);
             }
 
-            serializedObject.ApplyModifiedProperties();
-            serializedObject.Update();
+            EditorUtility.SetDirty(enemyConfigSO);
         }
     }
 #endif

@@ -34,17 +34,25 @@ public static class StatisticalUtility
         closestPoint = Vector3.zero;
         if (requestingObject == null || targetObject == null) return false;
 
-        Vector3 target = targetObject.transform.position;
+        Vector3 startPoint = requestingObject.transform.position;
+        Vector3 targetPoint = targetObject.transform.position;
 
         if (colliderIsTarget)
         {
-            Collider col = targetObject.GetComponent<Collider>();
-            if (col != null) target = col.ClosestPoint(targetObject.transform.position);
+            if (requestingObject.TryGetComponent(out Collider requestColl))
+            {
+                startPoint = requestColl.ClosestPoint(targetObject.transform.position);
+            }
+
+            if (targetObject.TryGetComponent(out Collider targetColl))
+            {
+                targetPoint = targetColl.ClosestPoint(requestingObject.transform.position);
+            }
         }
 
-        float distToTarget = Vector3.Distance(requestingObject.transform.position, target);
+        float distToTarget = Vector3.Distance(startPoint, targetPoint);
         Vector3 dirToTarget = (targetObject.transform.position - requestingObject.transform.position).normalized;
-        float distToMove = distToTarget - rangeToCheck + 0.01f;
+        float distToMove = distToTarget - rangeToCheck + 0.05f;
         closestPoint = requestingObject.transform.position + dirToTarget * distToMove;
 
         return distToTarget <= rangeToCheck;
@@ -54,15 +62,23 @@ public static class StatisticalUtility
     {
         if (requestingObject == null || targetObject == null) return false;
 
-        Vector3 target = targetObject.transform.position;
+        Vector3 startPoint = requestingObject.transform.position;
+        Vector3 targetPoint = targetObject.transform.position;
 
         if (colliderIsTarget)
         {
-            Collider col = targetObject.GetComponent<Collider>();
-            if (col != null) target = col.ClosestPoint(targetObject.transform.position);
+            if (requestingObject.TryGetComponent(out Collider requestColl))
+            {
+                startPoint = requestColl.ClosestPoint(targetObject.transform.position);
+            }
+
+            if (targetObject.TryGetComponent(out Collider targetColl))
+            {
+                targetPoint = targetColl.ClosestPoint(requestingObject.transform.position);
+            }
         }
 
-        float distToTarget = Vector3.Distance(requestingObject.transform.position, target);
+        float distToTarget = Vector3.Distance(startPoint, targetPoint);
         return distToTarget <= rangeToCheck;
     }
 

@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
         return totalDamage;
     }
 
-    protected virtual void Die()
+    private void Die()
     {
         doDeathStuff = false;
         GameEvents.instance.EnemyClick(null);

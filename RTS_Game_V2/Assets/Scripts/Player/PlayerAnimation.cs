@@ -37,6 +37,12 @@ public class PlayerAnimation : MonoBehaviour
         performStunAnimation = Animator.StringToHash("Stun");
     }
 
+    private void Start()
+    {
+        UpdateAttackType();
+        animator.keepAnimatorControllerStateOnDisable = true;
+    }
+
     private void OnEnable()
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
@@ -59,7 +65,6 @@ public class PlayerAnimation : MonoBehaviour
 
     private void PlayerStateAnimation(PlayerStateEvent playerStateEvent)
     {
-
         switch (playerStateEvent)
         {
             case PlayerStateEvent.NONE:
@@ -136,40 +141,16 @@ public class PlayerAnimation : MonoBehaviour
     }
 
 
-    public void HitAnimation()
-    {
-        animator.SetBool(performHitAnimation, true);
-        StartCoroutine(WaitAndSetFalse(0.35f, performHitAnimation));
-    }
+    public void HitAnimation() => animator.SetTrigger(performHitAnimation);
 
-    public void AttackAnimation()
-    {
-        animator.SetBool(performAttackAnimation, true);
-        StartCoroutine(WaitAndSetFalse(animationSpeed - 0.5f, performAttackAnimation));
-    }
+    public void AttackAnimation() => animator.SetTrigger(performAttackAnimation);
+    
 
-    public void DeathAnimation()
-    {
-        animator.SetBool(performDeathAnimation, true);
-        StartCoroutine(WaitAndSetFalse(5f, performDeathAnimation));
-    }
+    public void DeathAnimation() => animator.SetTrigger(performDeathAnimation);
 
-    public void StunAnimation()
-    {
-        animator.SetBool(performStunAnimation, true);
-    }
+    public void StunAnimation() => animator.SetBool(performStunAnimation, true);
 
-    public void BuffAnimation()
-    {
-        animator.SetBool(performBuffAnimation, true);
-        StartCoroutine(WaitAndSetFalse(1f, performBuffAnimation));
-    }
-
-    IEnumerator WaitAndSetFalse(float waitTime, int hashSetVariable)
-    {
-        yield return new WaitForSeconds(waitTime);
-        animator.SetBool(hashSetVariable, false);
-    }
+    public void BuffAnimation() => animator.SetTrigger(performBuffAnimation);
 
     private void OnDisable()
     {

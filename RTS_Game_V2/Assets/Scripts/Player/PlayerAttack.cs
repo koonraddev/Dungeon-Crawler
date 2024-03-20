@@ -81,15 +81,24 @@ public class PlayerAttack : MonoBehaviour
                 return;
             }
 
-            if (followTarget && follow)
+            if(!StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, out Vector3 closest, true))
             {
-                if (playerMov != null && !StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, true))//&& distanceToEnemy > attackRange)
+                if (followTarget && follow)
                 {
-                    StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, out Vector3 closest, true);
                     playerMov.MoveTo(closest);
-                    countTo = closest;
                 }
             }
+            countTo = closest;
+
+            //if (followTarget && follow)
+            //{
+            //    if (playerMov != null && !StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, true))//&& distanceToEnemy > attackRange)
+            //    {
+            //        StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, out Vector3 closest, true);
+            //        playerMov.MoveTo(closest);
+            //        countTo = closest;
+            //    }
+            //}
 
             distanceToEnemy = Vector3.Distance(transform.position, countTo);
 

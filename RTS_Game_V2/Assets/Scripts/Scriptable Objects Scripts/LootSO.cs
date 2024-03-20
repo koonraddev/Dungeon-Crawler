@@ -18,7 +18,6 @@ public class LootSO : ScriptableObject
     [SerializeField] private int lootTimeExisting;
     public int LootTimeExisting { get => lootTimeExisting; }
     private List<ContainerSlot> containerSlots;
-    int i;
     private void OnValidate()
     {
         if (lootSlots.Count > 10)
@@ -42,7 +41,6 @@ public class LootSO : ScriptableObject
     public Container GetContainer(string containerName)
     {
         containerSlots = new();
-        i = 0;
         //lootSlots.Sort((a, b) => b.lootChancePercentage.CompareTo(a.lootChancePercentage));
         foreach (LootSlot ltSlot in lootSlots)
         {
@@ -62,36 +60,32 @@ public class LootSO : ScriptableObject
         if(ltSlot.treasure is EquipmentItemSO)
         {
             Item newItem = new EquipmentItem(ltSlot.treasure as EquipmentItemSO);
-            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            ContainerSlot newSlot = new(containerSlots.Count, newItem, ltSlot.amount);
             containerSlots.Add(newSlot);
-            i++;
             return;
         }
 
         if (ltSlot.treasure is UnknownItemSO)
         {
             Item newItem = new UnknownItem(ltSlot.treasure as UnknownItemSO);
-            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            ContainerSlot newSlot = new(containerSlots.Count, newItem, ltSlot.amount);
             containerSlots.Add(newSlot);
-            i++;
             return;
         }
 
         if (ltSlot.treasure is UsableItemSO)
         {
             Item newItem = new UsableItem(ltSlot.treasure as UsableItemSO);
-            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            ContainerSlot newSlot = new(containerSlots.Count, newItem, ltSlot.amount);
             containerSlots.Add(newSlot);
-            i++;
             return;
         }
 
         if(ltSlot.treasure is PassiveItemSO)
         {
             Item newItem = new PassiveItem(ltSlot.treasure as PassiveItemSO);
-            ContainerSlot newSlot = new(i, newItem, ltSlot.amount);
+            ContainerSlot newSlot = new(containerSlots.Count, newItem, ltSlot.amount);
             containerSlots.Add(newSlot);
-            i++;
             return;
         }
     }

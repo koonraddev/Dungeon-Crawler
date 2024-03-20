@@ -14,6 +14,7 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnGeneratingReady += GameIsReady;
         GameEvents.instance.OnRestartFloor += SetRestartingInfo;
         GameEvents.instance.OnLoadLevel += SetLoadingInfo;
+        GameEvents.instance.OnLoadNextLevel += SetLoadingInfo;
         GameEvents.instance.OnLoadGameScene += SetLoadingInfo;
         GameEvents.instance.OnExitToMenu += SetLoadingMenuInfo;
     }
@@ -55,6 +56,7 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnGeneratingReady -= GameIsReady;
         GameEvents.instance.OnRestartFloor -= SetRestartingInfo;
         GameEvents.instance.OnLoadLevel -= SetLoadingInfo;
+        GameEvents.instance.OnLoadNextLevel -= SetLoadingInfo;
         GameEvents.instance.OnLoadGameScene -= SetLoadingInfo;
         GameEvents.instance.OnExitToMenu -= SetLoadingMenuInfo;
     }

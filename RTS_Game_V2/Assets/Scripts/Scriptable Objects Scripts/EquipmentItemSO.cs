@@ -70,8 +70,8 @@ public class EquipmentItemSO : ScriptableObject
                 eqItemSO.isWeapon = false;
                 eqItemSO.weaponPrefab = null;
             }
-            serializedObject.ApplyModifiedProperties();
-            serializedObject.Update();
+
+            EditorUtility.SetDirty(eqItemSO);
         }    
     }
 #endif

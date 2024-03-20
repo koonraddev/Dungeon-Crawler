@@ -15,7 +15,7 @@ MonoBehaviour:
   physicalDamage: 30
   trueDamage: 3
   magicDamage: 0
-  attackSpeed: 0
+  attackSpeed: 70
   attackRange: 5
   armor: 0
   magicResistance: 0
@@ -23,3 +23,16 @@ MonoBehaviour:
   healthPointsRegeneration: 0
   healthPercentageRegeneration: 0
   movementSpeed: 2
+  statTypes: 060000000800000007000000090000000a000000040000000500000000000000020000000300000001000000
+  statValues:
+  - 30
+  - 3
+  - 0
+  - 70
+  - 5
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 2

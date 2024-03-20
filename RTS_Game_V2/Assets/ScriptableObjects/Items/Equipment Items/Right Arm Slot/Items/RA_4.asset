@@ -18,4 +18,5 @@ MonoBehaviour:
   itemSlot: 5
   isWeapon: 1
   attackType: 1
-  weaponPrefab: {fileID: 100884, guid: 3b32b5a20c9db2c49b4d8e8025f6aeaa, type: 3}
+  weaponPrefab: {fileID: 174004, guid: 6478e3e782a118f45a402645660f05ef, type: 3}
+  projectilePrefab: {fileID: 0}

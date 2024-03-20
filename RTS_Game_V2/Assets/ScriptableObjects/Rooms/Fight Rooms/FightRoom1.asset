@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPlane: {fileID: 8458352657817854334, guid: ff1dbf28f0568c04ca5b28c36b8b5458, type: 3}
   portalSO: {fileID: 11400000, guid: 409400cedd32a7942819eea0005c769a, type: 2}
-  enemySpawnerObject: {fileID: 5816622439559371117, guid: 816921484448a034bb8f9ca906d2b32f, type: 3}
-  enemySpawnerConfigurationSO: {fileID: 11400000, guid: 400b3017bd748424e99193a722597feb, type: 2}
+  spawnerConfigsList:
+  - {fileID: 11400000, guid: 400b3017bd748424e99193a722597feb, type: 2}

@@ -15,7 +15,6 @@ public class ChestSO : ScriptableObject
     [SerializeField] private string description;
     [SerializeField] private int chestId;
     [SerializeField] List<ChestSlot> treasureList = new(25);
-    private List<ContainerSlot> contSlots = new(25);
 
     private void Awake()
     {
@@ -54,7 +53,7 @@ public class ChestSO : ScriptableObject
     {
         get
         {
-            contSlots = new();
+            List<ContainerSlot> contSlots = new();
             for (int i = 0; i < treasureList.Count; i++)
             {
                 ChestSlot itemSO = treasureList[i];

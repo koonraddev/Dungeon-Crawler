@@ -49,12 +49,11 @@ public class FullPopupPanel : PopupPanel
                 break;
         }
 
-
-
         if(popup.YesButtonDelegate == null) //not working
         {
             gameObject.SetActive(false);
         }
+
         yesButton.onClick.RemoveAllListeners();
         yesButton.onClick.AddListener(()=> popup.YesButtonDelegate?.Invoke());
         yesButton.onClick.AddListener(() => gameObject.SetActive(false));

@@ -52,8 +52,7 @@ public class EnemySpawnerConfigurationSO : ScriptableObject
                 enemySpawnerSO.spawnerInterval = EditorGUILayout.FloatField("Spawner interval", enemySpawnerSO.spawnerInterval);
             }
 
-            serializedObject.ApplyModifiedProperties();
-            serializedObject.Update();
+            EditorUtility.SetDirty(enemySpawnerSO);
         }
     }
 #endif

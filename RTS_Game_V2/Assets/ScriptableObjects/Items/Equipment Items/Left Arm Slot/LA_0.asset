@@ -19,3 +19,4 @@ MonoBehaviour:
   isWeapon: 1
   attackType: 3
   weaponPrefab: {fileID: 107374, guid: c223b5254ae0cec4180d5af774d0d2b3, type: 3}
+  projectilePrefab: {fileID: 110294, guid: 3015291fd64c2e3458a42390d720166e, type: 3}
