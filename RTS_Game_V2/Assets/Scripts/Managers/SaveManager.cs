@@ -10,7 +10,8 @@ public class PlayerData
     public Equipment equipment;
     public Inventory inventory;
     public List<Buff> activeBuffsList;
-    public PlayerBasicStatistics playerBasicStatistics;
+    //public PlayerBasicStatistics playerBasicStatistics;
+    public StatisticsSet playerBasicStatistics;
     public float playerHP;
     public string characterName;
     public int levelCompleted;
@@ -60,7 +61,7 @@ public class SaveManager : MonoBehaviour
         GameEvents.instance.PlayerDataSaved();
     }
 
-    public void CreateSave(int slot, string characterName, PlayerBasicStatistics playerBasicStatisitcs)
+    public void CreateSave(int slot, string characterName, StatisticsSet playerBasicStatisitcs)
     {
         PlayerData playerData = new();
 
@@ -68,7 +69,7 @@ public class SaveManager : MonoBehaviour
         playerData.inventory = new();
         playerData.activeBuffsList = new();
         playerData.playerBasicStatistics = playerBasicStatisitcs;
-        playerData.playerHP = playerBasicStatisitcs.MaxHealth;
+        playerData.playerHP = playerBasicStatisitcs.maxHealth;
         playerData.characterName = characterName;
         playerData.levelCompleted = 0;
         playerData.dateTime = DateTime.Now.ToString();

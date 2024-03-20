@@ -67,7 +67,6 @@ public class PlayerEquipment : MonoBehaviour
                 .Join(weaponObject.transform.DOLocalRotate(Vector3.zero, 0f))
                 .Append(rend.material.DOFade(1f, 0.2f));
 
-
         seq1.Play();
     }
 

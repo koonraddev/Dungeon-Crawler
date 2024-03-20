@@ -18,7 +18,7 @@ public class StatisticCreator
     public float BaseStatisticValue { get => baseStatValue; }
     public float ValueIncrease { get => valueIncrease; }
     public float AddedValue { get => addedValue; set => addedValue = value; }
-
+    public float TotalValue { get => baseStatValue + addedValue; }
     public void Reset()
     {
         addedValue = 0;
@@ -58,12 +58,18 @@ public class NewCharacterPanel : MonoBehaviour
     {
         points = startPoints;
 
+
+    }
+
+    private void OnEnable()
+    {
         foreach (var item in statsList)
         {
             item.Reset();
-            GameEvents.instance.StatisticUpdate(item.StatisticType, item.BaseStatisticValue + item.AddedValue);
+            GameEvents.instance.StatisticUpdate(item.StatisticType, item.BaseStatisticValue);
         }
     }
+
     void Update()
     {
         pointsText.text = points.ToString();
@@ -117,7 +123,13 @@ public class NewCharacterPanel : MonoBehaviour
 
     public void CreateSaveAndStartGame()
     {
-        PlayerBasicStatistics playerStats = new(StatsList);
+        StatisticsSet playerStats = new();
+
+        foreach (var item in statsList)
+        {
+            playerStats.SetStatisticValue(item.StatisticType, item.TotalValue);
+        }
+
         SaveManager.instance.ChosenSlotIndex = selectedSlot;
         SaveManager.instance.CreateSave(selectedSlot, CharacterName, playerStats);
         GameEvents.instance.LoadGameScene();

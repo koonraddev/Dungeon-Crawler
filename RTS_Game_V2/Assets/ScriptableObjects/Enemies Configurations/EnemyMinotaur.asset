@@ -13,21 +13,24 @@ MonoBehaviour:
   m_Name: EnemyMinotaur
   m_EditorClassIdentifier: 
   enemyName: Bad Minotaur
-  health: 300
   enemyLoot: {fileID: 11400000, guid: 4515a3cab85f4fe42af2af6e43e02631, type: 2}
   enemySprite: {fileID: 21300000, guid: d24e7e0b75e1a244bb9687d6fd4315ef, type: 3}
   boss: 1
   enemyPrefab: {fileID: 4336283486668330263, guid: 99727579c35f9b64cbf1549485441b48, type: 3}
-  movementSpeed: 8
+  statisticsSet:
+    maxHealth: 200
+    healthPointsRegeneration: 0
+    healthPercentagesRegeneration: 10
+    movementSpeed: 7
+    armor: 20
+    magicResistance: 20
+    attackSpeed: 30
+    attackRange: 2
+    physicalDamage: 20
+    magicDamage: 0
+    trueDamage: 3
   minMoveInterval: 4
   maxMoveInterval: 8
-  armor: 10
-  magicResistance: 10
-  attackSpeed: 25
-  attackRange: 3
   triggerRange: 20
-  physicalDamage: 1
-  magicDamage: 1
-  trueDamage: 1
   projectileAttack: 0
   projectilePrefab: {fileID: 0}

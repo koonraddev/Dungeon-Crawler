@@ -33,13 +33,17 @@ public class PlayerHealth : MonoBehaviour
     {
         GameEvents.instance.OnStatisticUpdate += UpdateStats;
         GameEvents.instance.OnLoadedPlayerData += OnplayerDataLoaded;
+
+    }
+
+    private void Start()
+    {
+        OnplayerDataLoaded();
     }
 
     private void OnplayerDataLoaded()
     {
         health = BuffManager.instance.LoadedPlayerHP;
-        physicalDamageMultiplier = StatisticalUtility.DamageMultiplier(armor);
-        magicDamageMultiplier = StatisticalUtility.DamageMultiplier(magicResistance);
         GameEvents.instance.UpdateCurrentHP(health);
         GameEvents.instance.PlayerStateEvent(PlayerStateEvent.NONE);
     }
@@ -59,11 +63,6 @@ public class PlayerHealth : MonoBehaviour
             if(health <= 0)
             {
                 Die();
-            }
-
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                Damage("instant kill", 9999, 9999, 9999);
             }
         }
     }
