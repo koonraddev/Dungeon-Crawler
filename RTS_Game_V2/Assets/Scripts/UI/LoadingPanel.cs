@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine;
 
 public class LoadingPanel : MonoBehaviour
 {
@@ -60,5 +57,4 @@ public class LoadingPanel : MonoBehaviour
         GameEvents.instance.OnLoadGameScene -= SetLoadingInfo;
         GameEvents.instance.OnExitToMenu -= SetLoadingMenuInfo;
     }
-
 }

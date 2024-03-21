@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class InventoryPanel : MonoBehaviour
 {
@@ -32,11 +32,6 @@ public class InventoryPanel : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            Debug.Log("NULL");
-        }
-
     }
 
     private void OnDestroy()

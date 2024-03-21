@@ -1,11 +1,8 @@
-using UnityEngine;
-using TMPro;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using System.Collections;
 using System.Linq;
-using System;
-using System.Reflection;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class InformationPanel : MonoBehaviour
 {
@@ -68,10 +65,6 @@ public class InformationPanel : MonoBehaviour
         }
     }
 
-
-   
-
-
     public void SetInfoPanel(Item item)
     {
         DisplayBasics(item.Name, item.Description, item.Sprite);
@@ -128,31 +121,12 @@ public class InformationPanel : MonoBehaviour
 
     }
 
-
-
     public void DisplayBasics(string itemName, string itemDescription, Sprite itemSprite)
     {
         nameText.text = itemName;
         textureHolder.sprite = itemSprite;
         infoText.text = itemDescription;
     }
-
-    //public void Exampe<T>(T comp) where T : Item
-    //{
-    //    PropertyInfo[] properties = typeof(T).GetProperties();
-    //    foreach (PropertyInfo property in properties)
-    //    {
-    //        try
-    //        {
-    //            Debug.Log(property.GetValue(comp));
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            continue
-    //        }
-    //    }
-    //}
-
 
     public void DisplayStatistics(Dictionary<StatisticType, float> statistics)
     {
@@ -180,8 +154,6 @@ public class InformationPanel : MonoBehaviour
         coolDownLeft = scrollCoolDown;
         scrollDown = true;
     }
-
-
 
     public void SetEmpty()
     {

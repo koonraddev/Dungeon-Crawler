@@ -1,17 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public enum RoomMarkType
-{
-    START,
-    EMPTY,
-    CHEST,
-    TREASURE,
-    FIGHT,
-    BOSS
-}
 
 [System.Serializable]
 public class RoomMarkSettings

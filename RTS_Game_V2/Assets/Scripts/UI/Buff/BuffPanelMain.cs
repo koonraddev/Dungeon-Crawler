@@ -26,11 +26,6 @@ public class BuffPanelMain : MonoBehaviour
     }
     private void Awake()
     {
-        //spriteDict = new();
-        //foreach (var item in buffsSettings)
-        //{
-        //    spriteDict.Add(item.statisticType, item.sprite);
-        //}
         mainPanelRect = GetComponent<RectTransform>();
     }
     

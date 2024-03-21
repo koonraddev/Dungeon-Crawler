@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -23,8 +21,6 @@ public class LevelManager : MonoBehaviour
         GameEvents.instance.OnLoadedPlayerData += LoadNextLevel;
     }
 
-
-
     private void LoadNextLevel()
     {
         currentLevel++;
@@ -35,21 +31,6 @@ public class LevelManager : MonoBehaviour
     {
         RoomsGenerator.instance.SetRoomsGenerator(currentLevel);
         GameEvents.instance.LevelSettingsSet();
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            GameEvents.instance.ActivateTeleport();
-        }
     }
 
     private void OnDisable()

@@ -1,22 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FullPopupPanel : PopupPanel
+public partial class FullPopupPanel : PopupPanel
 {
     [SerializeField] private TMP_Text nameHolder, descriptionHolder, messageHolder;
     [SerializeField] private Button yesButton;
     [SerializeField] private FullPopupType popupType;
-
-    private enum FullPopupType
-    {
-        DROP = PopupType.DROP,
-        TAKE = PopupType.TAKE,
-        OPEN = PopupType.OPEN,
-        USE = PopupType.USE
-    }
 
     public override PopupType MessageType { get => (PopupType)popupType; }
 

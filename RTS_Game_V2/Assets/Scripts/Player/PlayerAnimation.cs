@@ -1,15 +1,5 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
-public enum AttackType
-{
-    FISTS,
-    SWORD,
-    WAND,
-    BOW,
-    SPELL
-}
 
 public class PlayerAnimation : MonoBehaviour
 {

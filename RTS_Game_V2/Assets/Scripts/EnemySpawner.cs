@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +19,6 @@ public class EnemySpawner : MonoBehaviour
     }
     void Start()
     {
-        //CreateObjects();
         timeLeft = spawnerInterval;
     }
 
@@ -30,7 +28,6 @@ public class EnemySpawner : MonoBehaviour
         timeLeft -= timePassedWhileInactiveState;
         if (timeLeft <= 0)
         {
-            //Debug.Log("enabled and ready");
             TimePassed();
         }
     }
@@ -117,19 +114,6 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         return pool;
-    }
-
-    private void CreateObjects()
-    {
-        GameObject tmp;
-        foreach (GameObject enemy in enemyList)
-        {
-
-            tmp = Instantiate(enemy,transform.position,transform.rotation);
-            tmp.transform.SetParent(parentRoom.transform);
-            tmp.SetActive(true);
-            enemyPool.Add(tmp);
-        }
     }
 
     private void OnDisable()

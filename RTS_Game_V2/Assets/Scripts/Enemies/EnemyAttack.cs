@@ -1,6 +1,3 @@
-using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
@@ -15,8 +12,6 @@ public class EnemyAttack : MonoBehaviour
     private float projectileSpeed;
 
     private float timeToWait, attackCooldown;
-
-
     private GameObject playerObject;
     private PlayerHealth playerHealthMan;
 
@@ -24,26 +19,11 @@ public class EnemyAttack : MonoBehaviour
     private bool dead;
     public bool Dead { get => dead; set => dead = value; }
 
-    //[SerializeField] EnemyAttackConfigurationSO enemyAttackConfigurationSO;
-    //private AttackType attackType;
-    //private float effectSpeed;
-    //private GameObject effeectPrefab;
-    //private GameObject effect;
-
-    //private List<GameObject> pooledObjects;
     void Start()
     {
         attackCooldown = 0;
     }
 
-    private void Awake()
-    {
-        //pooledObjects = new List<GameObject>();
-        //attackType = enemyAttackConfigurationSO.AttackType;
-        //effectSpeed = enemyAttackConfigurationSO.EffectSpeed;
-        //effeectPrefab = enemyAttackConfigurationSO.EffectPrefab;
-        //CreateObject();
-    }
 
     private void OnEnable()
     {
@@ -68,7 +48,6 @@ public class EnemyAttack : MonoBehaviour
         if (playerObject != null)
         {
 
-
             distance = Vector3.Distance(transform.position, playerObject.transform.position);
 
             if (CheckPlayerInterest())
@@ -78,7 +57,6 @@ public class EnemyAttack : MonoBehaviour
                     Vector3 newPointToMove = pointMove;
                     if (enemyMovement != null)
                     {
-                        //distToMove = Mathf.Ceil(distToTarget - attackRange);
                         enemyMovement.MoveTo(newPointToMove);
                     }
                 }
@@ -98,7 +76,6 @@ public class EnemyAttack : MonoBehaviour
                 if (collider.CompareTag("Player"))
                 {
                     playerObject = collider.gameObject;
-                    //enemyMovement.StopMovement();
                     playerHealthMan = playerObject.GetComponent<PlayerHealth>();
                 }
             }

@@ -1,32 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-
-public delegate void YesButtonDelegate();
-public struct ObjectContent
-{
-    public string Nametext { get; set; }
-    public string Description { get; set; }
-    public string Message { get; set; }
-    public GameObject GameObjectReq { get; }
-    public YesButtonDelegate YesButtonDelegate { get; set; }
-
-    public ObjectContent(GameObject gameobjectReq) : this()
-    {
-        GameObjectReq = gameobjectReq;
-    }
-}
-
-public enum PopupType
-{
-    NAME,
-    INFORMATION,
-    TAKE,
-    OPEN,
-    DELETE,
-    DROP,
-    USE
-}
+using UnityEngine;
 
 public class UIMessageObjectPool : MonoBehaviour
 {

@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -10,10 +9,9 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
     [SerializeField] private Renderer[] renderers;
     private Container container;
     private int interactionDistance = 3;
-    private float existingTime;
-    private float existingTimeLeft;
-    private bool disappearON = false;
-    private bool stopExistingTime;
+    private float existingTime, existingTimeLeft;
+    private bool disappearON = false, stopExistingTime;
+   
     public GameObject GameObject => gameObject;
     public int InteractionDistance => interactionDistance;
     ObjectContent objectContent;
@@ -60,7 +58,6 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
 
     public void ObjectInteraction(GameObject interactingObject = null)
     {
-        //UIMessageObjectPool.instance.DisplayMessage(objectContent, PopupType.OPEN);
         DoInteraction();
     }
 

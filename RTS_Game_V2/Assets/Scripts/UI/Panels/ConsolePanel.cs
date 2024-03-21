@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class ConsolePanel : MonoBehaviour
@@ -72,8 +71,6 @@ public class ConsolePanel : MonoBehaviour
     {
         if (consoleIsOn)
         {
-            //consoleText.DOFade(1f,0f);
-            //mainPanel.DOFade(1f, 0f);
             gameObject.transform.position = startPostion;
             seq.Restart();
         }

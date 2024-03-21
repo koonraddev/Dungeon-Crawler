@@ -1,14 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public enum PlayerStateEvent
-{
-    NONE,
-    BUFF,
-    STUN,
-    DEATH,
-}
 
 
 public class PlayerHealth : MonoBehaviour
@@ -69,7 +60,6 @@ public class PlayerHealth : MonoBehaviour
     public void Damage(string enemyName,float physicalDamage, float magicDamage, float trueDamage)
     {
         float totalDamage = Mathf.RoundToInt(physicalDamage * physicalDamageMultiplier + magicDamage * magicDamageMultiplier + trueDamage);
-        //Console Log
         ConsolePanel.instance.PlayerTakeDamage(enemyName, totalDamage);
         health -= totalDamage;
         playerAnim.HitAnimation();

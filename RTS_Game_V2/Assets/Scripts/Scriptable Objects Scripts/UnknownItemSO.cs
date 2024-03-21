@@ -7,7 +7,6 @@ public class UnknownItemSO : ScriptableObject
 {
     [SerializeField] private int itemID;
     [SerializeField] private ItemInformationsSO itemInfos;
-    //[SerializeField] private EnemySpawnerConfigurationSO enemySpawnerSO;
     [SerializeField] private LootSO lootSO;
     [Range(0, 100)]
     [SerializeField] private float lootChancePercentage;
@@ -20,7 +19,6 @@ public class UnknownItemSO : ScriptableObject
 
         if (randomValue <= lootChancePercentage)
         {
-            Debug.Log("Loot!");
             Container container = lootSO.GetContainer(itemInfos.ItemName);
             List<ContainerSlot> containerSlots = container.Slots;
 
@@ -29,12 +27,6 @@ public class UnknownItemSO : ScriptableObject
                 LootManager.instance.CreateLoot(Vector3.zero, container, lootContainerPrefab, lootSO.LootTimeExisting);
             }
         }
-        else
-        {
-            //SpawnerLogic
-            Debug.Log("SPAWN!");
-        }
-
         return true;
     }
 }

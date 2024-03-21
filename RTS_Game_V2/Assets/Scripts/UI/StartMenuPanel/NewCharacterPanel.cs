@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System.Linq;
+using TMPro;
+using UnityEngine;
 
 [System.Serializable]
 public class StatisticCreator
@@ -57,8 +55,6 @@ public class NewCharacterPanel : MonoBehaviour
     private void Awake()
     {
         points = startPoints;
-
-
     }
 
     private void OnEnable()

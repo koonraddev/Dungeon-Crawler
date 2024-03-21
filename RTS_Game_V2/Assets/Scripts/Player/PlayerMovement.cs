@@ -1,4 +1,3 @@
-using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -110,9 +109,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        //SoundManager.PlaySound(pointDestinationSound, 1f);
-
-        //Debug.Log(destination);
 
         playerAgent.isStopped = false;
         playerAgent.SetDestination(destination);

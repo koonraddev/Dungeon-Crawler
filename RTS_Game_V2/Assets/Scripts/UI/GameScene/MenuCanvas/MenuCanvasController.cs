@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +5,7 @@ public class MenuCanvasController : MonoBehaviour
 {
     [SerializeField] private GameObject backgroundObject, mainPanel, optionsMenu, askMenu;
 
-    private PlayerControls playerControls; //TO DO -> menu action
+    private PlayerControls playerControls;
     private InputAction menuAction;
     private bool isMenuActivated = true, isMainPanelActivated, isOptionsPanelActivated, isAskPanelActivated;
 

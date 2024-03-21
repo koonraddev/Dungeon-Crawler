@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,7 +40,6 @@ public class LootSO : ScriptableObject
     public Container GetContainer(string containerName)
     {
         containerSlots = new();
-        //lootSlots.Sort((a, b) => b.lootChancePercentage.CompareTo(a.lootChancePercentage));
         foreach (LootSlot ltSlot in lootSlots)
         {
             float randomLootChance = Random.Range(0f, 101f);

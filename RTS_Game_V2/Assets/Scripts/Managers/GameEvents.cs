@@ -69,7 +69,6 @@ public class GameEvents : MonoBehaviour
     public event Action OnLevelSettingsSet;
 
     //Spawns ready status
-    //public event Action OnLastSpawnPoint
     public event Action OnGeneratingReady;
     public event Action OnLastRoomReady;
 

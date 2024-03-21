@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
 
@@ -17,9 +15,7 @@ public class StartRoomSO : RoomSO
 
     public override void RoomBehavoiur(GameObject roomGameObject, bool isLastRoom = false)
     {
-        //roomGameObject.GetComponent<Renderer>().material = roomFloorMaterial;
         NavMeshSurface surface = roomPlane.GetComponent<NavMeshSurface>();
-        NavigationController.instance.AddNavSurface(surface);
         MapManager.instance.AddRoom(roomGameObject, RoomMarkType.START);
     }
 }

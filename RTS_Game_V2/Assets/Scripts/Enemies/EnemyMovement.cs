@@ -83,7 +83,6 @@ public class EnemyMovement : MonoBehaviour
     public void StopMovement()
     {
         MoveTo(gameObject.transform.position);
-        //navAgent.isStopped = true;
     }
 
     private Vector3 GetRandomPosition()

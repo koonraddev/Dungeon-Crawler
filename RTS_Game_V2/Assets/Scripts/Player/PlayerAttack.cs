@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -89,16 +86,6 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
             countTo = closest;
-
-            //if (followTarget && follow)
-            //{
-            //    if (playerMov != null && !StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, true))//&& distanceToEnemy > attackRange)
-            //    {
-            //        StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, out Vector3 closest, true);
-            //        playerMov.MoveTo(closest);
-            //        countTo = closest;
-            //    }
-            //}
 
             distanceToEnemy = Vector3.Distance(transform.position, countTo);
 

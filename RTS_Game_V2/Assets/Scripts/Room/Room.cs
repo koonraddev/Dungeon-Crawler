@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
-
-
 public class Room : MonoBehaviour
 {
     private GameObject northSpawnPointObject, southSpawnPointObject, westSpawnPointObject, eastSpawnPointObject;
@@ -128,10 +125,7 @@ public class Room : MonoBehaviour
 
     IEnumerator SO()
     {
-        //yield return new WaitForEndOfFrame();
         var rand = new System.Random();
-        
-
         for (int i = 0; i < spawnsArray.Length; i++)
         {
             var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));

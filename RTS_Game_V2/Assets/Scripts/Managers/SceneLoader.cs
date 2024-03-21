@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,16 +11,6 @@ public class SceneLoader : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(this);
-    }
-
-
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            canSwitchScene = true;
-        }
     }
 
     private void OnEnable()
@@ -47,7 +36,6 @@ public class SceneLoader : MonoBehaviour
         canSwitchScene = true;
     }
 
-
     IEnumerator LoadYourAsyncScene(int sceneIndex)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
@@ -71,5 +59,4 @@ public class SceneLoader : MonoBehaviour
         GameEvents.instance.OnSwitchScene -= SwitchScene;
         GameEvents.instance.OnExitToMenu -= LoadMenuScene;
     }
-
 }

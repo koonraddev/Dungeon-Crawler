@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine;
 
 public class SceneCanvasManager : MonoBehaviour
 {
@@ -27,7 +26,6 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnStartLevel += StartingLevel;
         GameEvents.instance.OnExitToMenu += QuitingToMenu;
         GameEvents.instance.OnLoadGameScene += LoadingDungeonScene;
-        //GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
     }
 
     private void WaitAndFadeInFadeOut()
@@ -94,7 +92,6 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnStartLevel -= StartingLevel;
         GameEvents.instance.OnExitToMenu -= QuitingToMenu;
         GameEvents.instance.OnLoadGameScene -= LoadingDungeonScene;
-        GameEvents.instance.OnGameOver += WaitAndFadeInFadeOut;
     }
 
 }

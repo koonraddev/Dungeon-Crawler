@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +22,6 @@ public class OptionsPanel : MonoBehaviour
         if (!PlayerPrefs.HasKey("fullscreen")) { PlayerPrefs.SetInt("fullscreen", 1); }
         if (!PlayerPrefs.HasKey("resolutionWidth")) { PlayerPrefs.SetInt("resolutionWidth", 1920); }
         if (!PlayerPrefs.HasKey("resolutionHeight")) { PlayerPrefs.SetInt("resolutionHeight", 1080); }
-        //ApplySettings();
-
     }
     public void ApplySettings()
     {

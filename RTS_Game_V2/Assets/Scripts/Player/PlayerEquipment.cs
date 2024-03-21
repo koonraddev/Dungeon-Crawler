@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -58,7 +56,7 @@ public class PlayerEquipment : MonoBehaviour
             seq1.Kill();
         }
 
-        //if (rend == null) return;
+
         seq1 = DOTween.Sequence()
                 .AppendInterval(waitSeconds)
                 .Append(rend.material.DOFade(0f, 0.2f))

@@ -4,14 +4,7 @@ using UnityEngine.UI;
 
 public class UICanvasController : MonoBehaviour
 {
-    [SerializeField] private GameObject playerInventoryUI;
-    [SerializeField] private GameObject informationPanel;
-    [SerializeField] private GameObject equipmentPanel;
-    [SerializeField] private GameObject inventoryDropPanel;
-    [SerializeField] private GameObject containerPanel;
-    [SerializeField] private GameObject statisticsPanel;
-    [SerializeField] private GameObject enemyInformationPanel;
-    [SerializeField] private GameObject mapPanel;
+    [SerializeField] private GameObject playerInventoryUI ,informationPanel ,equipmentPanel ,inventoryDropPanel ,containerPanel ,statisticsPanel ,enemyInformationPanel ,mapPanel;
     [SerializeField] private RectMask2D rectMask2D;
 
     private Vector3 playerUIPos, infoPanelPos, eqPanelPos, invDropPanelPos, containerPanelPos, statsPanelPos, enemyPanelPos, mapPanelPos;
@@ -94,17 +87,14 @@ public class UICanvasController : MonoBehaviour
     {
         if(enemy != null)
         {
-            //enemyInformationPanel.SetActive(true);
             enemyInformationPanel.transform.position = enemyPanelPos;
             EnemyInformationPanel enemyInfo = enemyInformationPanel.GetComponent<EnemyInformationPanel>();
             enemyInfo.SetPanel(enemy);
         }
         else
         {
-            //enemyInformationPanel.SetActive(false);
             enemyInformationPanel.transform.position = enemyPanelPos + new Vector3(5000, 0, 0);
         }
-
     }
 
     public void FullSizeMap(bool activeFullSizeMap)
@@ -125,9 +115,6 @@ public class UICanvasController : MonoBehaviour
     public void InventoryPanelStatus(bool active)
     {
         isInventoryActivated = active;
-        //equipmentPanel.SetActive(active);
-        //playerInventoryUI.SetActive(active);
-        //inventoryDropPanel.SetActive(active);
         if (active)
         {
             equipmentPanel.transform.position = eqPanelPos;
@@ -142,19 +129,13 @@ public class UICanvasController : MonoBehaviour
         }
 
         if (!active)
-        {
-
-            //containerPanel.SetActive(active);
-            
+        {          
             containerPanel.transform.position = containerPanelPos + new Vector3(5000, 0, 0);
         }
-
-
     }
 
     public void InformationPanelStatus(bool active)
     {
-        //informationPanel.SetActive(active);
         if (active)
         {
             informationPanel.transform.position = infoPanelPos;
@@ -163,13 +144,11 @@ public class UICanvasController : MonoBehaviour
         {
             informationPanel.transform.position = infoPanelPos + new Vector3(5000, 0, 0);
         }
-
     }
 
     public void StatisticsPanelStatus(bool active)
     {
         isStatisticsActivated = active;
-        //statisticsPanel.SetActive(active);
 
         if (active)
         {

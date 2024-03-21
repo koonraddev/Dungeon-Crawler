@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,17 +41,7 @@ public class UsableItem : InventoryItem, IUsable, IStatisticItem, ISerialization
         itemSprite = usableItemSO.ItemInformations.ItemSprite;
         statistics = usableItemSO.ItemStatistics.Statistics;
         this.usableItemSO = usableItemSO;
-
-        //if (usableItemSO.DurationMode)
-        //{
-        //    itemDescription += "\n Duration: " + usableItemSO.Duration;
-        //}
-        //else
-        //{
-            itemDescription += "\n Cooldown: " + usableItemSO.Cooldown;
-        //}
-
-
+        itemDescription += "\n Cooldown: " + usableItemSO.Cooldown;
     }
 
     public bool Use()

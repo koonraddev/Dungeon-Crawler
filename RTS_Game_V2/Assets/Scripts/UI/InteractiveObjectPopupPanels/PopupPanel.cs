@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +27,7 @@ public abstract class PopupPanel : MonoBehaviour
     }
     public virtual void PrepareMessageMenu(ObjectContent popup)
     {
-        objectReq = popup.GameObjectReq;
+        objectReq = popup.RequestingGameObject;
         if (objectReq == null)
         {
             gameObject.SetActive(false);

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ContainerInfoPanel : MonoBehaviour
 {
@@ -49,12 +48,10 @@ public class ContainerInfoPanel : MonoBehaviour
             containerSlotPanel.SetContainerSlotUI(container,contList[i], Color.white);
             containerSlotPanel.gameObject.SetActive(true);
         }
-
     }
 
     public void ContainerUpdate()
     {
         SetAndActiveContainerPanel(container);
     }
-
 }

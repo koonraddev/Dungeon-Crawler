@@ -19,7 +19,6 @@ public class RoomTeleport : MonoBehaviour
     }
     public void ActiveTeleport(bool active)
     {
-        //float newValue = active ? activePortalValue : unactivePortalValue;
         float newIntensity = active ? activePortalLightIntensity : unactivePortalLightIntensity;
         Color newColor = active ? activePortalColor : unactivePortalColor;
 

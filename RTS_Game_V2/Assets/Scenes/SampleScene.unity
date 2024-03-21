@@ -2523,7 +2523,6 @@ GameObject:
   - component: {fileID: 231731580}
   - component: {fileID: 231731579}
   - component: {fileID: 231731583}
-  - component: {fileID: 231731584}
   - component: {fileID: 231731585}
   m_Layer: 5
   m_Name: UICanvas
@@ -2648,20 +2647,6 @@ MonoBehaviour:
   mapPanel: {fileID: 1765518697}
   rectMask2D: {fileID: 231731585}
   miniMapPanelPos: {x: 838.5, y: 320, z: 0}
---- !u!114 &231731584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 231731578}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26892de1919ab7a499fb8b8f5eff04ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textInputObj: {fileID: 0}
-  textGameStatusObj: {fileID: 0}
 --- !u!114 &231731585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13645,7 +13630,6 @@ GameObject:
   - component: {fileID: 1285007680}
   - component: {fileID: 1285007681}
   - component: {fileID: 1285007682}
-  - component: {fileID: 1285007683}
   - component: {fileID: 1285007684}
   - component: {fileID: 1285007686}
   - component: {fileID: 1285007687}
@@ -13712,19 +13696,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 800
   startPosition: {x: 1000, y: 500}
---- !u!114 &1285007683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285007676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55002b80914369849ad8db3086204e6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  surfacesList: []
 --- !u!114 &1285007684
 MonoBehaviour:
   m_ObjectHideFlags: 0
