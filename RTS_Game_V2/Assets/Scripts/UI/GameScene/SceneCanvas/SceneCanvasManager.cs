@@ -23,6 +23,7 @@ public class SceneCanvasManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.OnRestartFloor += RestartingLevel;
+        GameEvents.instance.OnLoadNextLevel += RestartingLevel;
         GameEvents.instance.OnStartLevel += StartingLevel;
         GameEvents.instance.OnExitToMenu += QuitingToMenu;
         GameEvents.instance.OnLoadGameScene += LoadingDungeonScene;
@@ -92,6 +93,7 @@ public class SceneCanvasManager : MonoBehaviour
         GameEvents.instance.OnStartLevel -= StartingLevel;
         GameEvents.instance.OnExitToMenu -= QuitingToMenu;
         GameEvents.instance.OnLoadGameScene -= LoadingDungeonScene;
+        GameEvents.instance.OnLoadNextLevel -= RestartingLevel;
     }
 
 }

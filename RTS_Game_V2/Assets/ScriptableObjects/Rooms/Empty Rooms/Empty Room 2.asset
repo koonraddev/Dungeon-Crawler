@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8719e15f1431b1e42986c45e85bae515, type: 3}
+  m_Name: Empty Room 2
+  m_EditorClassIdentifier: 
+  roomPlane: {fileID: 877072862004571133, guid: caccf09c7e94d114a8b7c4c004892ee2, type: 3}
+  portalSO: {fileID: 11400000, guid: 409400cedd32a7942819eea0005c769a, type: 2}

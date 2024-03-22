@@ -16,7 +16,14 @@ public class Container
     {
         get
         {
-            return contSlots.Count > 0;
+            foreach (var slot in contSlots)
+            {
+                if (slot.Empty)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

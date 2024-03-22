@@ -24,7 +24,6 @@ public class LootManager : MonoBehaviour
     
     public void CreateLoot(Vector3 position, Container container, GameObject parentRoom,float lootExistingTime = 0)
     {
-        
         if (container.Empty)
         {
             return;
@@ -51,7 +50,7 @@ public class LootManager : MonoBehaviour
                 containerObject = Instantiate(lootPrefab);
                 createdContainers.Add(containerObject);
             }
-            containerObject.transform.position = position;
+            containerObject.transform.position = position + new Vector3(0f,0.7f,0f);
             ltContainer = containerObject.GetComponentInChildren<ContainerObject>();
             ltContainer.SetContainer(container, lootExistingTime);
             containerObject.SetActive(true);

@@ -4286,6 +4286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966b84a6b49bb2148977a954c83bcd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelOnColor: {r: 0.4509804, g: 0.9607843, b: 0.6509804, a: 1}
+  panelOFFColor: {r: 1, g: 1, b: 1, a: 1}
+  statusIcon: {fileID: 1956395951}
 --- !u!114 &376734276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13712,49 +13715,55 @@ MonoBehaviour:
   defaultRoomsAmount: 7
   levelRangeSetsList:
   - levelRange: 5
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 91fe580353455f44f8de5227558214d3, type: 2}
   - levelRange: 10
     roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
   - levelRange: 15
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: c8a2830ec3928884c8caa2a3e5d2d7ec, type: 2}
   - levelRange: 20
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 25
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 30
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 41a1a04c1f4fbfe409315d5041fa2e2f, type: 2}
   - levelRange: 35
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: ce30e9d156a17b14287e415eedfd4b97, type: 2}
   - levelRange: 40
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 36d253ee3fda59e43b0a4cfb47a7ca79, type: 2}
   - levelRange: 45
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 50
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 55
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 60
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 65
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 70
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 75
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 80
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 85
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: 5ffb2cae2d51e624ebaa67be1e998d61, type: 2}
   - levelRange: 90
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: ce30e9d156a17b14287e415eedfd4b97, type: 2}
   - levelRange: 95
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: ce30e9d156a17b14287e415eedfd4b97, type: 2}
   - levelRange: 100
-    roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
+    roomsSet: {fileID: 11400000, guid: ce30e9d156a17b14287e415eedfd4b97, type: 2}
   levelExcSetsList:
   - level: 4
     roomsSet: {fileID: 11400000, guid: c619af4ebede7d047b8771957ca7d7e1, type: 2}
     roomsAmount: 3
+  - level: 30
+    roomsSet: {fileID: 11400000, guid: 91fe580353455f44f8de5227558214d3, type: 2}
+    roomsAmount: 3
+  - level: 75
+    roomsSet: {fileID: 11400000, guid: 36dc998fd32db834eb907cc4718bb42e, type: 2}
+    roomsAmount: 20
 --- !u!114 &1285007686
 MonoBehaviour:
   m_ObjectHideFlags: 0

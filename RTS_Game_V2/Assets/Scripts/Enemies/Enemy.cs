@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour, IInteractiveObject
 {
     [SerializeField] private EnemyConfigurationSO enemyConfig;
-    [SerializeField] private Color highLightObjectColor;
+    [SerializeField, ColorUsage(true, true)] private Color highLightObjectColor;
     [SerializeField] private Renderer[] renderers;
-    protected LootSO lootSO;
-    
+    private LootSO lootSO;
+    private Collider objectCollider; 
     private GameObject parentRoom;
 
     private string enemyName;
@@ -42,6 +40,7 @@ public class Enemy : MonoBehaviour, IInteractiveObject
     {
         gameObject.SetActive(false);
         doDeathStuff = true;
+        objectCollider = GetComponent<Collider>();
     }
 
     private void OnEnable()
@@ -51,8 +50,8 @@ public class Enemy : MonoBehaviour, IInteractiveObject
             health = maxHealth;
             doDeathStuff = true;
             dead = false;
+            objectCollider.enabled = true;
         }
-
     }
 
     public void SetEnemy(EnemyConfigurationSO enemyConfig, GameObject parentRoom)
@@ -124,6 +123,8 @@ public class Enemy : MonoBehaviour, IInteractiveObject
             GameEvents.instance.ActivateTeleport();
         }
 
+        objectCollider.enabled = false;
+
         Invoke(nameof(WaitAndDeactivate), timeAfterDeath);
     }
 
@@ -145,11 +146,11 @@ public class Enemy : MonoBehaviour, IInteractiveObject
 
     private void OnMouseEnter()
     {
+        UIMessageObjectPool.instance.DisplayMessage(objectContent ,PopupType.NAME);
         foreach (var item in renderers)
         {
             item.material.DOColor(highLightObjectColor, "_BaseColor", 0.5f).SetAutoKill(true).Play();
         }
-        UIMessageObjectPool.instance.DisplayMessage(objectContent ,PopupType.NAME);
     }
 
     private void OnMouseExit()

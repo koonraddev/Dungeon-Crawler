@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad6c2c867ec8b04abef599ee1a1345c, type: 3}
+  m_Name: Chest Room 2
+  m_EditorClassIdentifier: 
+  roomPlane: {fileID: 8696219440333952196, guid: 858f6e7235f665940b91078e18f0ab49, type: 3}
+  teleportSO: {fileID: 11400000, guid: 409400cedd32a7942819eea0005c769a, type: 2}
+  chestList:
+  - {fileID: 11400000, guid: 808dc1b6a65bfb34faffa2a3105eec79, type: 2}
+  - {fileID: 11400000, guid: 3e8f94ac7b3caa74b892ff74debcf8be, type: 2}
+  - {fileID: 11400000, guid: f716096d22adfaa41ae728b668441b74, type: 2}
+  chestPrefab: {fileID: 1850066015614315132, guid: af4b77faba32b4b4cb5d6b54f1133d28, type: 3}

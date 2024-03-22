@@ -52,12 +52,11 @@ public class EnemyAttack : MonoBehaviour
 
             if (CheckPlayerInterest())
             {
-                if (!StatisticalUtility.CheckIfTargetInRange(gameObject, playerObject, attackRange, out Vector3 pointMove))
+                if (!StatisticalUtility.CheckIfTargetInRange(gameObject, playerObject, attackRange, out InteractionPoints intStruct))
                 {
-                    Vector3 newPointToMove = pointMove;
                     if (enemyMovement != null)
                     {
-                        enemyMovement.MoveTo(newPointToMove);
+                        enemyMovement.MoveTo(intStruct.closestPoint);
                     }
                 }
                 else

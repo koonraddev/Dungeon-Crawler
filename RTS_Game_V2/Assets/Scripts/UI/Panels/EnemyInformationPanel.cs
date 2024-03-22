@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class EnemyInformationPanel : MonoBehaviour
 {
@@ -35,6 +36,15 @@ public class EnemyInformationPanel : MonoBehaviour
         currentHPTextObject.text = Mathf.RoundToInt(currentHP).ToString();
         maxHPTextObject.text = Mathf.RoundToInt(maxHP).ToString();
         nameTextObject.text = enemy.Name;
-        imageObject.sprite = enemy.Sprite;
+
+        if(enemy.Sprite != null)
+        {
+            imageObject.sprite = enemy.Sprite;
+            imageObject.DOFade(1, 0f).SetAutoKill(true);
+        }
+        else
+        {
+            imageObject.DOFade(0, 0f).SetAutoKill(true);
+        }
     }
 }

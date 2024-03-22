@@ -688,8 +688,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyConfig: {fileID: 0}
-  highLightObjectColor: {r: 0.0141509175, g: 1, b: 0.9475108, a: 0}
-  renderers: []
+  highLightObjectColor: {r: 2.828427, g: 2.828427, b: 2.828427, a: 0}
+  renderers:
+  - {fileID: 13752230}
   timeAfterDeath: 0.1
   enemyMovement: {fileID: 4038031097870996809}
   enemyAttack: {fileID: -7392681040525388889}
@@ -758,7 +759,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 600
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

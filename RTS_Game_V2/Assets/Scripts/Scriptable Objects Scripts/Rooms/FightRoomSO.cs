@@ -64,8 +64,8 @@ public class FightRoomSO : RoomSO
 
     private void InstantiateSpawner(GameObject room, Transform spot, EnemySpawnerConfigurationSO spawnerConfig)
     {
-        GameObject spawnerObject = new("Spawner", typeof(EnemySpawner));
-        EnemySpawner spawner = spawnerObject.GetComponent<EnemySpawner>();
+        GameObject spawnerObject = new("Spawner");
+        EnemySpawner spawner = spawnerObject.AddComponent<EnemySpawner>();
         spawnerObject.transform.SetPositionAndRotation(spot.position, spot.rotation);
         spawnerObject.transform.SetParent(spot);
         spawner.SetSpawner(spawnerConfig, room);

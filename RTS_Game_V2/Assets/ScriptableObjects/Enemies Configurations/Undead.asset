@@ -13,21 +13,24 @@ MonoBehaviour:
   m_Name: Undead
   m_EditorClassIdentifier: 
   enemyName: Undead
-  health: 40
   enemyLoot: {fileID: 11400000, guid: 4515a3cab85f4fe42af2af6e43e02631, type: 2}
-  enemySprite: {fileID: 21300000, guid: e5600378dd761e64d9423790c482bf36, type: 3}
-  boss: 1
+  enemySprite: {fileID: 21300000, guid: 15ee63fd4ef61564eb24b5fbeeff3539, type: 3}
+  boss: 0
   enemyPrefab: {fileID: 165424, guid: 9f4313a771e05c64d8da7ae6bd19a19f, type: 3}
-  movementSpeed: 8
+  statisticsSet:
+    maxHealth: 50
+    healthPointsRegeneration: 0
+    healthPercentagesRegeneration: 0
+    movementSpeed: 3
+    armor: 0
+    magicResistance: 0
+    attackSpeed: 40
+    attackRange: 2
+    physicalDamage: 5
+    magicDamage: 0
+    trueDamage: 0
   minMoveInterval: 4
   maxMoveInterval: 8
-  armor: 6
-  magicResistance: 6
-  attackSpeed: 20
-  attackRange: 3
   triggerRange: 10
-  physicalDamage: 10
-  magicDamage: 1
-  trueDamage: 1
   projectileAttack: 0
   projectilePrefab: {fileID: 0}

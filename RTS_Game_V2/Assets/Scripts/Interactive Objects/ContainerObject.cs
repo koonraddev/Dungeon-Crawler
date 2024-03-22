@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class ContainerObject : MonoBehaviour, IInteractiveObject
 {
-    [SerializeField] private Color highLightObjectColor;
+    [SerializeField, ColorUsage(true,true)] private Color highLightObjectColor;
     [SerializeField] private GameObject parentObject;
     [SerializeField] private Renderer[] renderers;
     private Container container;
@@ -70,6 +70,7 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
     {
         if (status)
         {
+            Debug.Log("OPEN");
             gameObject.transform.DOLocalRotate(new Vector3(-140, 0, 0), 2f).SetEase(Ease.OutBounce);
             ContainerInfoPanel.instance.SetAndActiveContainerPanel(container);
             GameEvents.instance.InventoryPanel(true);
@@ -79,6 +80,7 @@ public class ContainerObject : MonoBehaviour, IInteractiveObject
         }
         else
         {
+            Debug.Log("CLOSE");
             stopExistingTime = false;
             gameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 2f).SetEase(Ease.Linear);
             GameEvents.instance.OnCancelGameObjectAction -= OnCancelGameObject;

@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effb594c51857d0479ad4faff1805234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highLightObjectColor: {r: 0.0047169924, g: 0.7706096, b: 1, a: 1}
+  highLightObjectColor: {r: 3.482202, g: 3.482202, b: 3.482202, a: 1}
   parentObject: {fileID: 1850066015614315132}
   renderers:
   - {fileID: 6131211282008508777}

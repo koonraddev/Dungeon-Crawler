@@ -28,14 +28,14 @@ public static class StatisticalUtility
         return 10 + physicalDamage * 0.02f + magicDamage * 0.02f + attackSpeed * 0.1f + attackRange * 0.2f;
     }
 
-    public static bool CheckIfTargetInRange(GameObject requestingObject, GameObject targetObject, float rangeToCheck, out Vector3 closestPoint, bool colliderIsTarget = false)
+    public static bool CheckIfTargetInRange(GameObject requestingObject, GameObject targetObject, float rangeToCheck, out InteractionPoints intStruct, bool colliderIsTarget = false)
     {
-        closestPoint = Vector3.zero;
+        intStruct = new();
+
         if (requestingObject == null || targetObject == null) return false;
 
         Vector3 startPoint = requestingObject.transform.position;
         Vector3 targetPoint = targetObject.transform.position;
-
         if (colliderIsTarget)
         {
             if (requestingObject.TryGetComponent(out Collider requestColl))
@@ -52,7 +52,10 @@ public static class StatisticalUtility
         float distToTarget = Vector3.Distance(startPoint, targetPoint);
         Vector3 dirToTarget = (targetObject.transform.position - requestingObject.transform.position).normalized;
         float distToMove = distToTarget - rangeToCheck + 0.05f;
-        closestPoint = requestingObject.transform.position + dirToTarget * distToMove;
+
+        intStruct.startPoint = startPoint;
+        intStruct.closestPoint = requestingObject.transform.position + dirToTarget * distToMove;
+        intStruct.targetPoint = targetPoint;
 
         return distToTarget <= rangeToCheck;
     }

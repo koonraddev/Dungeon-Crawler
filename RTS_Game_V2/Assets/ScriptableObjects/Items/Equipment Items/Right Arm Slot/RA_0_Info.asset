@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Sabre
   itemDescription: With a curved blade
-  itemSprite: {fileID: 21300000, guid: 874d8401331ede14087e8d8d486ddda6, type: 3}
+  itemSprite: {fileID: 21300000, guid: f396ac1cbe13da4499cb38138b4a5b76, type: 3}

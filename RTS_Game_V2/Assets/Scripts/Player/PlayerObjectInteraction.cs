@@ -10,7 +10,7 @@ public class PlayerObjectInteraction : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttack playerAttack;
     private int minimumDistanceFromObject;
-    public float distanceFromObject, distanceFromClosestPoint;
+    public float distanceFromPlayer, distanceFromClosestPoint;
 
     private PlayerControls playerControls;
     private InputAction moveInspectAction;
@@ -59,10 +59,10 @@ public class PlayerObjectInteraction : MonoBehaviour
 
         if (clickedObject != null)
         {
-            StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, minimumDistanceFromObject, out Vector3 closest, true);
-            distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
-            distanceFromClosestPoint = Vector3.Distance(closest, clickedObject.transform.position);
 
+            StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, minimumDistanceFromObject, out InteractionPoints intStruct, true);
+            distanceFromPlayer = Vector3.Distance(intStruct.targetPoint, intStruct.startPoint);
+            distanceFromClosestPoint = Vector3.Distance(intStruct.targetPoint, intStruct.closestPoint);
             canInteract = !StatisticalUtility.CheckIfTargetIsBlocked(gameObject, clickedObject);
         }
     }
@@ -73,16 +73,16 @@ public class PlayerObjectInteraction : MonoBehaviour
 
         if (minimumDistanceFromObject < 100)
         {
-            if (!StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, minimumDistanceFromObject, out Vector3 closest, true))
+            if (!StatisticalUtility.CheckIfTargetInRange(gameObject, clickedObject, minimumDistanceFromObject, out InteractionPoints intStruct, true))
             {
-                distanceFromObject = Vector3.Distance(gameObject.transform.position, clickedObject.transform.position);
-                distanceFromClosestPoint = Vector3.Distance(closest, clickedObject.transform.position);
+                distanceFromPlayer = Vector3.Distance(intStruct.targetPoint, intStruct.startPoint);
+                distanceFromClosestPoint = Vector3.Distance(intStruct.targetPoint, intStruct.closestPoint);
                 if (playerMovement != null)
                 {
                     playerMovement.MoveTo(clickedObject.transform.position);
                 }
 
-                yield return new WaitUntil(() => distanceFromObject <= distanceFromClosestPoint);
+                yield return new WaitUntil(() => distanceFromClosestPoint > distanceFromPlayer);
                 playerMovement.StopMovement();
             }
             yield return new WaitUntil(() => canInteract);
@@ -95,7 +95,7 @@ public class PlayerObjectInteraction : MonoBehaviour
 
     public IEnumerator InspectingObject()
     {
-        yield return new WaitUntil(() => distanceFromObject > minimumDistanceFromObject);
+        yield return new WaitUntil(() => distanceFromClosestPoint < distanceFromPlayer);
         GameEvents.instance.CancelGameObjectAction();
         clickedObject = null;
     }

@@ -81,6 +81,7 @@ public class PortalSpawner : MonoBehaviour
         this.portalsDict = portalsDict;
         this.entryPortal = entryPortal;
         isStartRoom = roomSO is StartRoomSO;
+        colliderSize = portalPrefab.GetComponent<Collider>().bounds.size;
 
         pointA = new Vector3(-1f * gameObject.transform.localScale.x, 0f, 1f * gameObject.transform.localScale.z);
         pointB = new Vector3(1f * gameObject.transform.localScale.x, 0f, 1f * gameObject.transform.localScale.z);
@@ -96,7 +97,6 @@ public class PortalSpawner : MonoBehaviour
         pointBz = pointB - new Vector3(0f, 0f, colliderSize.x);
         pointCz = pointC + new Vector3(0f, 0f, colliderSize.x);
         pointDz = pointD + new Vector3(0f, 0f, colliderSize.x);
-
 
         if (gameObject.TryGetComponent(out RoomPortalSpots portalSpots))
         {

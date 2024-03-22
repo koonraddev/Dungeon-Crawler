@@ -34,6 +34,7 @@ public class RoomTeleport : MonoBehaviour
         foreach (var item in lights)
         {
             seq2.Join(item.DOIntensity(newIntensity, 2f));
+            seq2.Join(item.DOColor(newColor, 2f));
         }
         seq2.Play();
     }

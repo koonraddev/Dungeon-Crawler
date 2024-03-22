@@ -93,7 +93,8 @@ public class SaveManager : MonoBehaviour
 
     private string GetPath(int slot)
     {
-        string path = "C:/saves";
+        //string path = "C:/saves";
+        string path = Application.persistentDataPath;
         switch (slot)
         {
             case 1:

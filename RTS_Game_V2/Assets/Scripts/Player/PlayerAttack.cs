@@ -19,7 +19,6 @@ public class PlayerAttack : MonoBehaviour
     private bool projectileAttack;
     private float projectileSpeed;
     private GameObject projectilePrefab;
-    Vector3 countTo;
 
     private void OnEnable()
     {
@@ -78,16 +77,15 @@ public class PlayerAttack : MonoBehaviour
                 return;
             }
 
-            if(!StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, out Vector3 closest, true))
+            if(!StatisticalUtility.CheckIfTargetInRange(gameObject, objectToAttack, attackRange, out InteractionPoints intStruct, true))
             {
                 if (followTarget && follow)
                 {
-                    playerMov.MoveTo(closest);
+                    playerMov.MoveTo(intStruct.closestPoint);
                 }
             }
-            countTo = closest;
 
-            distanceToEnemy = Vector3.Distance(transform.position, countTo);
+            distanceToEnemy = Vector3.Distance(intStruct.startPoint, intStruct.targetPoint);
 
             CheckIfCanAttack();
         }
@@ -155,7 +153,6 @@ public class PlayerAttack : MonoBehaviour
             objectToAttack = target.transform.gameObject;
             enemy = target;
             follow = true;
-            countTo = objectToAttack.transform.position;
         }
     }
 
