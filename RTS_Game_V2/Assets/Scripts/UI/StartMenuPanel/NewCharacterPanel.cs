@@ -49,7 +49,6 @@ public class NewCharacterPanel : MonoBehaviour
     public Color ActiveButtonColor { get => activeButtonColor; }
     public int PointsLeft { get => points; }
     public List<StatisticCreator> StatsList { get => statsList; }
-    public string CharacterName { get => nameInputField.text; }
     public int SelectedSlot { get => selectedSlot; set =>selectedSlot = value; }
 
     private void Awake()
@@ -127,7 +126,7 @@ public class NewCharacterPanel : MonoBehaviour
         }
 
         SaveManager.instance.ChosenSlotIndex = selectedSlot;
-        SaveManager.instance.CreateSave(selectedSlot, CharacterName, playerStats);
+        SaveManager.instance.CreateSave(selectedSlot, nameInputField.text, playerStats);
         GameEvents.instance.LoadGameScene();
         GameEvents.instance.SwitchScene();
     }

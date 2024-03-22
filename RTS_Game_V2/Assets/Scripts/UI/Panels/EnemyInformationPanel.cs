@@ -40,11 +40,11 @@ public class EnemyInformationPanel : MonoBehaviour
         if(enemy.Sprite != null)
         {
             imageObject.sprite = enemy.Sprite;
-            imageObject.DOFade(1, 0f).SetAutoKill(true);
+            imageObject.DOFade(1, 0f).SetAutoKill(true).Play();
         }
         else
         {
-            imageObject.DOFade(0, 0f).SetAutoKill(true);
+            imageObject.DOFade(0, 0f).SetAutoKill(true).Play();
         }
     }
 }
