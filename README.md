@@ -1,6 +1,6 @@
 <h1>The 100 FLoors</h1>
 
-
+<table>
 <tbody>
   <tr>
     <td><img src="readme/screenshots/ss1.PNG" alt="screenshoot1"></td>
@@ -8,7 +8,7 @@
   </tr>
   <tr>
     <td><img src="readme/screenshots/ss3.PNG" alt="screenshoot3"></td>
-    <td><img src="readme/screenshots/ss4.png" alt="screenshoot4"></td>
+    <td><img src="readme/screenshots/ss4.PNG" alt="screenshoot4"></td>
   </tr>
 </tbody>
 </table>
