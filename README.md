@@ -36,8 +36,8 @@
 </p>
 <h2>ABOUT - PROJECT</h2>
 <ul>
-    <li>Rooms are generated randomly, but generator bases on scriptable objects which contain informations about list of room prefabs are available to spawn on current floor/li>
-    <li>Each room uses Portal spawner to spawn portal between rooms. Spawner does it in two ways: randomly in wall or in prepared spots/li>
+    <li>Rooms are generated randomly, but generator bases on scriptable objects which contain informations about list of room prefabs are available to spawn on current floor</li>
+    <li>Each room uses Portal spawner to spawn portal between rooms. Spawner does it in two ways: randomly in wall or in prepared spots</li>
     <li>Chest rooms and fight rooms uses spots and planes to spawn chests and enemies</li>
     <li>Items are classified according to a scheme
       <img src="readme/items_classification.PNG" alt="items_classification">
