@@ -1,4 +1,4 @@
-<h1>The 100 FLoors</h1>
+<h1>The 100 Floors</h1>
 
 <table>
 <tbody>
