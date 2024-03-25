@@ -47,7 +47,7 @@
             <li>Usable Items - inventory items (mostly potions) which are used by player manually</li>
             <li>Equipment Items are classified by equipment slot category (HEAD, BODY, LEGS, FEET, RIGHT ARM, LEFT ARM). Weapons can be classified to right or left armm slot and player can only hold one weapon. 
                 However there are items that can be hold in mentioned slots but due to they are not marked as a weapons - you can hold them in the second slot, while you hold wepaon item in the first slot. </li>
-              li>Items classified as weapons are spawned and they are used by a character model in game. Player character wear weapon on the back out of combat and use it when combat is on. Additionally, depending on the weapon attack type (FISTS, SWORD, WAND, SPELL, BOW) - attack animation is changing.</li>
+            <li>Items classified as weapons are spawned and they are used by a character model in game. Player character wear weapon on the back out of combat and use it when combat is on. Additionally, depending on the weapon attack type (FISTS, SWORD, WAND, SPELL, BOW) - attack animation is changing.</li>
         </ul>
     </li>
           
