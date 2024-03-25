@@ -58,4 +58,5 @@
     <br>Respectively: pDM = 100/(100 + armor), mDM = 100/(100 + magic_resistance)</li>
   <li>Enemies also use the statistics system, so some opponents can be defeated more easily by using physical attacks and some by using magic damage</li>
   <li>The gameplay is saved when teleporting to the next level (after killing the boss and using the teleport). Saving progress takes into account the player's equipment and inventory but also active buffs and debuffs</li>
+  <li>Save system uses JsonUtility class to create json representaion of player data in local files</li>
   </ul>
