@@ -26,7 +26,7 @@ MonoBehaviour:
     magicResistance: 0
     attackSpeed: 40
     attackRange: 2
-    physicalDamage: 5
+    physicalDamage: 6
     magicDamage: 0
     trueDamage: 0
   minMoveInterval: 4

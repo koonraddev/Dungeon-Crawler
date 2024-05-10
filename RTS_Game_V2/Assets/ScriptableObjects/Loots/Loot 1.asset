@@ -40,7 +40,4 @@ MonoBehaviour:
   - treasure: {fileID: 0}
     amount: 0
     lootChancePercentage: 0
-  - treasure: {fileID: 0}
-    amount: 0
-    lootChancePercentage: 0
   lootTimeExisting: 30

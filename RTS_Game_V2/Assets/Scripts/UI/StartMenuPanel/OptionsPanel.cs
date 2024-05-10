@@ -1,56 +1,109 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class OptionsPanel : MonoBehaviour
 {
     [SerializeField] private ResolutionDropdown resDropdown;
-    [SerializeField] private Toggle fullscreenToggle;
-    [SerializeField] private TMPro.TMP_Dropdown graphicsQualityDropdown;
+    [SerializeField] private GraphicsQualityDropdown graphicsQualityDropdown;
     [SerializeField] private FrameLimiter frameLimiter;
+    [SerializeField] private FullscreenToggle fullscreenToggle;
     [SerializeField] private ButtonManager applyButtonManager;
+    [SerializeField] private VSyncToggle vSyncToggle;
+
+    public static OptionsPanel panel;
+
+    private List<Action> actionslist = new();
 
     private void OnEnable()
     {
+        panel = this;
+        actionslist.Clear();
         applyButtonManager.DeactivateButton();
     }
 
-    private void Awake()
+    public void FrameLimiterChanged()
     {
-        if (!PlayerPrefs.HasKey("limitedFPS")) { PlayerPrefs.SetInt("limitedFPS", 0); }
-        if (!PlayerPrefs.HasKey("graphicsQuality")) { PlayerPrefs.SetInt("graphicsQuality", 0); }
-        if (!PlayerPrefs.HasKey("FPSlimiter")) { PlayerPrefs.SetInt("FPSlimiter", 60); }
-        if (!PlayerPrefs.HasKey("fullscreen")) { PlayerPrefs.SetInt("fullscreen", 1); }
-        if (!PlayerPrefs.HasKey("resolutionWidth")) { PlayerPrefs.SetInt("resolutionWidth", 1920); }
-        if (!PlayerPrefs.HasKey("resolutionHeight")) { PlayerPrefs.SetInt("resolutionHeight", 1080); }
+        applyButtonManager.ActivateButton();
+        AddAction(ApplyFPSlimiterSettings);
     }
+
+    public void FullscreenToggleChanged()
+    {
+        if (actionslist.Contains(ApplyResolutionSettings))
+        {
+            return;
+        }
+        AddAction(ApplyFullscreenSettings);
+    }
+
+    public void ResolutionDropdownChanged()
+    {
+        if (actionslist.Contains(ApplyFullscreenSettings))
+        {
+            actionslist.Remove(ApplyFullscreenSettings);
+        }
+
+        AddAction(ApplyResolutionSettings);
+    }
+
+    public void QualityDropdownChanged()
+    {
+        AddAction(ApplyQualitySettings);
+    }
+
+    public void VSyncChanged()
+    {
+        AddAction(ApplyVSyncSetting);
+    }
+
+    private void AddAction(Action newAction)
+    {
+        if (actionslist.Contains(newAction))
+        {
+            return;
+        }
+
+        actionslist.Add(newAction);
+        applyButtonManager.ActivateButton();
+    }
+
     public void ApplySettings()
     {
-        ApplyQuality();
-        ApplyResolution();
-        PlayerPrefs.Save();
+        foreach (var item in actionslist) { item?.Invoke(); }
+
+        actionslist.Clear();
+        applyButtonManager.DeactivateButton();
     }
 
-    private void ApplyResolution()
+    private void ApplyVSyncSetting()
     {
-        Resolution newResolution = resDropdown.PickedResolution;
-        int resWidth = newResolution.width;
-        int resHeight = newResolution.height;
-        int frameLimit = frameLimiter.FrameLimit;
-        int fullscreenINT = fullscreenToggle.isOn ? 1 : 0;
-
-        PlayerPrefs.SetString("resolutionWidth", resWidth.ToString());
-        PlayerPrefs.SetString("resolutionHeight", resHeight.ToString());
-        PlayerPrefs.SetInt("fullscreen", fullscreenINT);
-        PlayerPrefs.SetInt("limitedFPS", frameLimit);
-
-
-        Screen.SetResolution(resWidth, resHeight, fullscreenToggle.isOn); ;
-        Application.targetFrameRate = frameLimit;
+        GraphicSettings.SetVSync(vSyncToggle.VSyncValue);
     }
 
-    private void ApplyQuality()
+    private void ApplyFullscreenSettings()
     {
-        PlayerPrefs.SetInt("graphicsQuality", graphicsQualityDropdown.value);
-        QualitySettings.SetQualityLevel(graphicsQualityDropdown.value);
+        GraphicSettings.SetFullscreen(fullscreenToggle.FullscreenStatus);
+    }
+
+    private void ApplyFPSlimiterSettings()
+    {
+        GraphicSettings.SetFrameRateLimiter(frameLimiter.FrameLimitStatus, frameLimiter.FrameLimitValue);
+    }
+
+    private void ApplyResolutionSettings()
+    {
+        GraphicSettings.SetResolution(resDropdown.PickedResolution, fullscreenToggle.FullscreenStatus);
+    }
+
+    private void ApplyQualitySettings()
+    {
+        GraphicSettings.SetQuality(graphicsQualityDropdown.QualityLevel);
+    }
+
+    private void OnDisable()
+    {
+        actionslist.Clear();
+        applyButtonManager.DeactivateButton();
     }
 }

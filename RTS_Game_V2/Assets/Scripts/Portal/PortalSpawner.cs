@@ -157,7 +157,7 @@ public class PortalSpawner : MonoBehaviour
                 pos = new Vector3(pointB.x, 0f, positionInCurrentWall);
                 break;
             case SpawnType.SOUTH:
-                positionInCurrentWall = GetAxisPos(pointCx.x, pointDx.x);
+                positionInCurrentWall = GetAxisPos(pointDx.x, pointCx.x);
                 pos = new Vector3(positionInCurrentWall, 0f, pointC.z);
                 break;
             case SpawnType.WEST:

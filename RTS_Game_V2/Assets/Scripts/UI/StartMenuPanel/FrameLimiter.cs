@@ -1,41 +1,35 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
+[RequireComponent(typeof(Toggle), typeof(TMP_InputField), typeof(InvertedToggleDynamicBoolLogic))]
 public class FrameLimiter : MonoBehaviour
 {
-    [SerializeField] private UnityEngine.UI.Toggle limiterToggle;
-    [SerializeField] private TMPro.TMP_InputField limiterInputField;
-    [SerializeField] private ButtonManager applyButton;
-    [SerializeField] private int limiterMinValue;
-    private int limiterValue;
-    public int FrameLimit
+    [SerializeField] private Toggle limiterToggle;
+    [SerializeField] private TMP_InputField limiterInputField;
+
+    public bool FrameLimitStatus
+    {
+        get => limiterToggle.isOn;
+    }
+    public int FrameLimitValue
     {
         get
         {
             if (limiterToggle.isOn)
             {
-                return limiterValue;
+                if (int.TryParse(limiterInputField.text, out int parsedValue))
+                {
+                    return parsedValue;
+                }
             }
-            else
-            {
-                return 999;
-            }
+            return 9999;
         }
     }
 
-    private void Awake()
+    private void Update()
     {
-        limiterToggle.isOn = PlayerPrefs.GetInt("limitedFPS") != 0;
-        limiterValue = PlayerPrefs.GetInt("FPSlimiter");
-        limiterInputField.text = limiterValue.ToString();
-    }
-
-    private void OnEnable()
-    {
-        OnLimiterInputField();
-    }
-    public void OnToggleLimiter()
-    {
-        if (limiterToggle.isOn)
+        if (limiterToggle.interactable && limiterToggle.isOn)
         {
             limiterInputField.interactable = true;
         }
@@ -43,18 +37,20 @@ public class FrameLimiter : MonoBehaviour
         {
             limiterInputField.interactable = false;
         }
+
+        if (!limiterToggle.interactable)
+        {
+            limiterToggle.isOn = false;
+        }
+
     }
 
-    public void OnLimiterInputField()
+    private void OnEnable()
     {
-        if (int.TryParse(limiterInputField.text, out int parsedValue) && parsedValue >= limiterMinValue)
-        {
-            limiterValue = parsedValue;
-            applyButton.ActivateButton();
-        }
-        else
-        {
-            applyButton.DeactivateButton();
-        }
+        int limiterStatus = PlayerPrefsManager.GetPrefValue(PlayerPrefKey.FPS_LIMITER_STATUS);
+        int limiterValue = PlayerPrefsManager.GetPrefValue(PlayerPrefKey.FPS_LIMITER_VALUE);
+
+        limiterToggle.isOn = limiterStatus == 1;
+        limiterInputField.text = limiterStatus == 1 ? limiterValue.ToString() : "";
     }
 }

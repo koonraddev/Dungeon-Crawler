@@ -13,23 +13,23 @@ public class LootSlot
 [CreateAssetMenu(fileName = "newLoot", menuName = "Scriptable Objects/Loot")]
 public class LootSO : ScriptableObject
 {
-    [SerializeField] List<LootSlot> lootSlots = new(10);
+    [SerializeField] List<LootSlot> lootSlots = new(9);
     [SerializeField] private int lootTimeExisting;
     public int LootTimeExisting { get => lootTimeExisting; }
     private List<ContainerSlot> containerSlots;
     private void OnValidate()
     {
-        if (lootSlots.Count > 10)
+        if (lootSlots.Count > 9)
         {
-            int slotsToCreate = lootSlots.Count - 10;
+            int slotsToCreate = lootSlots.Count - 9;
             for (int i = 0; i < slotsToCreate; i++)
             {
                 lootSlots.RemoveAt(lootSlots.Count - 1);
             }
         }
-        else if (lootSlots.Count < 10)
+        else if (lootSlots.Count < 9)
         {
-            int slotsToCreate = 10 - lootSlots.Count;
+            int slotsToCreate = 9 - lootSlots.Count;
             for (int i = 0; i < slotsToCreate; i++)
             {
                 lootSlots.Add(null);
@@ -48,6 +48,10 @@ public class LootSO : ScriptableObject
                 AddLoot(ltSlot);
             }
         }
+
+        ContainerSlot newSlot = new(containerSlots.Count);
+        containerSlots.Add(newSlot);
+
         string contName = containerName + "'s loot";
         Container container = new(contName, "", containerSlots, false);
         return container;

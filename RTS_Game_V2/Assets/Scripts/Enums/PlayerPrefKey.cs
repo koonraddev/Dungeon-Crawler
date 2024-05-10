@@ -1,0 +1,10 @@
+public enum PlayerPrefKey
+{
+    FPS_LIMITER_STATUS,
+    FPS_LIMITER_VALUE,
+    FULLSCREEN,
+    RES_WIDTH,
+    RES_HEIGHT,
+    GRAPHICS_QUALITY,
+    VSYNC
+}
